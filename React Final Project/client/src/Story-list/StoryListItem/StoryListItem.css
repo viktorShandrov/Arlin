@@ -1,0 +1,10 @@
+.item{
+    border-radius: 20px;
+    border: solid 1px black;
+    width: fit-content;
+    padding: 10px;
+}
+
+.storyImg{
+    width: 70px;
+}
