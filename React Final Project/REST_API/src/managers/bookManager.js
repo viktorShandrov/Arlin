@@ -7,6 +7,10 @@ exports.getBook =async(bookId,userId)=>{
    return  models.bookModel.findById(bookId)
 
 }
+exports.getAllBooks =async()=>{
+   return  models.bookModel.find()
+
+}
 exports.editBook =async(bookId,bookName,image,userId)=>{
    await isAdmin(null,userId)
    let book = await models.bookModel.findById(bookId)
