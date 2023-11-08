@@ -11,6 +11,7 @@ const schema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Chapter"
     }],
+    name:String,
     length: Number,
     image:String
 })

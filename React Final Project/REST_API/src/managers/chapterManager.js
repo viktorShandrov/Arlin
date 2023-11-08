@@ -20,15 +20,28 @@ exports.deleteChapter =async(chapterId,userId)=>{
     await book.save()
    return models.chapterModel.findByIdAndDelete(chapterId)
 }
-exports.createChapter =async(bookId,text,userId)=>{
+exports.createChapter =async(bookId,text,userId,chapterName)=>{
    await isAdmin(null,userId)
    const chapter = await models.chapterModel.create(
        {
           book:bookId,
           text,
+           chapterName
        }
        )
    const book = await models.bookModel.findById(bookId)
    book.chapters.push(chapter._id)
+    book.length+=1
    return book.save()
+}
+exports.createChapterQuestion =async(chapterId,userId,rightAnswer,answers)=>{
+   await isAdmin(null,userId)
+   const chapter = await models.chapterModel.findById(chapterId)
+
+    return models.chapterQuestionsModel.create({
+        chapterId:chapterId,
+        rightAnswer:rightAnswer,
+        answers,
+    })
+
 }

@@ -1,29 +1,30 @@
 import StoryListItem from "./StoryListItem/StoryListItem";
 import "./StoryList.css"
+import {useEffect, useState} from "react";
+import {request} from "../functions";
 export default function StoryList(){
+    const [books,setBooks] = useState([])
+    const fetchAllBooks = ()=>{
+        request("books/all").subscribe(
+            (res:any)=>{
+                const {allBooks}=res
+                setBooks(allBooks)
+            },
+            (error:any)=>{
+                console.log(error)
+            }
+        )
+    }
+    useEffect(()=>{
+        fetchAllBooks()
+    },[])
 
-
-    const stories =[
-        {
-            storyName:"ivan",
-            imgUrl:"public/OIP.jpg"
-        },{
-            storyName:"ivan",
-            imgUrl:"public/OIP.jpg"
-        },{
-            storyName:"ivan",
-            imgUrl:"public/OIP.jpg"
-        },{
-            storyName:"ivan",
-            imgUrl:"public/OIP.jpg"
-        },
-    ]
 
 
 
     return(
         <div className={"storiesList"}>
-            {stories.map((story,index)=><StoryListItem key={index} storyName={story.storyName} imgUrl={story.imgUrl} />)}
+            {books.map((story:any,index:number)=><StoryListItem key={index} storyName={story.name} imgUrl={story.imgUrl} />)}
         </div>
 
     )

@@ -29,7 +29,8 @@ exports.createBook =async(bookName,image,userId)=>{
            ownedBy:[],
            chapters:[],
            length:0,
-           image
+           image,
+           name:bookName
        }
        )
 
