@@ -26,8 +26,8 @@ router.get("/:id",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
         const bookId = req.params.id
-        await bookManager.getBook(bookId,_id)
-        res.status(200).end()
+        const book = await bookManager.getBook(bookId,_id)
+        res.status(200).json({book})
     } catch (error) {
         res.status(400).json({message:error.message})
     }

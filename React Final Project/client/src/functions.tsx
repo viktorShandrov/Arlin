@@ -16,22 +16,31 @@ import * as constants from "./contants";
                     method
                 })
                     .then((response:any)=>{
+
                         if(!response.ok){
                             response.json().then((errorData: any) => {
                                 error(errorData);
                             });
                         }else{
-                            const contentType = response.headers.get('content-type');
+                            const contentType = response.headers.get('Content-Type');
                             if (contentType && contentType.includes('application/json')) {
                                 return response.json()
                             }else{
+
                                 res(null)
+                                return null
                             }
                         }
                     })
                     .then((data:any)=>{
-                        res(data)
+                        if (data !== null) { // Only execute when data is not null
+                            res(data);
+                        }
                     })
+                    .catch((err: any) => {
+                        console.error('Fetch Error:', err);
+                        error(err);
+                    });
 
             }
         }

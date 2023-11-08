@@ -24,7 +24,7 @@ export default function StoryList(){
 
     return(
         <div className={"storiesList"}>
-            {books.map((story:any,index:number)=><StoryListItem key={index} storyName={story.name} imgUrl={story.imgUrl} />)}
+            {books.map((story:any,index:number)=><StoryListItem key={index} storyName={story.name} storyId ={story._id} imgUrl={story.imgUrl} />)}
         </div>
 
     )

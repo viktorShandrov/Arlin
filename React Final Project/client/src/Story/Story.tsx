@@ -13,6 +13,7 @@ export default function Story(){
     useEffect(()=>{
         setStoryText(story)
     },[])
+
     const sentences = storyText.split(".")
     return(
         <div className={"story"}>
