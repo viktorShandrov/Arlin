@@ -1,27 +1,20 @@
 
 
 import './App.css'
-import Story from "./Story/Story"
-import StoryList from "./Story-list/StoryList"
-import TranslationContainer from "./TranslationContainer/TranslationContainer";
-import AddChapterPanel from "./admin/addChapter/AddChapterPanel";
-import {createContext, useState} from "react";
-   export const chapterContext = createContext<any>(undefined)
+import {Route, Routes} from "react-router-dom";
+import AdminPanel from "./admin/AdminPanel";
+import Main from "./Main/Main";
 function App() {
-    const [chapter,setChapter] = useState({})
 
 
   return (
       <>
-          <chapterContext.Provider value={[chapter,setChapter]}>
-              <main>
-                  <StoryList />
-                  <Story />
-                  <TranslationContainer/>
-              </main>
-          </chapterContext.Provider>
+          <Routes>
+              <Route path={"/admin/*"} element={<AdminPanel />}></Route>
+              <Route path={"/main/*"} element={<Main />}></Route>
+          </Routes>
 
-        <AddChapterPanel/>
+
       </>
 
   )
