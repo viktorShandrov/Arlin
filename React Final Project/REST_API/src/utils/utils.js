@@ -7,7 +7,7 @@ exports.verify = util.promisify(jwt.verify)
 
 exports.port = 3000
 exports.secret = "kjsdhgLKJGHDLKJGHkljhlkjhh43iu4h8osioduhfis"
-exports.FEdomain = "http://localhost:5173"
+exports.FEdomain = "http://127.0.0.1:5173"
 exports.testTypes ={
     randomWords:"randomWords",
     textWords:"textWords",
