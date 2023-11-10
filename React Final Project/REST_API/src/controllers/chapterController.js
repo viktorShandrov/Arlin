@@ -7,9 +7,9 @@ router.post("/create",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
         console.log(req.body)
-        const {bookId,chapterName,text} = req.body
+        const {bookId,chapterName,chapterText} = req.body
 
-        await chapterManager.createChapter(bookId,text,_id,chapterName)
+        await chapterManager.createChapter(bookId,chapterText,_id,chapterName)
         res.status(200).end()
     } catch (error) {
         res.status(400).json({message:error.message})
