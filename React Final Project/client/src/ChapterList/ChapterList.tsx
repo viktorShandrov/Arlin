@@ -32,7 +32,7 @@ export default function ChapterList(){
                     <Link key={chapter}  to={`/main/${bookId}/chapterId=${chapter}`}>
                         <div className={styles.item}>
                             <div className={styles.chapterImg}>
-                                <img src={"/public/chapter.jpg"} alt={`Chapter ${index+1}`} />
+                                <img className={"img"} src={"/public/chapter.jpg"} alt={`Chapter ${index+1}`} />
                             </div>
 
                             <h3 className={styles.chapterName}>{index+1}</h3>

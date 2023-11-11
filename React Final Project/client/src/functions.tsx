@@ -1,5 +1,5 @@
 import * as constants from "./contants";
-
+import {useNavigate} from "react-router-dom";
 
   export function request(url:string,method?:string,body?:any,headers:any={}){
         return {
@@ -10,13 +10,12 @@ import * as constants from "./contants";
                 fetch(constants.REST_API+url,{
                     headers:{
                         ...headers,
-                        Authorization:localStorage.getItem("token")!
+                        Authorization:localStorage.getItem("token")
                     },
                     body:JSON.stringify(body),
                     method
                 })
                     .then((response:any)=>{
-
                         if(!response.ok){
                             response.json().then((errorData: any) => {
                                 error(errorData);

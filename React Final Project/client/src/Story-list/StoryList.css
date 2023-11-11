@@ -1,5 +1,42 @@
-.storiesList{
+.chapterListWrapper{
+    overflow-y: auto;
+    height: 100%;
+    background-color: #D9D9D9;
+    border-radius: 10px;
+}
+.chapterList{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding: 20px;
+    min-width: 150px;
+
+
+}
+.chapterName{
+    background-color: #4A4A4A;
+    text-align: center;
+    color: #dedede;
+    margin: 0;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.item{
+    border-radius: 20px;
+    border: solid 1px black;
+    /*padding: 10px;*/
+    width: 100%;
+
+}
+.img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.chapterImg{
+    width: 100%;
+    height: 70px;
 }

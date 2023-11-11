@@ -3,7 +3,7 @@ const jwt = require("./utils")
 exports.auth= async(req,res,next)=>{
     try{
         const token =  req.headers.authorization;
-        if(token){
+        if(token&&token!=="null"){
             req.user = await jwt.verify(token,jwt.secret)
         }
         next()

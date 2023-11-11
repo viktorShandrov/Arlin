@@ -1,4 +1,52 @@
-.main{
+.main {
     height: 100%;
     justify-content: space-between;
+}
+.nav{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 30px;
+    background-color: #309BFF;
+    transition: 0.6s;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.booksMenu{
+     display: none;
+
+}
+.testsMenu{
+     display: none;
+
+}
+.nav:hover{
+    height: 100px;
+}
+.nav:hover .booksNav,
+.nav:hover .testsNav  {
+    display: none;
+    color: red;
+}
+.nav:hover .booksMenu,
+.nav:hover .testsMenu{
+    display: flex;
+    flex-direction: column;
+}
+.navItem{
+    display: flex;
+    align-items: center;
+    padding: 0 60px;
+    color: white;
+    transition: 0.4s;
+    margin: 0;
+    height: 100%;
+    text-decoration: none;
+}
+
+.navItem:hover{
+    background-color: white;
+    color:grey;
+    cursor: pointer;
 }
