@@ -7,7 +7,6 @@ router.post("/create",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
         const {words} = req.body
-
        await wordManager.createWords(words,_id)
         res.status(200).end()
     } catch (error) {

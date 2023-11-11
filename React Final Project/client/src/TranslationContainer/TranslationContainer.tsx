@@ -62,14 +62,14 @@ export default function  TranslationContainer (){
             words.push(el.textContent)
         }
         console.log(words)
-        // request("/unknownWords/create", "POST",{words}).subscribe(
-        //     (res)=>{
-        //         console.log("success")
-        //     },
-        //     (error)=>{
-        //         console.log(error)
-        //     }
-        // )
+        request("unknownWords/create", "POST",{words}).subscribe(
+            (res)=>{
+                console.log("success")
+            },
+            (error)=>{
+                console.log(error)
+            }
+        )
     }
     // @ts-ignore
     return(

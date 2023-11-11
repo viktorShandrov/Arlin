@@ -1,10 +1,11 @@
+
 const models = require("../models/allModels")
 const utils = require("../utils/utils")
 const {isOwnedByUser, isAdmin} = require("../managerUtils/managerUtil");
 const allModels = require("../models/allModels");
 // Change this line to use dynamic import
 import('random-words')
-    .then(randomWordsModule => {
+    .then(async (randomWordsModule )=>{
         const randomWords = randomWordsModule.default;
 
         exports.generateTest =async(userId,testType,chapterId)=>{
@@ -49,14 +50,52 @@ exports.deleteWord =async(wordId,userId)=>{
    return models.bookModel.findByIdAndDelete(wordId)
 }
 exports.createWords =async(words,userId)=>{
+    const fetch = await import("node-fetch")
     for (const word of words) {
-        await models.wordModel.create(
-            {
-                unknownBy:userId,
-                word
-            }
-        )
+        const wordRecord = await allModels.wordModel.findOne({word})
+        if(wordRecord){
+            wordRecord.unknownFor.push(userId)
+            await wordRecord.save()
+        }else{
+
+
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    q: word,
+                    source: 'en',
+                    target: 'bg',
+                    format: 'text',
+                }),
+            };
+
+                const response = await fetch.default(`https://translation.googleapis.com/language/translate/v2?key=${utils.GoogleTranslateAPI_KEY}`, requestOptions);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                const translatedText = data.data.translations[0].translatedText;
+
+
+            await models.wordModel.create(
+                {
+                    unknownFor:[userId],
+                    word,
+                    translatedText
+                }
+            )
+        }
+
     }
+
+
+
+
 
 
 

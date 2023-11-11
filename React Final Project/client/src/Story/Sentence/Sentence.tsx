@@ -1,7 +1,6 @@
 
 
 import "./Sentence.css"
-import {functions} from "../../functions";
 
 export default function Sentence(props:any) {
 

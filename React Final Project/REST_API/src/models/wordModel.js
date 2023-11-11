@@ -3,11 +3,12 @@ const mongoose = require("mongoose")
 
 
 const schema = mongoose.Schema({
-    unknownBy:{
+    unknownFor:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
-    },
+    }],
     word:String,
+    translatedText:String,
 })
 
 

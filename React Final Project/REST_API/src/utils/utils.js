@@ -13,6 +13,7 @@ exports.testTypes ={
     textWords:"textWords",
     textQuestions:"textQuestions"
 }
+exports.GoogleTranslateAPI_KEY = "AIzaSyCwcafxQT_4clYPFoz6pR5C3KOAbNhvTc8"
 exports.commonWords = [
     "a",
     "about",
