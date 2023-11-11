@@ -6,12 +6,56 @@ const allModels = require("../models/allModels");
 // Change this line to use dynamic import
 import('random-words')
     .then(async (randomWordsModule )=>{
-        const randomWords = randomWordsModule.default;
+        const randomWords = randomWordsModule;
+
+        async function translateWord(word){
+            const fetch = await import("node-fetch")
+
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    q: word,
+                    source: 'en',
+                    target: 'bg',
+                    format: 'text',
+                }),
+            };
+
+            const response = await fetch.default(`https://translation.googleapis.com/language/translate/v2?key=${utils.GoogleTranslateAPI_KEY}`, requestOptions);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return  data.data.translations[0].translatedText;
+        }
 
         exports.generateTest =async(userId,testType,chapterId)=>{
             if(testType === utils.testTypes.randomWords){
                 //12 words
-                return randomWords.generate(12)
+                const questions = randomWords.generate(12)
+                const test = []
+                for (const question of questions) {
+                    const answers =[]
+                    for (let i =0;i<3;i++){
+                        answers[i] = {answer:await translateWord(randomWords.generate()) }
+                    }
+                    const rightAnswer =  {answer:await translateWord(question),isCorrect : true}
+
+                    const randomNumber = Math.floor(Math.random() * 4);
+                    answers.splice(randomNumber,0,rightAnswer)
+                    test.push(
+                        {
+                            question,
+                            answers
+                        }
+                    )
+                }
+                return test
 
             }else if(testType === utils.testTypes.textWords){
                 //12 words from text
@@ -50,7 +94,6 @@ exports.deleteWord =async(wordId,userId)=>{
    return models.bookModel.findByIdAndDelete(wordId)
 }
 exports.createWords =async(words,userId)=>{
-    const fetch = await import("node-fetch")
     for (const word of words) {
         const wordRecord = await allModels.wordModel.findOne({word})
         if(wordRecord){
@@ -59,40 +102,20 @@ exports.createWords =async(words,userId)=>{
         }else{
 
 
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    q: word,
-                    source: 'en',
-                    target: 'bg',
-                    format: 'text',
-                }),
-            };
 
-                const response = await fetch.default(`https://translation.googleapis.com/language/translate/v2?key=${utils.GoogleTranslateAPI_KEY}`, requestOptions);
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                const translatedText = data.data.translations[0].translatedText;
 
 
             await models.wordModel.create(
                 {
                     unknownFor:[userId],
                     word,
-                    translatedText
+                    translatedText:await translateWord(word)
                 }
             )
         }
 
-    }
 
+    }
 
 
 
