@@ -6,9 +6,9 @@ const router = require("express").Router()
 router.post("/create",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
-        const {word} = req.body
+        const {words} = req.body
 
-       await wordManager.createWord(word,_id)
+       await wordManager.createWords(words,_id)
         res.status(200).end()
     } catch (error) {
         res.status(400).json({message:error.message})

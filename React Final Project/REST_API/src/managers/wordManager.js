@@ -48,13 +48,16 @@ exports.deleteWord =async(wordId,userId)=>{
     await isOwnedByUser(userId,wordId,models.wordModel,"unknownBy")
    return models.bookModel.findByIdAndDelete(wordId)
 }
-exports.createWord =async(word,userId)=>{
-    return await models.wordModel.create(
-       {
-           unknownBy:userId,
-           word
-       }
-       )
+exports.createWords =async(words,userId)=>{
+    for (const word of words) {
+        await models.wordModel.create(
+            {
+                unknownBy:userId,
+                word
+            }
+        )
+    }
+
 
 
 }

@@ -1,6 +1,39 @@
+
+*{
+    font-family: Inter;
+}
 .container{
     padding: 20px;
     width: 300px;
-    border: solid 2px black;
+    border: solid 1px black;
     height: fit-content;
+    border-radius: 20px;
+    background-color: #EBEBEB;
+}
+.textForTranslate{
+    padding: 15px;
+    border-radius: 20px;
+    background-color: white;
+    display: flex;
+    gap: 5px;
+}
+.word{
+    border-radius: 10px;
+    padding: 5px;
+}
+.word:hover{
+    cursor: pointer;
+    background-color: #a6a600;
+}
+[data-isclicked="true"]{
+    background-color: #a6a600;
+
+}
+.saveWords{
+    border: none;
+    padding: 5px 10px;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+
 }

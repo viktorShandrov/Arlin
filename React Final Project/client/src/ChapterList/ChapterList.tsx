@@ -35,7 +35,7 @@ export default function ChapterList(){
                                 <img src={"/public/chapter.jpg"} alt={`Chapter ${index+1}`} />
                             </div>
 
-                            <h3 className={"chapterName"}>{index+1}</h3>
+                            <h3 className={styles.chapterName}>{index+1}</h3>
                         </div>
                     </Link>
 
