@@ -26,7 +26,7 @@ export default function  Login(){
         request("users/login","POST",formValues).subscribe(
             (res)=>{
                 localStorage.setItem("token",res.token)
-                setUser(res)
+                setUser(res.token)
                 navigate("/main")
             },
             (error)=>{

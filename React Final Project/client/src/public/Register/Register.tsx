@@ -26,7 +26,7 @@ export default function  Register(){
         request("users/register","POST",formValues).subscribe(
             (res)=>{
                 localStorage.setItem("token",res.token)
-                setUser(res)
+                setUser(res.token)
                 navigate("/main")
             },
             (error)=>{
