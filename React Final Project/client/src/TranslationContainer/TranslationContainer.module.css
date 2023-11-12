@@ -16,6 +16,7 @@
     background-color: white;
     display: flex;
     gap: 5px;
+    flex-wrap: wrap;
 }
 .word{
     border-radius: 10px;

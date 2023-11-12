@@ -1,4 +1,3 @@
-import StoryListItem from "./StoryListItem/StoryListItem";
 import "./StoryList.css"
 import {useContext, useEffect, useState} from "react";
 import {request} from "../functions";
@@ -35,9 +34,10 @@ export default function StoryList(){
             <div className={styles.chapterList}>
                 {books.map((book: any, index: number) => (
                     <div className={styles.bookElementWrapper}>
-                        {!book.ownedBy.includes(user)&&
+                        {!book.ownedBy.includes(user.userId)&&
                             <i className={`fa-solid fa-lock ${styles.lockIcon}`}></i>
                         }
+
                         <Link key={book._id}  to={`/main/${book._id}`}>
 
                             <div className={styles.item}>

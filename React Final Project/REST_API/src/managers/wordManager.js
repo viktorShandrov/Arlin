@@ -63,39 +63,15 @@ import('random-words')
             return wordsArray[randomIndex];
         }
 
-        async function translateWord(word){
-            const fetch = await import("node-fetch")
 
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    q: word,
-                    source: 'en',
-                    target: 'bg',
-                    format: 'text',
-                }),
-            };
-
-            const response = await fetch.default(`https://translation.googleapis.com/language/translate/v2?key=${utils.GoogleTranslateAPI_KEY}`, requestOptions);
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            return  data.data.translations[0].translatedText;
-        }
         async function makeTestOutOfWords(words){
             const container = []
             for (const question of words) {
                 const answers =[]
                 for (let i =0;i<3;i++){
-                    answers[i] = {answer:await translateWord(randomWords.generate()) }
+                    answers[i] = {answer:await exports.translateWord(randomWords.generate()) }
                 }
-                const rightAnswer =  {answer:await translateWord(question),isCorrect : true}
+                const rightAnswer =  {answer:await exports.translateWord(question),isCorrect : true}
 
                 const randomNumber = Math.floor(Math.random() * 4);
                 answers.splice(randomNumber,0,rightAnswer)
@@ -112,10 +88,34 @@ import('random-words')
     .catch(error => {
         console.error('Error:', error);
     });
+exports.translateWord=async(word)=>{
+    const fetch = await import("node-fetch")
 
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            q: word,
+            source: 'en',
+            target: 'bg',
+            format: 'text',
+        }),
+    };
+
+    const response = await fetch.default(`https://translation.googleapis.com/language/translate/v2?key=${utils.GoogleTranslateAPI_KEY}`, requestOptions);
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return  data.data.translations[0].translatedText;
+}
 
 exports.getAllWords =async(userId)=>{
-   return  models.wordModel.find({unknownBy:userId})
+   return  models.wordModel.find({unknownFor:userId})
 }
 
 exports.deleteWord =async(wordId,userId)=>{
@@ -138,7 +138,7 @@ exports.createWords =async(words,userId)=>{
                 {
                     unknownFor:[userId],
                     word,
-                    translatedText:await translateWord(word)
+                    translatedText:await exports.translateWord(word)
                 }
             )
         }

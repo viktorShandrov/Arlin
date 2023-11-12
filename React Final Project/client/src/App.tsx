@@ -11,11 +11,11 @@ import Test from "./Test/Test";
 import UnknownWords from "./UnknownWords/UnknownWords";
     export const userContext=createContext({})
 function App() {
-        const [user,setUser]= useState("")
+        const [user,setUser]= useState({})
     useEffect(()=>{
-        const token = localStorage.getItem("token")
-        if(token){
-            setUser(token)
+        const userObject = localStorage.getItem("user")
+        if(userObject){
+            setUser(JSON.parse(userObject))
         }
     },[])
 

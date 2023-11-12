@@ -25,8 +25,8 @@ export default function  Register(){
     const onSubmit=()=>{
         request("users/register","POST",formValues).subscribe(
             (res)=>{
-                localStorage.setItem("token",res.token)
-                setUser(res.token)
+                localStorage.setItem("user",JSON.stringify(res))
+                setUser(res)
                 navigate("/main")
             },
             (error)=>{
