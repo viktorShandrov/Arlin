@@ -16,6 +16,22 @@ const schema = mongoose.Schema({
         enum: ["admin", "user"],
         default: "user"
     },
+    randomWordsTests: {
+        type:Number,
+        default: 0
+    },
+    wordsFromChapterTests: {
+        type:Number,
+        default: 0
+    },
+    chapterPlotTests: {
+        type:Number,
+        default: 0
+    },
+    knownWords: {
+        type:Number,
+        default: 0
+    },
     isPasswordHashed: {
         type: Boolean,
         default: false,
