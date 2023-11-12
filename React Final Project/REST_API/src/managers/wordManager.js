@@ -8,6 +8,61 @@ import('random-words')
     .then(async (randomWordsModule )=>{
         const randomWords = randomWordsModule;
 
+
+
+        exports.generateTest =async(userId,testType,chapterId)=>{
+
+
+
+
+            if(testType === utils.testTypes.randomWords){
+                //12 words
+                const questions = randomWords.generate(12)
+
+                return await makeTestOutOfWords(questions)
+
+            }else if(testType === utils.testTypes.textWords){
+                //12 words from text
+                const chapter = await allModels.chapterModel.findById(chapterId)
+                const splitedChapter = chapter.text.split(/\s+/);
+
+                const filteredWords = splitedChapter.filter(word => !utils.commonWords.includes(word.toLowerCase()));
+
+                const testWords = []
+
+                for (let i = 0; i < 12; i++) {
+                    testWords.push(getRandomWord(filteredWords))
+                }
+
+                return await makeTestOutOfWords(testWords)
+            }if(testType === utils.testTypes.textQuestions){
+                // 3 questions from the text
+            }
+        }
+
+        exports.markTestAsCompleted =async (userId,testType)=>{
+            const user = await models.userModel.findById(userId)
+            switch(testType){
+                case utils.testTypes.randomWords :
+                    ++user.randomWordsTests
+                    user.knownWords+=12
+                    break;
+                case utils.testTypes.textWords :
+                    ++user.wordsFromChapterTests
+                    break;
+                case utils.testTypes.textQuestions :
+                    ++user.chapterPlotTests
+                    break;
+            }
+            return user.save()
+        }
+
+
+        function getRandomWord(wordsArray) {
+            const randomIndex = Math.floor(Math.random() * wordsArray.length);
+            return wordsArray[randomIndex];
+        }
+
         async function translateWord(word){
             const fetch = await import("node-fetch")
 
@@ -33,51 +88,25 @@ import('random-words')
             const data = await response.json();
             return  data.data.translations[0].translatedText;
         }
+        async function makeTestOutOfWords(words){
+            const container = []
+            for (const question of words) {
+                const answers =[]
+                for (let i =0;i<3;i++){
+                    answers[i] = {answer:await translateWord(randomWords.generate()) }
+                }
+                const rightAnswer =  {answer:await translateWord(question),isCorrect : true}
 
-        exports.generateTest =async(userId,testType,chapterId)=>{
-            if(testType === utils.testTypes.randomWords){
-                //12 words
-                const questions = randomWords.generate(12)
-                const test = []
-                for (const question of questions) {
-                    const answers =[]
-                    for (let i =0;i<3;i++){
-                        answers[i] = {answer:await translateWord(randomWords.generate()) }
+                const randomNumber = Math.floor(Math.random() * 4);
+                answers.splice(randomNumber,0,rightAnswer)
+                container.push(
+                    {
+                        question,
+                        answers
                     }
-                    const rightAnswer =  {answer:await translateWord(question),isCorrect : true}
-
-                    const randomNumber = Math.floor(Math.random() * 4);
-                    answers.splice(randomNumber,0,rightAnswer)
-                    test.push(
-                        {
-                            question,
-                            answers
-                        }
-                    )
-                }
-                return test
-
-            }else if(testType === utils.testTypes.textWords){
-                //12 words from text
-                const chapter = await allModels.chapterModel.findById(chapterId)
-                const splitedChapter = chapter.split(/\s+/);
-
-                const filteredWords = splitedChapter.filter(word => !utils.commonWords.includes(word.toLowerCase()));
-
-                function getRandomWord(wordsArray) {
-                    const randomIndex = Math.floor(Math.random() * wordsArray.length);
-                    return wordsArray[randomIndex];
-                }
-                const testWords = []
-
-                for (let i = 1; i < 12; i++) {
-                    testWords.push(getRandomWord(filteredWords))
-                }
-
-                return testWords
-            }if(testType === utils.testTypes.textQuestions){
-                // 3 questions from the text
+                )
             }
+            return container
         }
     })
     .catch(error => {

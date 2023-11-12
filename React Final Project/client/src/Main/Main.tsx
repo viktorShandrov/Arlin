@@ -22,13 +22,13 @@ export default  function Main(){
                                 <Link to={"/user/login"} className={styles.navItem}>All books</Link>
                                 <Link to={"/user/login"} className={styles.navItem}>My books</Link>
                             </div>
-                            <Link to={"/user/login"} className={styles.navItem}>My unknown words</Link>
+                            <Link to={"/main/unknownWords"} className={styles.navItem}>My unknown words</Link>
                             <Link to={"/user/login"} className={`${styles.navItem} ${styles.testsNav}`}>Tests</Link>
                             <div className={styles.testsMenu}>
                                 <Link to={"/user/login"} className={styles.navItem}>My tests</Link>
-                                <Link to={"/user/login"} className={styles.navItem}>Random words</Link>
-                                <Link to={"/user/login"} className={styles.navItem}>Words from text</Link>
-                                <Link to={"/user/login"} className={styles.navItem}>Chapter plot</Link>
+                                <Link to={"/main/test/randomWords"} className={styles.navItem}>Random words</Link>
+                                <Link to={"/main/test/textWords"} className={styles.navItem}>Words from text</Link>
+                                <Link to={"/main/test/textQuestions"} className={styles.navItem}>Chapter plot</Link>
                             </div>
                         </>
 
