@@ -29,6 +29,10 @@
     color: white;
     border: none;
 }
+.btns>*:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+}
 .previousChapter{
     background-color: #ae3fff;
 }

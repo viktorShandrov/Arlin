@@ -2,7 +2,20 @@ const models = require("../models/allModels")
 const {isOwnedByUser, isAdmin} = require("../managerUtils/managerUtil");
 
 exports.getChapter =async(chapterId,userId)=>{
-   return  models.chapterModel.findById(chapterId)
+    const book = await models.bookModel.findOne({
+        chapters: {
+            $in: chapterId
+        }
+    });
+    const currentChapterIndex = book.chapters.findIndex(el=>el.equals(chapterId))
+       const previousChapterId = book.chapters[currentChapterIndex-1]
+       const nextChapterId = book.chapters[currentChapterIndex+1]
+
+    return{
+        currentChapter:await models.chapterModel.findById(chapterId),
+        previousChapterId,
+        nextChapterId
+    }
 
 }
 exports.editChapter =async(chapterId,bookId,text,userId)=>{

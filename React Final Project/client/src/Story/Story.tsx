@@ -9,7 +9,9 @@ export default function Story(){
     const navigate = useNavigate();
 
     const [chapter,setChapter] = useState({
-        text:""
+        currentChapter: {text:""},
+        previousChapterId:'',
+        nextChapterId:''
     })
 
 
@@ -18,6 +20,7 @@ export default function Story(){
     const getChapter=(chapterId:string)=>{
          request(`chapters/${chapterId}`).subscribe(
              (res)=>{
+                 console.log(res)
                  setChapter(res)
              },
              (error)=>{
@@ -39,6 +42,14 @@ export default function Story(){
 
         navigate(`${currentPathWithoutLastSegment}/${sentence}`);
     };
+    const changeChapterClickHandler =(chapterId:string)=>{
+        const index = urlLocation.pathname.indexOf("chapterId")
+        if(index!==-1){
+            const urlWithoutChapter = urlLocation.pathname.slice(0,index)
+            navigate(urlWithoutChapter+"chapterId="+chapterId)
+        }
+
+    }
 
 
     useEffect(()=>{
@@ -48,7 +59,8 @@ export default function Story(){
 
         let sentences:any =[]
         if(chapter){
-             sentences = chapter.text.split(".")
+
+             sentences = chapter.currentChapter.text.split(".")
         }
 
 
@@ -59,14 +71,13 @@ export default function Story(){
                     {chapter&&sentences.map((sentence:string,index:number)=>
                         <div  key={index} onClick={()=>handleNavigation(sentence)}>
                             <Sentence   text={sentence} />
-
                         </div>
                     )}
                 </div>
 
                 <div className={styles.btns}>
-                    <button className={styles.previousChapter}>Previous chapter</button>
-                    <button className={styles.nextChapter}>Next chapter</button>
+                    <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={styles.previousChapter}>Previous chapter</button>
+                    <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={styles.nextChapter}>Next chapter</button>
                 </div>
             </div>
         </div>
