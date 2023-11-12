@@ -20,18 +20,29 @@ export default function UnknownWords(){
                 <div className={styles.container}>
                     <h2 className={styles.heading}>Непознати думи</h2>
                     <hr/>
-                    <div className={styles.wordsContainer}>
-                        {words.length>0&&words.map((word,index)=>{
+                    <div className={styles.wordsWrapper}>
+                        <div className={styles.wordsContainer}>
+                            {words.length>0&&words.map((word,index)=>{
 
-                            return <details key={index}>
-                                    <summary>{word.word}</summary>
-                                    {word.translatedText}
+                                return <details className={styles.row} key={index}>
+                                    <summary className={styles.summary}>
+                                        {word.word}
+                                        <i className="fa-solid fa-caret-down"></i>
+                                    </summary>
+                                    <h5>{word.translatedText}</h5>
                                 </details>
 
 
-                        })}
+                            })}
+
+                            {words.length==0&&
+                                <div className={styles.noWordsC}>Нямаш запазени непознати думи</div>
+                            }
+
+                        </div>
 
                     </div>
+
                 </div>
             </div>
         </>
