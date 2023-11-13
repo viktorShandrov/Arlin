@@ -13,11 +13,22 @@ import('random-words')
         exports.generateTest =async(userId,testType,chapterId)=>{
 
 
-
-
             if(testType === utils.testTypes.randomWords){
                 //12 words
-                const questions = randomWords.generate(12)
+                let questions
+                const unknownWords = await models.wordModel.find({
+                    unknownFor:{
+                        $in:userId
+                    }
+                })
+
+                //max 12
+                    questions = unknownWords.slice(0,12)
+                //fill with random words if necessary
+                    const randomWordsToFill = randomWords.generate(12-questions.length)
+
+                    questions = [...questions,...randomWordsToFill]
+
 
                 return await makeTestOutOfWords(questions)
 
@@ -31,7 +42,9 @@ import('random-words')
                 const testWords = []
 
                 for (let i = 0; i < 12; i++) {
-                    testWords.push(getRandomWord(filteredWords))
+                    //removes . : ; ,
+                    const trimmedStr = getRandomWord(filteredWords).replace(/^[,.\s:]+|[,\s:]+$/g, "");
+                    testWords.push(trimmedStr)
                 }
 
                 return await makeTestOutOfWords(testWords)
@@ -62,25 +75,46 @@ import('random-words')
             const randomIndex = Math.floor(Math.random() * wordsArray.length);
             return wordsArray[randomIndex];
         }
+        async function makeWrongAnswers(){
+            const answers =[]
+            for (let i =0;i<3;i++){
+                answers[i] = {answer:await exports.translateWord(randomWords.generate()) }
+            }
+            return answers
+        }
 
 
         async function makeTestOutOfWords(words){
             const container = []
             for (const question of words) {
-                const answers =[]
-                for (let i =0;i<3;i++){
-                    answers[i] = {answer:await exports.translateWord(randomWords.generate()) }
+
+               const answers =await makeWrongAnswers()
+
+                let rightAnswer
+                if(question.translatedText){
+                    rightAnswer ={answer:question.translatedText,isCorrect : true}
+                }else{
+                     rightAnswer =  {answer:await exports.translateWord(question),isCorrect : true}
                 }
-                const rightAnswer =  {answer:await exports.translateWord(question),isCorrect : true}
 
                 const randomNumber = Math.floor(Math.random() * 4);
+                //place it on random place
                 answers.splice(randomNumber,0,rightAnswer)
-                container.push(
-                    {
-                        question,
-                        answers
-                    }
-                )
+                if(question.translatedText) {
+                    container.push(
+                        {
+                            question:question.word,
+                            answers
+                        }
+                    )
+                }else{
+                    container.push(
+                        {
+                            question,
+                            answers
+                        }
+                    )
+                }
             }
             return container
         }

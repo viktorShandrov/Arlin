@@ -49,7 +49,7 @@ export default function Test(){
     }
 
     useEffect(()=>{
-        request("unknownWords/giveTest","POST",{testType:"textWords",chapterId:"654d4e6b8434f59d05fded7b"}).subscribe(
+        request("unknownWords/giveTest","POST",{testType:"randomWords",chapterId:"654d4e6b8434f59d05fded7b"}).subscribe(
             (res)=>{
                 console.log(res)
                 setTest(res.test)
