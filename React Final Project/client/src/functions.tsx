@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom";
                 fetch(constants.REST_API+url,{
                     headers:{
                         ...headers,
-                        Authorization:JSON.parse(localStorage.getItem("user")).token
+                        Authorization:localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")).token:null
                     },
                     body:JSON.stringify(body),
                     method

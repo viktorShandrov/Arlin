@@ -3,6 +3,8 @@ import styles from "./Test.module.css"
 import {useEffect, useRef, useState} from "react";
 import {request} from "../functions";
 import Spinner from 'react-bootstrap/Spinner';
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
 
 export default function Test(){
 
@@ -24,6 +26,18 @@ export default function Test(){
     const textToSpeechClickHandler = ()=>{
         const voice = new SpeechSynthesisUtterance(question.question)
         window.speechSynthesis.speak(voice)
+        makeUnknownWordsKnown()
+    }
+    const makeUnknownWordsKnown = () =>{
+        const wordsIds = test.filter(el => el._id).map((el)=>el._id)
+        request("unknownWords/makeThemKnown","POST", {wordsIds}).subscribe(
+            (res)=>{
+
+            },
+            (error)=>{
+
+            }
+        )
     }
     const answerClickHandler=(index:number)=>{
         answerRefs.current[index].classList.add(styles.clicked);
@@ -38,6 +52,8 @@ export default function Test(){
                 const questionIndex = test.findIndex(question1=>question1==question)
                 if(questionIndex==11){
                     setIsTestDone(true)
+                    makeUnknownWordsKnown()
+
                 }else{
                     setQuestion(oldQuestion=>{
                         return test[questionIndex+1]
