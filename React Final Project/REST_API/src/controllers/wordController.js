@@ -36,6 +36,17 @@ router.post("/:id/delete",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.post("/makeThemKnown",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {wordsIds}= req.body
+
+        await wordManager.makeThemKnown(wordsIds,_id)
+        res.status(200).end()
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
 router.post("/giveTest",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user

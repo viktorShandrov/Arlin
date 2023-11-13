@@ -92,7 +92,7 @@ import('random-words')
 
                 let rightAnswer
                 if(question.translatedText){
-                    rightAnswer ={answer:question.translatedText,isCorrect : true}
+                    rightAnswer ={answer:question.translatedText,isCorrect : true,}
                 }else{
                      rightAnswer =  {answer:await exports.translateWord(question),isCorrect : true}
                 }
@@ -103,6 +103,7 @@ import('random-words')
                 if(question.translatedText) {
                     container.push(
                         {
+                            _id:question._id,
                             question:question.word,
                             answers
                         }
@@ -116,6 +117,7 @@ import('random-words')
                     )
                 }
             }
+            console.log(container)
             return container
         }
     })
@@ -155,6 +157,16 @@ exports.getAllWords =async(userId)=>{
 exports.deleteWord =async(wordId,userId)=>{
     await isOwnedByUser(userId,wordId,models.wordModel,"unknownBy")
    return models.bookModel.findByIdAndDelete(wordId)
+}
+exports.makeThemKnown =async(wordsIds,userId)=>{
+    for (const wordId of wordsIds) {
+        const word = await models.wordModel.findById(wordId)
+        const index = word.unknownFor.findIndex(id=>id.equals(userId))
+        if(index!==-1){
+            word.unknownFor.splice(index,1)
+        }
+        await word.save()
+    }
 }
 exports.createWords =async(words,userId)=>{
     for (const word of words) {
