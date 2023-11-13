@@ -1,0 +1,80 @@
+
+.wrapper{
+    height: 100%;
+}
+.container{
+    display: flex;
+    padding: 50px;
+    border-radius: 10px;
+    height: 100%;
+    justify-content: space-around;
+    gap: 200px;
+    background-color: #c8c8c8;
+
+
+}
+.container>*{
+    flex: 1;
+}
+.imageAndBtns{
+    /*padding: 0 150px;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.imageAndBtns img{
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+}
+
+.detailsAndBtns{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.details{
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.bookName{
+    background-color: #6D6D6D;
+    padding: 10px;
+    text-align: center;
+    margin: 0;
+}
+.resume{
+    flex-grow: 1;
+    background-color: white;
+    margin: 0;
+
+}
+.btns{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+
+}
+.btns>*{
+    border-radius: 10px;
+    border: none;
+    padding: 10px 45px  ;
+    font-weight: bold;
+    color: #000000;
+}
+
+.buyBtn{
+    background-color: #05FF00;
+}
+.editBtn{
+    background-color: #fcff20;
+}
+.deleteBtn{
+    background-color: #ff0d0d;
+}
