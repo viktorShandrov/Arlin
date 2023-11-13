@@ -31,6 +31,6 @@ exports.login = async (email,password)=>{
     }
     const token = await utils.sign(payload,utils.secret)
 
-    return {token,email,userId:user._id}
+    return {token,email,userId:user._id,role:user.role}
 
 }
