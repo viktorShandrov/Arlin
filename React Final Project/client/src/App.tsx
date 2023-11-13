@@ -9,6 +9,8 @@ import Login from "./public/Login/Login";
 import {createContext, useEffect, useState} from "react";
 import Test from "./Test/Test";
 import UnknownWords from "./UnknownWords/UnknownWords";
+import AllBooks from "./AllBooks/AllBooks";
+import BookDetails from "./BookDetails/BookDetails";
     export const userContext=createContext({})
 function App() {
         const [user,setUser]= useState({})
@@ -27,6 +29,8 @@ function App() {
                       <Route path={"/admin/*"} element={<AdminPanel />}></Route>
                       <Route path={"/main/test/*"} element={<Test />}></Route>
                       <Route path={"/main/unknownWords"} element={<UnknownWords />}></Route>
+                      <Route path={"/main/AllBooks/"} element={<AllBooks />}></Route>
+                      <Route path={"/main/AllBooks/:id"} element={<BookDetails />}></Route>
                       <Route path={"/user/register"} element={<Register />}></Route>
                       <Route path={"/user/login"} element={<Login />}></Route>
                       <Route path={"/main/*"} element={<Main />}></Route>

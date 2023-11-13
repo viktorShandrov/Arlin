@@ -1,0 +1,25 @@
+.wrapper{
+
+}
+.booksC{
+    display: flex;
+    flex-wrap: wrap;
+}
+.bookC{
+    border-radius: 20px;
+    max-width: 200px;
+    margin: 15px;
+    box-shadow: 0 0 10px 5px rgb(53, 174, 31);
+}
+.bookC img{
+    width: 100%;
+}
+.heading{
+    text-align: center;
+    padding: 10px;
+    background-color: #c8c8c8;
+    margin:0;
+}
+.heading:nth-child(odd){
+background-color: #b5b5b5;
+}
