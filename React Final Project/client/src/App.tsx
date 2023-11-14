@@ -15,6 +15,7 @@ import BookDetails from "./BookDetails/BookDetails";
 function App() {
         const [user,setUser]= useState({})
     useEffect(()=>{
+        console.log("initial load")
         const userObject = localStorage.getItem("user")
         if(userObject){
             setUser(JSON.parse(userObject))

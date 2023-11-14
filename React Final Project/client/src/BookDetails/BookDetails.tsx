@@ -22,7 +22,9 @@ export default function  BookDetails(){
             request(`books/${id}`,"GET").subscribe(
                 (res)=>{
                     setBook(res.book)
-                },
+                    console.log(res.book)
+                    console.log(user)
+                    },
                 error=>{
                     console.log(error)
                 }
@@ -39,9 +41,18 @@ export default function  BookDetails(){
                     <div className={styles.imageAndBtns}>
                         <img src={"/public/chapter.jpg"}></img>
                         <div className={styles.btns}>
-                            <button className={styles.buyBtn}>Buy</button>
-                            <button className={styles.editBtn}>Edit</button>
-                            <button className={styles.deleteBtn}>Delete</button>
+
+                            {book&&book.ownedBy?.includes(user._id)&&
+                                <button className={styles.buyBtn}>Buy</button>
+                            }
+
+                            {user.role==="admin"&&
+                                <>
+                                    <button className={styles.editBtn}>Edit</button>
+                                    <button className={styles.deleteBtn}>Delete</button>
+                                </>
+                            }
+
                         </div>
 
                     </div>
