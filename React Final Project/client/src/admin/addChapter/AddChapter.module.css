@@ -1,0 +1,20 @@
+.formWrapper{
+    display: flex;
+    justify-content: center;
+}
+.formC{
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    background-color: #5e5e5e;
+    flex-direction: column;
+    gap: 15px;
+}
+.submitBtn {
+    background-color: lawngreen;
+}
+.editBtn {
+    background-color: #ffd34c;
+}
+
