@@ -1,10 +1,17 @@
 const {isAuth} = require("../utils/authentication");
 const bookManager = require("../managers/bookManager");
 const router = require("express").Router()
+const multer = require('multer');
+
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 
 //CRUD
-router.post("/create",isAuth,async (req,res)=>{
+router.post("/create",upload.single('image'),isAuth,async (req,res)=>{
     try{
+        console.log(req.file.buffer)
         const {_id} = req.user
         const {bookData} = req.body
         console.log(bookData)

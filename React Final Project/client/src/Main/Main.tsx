@@ -19,7 +19,7 @@ export default  function Main(){
                             <Link to={"/user/login"} className={styles.navItem}>Read</Link>
                             <Link to={"/user/login"} className={`${styles.navItem} ${styles.booksNav}`}>Books</Link>
                             <div className={styles.booksMenu}>
-                                <Link to={"/user/login"} className={styles.navItem}>All books</Link>
+                                <Link to={"/main/AllBooks"} className={styles.navItem}>All books</Link>
                                 <Link to={"/user/login"} className={styles.navItem}>My books</Link>
                             </div>
                             <Link to={"/main/unknownWords"} className={styles.navItem}>My unknown words</Link>

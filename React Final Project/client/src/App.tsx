@@ -11,6 +11,9 @@ import Test from "./Test/Test";
 import UnknownWords from "./UnknownWords/UnknownWords";
 import AllBooks from "./AllBooks/AllBooks";
 import BookDetails from "./BookDetails/BookDetails";
+
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer ,toast} from "react-toastify";
     export const userContext=createContext({})
 function App() {
         const [user,setUser]= useState({})
@@ -24,6 +27,8 @@ function App() {
 
   return (
       <>
+
+          <ToastContainer position={toast.POSITION.TOP_RIGHT} />
           <userContext.Provider value={{user,setUser}}>
               <div className={styles.mainWrapper}>
                   <Routes>

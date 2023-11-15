@@ -50,10 +50,10 @@ const [formValues,setFormValues] = useState({
             payload.append(formValue[0],formValue[1])
         }
         // @ts-ignore
-        payload.append("image",selectedFile)
+        payload.append("image",selectedFile,selectedFile.name)
         request("books/create","POST",{bookData: payload},
-            {
-                "Content-Type":"multipart/form-data"
+                {
+                // "Content-Type":"multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
             }
             ).subscribe(
             (res)=>{

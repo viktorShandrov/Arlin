@@ -34,6 +34,23 @@
     display: flex;
     flex-direction: column;
 }
+.leftAndRightC{
+    display: flex;
+}
+.leftAndRightC h2{
+    text-overflow: ellipsis;
+    font-size: 20px;
+    font-weight: normal;
+}
+.left h2{
+    text-align: right;
+}
+.right h2{
+    text-align: left;
+}
+.leftAndRightC>*{
+    flex: 1;
+}
 .details{
     border-radius: 20px;
 
@@ -50,6 +67,9 @@
 }
 .resume{
     flex-grow: 1;
+    overflow-y: auto;
+    max-height: 500px;
+    padding: 10px;
     background-color: white;
     margin: 0;
 

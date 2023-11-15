@@ -1,6 +1,6 @@
 import styles from "./BookDetails.module.css"
 import {useContext, useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {request} from "../functions";
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
@@ -19,20 +19,15 @@ export default function  BookDetails(){
 
     })
     const getBook = ()=>{
-            request(`books/${id}`,"GET").subscribe(
+            request(`books/${id}/details`,"GET").subscribe(
                 (res)=>{
                     setBook(res.book)
-                    console.log(res.book)
-                    console.log(user)
                     },
-                error=>{
-                    console.log(error)
-                }
             )
     }
 
     useEffect(()=>{
-        getBook()
+         getBook()
     },[])
     return(
         <>
@@ -42,13 +37,13 @@ export default function  BookDetails(){
                         <img src={"/public/chapter.jpg"}></img>
                         <div className={styles.btns}>
 
-                            {book&&book.ownedBy?.includes(user._id)&&
+                            {book&&!book.ownedBy?.includes(user.userId)||user.role!=="admin"&&
                                 <button className={styles.buyBtn}>Buy</button>
                             }
 
                             {user.role==="admin"&&
                                 <>
-                                    <button className={styles.editBtn}>Edit</button>
+                                    <Link to={`/admin/addBook/${book._id}`} className={styles.editBtn}>Edit</Link>
                                     <button className={styles.deleteBtn}>Delete</button>
                                 </>
                             }
@@ -58,9 +53,20 @@ export default function  BookDetails(){
                     </div>
                     <div className={styles.detailsAndBtns}>
                         <div className={styles.details}>
-                            <h2 className={styles.bookName}>{book.name}</h2>
-                            <h2 className={styles.bookName}>{book.author}</h2>
-                            <h2 className={styles.bookName}>{book.length}</h2>
+                            <div className={styles.leftAndRightC}>
+                                <div className={styles.left}>
+                                    <h2 className={styles.bookName}>Name:</h2>
+                                    <h2 className={styles.bookName}>Author:</h2>
+                                    <h2 className={styles.bookName}>Chapters count:</h2>
+                                </div>
+                                <div className={styles.right}>
+                                    <h2 className={styles.bookName}>{book.name}</h2>
+                                    <h2 className={styles.bookName}>{book.author}</h2>
+                                    <h2 className={styles.bookName}>{book.length}</h2>
+                                </div>
+                            </div>
+
+
                             <p className={styles.resume}>{book.resume}</p>
                         </div>
                         <div className={styles.btns}>
