@@ -13,7 +13,11 @@ const schema = mongoose.Schema({
     }],
     name:String,
     length: Number,
-    image:String
+    image:String,
+    author:String,
+    resume:String,
+    genre:String,
+    releaseDate:Date
 })
 
 

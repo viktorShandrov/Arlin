@@ -6,9 +6,9 @@ const router = require("express").Router()
 router.post("/create",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
-        const {bookName,image} = req.body
-
-       const book =  await bookManager.createBook(bookName,image,_id)
+        const {bookData} = req.body
+        console.log(bookData)
+       const book =  await bookManager.createBook(bookData,_id)
         res.status(200).json(book)
     } catch (error) {
         res.status(400).json({message:error.message})
@@ -32,13 +32,23 @@ router.get("/:id",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/:id/details",isAuth,async (req,res)=>{
+    try{
+        const bookId = req.params.id
+        const book = await bookManager.getBookDetails(bookId)
+        res.status(200).json({book})
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
 
 router.post("/:id/edit",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
         const bookId = req.params.id
-        const {bookName,image} = req.body
-        await bookManager.editBook(bookId,bookName,image,_id)
+        const {bookData,image} = req.body
+        await bookManager.editBook(bookId,bookData,_id)
+        console.log("dddd")
         res.status(200).end()
     } catch (error) {
         res.status(400).json({message:error.message})
