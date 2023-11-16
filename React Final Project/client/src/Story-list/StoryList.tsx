@@ -38,7 +38,7 @@ export default function StoryList(){
                             <i className={`fa-solid fa-lock ${styles.lockIcon}`}></i>
                         }
 
-                        <Link key={book._id}  to={`/main/${book._id}`}>
+                        <Link key={book._id}  to={`/main/read/${book._id}`}>
 
                             <div className={styles.item}>
                                 <div className={styles.chapterImg}>
