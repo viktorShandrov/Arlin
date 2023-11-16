@@ -38,6 +38,12 @@ exports.deleteBook =async(bookId,userId)=>{
    await isAdmin(null,userId)
    return models.bookModel.findByIdAndDelete(bookId)
 }
+exports.addImageToBook =async(bookId,userId,image)=>{
+   await isAdmin(null,userId)
+    const book = await models.bookModel.findById(bookId)
+    book.image = image
+   return book.save()
+}
 exports.createBook =async(bookData,userId)=>{
    await isAdmin(null,userId)
     return await models.bookModel.create(

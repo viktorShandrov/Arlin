@@ -46,18 +46,32 @@ const [formValues,setFormValues] = useState({
 
     const createBookHandler = ()=>{
         const payload = new FormData()
-        for (const formValue of Object.entries(formValues)) {
-            payload.append(formValue[0],formValue[1])
-        }
-        // @ts-ignore
-        payload.append("image",selectedFile,selectedFile.name)
-        request("books/create","POST",{bookData: payload},
-                {
-                // "Content-Type":"multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW"
-            }
+        // for (const formValue of Object.entries(formValues)) {
+        //     payload.append(formValue[0],formValue[1])
+        // }
+        payload.append("file",selectedFile!,selectedFile!.name)
+        payload.append("upload_preset","xw4yrog1")
+
+
+        request("books/create","POST",{bookData: formValues},
+
             ).subscribe(
             (res)=>{
-                navigate("/main/AllBooks")
+
+                fetch(`http://localhost:3000/books/addImageToBook/${res._id}`, {
+                    method: 'POST',
+                    body: payload,
+                    headers:{
+                        Authorization: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : null
+                    }
+                }).then((response)=>{
+                    if(response.ok){
+                        navigate("/main/AllBooks")
+                    }
+                }).catch(()=>{
+                    toast.error("Cannot upload image")
+                });
+
             },
             (error)=>{
                 console.log(error)
