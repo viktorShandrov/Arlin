@@ -9,14 +9,24 @@ const upload = multer({ storage: storage });
 
 
 //CRUD
-router.post("/create",upload.single('image'),isAuth,async (req,res)=>{
+router.post("/create",isAuth,async (req,res)=>{
     try{
-        console.log(req.file.buffer)
         const {_id} = req.user
         const {bookData} = req.body
         console.log(bookData)
        const book =  await bookManager.createBook(bookData,_id)
         res.status(200).json(book)
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
+router.post("/addImageToBook/:bookId",upload.single('file'),isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {bookId} = req.params
+
+        await bookManager.addImageToBook(bookId,_id,req.file.buffer)
+        res.status(200).end()
     } catch (error) {
         res.status(400).json({message:error.message})
     }

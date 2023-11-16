@@ -10,17 +10,26 @@ export default function  BookDetails(){
         const {id} = useParams()
 
     const {user} = useContext(userContext)
-
+const [image,setImage] = useState("")
     const [book,setBook] = useState({
         name:"",
         resume:"",
         author:"",
         length:"",
-
+        image: {
+            data:''
+        },
+        ownedBy:[]
     })
     const getBook = ()=>{
             request(`books/${id}/details`,"GET").subscribe(
-                (res)=>{
+                async (res)=>{
+                    const imageData = res.book.image.data;
+
+                    const base64Image = btoa(new Uint8Array(imageData).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+
+                    // Set Base64-encoded image as the source
+                    setImage(`data:image/jpeg;base64,${base64Image}`);
                     setBook(res.book)
                     },
             )
@@ -34,7 +43,7 @@ export default function  BookDetails(){
             <div className={styles.wrapper}>
                 <div className={styles.container}>
                     <div className={styles.imageAndBtns}>
-                        <img src={"/public/chapter.jpg"}></img>
+                        <img src={image} alt="Your Image" />
                         <div className={styles.btns}>
 
                             {book&&!book.ownedBy?.includes(user.userId)||user.role!=="admin"&&
@@ -57,7 +66,7 @@ export default function  BookDetails(){
                                 <div className={styles.left}>
                                     <h2 className={styles.bookName}>Name:</h2>
                                     <h2 className={styles.bookName}>Author:</h2>
-                                    <h2 className={styles.bookName}>Chapters count:</h2>
+                                    <h2 className={styles.chaptersCount}>Chapters count:</h2>
                                 </div>
                                 <div className={styles.right}>
                                     <h2 className={styles.bookName}>{book.name}</h2>
@@ -71,7 +80,10 @@ export default function  BookDetails(){
                         </div>
                         <div className={styles.btns}>
                             <button className={styles.seeFreeChaptersBtn}>See free chapters</button>
-                            <button className={styles.readBtn}>Read</button>
+                            {book.ownedBy.includes(user.userId)&&
+                                <Link to={`/main/${book._id}`} className={styles.readBtn}>Read</Link>
+                            }
+
                         </div>
                     </div>
 

@@ -3,9 +3,6 @@
 import styles from './App.module.css'
 import {Route, Routes} from "react-router-dom";
 import AdminPanel from "./admin/AdminPanel";
-import Main from "./Main/Main";
-import Register from "./public/Register/Register";
-import Login from "./public/Login/Login";
 import {createContext, useEffect, useState} from "react";
 import Test from "./Test/Test";
 import UnknownWords from "./UnknownWords/UnknownWords";
@@ -14,6 +11,8 @@ import BookDetails from "./BookDetails/BookDetails";
 
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer ,toast} from "react-toastify";
+import User from "./Users/Users";
+import Main from "./Main/Main";
     export const userContext=createContext({})
 function App() {
         const [user,setUser]= useState({})
@@ -33,12 +32,8 @@ function App() {
               <div className={styles.mainWrapper}>
                   <Routes>
                       <Route path={"/admin/*"} element={<AdminPanel />}></Route>
-                      <Route path={"/main/test/*"} element={<Test />}></Route>
-                      <Route path={"/main/unknownWords"} element={<UnknownWords />}></Route>
-                      <Route path={"/main/AllBooks/"} element={<AllBooks />}></Route>
-                      <Route path={"/main/AllBooks/:id"} element={<BookDetails />}></Route>
-                      <Route path={"/user/register"} element={<Register />}></Route>
-                      <Route path={"/user/login"} element={<Login />}></Route>
+
+                      <Route path={"/user/*"} element={<User />}></Route>
                       <Route path={"/main/*"} element={<Main />}></Route>
                   </Routes>
               </div>

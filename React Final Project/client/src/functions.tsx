@@ -5,7 +5,7 @@ export function request(url: string, method?: string, body?: any, headers: any =
     return {
         subscribe(res: any, error?: any) {
             if (!headers.hasOwnProperty("Content-Type")) {
-                // headers["Content-Type"] = "application/json";
+                headers["Content-Type"] = "application/json";
             }
             const promiseRequest = fetch(constants.REST_API + url, {
                 headers: {
