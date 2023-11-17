@@ -1,6 +1,10 @@
 .main {
     height: 100%;
+    display: flex;
     justify-content: space-between;
+}
+.main{
+    flex: 1;
 }
 
 

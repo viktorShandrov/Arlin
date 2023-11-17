@@ -9,9 +9,10 @@ export default function TranslationContainer() {
     const [clickedWords, setClickedWords] = useState([]);
     const wordsContainerRef = useRef()
 
-    const { textToTranslate } = useParams();
+    let { textToTranslate } = useParams();
 
     useEffect(() => {
+         textToTranslate = decodeURIComponent(textToTranslate);
         for (const wordRef of Array.from(wordsContainerRef.current!.children)) {
             wordRef.removeAttribute("data-isclicked")
         }
@@ -84,11 +85,11 @@ export default function TranslationContainer() {
             <h3>Избери думите, които са ти непознати:</h3>
             <p className={styles.textForTranslate} ref={wordsContainerRef}>
                 {textToTranslate!.split(" ").map((el, index) => {
-                    // const spanRef = useRef<HTMLSpanElement>(null);
 
-                    // Create a new ref each time the component renders
-                    // clickedElementsRef.current[index] = spanRef;
-
+                    if(!el){
+                        return null
+                    }
+                    el = el.replace(/^[,."\s:]+|[,\s:]+$/g, "")
                     return (
                         <span
                             key={index}
@@ -97,8 +98,8 @@ export default function TranslationContainer() {
                             onClick={() => handleWordClick(index)}
                             // ref={spanRef}
                         >
-              {el}
-            </span>
+                          {el}
+                        </span>
                     );
                 })}
             </p>

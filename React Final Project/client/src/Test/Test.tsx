@@ -5,10 +5,11 @@ import {request} from "../functions";
 import Spinner from 'react-bootstrap/Spinner';
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
+import {useParams} from "react-router-dom";
 
 export default function Test(){
 
-
+    const {testType,chapterId} = useParams()
     const [test,setTest] = useState([])
     const [isLoading,setIsLoading] = useState(true)
     const [isTestDone,setIsTestDone] = useState(false)
@@ -65,7 +66,7 @@ export default function Test(){
     }
 
     useEffect(()=>{
-        request("unknownWords/giveTest","POST",{testType:"randomWords",chapterId:"654d4e6b8434f59d05fded7b"}).subscribe(
+        request("unknownWords/giveTest","POST",{testType,chapterId}).subscribe(
             (res)=>{
                 console.log(res)
                 setTest(res.test)

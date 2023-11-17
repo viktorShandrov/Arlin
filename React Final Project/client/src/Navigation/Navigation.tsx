@@ -22,8 +22,8 @@ export default function Navigation(){
                         <div className={styles.testsMenu}>
                             <Link to={"/user/login"} className={styles.navItem}>My tests</Link>
                             <Link to={"/main/test/randomWords"} className={styles.navItem}>Random words</Link>
-                            <Link to={"/main/test/textWords"} className={styles.navItem}>Words from text</Link>
-                            <Link to={"/main/test/textQuestions"} className={styles.navItem}>Chapter plot</Link>
+                            {/*<Link to={"/main/test/textWords/:chapterId"} className={styles.navItem}>Words from text</Link>*/}
+                            {/*<Link to={"/main/test/textQuestions"} className={styles.navItem}>Chapter plot</Link>*/}
                         </div>
                     </>
 

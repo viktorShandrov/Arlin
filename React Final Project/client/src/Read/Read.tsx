@@ -14,17 +14,26 @@ export default  function Read(){
     return(
         <>
             <main className={styles.main}>
-                <Routes>
-                    <Route path={"/"} element={<StoryList />}/>
-                    <Route path={"/:bookId/:chapterId?/:textToTranslate?"} element={<ChapterList />}/>
+                <div className={styles.listC}>
+                        <Routes>
 
-                </Routes>
-                <Routes>
-                    <Route path={"/:bookId/:chapterId/:textToTranslate?"} element={<Story />}/>
-                </Routes>
-                <Routes>
-                    <Route path={"/:bookId/:chapterId/:textToTranslate"} element={<TranslationContainer/>}/>
-                </Routes>
+
+                            <Route path={"/"} element={<StoryList />}/>
+                            <Route path={"/:bookId/:chapterId?/:textToTranslate?"} element={<ChapterList />}/>
+
+                        </Routes>
+                </div>
+                <div className={styles.storyC}>
+                    <Routes>
+                        <Route path={"/:bookId/:chapterId/:textToTranslate?"} element={<Story />}/>
+                    </Routes>
+                </div>
+
+                <div className={styles.translatePanelC}>
+                    <Routes>
+                        <Route path={"/:bookId/:chapterId/:textToTranslate"} element={<TranslationContainer/>}/>
+                    </Routes>
+                </div>
 
 
             </main>
