@@ -13,7 +13,7 @@ export default function Main(){
             <div className={styles.templateWrapper}>
                 <Navigation />
                 <Routes>
-                    <Route path={"/test/*"} element={<Test />}></Route>
+                    <Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>
                     <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
                     <Route path={"/AllBooks/"} element={<AllBooks />}></Route>
                     <Route path={"/read/*"} element={<Read />}></Route>
