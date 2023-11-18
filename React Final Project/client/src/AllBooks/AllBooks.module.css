@@ -88,3 +88,23 @@
 .heading:nth-child(odd){
 background-color: #b5b5b5;
 }
+.filterIcon{
+    position: absolute;
+    background-color: #309BFF;
+    padding: 10px;
+    border-radius: 200px;
+    aspect-ratio: 1/1;
+}
+.filterIcon:hover{
+    cursor: pointer;
+}
+.filterMenu{
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 20px;
+    height: 100%;
+}
+.filterIcon[data-isiconclicked="true"] ~ .filterMenu{
+    display: block;
+}

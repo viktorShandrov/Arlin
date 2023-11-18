@@ -31,6 +31,16 @@ router.post("/addImageToBook/:bookId",upload.single('file'),isAuth,async (req,re
         res.status(400).json({message:error.message})
     }
 })
+router.get("/getDataForFilters",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+
+        const payload = await bookManager.getFilteringData()
+        res.status(200).json(payload)
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
 router.get("/all",async (req,res)=>{
     try{
         const allBooks = await bookManager.getAllBooks()

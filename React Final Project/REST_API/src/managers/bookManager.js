@@ -44,6 +44,19 @@ exports.addImageToBook =async(bookId,userId,image)=>{
     book.image = image
    return book.save()
 }
+exports.getFilteringData =async(userId)=>{
+    const authors = []
+    const genres =[]
+    const books = await models.bookModel.find({})
+    for (const book of books) {
+        authors.push(book.author)
+        genres.push(book.genre)
+    }
+    return {
+        authors,
+        genres
+    }
+}
 exports.createBook =async(bookData,userId)=>{
    await isAdmin(null,userId)
     return await models.bookModel.create(

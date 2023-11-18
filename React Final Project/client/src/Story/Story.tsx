@@ -79,17 +79,23 @@ export default function Story(){
                 </div>
 
                 <div className={styles.btns}>
+                        <div className={`${styles.testBtns}`}>
+                            <Link className={`${styles.btn}`} to={`/main/test/textWords/${chapter.currentChapter._id}`}>
+                                <button  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={styles.previousChapter}>Word test</button>
+                            </Link>
+                            <Link className={`${styles.btn}`} to={`/main/test/textQuestions/${chapter.currentChapter._id}`}>
+                                <button  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={styles.previousChapter}>Plot test</button>
+                            </Link>
+                        </div>
+                    <div className={styles.navigationBtns}>
+                        <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={`${styles.previousChapter} ${styles.btn}`}>
+                            <i className="fa-solid fa-caret-left"></i>
+                        </button>
+                        <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={`${styles.nextChapter} ${styles.btn}`}>
+                            <i className="fa-solid fa-caret-right"></i>
+                        </button>
+                    </div>
 
-                    <Link to={`/main/test/textWords/${chapter.currentChapter._id}`}>
-                        <button  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={styles.previousChapter}>Word test</button>
-                    </Link>
-                    <button  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={styles.previousChapter}>Plot test</button>
-                    <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={styles.previousChapter}>
-                        <i className="fa-solid fa-caret-left"></i>
-                    </button>
-                    <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={styles.nextChapter}>
-                        <i className="fa-solid fa-caret-right"></i>
-                    </button>
                 </div>
             </div>
         </div>

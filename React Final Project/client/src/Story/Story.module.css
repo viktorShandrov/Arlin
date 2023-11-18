@@ -21,15 +21,28 @@
 }
 .btns{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 .btns>*{
+    flex: 1;
+}
+.btns .navigationBtns,
+.btns .testBtns
+{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.btns .navigationBtns>*{
     padding: 15px 40px;
     border-radius: 20px;
     color: white;
     border: none;
 }
-.btns>*:disabled{
+.btns a {
+    padding: 15px 10px;
+}
+.btn:disabled{
     opacity: 0.4;
     cursor: not-allowed;
 }
