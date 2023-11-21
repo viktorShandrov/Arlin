@@ -6,7 +6,6 @@ const router = require("express").Router()
 router.post("/create",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
-        console.log(req.body)
         const {bookId,chapterName,chapterText} = req.body
 
         await chapterManager.createChapter(bookId,chapterText,_id,chapterName)

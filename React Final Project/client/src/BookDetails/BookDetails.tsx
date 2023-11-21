@@ -2,15 +2,19 @@ import styles from "./BookDetails.module.css"
 import {useContext, useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import {request} from "../functions";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 import {userContext} from "../App";
+import BuyBtn from "../BuyBtn/BuyBtn";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
 export default function  BookDetails(){
-        const {id} = useParams()
+
+    const stripePromise = loadStripe('pk_test_51OEwwSAPrNaPFyVRyPTVcpxfNfy2RJiSVgl3frnwPgKe2tQZhlOVVz5PCvVN8nqoEyT2HwarufbQcoQzNy1giqkg00bLGKyRr4');
+
+    const {id} = useParams()
 
     const {user} = useContext(userContext)
-const [image,setImage] = useState("")
+    const [image,setImage] = useState("")
     const [book,setBook] = useState({
         name:"",
         resume:"",
@@ -35,9 +39,12 @@ const [image,setImage] = useState("")
             )
     }
 
+
+
     useEffect(()=>{
          getBook()
     },[])
+
     return(
         <>
             <div className={styles.wrapper}>
@@ -46,9 +53,12 @@ const [image,setImage] = useState("")
                         <img src={image} alt="Your Image" />
                         <div className={styles.btns}>
 
-                            {book&&!book.ownedBy?.includes(user.userId)||user.role!=="admin"&&
-                                <button className={styles.buyBtn}>Buy</button>
+                            {book&&!book.ownedBy?.includes(user.userId)||user.role!=="admin"&&true
                             }
+                                <Elements stripe={stripePromise}>
+                                    <BuyBtn />
+                                </Elements>
+
 
                             {user.role==="admin"&&
                                 <>

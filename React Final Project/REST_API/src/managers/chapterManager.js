@@ -1,5 +1,6 @@
 const models = require("../models/allModels")
 const {isOwnedByUser, isAdmin} = require("../managerUtils/managerUtil");
+const wordManager = require("./wordManager");
 
 exports.getChapter =async(chapterId,userId)=>{
     const book = await models.bookModel.findOne({
@@ -45,6 +46,7 @@ exports.createChapter =async(bookId,text,userId,chapterName)=>{
    const book = await models.bookModel.findById(bookId)
    book.chapters.push(chapter._id)
     book.length+=1
+    await wordManager.storeTestForChapter(chapter)
    return book.save()
 }
 exports.createChapterQuestion =async(chapterId,userId,rightAnswer,answers)=>{

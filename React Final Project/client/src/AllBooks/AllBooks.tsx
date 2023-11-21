@@ -2,8 +2,6 @@ import styles from "./AllBooks.module.css"
 import {useEffect, useState} from "react";
 import {request} from "../functions";
 import {Link} from "react-router-dom";
-import {createLogger} from "vite";
-
 export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
@@ -18,7 +16,6 @@ export default function AllBooks(){
         genre:[],
     })
     useEffect(()=>{
-        console.log(appliedFilters)
         setBooks(oldState=>{
                 let filteredResult = []
 
@@ -94,7 +91,15 @@ export default function AllBooks(){
     const getFilteringData = () =>{
         request("books/getDataForFilters",'GET').subscribe(
             (res)=>{
-                setFilterData(res)
+                const data = res
+                for (const filter of Object.values(data)) {
+                    for (const filterValue of filter) {
+                        data[filterValue] = false
+
+                    }
+                }
+                console.log(data)
+                setFilterData(data)
             }
         )
     }
@@ -148,7 +153,7 @@ export default function AllBooks(){
                         <summary>Жанр</summary>
                         {filterData.genres&&filterData.genres.length>0&&filterData.genres.map((el,index)=>{
                             return <div data-filtervalue={el} key={index} className={styles.pair}>
-                                <input onChange={filterChangeHandler} name={"genre"} type={"checkbox"} />
+                                <input value={filterData[el]} onChange={filterChangeHandler} name={"genre"} type={"checkbox"} />
                                 <label>{el}</label>
                             </div>
                         })}

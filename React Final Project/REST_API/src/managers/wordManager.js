@@ -1,154 +1,242 @@
 
-const models = require("../models/allModels")
-const utils = require("../utils/utils")
-const {isOwnedByUser, isAdmin} = require("../managerUtils/managerUtil");
+const models = require("../models/allModels");
+const utils = require("../utils/utils");
+const { isOwnedByUser, isAdmin } = require("../managerUtils/managerUtil");
 const allModels = require("../models/allModels");
-// Change this line to use dynamic import
+
+
 import('random-words')
     .then(async (randomWordsModule )=>{
+        globalThis.fetch = (await import('node-fetch')).default;
+
         const randomWords = randomWordsModule;
+        import("chatgpt")
+            .then(async(chatgpt)=>{
+                const { ChatGPTUnofficialProxyAPI } = chatgpt
 
 
+                    exports.generateTest =async(userId,testType,chapterId)=>{
 
-        exports.generateTest =async(userId,testType,chapterId)=>{
+
+                        if(testType === utils.testTypes.randomWords){
+                            //12 words
+                            let questions
+                            const unknownWords = await models.wordModel.find({
+                                unknownFor:{
+                                    $in:userId
+                                }
+                            })
+
+                            //max 12
+                                questions = unknownWords.slice(0,12)
+                            //fill with random words if necessary
+                                const randomWordsToFill = randomWords.generate(12-questions.length)
+
+                                questions = [...questions,...randomWordsToFill]
 
 
-            if(testType === utils.testTypes.randomWords){
-                //12 words
-                let questions
-                const unknownWords = await models.wordModel.find({
-                    unknownFor:{
-                        $in:userId
+                            return await makeTestOutOfWords(questions)
+
+                        }else if(testType === utils.testTypes.textWords){
+                            //12 words from text
+                            const chapter = await allModels.chapterModel.findById(chapterId)
+                            const splitedChapter = chapter.text.split(/\s+/);
+
+                            const filteredWords = splitedChapter.filter(word => !utils.commonWords.includes(word.toLowerCase()));
+
+                            const testWords = []
+
+                            for (let i = 0; i < 12; i++) {
+                                //removes . : ; ,
+                                const trimmedStr = getRandomWord(filteredWords).replace(/^[,.\s:]+|[,\s:]+$/g, "");
+                                testWords.push(trimmedStr)
+                            }
+
+                            return await makeTestOutOfWords(testWords)
+                        }if(testType === utils.testTypes.textQuestions){
+                            // 3 questions from the text
+                        }
+                    }
+                    exports.makePlotTestForChapter =async (chapter)=>{
+
+                    }
+                    exports.storeTestForChapter =async (chapter)=>{
+                        const API = new ChatGPTUnofficialProxyAPI({
+                            accessToken: utils.chatgptAccessToken,
+                            apiReverseProxyUrl: "https://ai.fakeopen.com/api/conversation" ,
+                        })
+
+                        const Response = await API.sendMessage(exports.makeGPTInput(chapter.text))
+                        let splitedText = Response.text.split("\n")
+                        splitedText = trimResponseArray(splitedText)
+
+                        const test = []
+
+                        for (let i = 0; i < splitedText.length; i+=5) {
+                            test.push(getQuestionAndAnswersObj(i,splitedText))
+                        }
+                        for (const questionElement of test) {
+                           await allModels.chapterQuestionsModel.create(
+                                {
+                                    chapterId:chapter._id,
+                                    rightAnswerIndex:questionElement.rightAnswerIndex,
+                                    answers:questionElement.answers,
+                                }
+                            )
+                        }
+                        return test
+                    }
+                    function trimResponseArray(splitedText){
+                        while (splitedText.includes("")){
+                            const index = splitedText.indexOf("")
+                            if(index){
+                                splitedText.splice(index,1)
+                            }
+                        }
+                        return splitedText
+                    }
+                    function getQuestionAndAnswersObj(i,splitedText){
+                        const question = splitedText[i]
+                        let answers = [
+                            splitedText[i+1],
+                            splitedText[i+2],
+                            splitedText[i+3],
+                            splitedText[i+4],
+                        ]
+                        const rightAnswerIndex = answers.findIndex((el)=>el.includes("(TRUE ANSWER)"))
+                        answers[rightAnswerIndex] = answers[rightAnswerIndex].split("(TRUE ANSWER)")[1]
+                        answers=answers.map(el=>el.trim())
+                        return{
+                            question,
+                            answers,
+                            rightAnswerIndex
+                        }
+                    }
+                    exports.makeGPTInput=(chapterText)=>{
+                        return `
+                        HELLO! I NEED YOUR HELP.
+                        I WILL PROVIDE YOU ONE CHAPTER TEXT. YOU MUST TAKE THAT TEXT, UNDERSTAND THE CONTEXT AND GIVE ME 3 QUESTIONS ABOUT
+                        THE PLOT OF THE CHAPTER. 
+                        FOR EVERY QUESTION YOU WILL PROVIDE ME 4 POSSIBLE ANSWERS WITH 5-10 WORDS.
+                        ONE OF THEM IS THE REALLY RIGHT ANSWER.
+                        THIS IS THE TEMPLATE THAT YOU SHOULD FOLLOW-
+                        "
+                        3.How does Daddy respond to Adam-Two's skepticism about Santa Claus?
+                        He dismisses Adam-Two's thoughts as childish imagination.
+                        (TRUE ANSWER) He reassures Mike-One that Santa Claus is real in Fairyland.
+                         He puts Adam-Two on the No Ice Cream List for a month.
+                        He ignores the question and suggests playing chess instead.
+
+                        "
+                
+                        THE ANSWERS MUST BE EXACTLY 4.
+                        ON THE BEGINNING OF THE RIGHT ANSWER YOU MUST PUT "(TRUE ANSWER)" TO KNOW THAT THIS IS THE RIGHT ONE.
+                        HERE IS THE TEXT:
+                        ${chapterText}
+                        `
+
+                    }
+
+                    exports.markTestAsCompleted =async (userId,testType)=>{
+                        const user = await models.userModel.findById(userId)
+                        switch(testType){
+                            case utils.testTypes.randomWords :
+                                ++user.randomWordsTests
+                                user.knownWords+=12
+                                break;
+                            case utils.testTypes.textWords :
+                                ++user.wordsFromChapterTests
+                                break;
+                            case utils.testTypes.textQuestions :
+                                ++user.chapterPlotTests
+                                break;
+                        }
+                        return user.save()
+                    }
+
+
+                    function getRandomWord(wordsArray) {
+                        const randomIndex = Math.floor(Math.random() * wordsArray.length);
+                        return wordsArray[randomIndex];
+                    }
+                    async function makeWrongAnswers(){
+                        const answers =[]
+                        for (let i =0;i<3;i++){
+                            answers[i] = {answer:await exports.translateWord(randomWords.generate()) }
+                        }
+                        return answers
+                    }
+
+
+                    async function makeTestOutOfWords(words){
+                        const container = []
+                        for (const question of words) {
+
+                           const answers =await makeWrongAnswers()
+
+                            let rightAnswer
+                            if(question.translatedText){
+                                rightAnswer ={answer:question.translatedText,isCorrect : true,}
+                            }else{
+                                 rightAnswer =  {answer:await exports.translateWord(question),isCorrect : true}
+                            }
+
+                            const randomNumber = Math.floor(Math.random() * 4);
+                            //place it on random place
+                            answers.splice(randomNumber,0,rightAnswer)
+                            if(question.translatedText) {
+                                container.push(
+                                    {
+                                        _id:question._id,
+                                        question:question.word,
+                                        answers
+                                    }
+                                )
+                            }else{
+                                container.push(
+                                    {
+                                        question,
+                                        answers
+                                    }
+                                )
+                            }
+                        }
+                        console.log(container)
+                        return container
                     }
                 })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            exports.translateWord=async(word)=>{
+                const fetch = await import("node-fetch")
 
-                //max 12
-                    questions = unknownWords.slice(0,12)
-                //fill with random words if necessary
-                    const randomWordsToFill = randomWords.generate(12-questions.length)
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        q: word,
+                        source: 'en',
+                        target: 'bg',
+                        format: 'text',
+                    }),
+                };
 
-                    questions = [...questions,...randomWordsToFill]
+                const response = await fetch.default(`https://translation.googleapis.com/language/translate/v2?key=${utils.GoogleTranslateAPI_KEY}`, requestOptions);
 
-
-                return await makeTestOutOfWords(questions)
-
-            }else if(testType === utils.testTypes.textWords){
-                //12 words from text
-                const chapter = await allModels.chapterModel.findById(chapterId)
-                const splitedChapter = chapter.text.split(/\s+/);
-
-                const filteredWords = splitedChapter.filter(word => !utils.commonWords.includes(word.toLowerCase()));
-
-                const testWords = []
-
-                for (let i = 0; i < 12; i++) {
-                    //removes . : ; ,
-                    const trimmedStr = getRandomWord(filteredWords).replace(/^[,.\s:]+|[,\s:]+$/g, "");
-                    testWords.push(trimmedStr)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
-                return await makeTestOutOfWords(testWords)
-            }if(testType === utils.testTypes.textQuestions){
-                // 3 questions from the text
+                const data = await response.json();
+                return  data.data.translations[0].translatedText;
             }
-        }
-
-        exports.markTestAsCompleted =async (userId,testType)=>{
-            const user = await models.userModel.findById(userId)
-            switch(testType){
-                case utils.testTypes.randomWords :
-                    ++user.randomWordsTests
-                    user.knownWords+=12
-                    break;
-                case utils.testTypes.textWords :
-                    ++user.wordsFromChapterTests
-                    break;
-                case utils.testTypes.textQuestions :
-                    ++user.chapterPlotTests
-                    break;
-            }
-            return user.save()
-        }
+            })
 
 
-        function getRandomWord(wordsArray) {
-            const randomIndex = Math.floor(Math.random() * wordsArray.length);
-            return wordsArray[randomIndex];
-        }
-        async function makeWrongAnswers(){
-            const answers =[]
-            for (let i =0;i<3;i++){
-                answers[i] = {answer:await exports.translateWord(randomWords.generate()) }
-            }
-            return answers
-        }
 
-
-        async function makeTestOutOfWords(words){
-            const container = []
-            for (const question of words) {
-
-               const answers =await makeWrongAnswers()
-
-                let rightAnswer
-                if(question.translatedText){
-                    rightAnswer ={answer:question.translatedText,isCorrect : true,}
-                }else{
-                     rightAnswer =  {answer:await exports.translateWord(question),isCorrect : true}
-                }
-
-                const randomNumber = Math.floor(Math.random() * 4);
-                //place it on random place
-                answers.splice(randomNumber,0,rightAnswer)
-                if(question.translatedText) {
-                    container.push(
-                        {
-                            _id:question._id,
-                            question:question.word,
-                            answers
-                        }
-                    )
-                }else{
-                    container.push(
-                        {
-                            question,
-                            answers
-                        }
-                    )
-                }
-            }
-            console.log(container)
-            return container
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-exports.translateWord=async(word)=>{
-    const fetch = await import("node-fetch")
-
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            q: word,
-            source: 'en',
-            target: 'bg',
-            format: 'text',
-        }),
-    };
-
-    const response = await fetch.default(`https://translation.googleapis.com/language/translate/v2?key=${utils.GoogleTranslateAPI_KEY}`, requestOptions);
-
-    if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return  data.data.translations[0].translatedText;
-}
 
 exports.getAllWords =async(userId)=>{
    return  models.wordModel.find({unknownFor:userId})
