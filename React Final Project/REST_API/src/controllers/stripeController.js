@@ -2,14 +2,18 @@
 const router = require("express").Router()
 const utils = require("../utils/utils")
 const bodyParser = require("body-parser");
+const bookManager = require("../managers/bookManager");
+const {isAuth} = require("../utils/authentication");
 
 const stripe = require('stripe')(utils.stripeSecretKey);
 
 
 router.use(bodyParser.raw({ type: 'application/json' }));
 
-router.post('/create-checkout-session', async (req, res) => {
+router.post('/create-checkout-session',isAuth, async (req, res) => {
     try {
+        const {_id} = req.user
+        const {bookId} = req.body
 
         const session = await stripe.checkout.sessions.create({
             mode: 'payment',
@@ -22,13 +26,14 @@ router.post('/create-checkout-session', async (req, res) => {
                 },
             ],
                     metadata: {
-                        itemID: "itemID",
+                        bookId,
+                        userId:_id
                     },
             // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
             // the actual Session ID is returned in the query parameter when your customer
             // is redirected to the success page.
-            success_url: `http://www.example.com`,
-            cancel_url: `http://www.example.com`,
+            success_url: `${utils.FEdomain}/main/read`,
+            cancel_url: `${utils.FEdomain}/main/read`,
         });
 
 
@@ -50,17 +55,11 @@ router.post("/stripeWebhook",async (req,res)=>{
     try {
         const {type} = req.body
         if(type==="checkout.session.completed"){
-            console.log("----------------")
-            console.log(req.body.data.object.metadata)
+            const {bookId,userId} = req.body.data.object.metadata
+            console.log(bookId,userId)
+            await bookManager.bookIsPurchased(userId,bookId)
         }
-        //
-        // const endpointSecret = 'whsec_6b16e96c005c64b9a971240a119f9b2bf16ba7c0347c51f262051d73c5e0bbd6';
-        // const payload = req.body;
-        // const sig = req.headers['stripe-signature'];
-        //
-        // const event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
-        // const session = event.data.object;
-        // const itemID = session.metadata.itemID;
+
 
         res.status(200).end()
     } catch (error) {

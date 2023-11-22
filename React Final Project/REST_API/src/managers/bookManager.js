@@ -1,5 +1,6 @@
 const models = require("../models/allModels")
 const {isOwnedByUser, isAdmin} = require("../managerUtils/managerUtil");
+const mongoose = require("mongoose");
 
 
 exports.getBook =async(bookId,userId)=>{
@@ -33,6 +34,13 @@ exports.editBook =async(bookId,bookData,userId)=>{
         book[object[0]] = object[1]
     }
    return book.save()
+}
+exports.bookIsPurchased =async (userId,bookId)=>{
+    const book = await models.bookModel.findById(bookId)
+    if(!book.ownedBy.some((el)=>el.equals(userId))){
+        book.ownedBy.push(userId)
+    }
+    return book.save()
 }
 exports.deleteBook =async(bookId,userId)=>{
    await isAdmin(null,userId)

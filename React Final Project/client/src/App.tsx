@@ -13,15 +13,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer ,toast} from "react-toastify";
 import User from "./Users/Users";
 import Main from "./Main/Main";
+import useLocalStorage from "./hooks/useLocalStorage";
     export const userContext=createContext({})
 function App() {
-        const [user,setUser]= useState({})
+        const [user,setUser]= useLocalStorage("user",{})
     useEffect(()=>{
         console.log("initial load")
-        const userObject = localStorage.getItem("user")
-        if(userObject){
-            setUser(JSON.parse(userObject))
-        }
+        // const userObject = localStorage.getItem("user")
+        // if(userObject){
+        //     setUser(JSON.parse(userObject))
+        // }
     },[])
 
   return (

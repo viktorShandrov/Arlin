@@ -2,11 +2,11 @@ import styles from "../BookDetails/BookDetails.module.css";
 import {request} from "../functions";
 import {useStripe} from "@stripe/react-stripe-js";
 
-export default function  BuyBtn(){
+export default function  BuyBtn({bookId}){
     const stripe = useStripe();
 
     const onBuyClickHandler = ()=>{
-        request("stripe/create-checkout-session","POST",{}).subscribe(
+        request("stripe/create-checkout-session","POST",{bookId}).subscribe(
             async(res)=>{
                 const { error } = await stripe!.redirectToCheckout({
                     sessionId: res.id,

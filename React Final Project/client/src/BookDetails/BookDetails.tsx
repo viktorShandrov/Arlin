@@ -20,6 +20,7 @@ export default function  BookDetails(){
         resume:"",
         author:"",
         length:"",
+        _id:"",
         image: {
             data:''
         },
@@ -56,7 +57,7 @@ export default function  BookDetails(){
                             {book&&!book.ownedBy?.includes(user.userId)||user.role!=="admin"&&true
                             }
                                 <Elements stripe={stripePromise}>
-                                    <BuyBtn />
+                                    <BuyBtn bookId={book._id} />
                                 </Elements>
 
 
