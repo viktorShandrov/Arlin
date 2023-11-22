@@ -23,10 +23,10 @@ export default function UnknownWords(){
                         <div className={styles.count}>{words.length>99?"99+":words.length}</div>
                     </div>
 
-                    <hr/>
+                    <hr className={styles.hr}/>
                     <div className={styles.wordsWrapper}>
                         <div className={styles.wordsContainer}>
-                            {words.length>0&&words.map((word,index)=>{
+                            {words.length>0&&words.reverse().map((word,index)=>{
 
                                 return <details className={styles.row} key={index}>
                                     <summary className={styles.summary}>
