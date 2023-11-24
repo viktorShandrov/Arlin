@@ -61,15 +61,126 @@ import('random-words')
 
                     }
                     exports.storeTestForChapter =async (chapter)=>{
-                        const API = new ChatGPTUnofficialProxyAPI({
-                            accessToken: utils.chatgptAccessToken,
-                            apiReverseProxyUrl: "https://ai.fakeopen.com/api/conversation" ,
-                        })
+                        // const API = new ChatGPTUnofficialProxyAPI({
+                        //     accessToken: utils.chatgptAccessToken,
+                        //     apiReverseProxyUrl: "https://ai.fakeopen.com/api/conversation" ,
+                        // })
+                        //
+                        // const Response = await API.sendMessage("Hello")
 
-                        const Response = await API.sendMessage(exports.makeGPTInput(chapter.text))
-                        let splitedText = Response.text.split("\n")
+                        // const response = await fetch("https://api.pawan.krd/v1/completions",{
+                        //     method :"POST",
+                        //     headers:{
+                        //         "Content-Type":"application/json",
+                        //         "Authorization":"Bearer "+ utils.openAIPReoxyToken
+                        //     },
+                        //     body:JSON.stringify(
+                        //         {
+                        //         "model": "pai-001-light-beta",
+                        //         "prompt": exports.makeGPTInput(chapter.text),
+                        //         // "temperature": 0.7,
+                        //         "max_tokens": 240,
+                        //         // "stop": [
+                        //         //     "Human:",
+                        //         //     "AI:"
+                        //         // ]
+                        // }
+                        //     )
+                        // })
+                        try {
+                            const response = await fetch("https://chatgpt-api.shn.hk/v1/",{
+                                method :"POST",
+                                headers:{
+                                    "Content-Type":"application/json",
+                                    // "Authorization":"Bearer "+ utils.openAIPReoxyToken
+                                },
+                                body:JSON.stringify(
+                                    {
+                                        "model": "gpt-3.5-turbo",
+                                        "messages": [{"role": "user", "content": exports.makeGPTInput(chapter.text)}]
+                                    }
+                                )
+                            })
+                            const data = await response.json()
+                            console.log(response.ok)
+                            console.log(data)
+                        }catch (error){
+                            console.log(error)
+                        }
+
+
+
+                        // import("openai")
+                        //     .then(async(openaiImport)=>{
+                        //         const {Configuration, OpenAIApi} =openaiImport
+                        //         console.log(Configuration)
+                        //         const configuration = new Configuration({
+                        //             apiKey: utils.openAIAPIkey,
+                        //             basePath: "https://api.pawan.krd/v1",
+                        //         });
+                        //
+                        //         const openai = new OpenAIApi(configuration);
+                        //
+                        //         const response = await openai.createCompletion({
+                        //             model: "text-davinci-003",
+                        //             prompt: "Human: Hello\nAI:",
+                        //             temperature: 0.7,
+                        //             max_tokens: 256,
+                        //             top_p: 1,
+                        //             frequency_penalty: 0,
+                        //             presence_penalty: 0,
+                        //             stop: ["Human: ", "AI: "],
+                        //         });
+                        //
+                        //         console.log(response.data.choices[0].text);
+                        //     })
+
+
+                        // const sdk = require('api')('@pplx/v0#1k349py3lp77geqk');
+                        //
+                        // sdk.post_chat_completions({
+                        //     model: 'mistral-7b-instruct',
+                        //     messages: [{content: 'string', role: 'system'}],
+                        //     max_tokens: 0,
+                        //     temperature: 1,
+                        //     top_p: 1,
+                        //     top_k: 0,
+                        //     stream: false,
+                        //     presence_penalty: 0,
+                        //     frequency_penalty: 1
+                        // })
+                        //     .then(( data ) => console.log(data))
+                        //     .catch(err => console.error(err));
+
+
+                        // const response =await  fetch("https://api.perplexity.ai/chat/completions",{
+                        //     method:"POST",
+                        //     headers:{
+                        //         "content-type": "application/json ",
+                        //         "accept": "application/json"
+                        //     },
+                        //     body:JSON.stringify({
+                        //         "model": "mistral-7b-instruct",
+                        //         "messages": [
+                        //             {
+                        //                 "role": "system",
+                        //                 "content": "Be precise and concise."
+                        //             },
+                        //             {
+                        //                 "role": "user",
+                        //                 "content": "How many stars are there in our galaxy?"
+                        //             }
+                        //         ]
+                        //     })
+                        //
+                        // })
+                        // if(!response.ok){
+                        //     console.log("not ok")
+                        // }
+                        // const data = await response.json()
+
+                        let splitedText = data.choices.text.split("\n")
                         splitedText = trimResponseArray(splitedText)
-
                         const test = []
 
                         for (let i = 0; i < splitedText.length; i+=5) {
@@ -114,7 +225,7 @@ import('random-words')
                     }
                     exports.makeGPTInput=(chapterText)=>{
                         return `
-                        HELLO! I NEED YOUR HELP.
+                        SKIP ANY GREETINGS.
                         I WILL PROVIDE YOU ONE CHAPTER TEXT. YOU MUST TAKE THAT TEXT, UNDERSTAND THE CONTEXT AND GIVE ME 3 QUESTIONS ABOUT
                         THE PLOT OF THE CHAPTER. 
                         FOR EVERY QUESTION YOU WILL PROVIDE ME 4 POSSIBLE ANSWERS WITH 5-10 WORDS.
@@ -126,7 +237,6 @@ import('random-words')
                         (TRUE ANSWER) He reassures Mike-One that Santa Claus is real in Fairyland.
                          He puts Adam-Two on the No Ice Cream List for a month.
                         He ignores the question and suggests playing chess instead.
-
                         "
                 
                         THE ANSWERS MUST BE EXACTLY 4.
