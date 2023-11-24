@@ -5,6 +5,7 @@ exports.sign = util.promisify(jwt.sign)
 exports.verify = util.promisify(jwt.verify)
 
 
+process.env.GOOGLE_APPLICATION_CREDENTIALS =path.join(__dirname,'./gc-cred.json')
 exports.port = 3000
 exports.secret = "kjsdhgLKJGHDLKJGHkljhlkjhh43iu4h8osioduhfis"
 exports.FEdomain = "http://127.0.0.1:5173"
@@ -18,6 +19,7 @@ exports.chatgptAccessToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1UaE
 exports.stripeSecretKey="sk_test_51OEwwSAPrNaPFyVR8ratcB8BTCUKEMzYiSIF8iQiBNBzOmr2olTnhDeuRC0bAAdBqrUyisTg1CN4hEVFSapAmUnV00QqAC84Oj"
 exports.openAIAPIkey = "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"
 exports.openAIPReoxyToken = "pk-YkGnWlSytCvQzNQVUvPYkfRvCdFfxmFKcgGRYZAEdrXyHkaY"
+exports.dbxAccessToken = "sl.Bqd8661L9fVn0Wf6cHyqhSu7SKPPCddVXUsBYpvoj9xzLqXuJMr0Jdx5AOrYoAJk8QGLjYnOXLo3wvsDQp2yQcK1tRX7nHoceo-af89pRK3-pAURe5DmR8DkmnzANiTFdPZ_to_WFBVq"
 exports.commonWords = [
     "a",
     "about",

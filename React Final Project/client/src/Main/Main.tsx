@@ -7,6 +7,7 @@ import Read from "../Read/Read";
 import Navigation from "../Navigation/Navigation";
 
 import styles from "./Main.module.css"
+import Dashboard from "../Dashboard/Dashboard";
 export default function Main(){
     return(
         <>
@@ -18,6 +19,7 @@ export default function Main(){
                     <Route path={"/AllBooks/"} element={<AllBooks />}></Route>
                     <Route path={"/read/*"} element={<Read />}></Route>
                     <Route path={"/AllBooks/:id"} element={<BookDetails />}></Route>
+                    <Route path={"/dashboard"} element={<Dashboard />}></Route>
                 </Routes>
             </div>
 
