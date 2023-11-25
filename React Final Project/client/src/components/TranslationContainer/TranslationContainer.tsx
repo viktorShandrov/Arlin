@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "./TranslationContainer.module.css";
 import styles from "./TranslationContainer.module.css";
 import { useParams } from "react-router-dom";
-import { request } from "../functions";
+import { request } from "../../functions";
 
 export default function TranslationContainer() {
     const [translatedSentence, setTranslatedSentence] = useState("");

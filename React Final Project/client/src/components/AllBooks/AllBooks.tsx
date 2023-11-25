@@ -1,6 +1,6 @@
 import styles from "./AllBooks.module.css"
 import {useEffect, useState} from "react";
-import {request} from "../functions";
+import {request} from "../../functions";
 import {Link} from "react-router-dom";
 export default function AllBooks(){
 

@@ -1,15 +1,17 @@
 import styles from "./Navigation.module.css";
 import {Link} from "react-router-dom";
 import {useContext} from "react";
-import {userContext} from "../App";
+import {userContext} from "../../App";
+import {useSelector} from "react-redux";
 
 export default function Navigation(){
-    const {user} = useContext(userContext)
-
+    // const {user} = useContext(userContext)
+    const {user} = useSelector((selector)=>selector.user)
+    console.log(user)
     return(
         <div className={styles.navC}>
             <nav className={styles.nav}>
-                {user&&
+                {user.token&&
                     <>
                         <Link to={"/main/read"} className={styles.navItem}>Read</Link>
                         <Link to={"/user/login"} className={`${styles.navItem} ${styles.booksNav}`}>Books</Link>
@@ -29,7 +31,7 @@ export default function Navigation(){
 
                 }
 
-                {!user&&
+                {!user.token&&
                     <>
                         <Link to={"/user/login"} className={styles.navItem}>Login</Link>
                         <Link to={"/user/register"} className={styles.navItem}>Register</Link>

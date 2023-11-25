@@ -1,17 +1,19 @@
-import {useContext, useState} from "react";
-import styles from "./Register.module.css"
+import {useContext, useEffect, useState} from "react";
+import styles from "./Login.module.css"
 import {Link, useNavigate} from "react-router-dom";
-import {request} from "../../functions";
-import {userContext} from "../../App";
+import {request} from "../../../functions";
+// import {userContext} from "../../App";
+import {setUser} from "../../../redux/user"
+import {useDispatch, useSelector} from "react-redux";
+export default function  Login(){
 
-export default function  Register(){
-
-    const {user,setUser}= useContext(userContext)
-    const navigate =useNavigate()
+    // const {user,setUser} = useContext(userContext)
+    const {user} = useSelector((state)=>state.user)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const [formValues,setFormValues] = useState({
-        email:"",
-        password:"",
-        repeatedPassword:"",
+        email:"viktor_shandrov@abv.bg",
+        password:"111111111",
     })
     const onFormChange=(e:any)=>{
 
@@ -22,13 +24,16 @@ export default function  Register(){
             }
         })
     }
+
+
     const onSubmit=()=>{
-        request("users/register","POST",formValues).subscribe(
+        request("users/login","POST",formValues).subscribe(
             (res)=>{
-                // localStorage.setItem("user",JSON.stringify(res))
                 if(res){
-                    setUser(res)
+                    dispatch(setUser(res))
+
                     navigate("/main")
+
                 }
             },
             (error)=>{
@@ -37,17 +42,24 @@ export default function  Register(){
         )
     }
 
+
     return(
         <>
         <div className={styles.container}>
             <div className={styles.left}>
                 <form className={styles.form} >
                 <div className={styles.headingLeft}>
-                    <h1>Create your account</h1>
+                    <h1>Log in to your account</h1>
                     <p >Unlock all Features!</p>
                 </div>
+                 {/*   <div className={styles.otherAuth}>*/}
+                 {/*       <button  className={styles.otherAuthBtn}>*/}
+                 {/*        <img src="/public/google.png" alt="google" /> Google*/}
+                 {/*       </button>*/}
 
-
+                 {/* </div>*/}
+                 {/*<hr />*/}
+                    {/*<div className="centered-text">or log in with email</div>*/}
 
 
                 <div className={styles.inputC}>
@@ -76,34 +88,17 @@ export default function  Register(){
                 onChange={onFormChange}
             />
         </div>
-    <div className={styles.inputC}>
-        <i className="fa-solid fa-key"></i>
-        <input
-            className={styles.input}
-            type="password"
-            required
-            name="repeatedPassword"
-            placeholder="Confirm Password"
-            value={formValues.repeatedPassword}
-            onChange={onFormChange}
-        />
-    </div>
+
     <button  className={styles.otherAuthBtn}>
         <img src="/public/google.png" alt="google" /> Google
         </button>
 
-    <div className={styles.rememberMeC}>
-        <input
-            type="checkbox"
-            name="rememberMe"
-        />
-        <div>Accept <span className={styles.accept}>terms and conditions</span></div>
-    </div>
 
-    <button className={styles.submitBtn} onClick={onSubmit}  type="button">REGISTER</button>
+
+    <button className={styles.submitBtn}  onClick={onSubmit} type="button">LOGIN</button>
     <p>
-        You have an account?
-        <Link to={"/user/login"} className={styles.loginLink}>Sign in</Link>
+        Don't have an account?
+        <Link to={"/user/register"} className={styles.loginLink}>Sign up</Link>
     </p>
 </form>
 </div>

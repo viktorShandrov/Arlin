@@ -1,5 +1,5 @@
 import styles from "../BookDetails/BookDetails.module.css";
-import {request} from "../functions";
+import {request} from "../../functions";
 import {useStripe} from "@stripe/react-stripe-js";
 
 export default function  BuyBtn({bookId}){

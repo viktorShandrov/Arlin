@@ -1,6 +1,8 @@
 const models = require("../models/allModels")
 const {isOwnedByUser, isAdmin} = require("../managerUtils/managerUtil");
 const wordManager = require("./wordManager");
+const schedule = require('node-schedule');
+
 
 exports.getChapter =async(chapterId,userId)=>{
     const book = await models.bookModel.findOne({
@@ -48,6 +50,29 @@ exports.createChapter =async(bookId,text,userId,chapterName)=>{
     book.length+=1
     // await wordManager.storeTestForChapter(chapter)
    return book.save()
+}
+const weeklyJob = schedule.scheduleJob({ hour: 2, minute: 0, dayOfWeek: 1 }, async () => {
+    try {
+        // Your logic to update specific products in the database
+        await changeBookFreeRotation();
+        console.log('Weekly update completed successfully.');
+    } catch (error) {
+        console.error('Error during weekly update:', error);
+    }
+});
+async function changeBookFreeRotation(){
+
+   const randomChapters =  await models.chapterModel.aggregate([{ $sample: { size: 10 } }])
+    for (const chapter of randomChapters) {
+        chapter.isFree = true
+        await chapter.save()
+    }
+
+    const previousChapters = await models.chapterModel.find({isFree:true})
+    for (const previousChapter of previousChapters) {
+        previousChapter.isFree = false
+        await previousChapter.save()
+    }
 }
 exports.createChapterQuestion =async(chapterId,userId,rightAnswer,answers)=>{
    await isAdmin(null,userId)

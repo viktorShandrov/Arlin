@@ -8,6 +8,10 @@ const schema = mongoose.Schema({
     book:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Book"
+    },
+    isFree:{
+        type:Boolean,
+        default:false
     }
 })
 

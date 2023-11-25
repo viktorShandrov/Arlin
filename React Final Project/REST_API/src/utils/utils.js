@@ -5,6 +5,12 @@ exports.sign = util.promisify(jwt.sign)
 exports.verify = util.promisify(jwt.verify)
 
 
+
+
+
+exports.isProduction = false
+
+
 process.env.GOOGLE_APPLICATION_CREDENTIALS =path.join(__dirname,'./gc-cred.json')
 exports.port = 3000
 exports.secret = "kjsdhgLKJGHDLKJGHkljhlkjhh43iu4h8osioduhfis"

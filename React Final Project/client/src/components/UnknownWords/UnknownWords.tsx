@@ -1,6 +1,6 @@
 import styles from "./UnknownWords.module.css"
 import {useEffect, useState} from "react";
-import {request} from "../functions";
+import {request} from "../../functions";
 
 export default function UnknownWords(){
     const [words,setWords] = useState([])

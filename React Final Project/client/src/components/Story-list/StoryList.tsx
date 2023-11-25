@@ -1,13 +1,15 @@
 import "./StoryList.css"
 import {useContext, useEffect, useState} from "react";
-import {request} from "../functions";
+import {request} from "../../functions";
 import styles from "../ChapterList/ChapterList.module.css";
 import {Link} from "react-router-dom";
-import {userContext} from "../App";
+import {userContext} from "../../App";
+import {useSelector} from "react-redux";
 export default function StoryList(){
 
 
-    const {user} = useContext(userContext)
+    // const {user} = useContext(userContext)
+    const {user} = useSelector((selector)=>selector.user)
 
 
     const [books,setBooks] = useState([])

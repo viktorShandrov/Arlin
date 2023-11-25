@@ -1,11 +1,12 @@
 import styles from "./BookDetails.module.css"
 import {useContext, useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
-import {request} from "../functions";
-import {userContext} from "../App";
+import {request} from "../../functions";
+import {userContext} from "../../App";
 import BuyBtn from "../BuyBtn/BuyBtn";
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import {useSelector} from "react-redux";
 
 export default function  BookDetails(){
 
@@ -13,7 +14,8 @@ export default function  BookDetails(){
 
     const {id} = useParams()
 
-    const {user} = useContext(userContext)
+    // const {user} = useContext(userContext)
+    const {user} = useSelector((selector)=>selector.user)
     const [image,setImage] = useState("")
     const [book,setBook] = useState({
         name:"",
@@ -92,7 +94,7 @@ export default function  BookDetails(){
                         <div className={styles.btns}>
                             <button className={styles.seeFreeChaptersBtn}>See free chapters</button>
                             {book.ownedBy.includes(user.userId)&&
-                                <Link to={`/main/${book._id}`} className={styles.readBtn}>Read</Link>
+                                <Link to={`/main/read/${book._id}`} className={styles.readBtn}>Read</Link>
                             }
 
                         </div>

@@ -11,7 +11,8 @@ const AdmZip = require('adm-zip');
 const path = require('path');
 require('dotenv').config();
 const { Dropbox } = require('dropbox'); // Import the Dropbox SDK
-const fetch = require('isomorphic-fetch'); // Import a fetch-compatible library for making HTTP requests
+const fetch = require('isomorphic-fetch');
+const models = require("../models/allModels"); // Import a fetch-compatible library for making HTTP requests
 
 
 const openai = new OpenAI({ apiKey: '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' });
@@ -158,7 +159,6 @@ exports.test=async ()=> {
 //     await zipFolder()
 
     // const filePath = "C:\\Users\\mmano\\Downloads\\cbimage.png"
-
 
 
 

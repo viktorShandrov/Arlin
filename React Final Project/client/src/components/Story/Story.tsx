@@ -1,7 +1,7 @@
 import Sentence from "./Sentence/Sentence.tsx";
 import {useEffect, useState} from "react";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
-import {request} from "../functions";
+import {request} from "../../functions";
 import styles from "./Story.module.css"
 export default function Story(){
 

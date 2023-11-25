@@ -1,15 +1,17 @@
 import {useContext, useState} from "react";
-import styles from "./Login.module.css"
+import styles from "./Register.module.css"
 import {Link, useNavigate} from "react-router-dom";
-import {request} from "../../functions";
-import {userContext} from "../../App";
-export default function  Login(){
+import {request} from "../../../functions";
+import {userContext} from "../../../App";
 
-    const {user,setUser} = useContext(userContext)
-    const navigate = useNavigate()
+export default function  Register(){
+
+    // const {user,setUser}= useContext(userContext)
+    const navigate =useNavigate()
     const [formValues,setFormValues] = useState({
         email:"",
         password:"",
+        repeatedPassword:"",
     })
     const onFormChange=(e:any)=>{
 
@@ -20,10 +22,8 @@ export default function  Login(){
             }
         })
     }
-
-
     const onSubmit=()=>{
-        request("users/login","POST",formValues).subscribe(
+        request("users/register","POST",formValues).subscribe(
             (res)=>{
                 // localStorage.setItem("user",JSON.stringify(res))
                 if(res){
@@ -43,17 +43,11 @@ export default function  Login(){
             <div className={styles.left}>
                 <form className={styles.form} >
                 <div className={styles.headingLeft}>
-                    <h1>Log in to your account</h1>
+                    <h1>Create your account</h1>
                     <p >Unlock all Features!</p>
                 </div>
-                 {/*   <div className={styles.otherAuth}>*/}
-                 {/*       <button  className={styles.otherAuthBtn}>*/}
-                 {/*        <img src="/public/google.png" alt="google" /> Google*/}
-                 {/*       </button>*/}
 
-                 {/* </div>*/}
-                 {/*<hr />*/}
-                    {/*<div className="centered-text">or log in with email</div>*/}
+
 
 
                 <div className={styles.inputC}>
@@ -82,17 +76,34 @@ export default function  Login(){
                 onChange={onFormChange}
             />
         </div>
-
+    <div className={styles.inputC}>
+        <i className="fa-solid fa-key"></i>
+        <input
+            className={styles.input}
+            type="password"
+            required
+            name="repeatedPassword"
+            placeholder="Confirm Password"
+            value={formValues.repeatedPassword}
+            onChange={onFormChange}
+        />
+    </div>
     <button  className={styles.otherAuthBtn}>
         <img src="/public/google.png" alt="google" /> Google
         </button>
 
+    <div className={styles.rememberMeC}>
+        <input
+            type="checkbox"
+            name="rememberMe"
+        />
+        <div>Accept <span className={styles.accept}>terms and conditions</span></div>
+    </div>
 
-
-    <button className={styles.submitBtn}  onClick={onSubmit} type="button">LOGIN</button>
+    <button className={styles.submitBtn} onClick={onSubmit}  type="button">REGISTER</button>
     <p>
-        Don't have an account?
-        <Link to={"/user/register"} className={styles.loginLink}>Sign up</Link>
+        You have an account?
+        <Link to={"/user/login"} className={styles.loginLink}>Sign in</Link>
     </p>
 </form>
 </div>

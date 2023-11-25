@@ -48,7 +48,7 @@ import('random-words')
 
                             for (let i = 0; i < 12; i++) {
                                 //removes . : ; ,
-                                const trimmedStr = getRandomWord(filteredWords).replace(/^[,.\s:]+|[,\s:]+$/g, "");
+                                const trimmedStr = getRandomWord(filteredWords).replace(/^[,.\s:]+|[,\s:"']+$/g, "");
                                 testWords.push(trimmedStr)
                             }
 

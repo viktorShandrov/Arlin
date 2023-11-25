@@ -4,14 +4,17 @@ const fetch = require("isomorphic-fetch");
 const fs = require("fs");
 const AdmZip = require("adm-zip");
 const path = require("path");
+const utils = require("../utils/utils");
 
 exports.mongodbConfig=()=>{
     mongoose.connect('mongodb://localhost:27017/language-trough-literature', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
-    // backupDB()
-    // setInterval(backupDB,1000 * 60 *10)
+    if(utils.isProduction){
+        backupDB()
+        setInterval(backupDB,1000 * 60 *10)
+    }
 }
 
 

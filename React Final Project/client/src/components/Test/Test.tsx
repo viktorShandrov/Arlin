@@ -1,7 +1,7 @@
 
 import styles from "./Test.module.css"
 import {useEffect, useRef, useState} from "react";
-import {request} from "../functions";
+import {request} from "../../functions";
 import Spinner from 'react-bootstrap/Spinner';
 import {Simulate} from "react-dom/test-utils";
 import error = Simulate.error;
