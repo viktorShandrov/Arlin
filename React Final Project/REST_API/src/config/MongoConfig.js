@@ -10,15 +10,15 @@ exports.mongodbConfig=()=>{
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
-    backupDB()
-    setInterval(backupDB,1000 * 60 *10)
+    // backupDB()
+    // setInterval(backupDB,1000 * 60 *10)
 }
 
 
 async function backupDB(){
     const filePath = "P:\\Folder-Deliivanova\\SoftUni\\Repository\\React\\MongoDbBackUp\\backup.zip"
     const dbx = new Dropbox({
-        accessToken: "sl.BqekwUOOEws6SRyFdu91_ITDndW6EHlSIWXzo1GWYq5YhOi3aTjgQ-yzVyjwYj0dN0VQCwkT4ZvwrleGxLl7SxtGkaJuA9S9WA7SiT0pPTnp27-HXi5oTRMZ20NqVG1SEdc0IZzD2QJp",
+        accessToken: "sl.Bqi1VLPo08c77kZgbWClXgS-QXHDd_2pN9eaR0jJnExzMxPfVpsplOxA3QR7g8sJZ5YgV0_vMOtTU3QdViKrOWRDm1oWq_Z2mRX_GF0mhATvQ7JhBrtxpGfaXL9Dgu6GAORUpG6ipnbx",
         fetch
     });
 

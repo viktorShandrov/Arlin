@@ -53,16 +53,16 @@ exports.addImageToBook =async(bookId,userId,image)=>{
    return book.save()
 }
 exports.getFilteringData =async(userId)=>{
-    const authors = []
-    const genres =[]
+    const authors = new Set()
+    const genres =new Set()
     const books = await models.bookModel.find({})
     for (const book of books) {
-        authors.push(book.author)
-        genres.push(book.genre)
+        authors.add(book.author)
+        genres.add(book.genre)
     }
     return {
-        authors,
-        genres
+        authors:[...authors],
+        genres:[...genres]
     }
 }
 exports.createBook =async(bookData,userId)=>{
