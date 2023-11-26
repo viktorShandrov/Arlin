@@ -162,7 +162,14 @@ exports.test=async ()=> {
 
 
 
-
+    var url = 'https://newsapi.org/v2/top-headlines?' +
+        'country=us&' +
+        'apiKey=bed9711e59814ef59ab510e3a7f99b8e';
+    var req = new Request(url);
+    fetch(req)
+        .then(async function(response) {
+            console.log((await response.json()).articles[0].content.split(" "));
+        })
 
 }
 
