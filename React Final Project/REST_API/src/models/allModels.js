@@ -4,4 +4,5 @@ module.exports = {
     userModel : require("../models/userModel"),
     wordModel : require("../models/wordModel"),
     chapterQuestionsModel : require("../models/chapterQuestionsModel"),
+    newsModel : require("../models/newsModel"),
 }

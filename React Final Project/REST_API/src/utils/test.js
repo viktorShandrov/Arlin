@@ -13,6 +13,7 @@ require('dotenv').config();
 const { Dropbox } = require('dropbox'); // Import the Dropbox SDK
 const fetch = require('isomorphic-fetch');
 const models = require("../models/allModels"); // Import a fetch-compatible library for making HTTP requests
+const newsManager = require("../managers/newsManager")
 
 
 const openai = new OpenAI({ apiKey: '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' });
@@ -162,14 +163,8 @@ exports.test=async ()=> {
 
 
 
-    var url = 'https://newsapi.org/v2/top-headlines?' +
-        'country=us&' +
-        'apiKey=bed9711e59814ef59ab510e3a7f99b8e';
-    var req = new Request(url);
-    fetch(req)
-        .then(async function(response) {
-            console.log((await response.json()).articles[0].content.split(" "));
-        })
+    // newsManager.setTodayNews()
+
 
 }
 
