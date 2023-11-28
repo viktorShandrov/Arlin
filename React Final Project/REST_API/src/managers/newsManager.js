@@ -21,5 +21,5 @@ exports.getAll=async()=>{
     return  models.newsModel.find({})
 }
 exports.get=async(id)=>{
-    return  models.newsModel.find({id})
+    return  models.newsModel.findById(id)
 }

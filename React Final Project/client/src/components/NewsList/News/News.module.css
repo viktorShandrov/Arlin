@@ -18,6 +18,9 @@
 .news{
     width: 100%;
 }
+.news:hover{
+    cursor: pointer;
+}
 .image{
     aspect-ratio: 1/1;
 }

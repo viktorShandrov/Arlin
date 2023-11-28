@@ -164,7 +164,19 @@ exports.test=async ()=> {
 
 
     // newsManager.setTodayNews()
-
+    // const repsonse = await fetch("http://localhost:8000/ask",{
+    //     method:"POST",
+    //     headers:{
+    //         "Content-Type":"application/json",
+    //         "accept": "application/json"
+    //     },
+    //     body:JSON.stringify({
+    //         "session_id": "dQiQ9yJQmGoVEU7_2szI9GQqFQ6-O8T0Z5HV0e8CzrHJSrCX-QTdgf-fgrvK8vtKhWipuA.",
+    //         "message": "What is the meaning of life?"
+    //     })
+    // })
+    // console.log(1)
+    // console.log(repsonse)
 
 }
 

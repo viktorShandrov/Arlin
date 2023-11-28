@@ -1,0 +1,29 @@
+.detailsWrapper{
+    background-color: white;
+    border-radius: 5px;
+    height: 100%;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    /*align-items: center;*/
+}
+.detailsC{
+    height: fit-content;
+    flex: 1;
+}
+
+.title{
+    font-weight: bolder ;
+}
+.date{
+    font-weight: bolder;
+    color: grey;
+}
+.imgC{
+    /*padding: 20px;*/
+    border-radius: 15px;
+    margin: 20px;
+}
+.content{
+    padding:10px 70px;
+}
