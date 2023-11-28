@@ -59,9 +59,13 @@ export default function NewsDetails(){
                         })}
                     </div>
                 </div>
-                <Routes>
-                    <Route path={"/:textToTranslate"} element={<TranslationContainer/>} />
-                </Routes>
+
+                        <Routes>
+                            <Route path={"/:textToTranslate"} element={<TranslationContainer/>} />
+                        </Routes>
+                    {/*<div className={styles.translationC}>*/}
+                    {/*</div>*/}
+
             </div>
         </>
     )

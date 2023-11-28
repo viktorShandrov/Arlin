@@ -8,7 +8,7 @@ const router = require("express").Router()
 
 //CRUD
 
-router.get("/all",isAuth,async (req,res)=>{
+router.get("/all",async (req,res)=>{
     try{
         const news = await newsManager.getAll()
         res.status(200).json({news})
@@ -16,7 +16,7 @@ router.get("/all",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.get("/:id",isAuth,async (req,res)=>{
+router.get("/:id",async (req,res)=>{
     try{
         const {id} = req.params
         const news = await newsManager.get(id)

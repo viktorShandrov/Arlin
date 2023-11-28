@@ -2,12 +2,14 @@ import {useContext, useState} from "react";
 import styles from "./Register.module.css"
 import {Link, useNavigate} from "react-router-dom";
 import {request} from "../../../functions";
-import {userContext} from "../../../App";
+import {setUser} from "../../../redux/user";
+import {useDispatch} from "react-redux";
 
 export default function  Register(){
 
     // const {user,setUser}= useContext(userContext)
     const navigate =useNavigate()
+    const dispatch = useDispatch()
     const [formValues,setFormValues] = useState({
         email:"",
         password:"",
@@ -27,8 +29,10 @@ export default function  Register(){
             (res)=>{
                 // localStorage.setItem("user",JSON.stringify(res))
                 if(res){
-                    setUser(res)
-                    navigate("/main")
+                    dispatch(setUser(res))
+                    localStorage.setItem("user",JSON.stringify(res))
+                    // navigate("/main")
+                    navigate(-1)
                 }
             },
             (error)=>{

@@ -23,7 +23,7 @@ export default function News({el}){
                 {el.title}
             </div>
             <div className={styles.image}>
-                <img src={el.urlToImage} alt={"No image to display"}/>
+                <img className={styles.img} src={el.urlToImage} alt={"No image to display"}/>
             </div>
             <div className={styles.sourceAndDateC}>
                 <label className={styles.source}>

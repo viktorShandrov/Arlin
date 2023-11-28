@@ -9,6 +9,7 @@
 }
 .detailsC{
     height: fit-content;
+    padding: 40px;
     flex: 1;
 }
 
@@ -24,6 +25,16 @@
     border-radius: 15px;
     margin: 20px;
 }
+.imgC>*{
+    object-fit: cover;
+    width: 100%;
+}
 .content{
     padding:10px 70px;
+}
+.translationC{
+    /*position: sticky;*/
+    height: fit-content;
+    /*display: flex;*/
+   /*align-items: center;*/
 }

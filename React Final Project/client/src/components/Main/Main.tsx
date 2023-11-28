@@ -24,9 +24,10 @@ export default function Main(){
                         <Route path={"/read/*"} element={<Read />}></Route>
                         <Route path={"/AllBooks/:id"} element={<BookDetails />}></Route>
                         <Route path={"/dashboard"} element={<Dashboard />}></Route>
-                        <Route path={"/news"} element={<NewsList />}></Route>
                         <Route path={"/news/:id/*"} element={<NewsDetails />}></Route>
                     </Route>
+                        <Route path={"/news/:id/"} element={<NewsDetails />}></Route>
+                        <Route path={"/news"} element={<NewsList />}></Route>
                 </Routes>
             </div>
 

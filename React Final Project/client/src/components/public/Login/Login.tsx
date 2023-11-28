@@ -31,8 +31,9 @@ export default function  Login(){
             (res)=>{
                 if(res){
                     dispatch(setUser(res))
-
-                    navigate("/main")
+                    localStorage.setItem("user",JSON.stringify(res))
+                    // navigate("/main")
+                    navigate(-1)
 
                 }
             },

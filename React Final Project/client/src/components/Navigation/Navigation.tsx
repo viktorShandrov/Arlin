@@ -27,6 +27,7 @@ export default function Navigation(){
                             {/*<Link to={"/main/test/textWords/:chapterId"} className={styles.navItem}>Words from text</Link>*/}
                             {/*<Link to={"/main/test/textQuestions"} className={styles.navItem}>Chapter plot</Link>*/}
                         </div>
+                        <Link to={"/main/news"} className={`${styles.navItem} `}>News</Link>
                     </>
 
                 }
@@ -35,6 +36,8 @@ export default function Navigation(){
                     <>
                         <Link to={"/user/login"} className={styles.navItem}>Login</Link>
                         <Link to={"/user/register"} className={styles.navItem}>Register</Link>
+                        <Link to={"/main/news"} className={`${styles.navItem} `}>News</Link>
+
                     </>
 
                 }
