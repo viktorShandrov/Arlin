@@ -2,10 +2,12 @@ import styles from "./AllBooks.module.css"
 import {useEffect, useState} from "react";
 import {request} from "../../functions";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
     const [books,setBooks] = useState([])
+    const [isOwnedFilter,setIsOwnedFilter] = useState(false)
     const [searchParams,setSearchParams] = useState("")
     const [filterData,setFilterData] = useState({
         authors:[],
@@ -15,35 +17,44 @@ export default function AllBooks(){
         author:[],
         genre:[],
     })
+    const {user} = useSelector((selector)=>selector.user)
     useEffect(()=>{
+        filterByFilters()
+    },[appliedFilters])
+    const filterByFilters = ()=>{
         setBooks(oldState=>{
-                let filteredResult = []
+            let filteredResult = []
 
-                    const filtered = reqBooks.filter(el=>{
-                        const results = []
-                        for (const filter of Object.keys(appliedFilters)) {
-                            //author,genre ...
-                            for (const filterValue of appliedFilters[filter]) {
-                                     results.push(el[filter]===filterValue)
-                            }
+            let data = reqBooks
+            if(isOwnedFilter){
+                data = data.filter(el=>el.ownedBy.includes(user.userId))
+            }
 
+            const filtered = data.filter(el=>{
+                const results = []
+                for (const filter of Object.keys(appliedFilters)) {
+                    //author,genre ...
+                    for (const filterValue of appliedFilters[filter]) {
+                        results.push(el[filter]===filterValue)
                     }
-                        return results.every(el=>el===true)
 
-                    })
-
-                filteredResult.push(...filtered)
-
-
-
-
-
-                if(filteredResult.length===0&&Object.values(appliedFilters).every(el=>el.length===0)){
-                    filteredResult = reqBooks
                 }
+                return results.every(el=>el===true)
+
+            })
+
+            filteredResult.push(...filtered)
+
+
+
+
+
+            if(filteredResult.length===0&&Object.values(appliedFilters).every(el=>el.length===0)){
+                filteredResult = reqBooks
+            }
             return filteredResult
         })
-    },[appliedFilters])
+    }
     const filterChangeHandler = (e)=>{
         setAppliedFilters(oldState=>{
             const filterValue = e.target.parentElement.getAttribute("data-filterValue")
@@ -98,10 +109,12 @@ export default function AllBooks(){
 
                     }
                 }
-                console.log(data)
                 setFilterData(data)
             }
         )
+    }
+    const ownedFilterClickHandler = (e)=>{
+            setIsOwnedFilter((oldValue)=>!oldValue)
     }
     useEffect(()=>{
         getAll()
@@ -121,13 +134,22 @@ export default function AllBooks(){
                         {books.length>0&&books.map((book)=>{
 
 
+                            if(isOwnedFilter&&book.ownedBy.includes(user.userId)){
+                                return <Link data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
+                                    <img src={"/public/chapter.jpg"}></img>
+                                    <h3 className={styles.heading}>{book.name}</h3>
+                                    <h3 className={styles.heading}>{book.author}</h3>
+                                    <h3 className={styles.heading}>{book.genre}</h3>
+                                </Link>
+                            }else if(!isOwnedFilter){
+                                return <Link data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
+                                    <img src={"/public/chapter.jpg"}></img>
+                                    <h3 className={styles.heading}>{book.name}</h3>
+                                    <h3 className={styles.heading}>{book.author}</h3>
+                                    <h3 className={styles.heading}>{book.genre}</h3>
+                                </Link>
+                            }
 
-                            return <Link to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
-                                <img src={"/public/chapter.jpg"}></img>
-                                <h3 className={styles.heading}>{book.name}</h3>
-                                <h3 className={styles.heading}>{book.author}</h3>
-                                <h3 className={styles.heading}>{book.genre}</h3>
-                            </Link>
 
 
                         })}
@@ -139,7 +161,8 @@ export default function AllBooks(){
                     <i className="fa-solid fa-filter"></i>
                 </div>
                 <div className={styles.filterMenu}>
-
+                    <input onChange={ownedFilterClickHandler}  type={"checkbox"} />
+                    <label>Купена</label>
                     <details data-filter={"author"}>
                         <summary>Автор</summary>
                         {filterData.authors&&filterData.authors.length>0&&filterData.authors.map((el,index)=>{
