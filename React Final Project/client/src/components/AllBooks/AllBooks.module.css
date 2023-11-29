@@ -11,12 +11,14 @@
 .searchBarWrapper{
     display: flex;
     justify-content: center;
-    position: relative;
+    position: absolute;
+    height: 400px;
 
 }
 .searchBarC{
     display: flex;
     align-items: center;
+    /*justify-content: center;*/
     flex-direction: column;
     width: 300px;
     position: relative;
@@ -37,7 +39,7 @@
 
 }
 .autoCompletion{
-    top: 100%;
+    top: 11%;
     left: 0;
     transition: 1s;
     width: 0;
@@ -45,6 +47,7 @@
     position: absolute;
     background-color: pink;
     z-index: 1;
+    justify-self: center;
     /*transform: translateZ(0);*/
 }
 
