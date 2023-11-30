@@ -7,6 +7,8 @@ export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
     const [books,setBooks] = useState([])
+    const [completions,setCompletions] = useState([])
+    const [filteredAutoCompletions,setFilteredAutoCompletions] = useState([])
     const [isOwnedFilter,setIsOwnedFilter] = useState(false)
     const [searchParams,setSearchParams] = useState("")
     const [filterData,setFilterData] = useState({
@@ -95,6 +97,12 @@ export default function AllBooks(){
             (res)=>{
                 setReqBooks(res.allBooks)
                 setBooks(res.allBooks)
+                setCompletions(res.allBooks.map((book)=>{
+                    return {
+                        bookId:book._id,
+                        bookName:book.name
+                    }
+                }))
             }
         )
     }
@@ -116,10 +124,19 @@ export default function AllBooks(){
     const ownedFilterClickHandler = (e)=>{
             setIsOwnedFilter((oldValue)=>!oldValue)
     }
+    const changeAutoCompletions = ()=>{
+        const data = completions.filter(completion=>completion.bookName.indexOf(searchParams)==0)
+        console.log(data)
+        setFilteredAutoCompletions(data)
+    }
+
     useEffect(()=>{
         getAll()
         getFilteringData()
     },[])
+    useEffect(()=>{
+        changeAutoCompletions()
+    },[searchParams])
     return(
         <>
             <div className={styles.wrapper}>
@@ -127,9 +144,9 @@ export default function AllBooks(){
                     <div className={styles.searchBarC}>
                         <input value={searchParams} onChange={searchParamsChangeHandler} placeholder={"Search here"}  />
                         <div className={styles.autoCompletionC}>
-                            {books.length>0&&books.map((book)=>{
-                                return <div key={book._id} className={styles.autoCompletion}>
-                                    <p className={styles.completion}>{book.name}</p>
+                            {filteredAutoCompletions.length>0&&filteredAutoCompletions.map((completion)=>{
+                                return <div key={completion.bookId} className={styles.autoCompletion}>
+                                    <p className={styles.completion}>{completion.bookName}</p>
                                 </div>
                             })}
 

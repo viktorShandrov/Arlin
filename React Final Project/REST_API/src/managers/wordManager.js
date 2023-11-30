@@ -1,8 +1,10 @@
 
+
 const models = require("../models/allModels");
 const utils = require("../utils/utils");
 const { isOwnedByUser, isAdmin } = require("../managerUtils/managerUtil");
 const allModels = require("../models/allModels");
+const fetch = require('isomorphic-fetch');
 
 
 import('random-words')
@@ -12,7 +14,7 @@ import('random-words')
         const randomWords = randomWordsModule;
         import("chatgpt")
             .then(async(chatgpt)=>{
-                const { ChatGPTUnofficialProxyAPI } = chatgpt
+
 
 
                     exports.generateTest =async(userId,testType,chapterId)=>{
@@ -88,22 +90,37 @@ import('random-words')
                         //     )
                         // })
                         try {
-                            const response = await fetch("https://chatgpt-api.shn.hk/v1/",{
-                                method :"POST",
+                            const apiKey = "Vcm0eWkTJDLFojmyyDYcTB2rFDV6vFBTiNfs9F4q"
+                            const response = await fetch("https://api.cohere.ai/v1/generate",{
+                                method:"POST",
                                 headers:{
                                     "Content-Type":"application/json",
-                                    // "Authorization":"Bearer "+ utils.openAIPReoxyToken
+                                    "accept": "application/json",
+                                    "Authorization":`Bearer ${apiKey}`,
                                 },
-                                body:JSON.stringify(
+                                body:JSON.stringify({
+
+
+
+                                    "prompt":exports.makeGPTInput(chapter),
+                                    "connectors": [{"id": "web-search"}]
+
+                                })
+                            })
+                            const data = (await response.json()).generations[0].text.slice(0,-3)
+                            const parsedData = JSON.parse(data)
+                            console.log(data)
+                            console.log(parsedData)
+
+                            for (const questionElement of parsedData) {
+                               await allModels.chapterQuestionsModel.create(
                                     {
-                                        "model": "gpt-3.5-turbo",
-                                        "messages": [{"role": "user", "content": exports.makeGPTInput(chapter.text)}]
+                                        chapterId:chapter._id,
+                                        question:questionElement.question,
+                                        answers:questionElement.options,
                                     }
                                 )
-                            })
-                            const data = await response.json()
-                            console.log(response.ok)
-                            console.log(data)
+                            }
                         }catch (error){
                             console.log(error)
                         }
@@ -179,22 +196,22 @@ import('random-words')
                         // }
                         // const data = await response.json()
 
-                        let splitedText = data.choices.text.split("\n")
-                        splitedText = trimResponseArray(splitedText)
-                        const test = []
-
-                        for (let i = 0; i < splitedText.length; i+=5) {
-                            test.push(getQuestionAndAnswersObj(i,splitedText))
-                        }
-                        for (const questionElement of test) {
-                           await allModels.chapterQuestionsModel.create(
-                                {
-                                    chapterId:chapter._id,
-                                    rightAnswerIndex:questionElement.rightAnswerIndex,
-                                    answers:questionElement.answers,
-                                }
-                            )
-                        }
+                        // let splitedText = data.choices.text.split("\n")
+                        // splitedText = trimResponseArray(splitedText)
+                        // const test = []
+                        //
+                        // for (let i = 0; i < splitedText.length; i+=5) {
+                        //     test.push(getQuestionAndAnswersObj(i,splitedText))
+                        // }
+                        // for (const questionElement of test) {
+                        //    await allModels.chapterQuestionsModel.create(
+                        //         {
+                        //             chapterId:chapter._id,
+                        //             rightAnswerIndex:questionElement.rightAnswerIndex,
+                        //             answers:questionElement.answers,
+                        //         }
+                        //     )
+                        // }
                         return test
                     }
                     function trimResponseArray(splitedText){
@@ -230,26 +247,39 @@ import('random-words')
                         Text:
                         ${chapterText}
                         
-                        Generate three questions about the plot of the chapter, each with four possible answers. Mark the correct answer with "(TRUE ANSWER)" at the beginning. Keep each answer concise, between 5-10 words.
-                        
-                        Question 1:
-                        
-                        A. [Possible Answer 1]
-                        B. [Possible Answer 2]
-                        C. [Possible Answer 3]
-                        D. (TRUE ANSWER) [Correct Answer 1]
-                        Question 2:
-                        
-                        A. [Possible Answer 1]
-                        B. [Possible Answer 2]
-                        C. [Possible Answer 3]
-                        D. (TRUE ANSWER) [Correct Answer 2]
-                        Question 3:
-                        
-                        A. [Possible Answer 1]
-                        B. [Possible Answer 2]
-                        C. [Possible Answer 3]
-                        D. (TRUE ANSWER) [Correct Answer 3]
+                        Generate three questions about the plot of the chapter, each with four possible answers. Keep each answer concise, between 5-10 words. It's crucial that the correct answer is marked with the '"isCorrect": true' property.
+                        The output must be in JSON format as follows:
+                        [
+                          {
+                            "question": "Question 1 here",
+                            "options": [
+                              {"option": "[Possible Answer 1]", "isCorrect": false},
+                              {"option": "[Possible Answer 2]", "isCorrect": false},
+                              {"option": "[Possible Answer 3]", "isCorrect": false},
+                              {"option": "[Possible Answer 4]", "isCorrect": true}
+                            ]
+                          },
+                          {
+                            "question": "Question 2 here",
+                            "options": [
+                              {"option": "[Possible Answer 1]", "isCorrect": false},
+                              {"option": "[Possible Answer 2]", "isCorrect": false},
+                              {"option": "[Possible Answer 3]", "isCorrect": false},
+                              {"option": "[Possible Answer 4]", "isCorrect": true}
+                            ]
+                          },
+                          {
+                            "question": "Question 3 here",
+                            "options": [
+                              {"option": "[Possible Answer 1]", "isCorrect": false},
+                              {"option": "[Possible Answer 2]", "isCorrect": false},
+                              {"option": "[Possible Answer 3]", "isCorrect": true},
+                              {"option": "[Possible Answer 4]", "isCorrect": false}
+                            ]
+                          }
+                        ]
+
+
                         
                         `
 

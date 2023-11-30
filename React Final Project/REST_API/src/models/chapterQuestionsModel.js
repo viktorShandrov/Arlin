@@ -7,10 +7,11 @@ const schema = mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Chapter"
     },
-    rightAnswerIndex:Number,
+    question:String,
     answers:[
         {
-            type: String
+           option:String,
+            isCorrect:Boolean
         }
     ],
 })

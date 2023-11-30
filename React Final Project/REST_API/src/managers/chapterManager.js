@@ -48,7 +48,7 @@ exports.createChapter =async(bookId,text,userId,chapterName)=>{
    const book = await models.bookModel.findById(bookId)
    book.chapters.push(chapter._id)
     book.length+=1
-    // await wordManager.storeTestForChapter(chapter)
+    await wordManager.storeTestForChapter(chapter)
    return book.save()
 }
 const weeklyJob = schedule.scheduleJob({ hour: 2, minute: 0, dayOfWeek: 1 }, async () => {
