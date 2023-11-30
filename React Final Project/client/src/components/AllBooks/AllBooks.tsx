@@ -126,7 +126,14 @@ export default function AllBooks(){
                 <div className={styles.searchBarWrapper}>
                     <div className={styles.searchBarC}>
                         <input value={searchParams} onChange={searchParamsChangeHandler} placeholder={"Search here"}  />
-                        <div className={styles.autoCompletion}></div>
+                        <div className={styles.autoCompletionC}>
+                            {books.length>0&&books.map((book)=>{
+                                return <div key={book._id} className={styles.autoCompletion}>
+                                    <p className={styles.completion}>{book.name}</p>
+                                </div>
+                            })}
+
+                        </div>
                     </div>
                 </div>
                 <div className={styles.bookWrapper}>

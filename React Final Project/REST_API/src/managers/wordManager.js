@@ -225,27 +225,45 @@ import('random-words')
                     }
                     exports.makeGPTInput=(chapterText)=>{
                         return `
-                        SKIP ANY GREETINGS.
-                        I WILL PROVIDE YOU ONE CHAPTER TEXT. YOU MUST TAKE THAT TEXT, UNDERSTAND THE CONTEXT AND GIVE ME 3 QUESTIONS ABOUT
-                        THE PLOT OF THE CHAPTER. 
-                        FOR EVERY QUESTION YOU WILL PROVIDE ME 4 POSSIBLE ANSWERS WITH 5-10 WORDS.
-                        ONE OF THEM IS THE REALLY RIGHT ANSWER.
-                        THIS IS THE TEMPLATE THAT YOU SHOULD FOLLOW-
-                        "
+                        Chapter Plot Analysis:
+
+                        Text:
+                        ${chapterText}
+                        
+                        Generate three questions about the plot of the chapter, each with four possible answers. Mark the correct answer with "(TRUE ANSWER)" at the beginning. Keep each answer concise, between 5-10 words.
+                        
+                        Question 1:
+                        
+                        A. [Possible Answer 1]
+                        B. [Possible Answer 2]
+                        C. [Possible Answer 3]
+                        D. (TRUE ANSWER) [Correct Answer 1]
+                        Question 2:
+                        
+                        A. [Possible Answer 1]
+                        B. [Possible Answer 2]
+                        C. [Possible Answer 3]
+                        D. (TRUE ANSWER) [Correct Answer 2]
+                        Question 3:
+                        
+                        A. [Possible Answer 1]
+                        B. [Possible Answer 2]
+                        C. [Possible Answer 3]
+                        D. (TRUE ANSWER) [Correct Answer 3]
+                        
+                        `
+
+                    }
+
+                    `
+                     "
                         3.How does Daddy respond to Adam-Two's skepticism about Santa Claus?
                         He dismisses Adam-Two's thoughts as childish imagination.
                         (TRUE ANSWER) He reassures Mike-One that Santa Claus is real in Fairyland.
                          He puts Adam-Two on the No Ice Cream List for a month.
                         He ignores the question and suggests playing chess instead.
                         "
-                
-                        THE ANSWERS MUST BE EXACTLY 4.
-                        ON THE BEGINNING OF THE RIGHT ANSWER YOU MUST PUT "(TRUE ANSWER)" TO KNOW THAT THIS IS THE RIGHT ONE.
-                        HERE IS THE TEXT:
-                        ${chapterText}
-                        `
-
-                    }
+                    `
 
                     exports.markTestAsCompleted =async (userId,testType)=>{
                         const user = await models.userModel.findById(userId)
