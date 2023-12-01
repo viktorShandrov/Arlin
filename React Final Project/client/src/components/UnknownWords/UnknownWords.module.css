@@ -72,3 +72,13 @@
 .row h5{
     margin: 15px 20px;
 }
+.buyBtnWrapper{
+    display: flex;
+    justify-content: center;
+}
+stripe-buy-button{
+    border-radius: 5px;
+    padding: 20px;
+    background-color: white;
+
+}

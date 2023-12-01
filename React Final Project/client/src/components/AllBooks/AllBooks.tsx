@@ -153,6 +153,9 @@ export default function AllBooks(){
                         </div>
                     </div>
                 </div>
+
+
+
                 <div className={styles.bookWrapper}>
                     <div className={styles.booksC}>
                         {books.length>0&&books.map((book)=>{

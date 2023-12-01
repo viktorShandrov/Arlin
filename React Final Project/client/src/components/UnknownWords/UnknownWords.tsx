@@ -49,6 +49,14 @@ export default function UnknownWords(){
 
                 </div>
             </div>
+            <div className={styles.buyBtnWrapper}>
+                <stripe-buy-button
+                    buy-button-id="buy_btn_1OIWmyAPrNaPFyVRmw78cr1J"
+                    publishable-key="pk_live_51OEwwSAPrNaPFyVRf6RiYUnrC0lm4mHy12PxGfJUmWmC5SHbtvL2UErsfoOynjL0iH6pma7sQae15NFRz4AxLQTa00dgG5S75V"
+                >
+                </stripe-buy-button>
+            </div>
+
         </>
     )
 }
