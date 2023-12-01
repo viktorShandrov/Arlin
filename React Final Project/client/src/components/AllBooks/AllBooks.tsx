@@ -9,6 +9,7 @@ export default function AllBooks(){
     const [books,setBooks] = useState([])
     const [completions,setCompletions] = useState([])
     const [filteredAutoCompletions,setFilteredAutoCompletions] = useState([])
+    const [isFilterPanelShown,setIsFilterPanelShown] = useState(false)
     const [isOwnedFilter,setIsOwnedFilter] = useState(false)
     const [searchParams,setSearchParams] = useState("")
     const [filterData,setFilterData] = useState({
@@ -184,10 +185,11 @@ export default function AllBooks(){
 
                     </div>
                 </div>
-                <div onClick={(e)=>e.currentTarget.setAttribute("data-isiconclicked",true)} className={styles.filterIcon}>
+                <div onClick={()=>setIsFilterPanelShown(true)} className={styles.filterIcon}>
                     <i className="fa-solid fa-filter"></i>
                 </div>
-                <div className={styles.filterMenu}>
+                {isFilterPanelShown&&<div className={styles.filterMenu}>
+                    <i  onClick={()=>setIsFilterPanelShown(false)} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
                     <input onChange={ownedFilterClickHandler}  type={"checkbox"} />
                     <label>Купена</label>
                     <details data-filter={"author"}>
@@ -208,7 +210,8 @@ export default function AllBooks(){
                             </div>
                         })}
                     </details>
-                </div>
+                </div>}
+
 
 
             </div>
