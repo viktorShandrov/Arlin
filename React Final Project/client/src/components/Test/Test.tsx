@@ -27,19 +27,8 @@ export default function Test(){
     const textToSpeechClickHandler = ()=>{
         const voice = new SpeechSynthesisUtterance(question.question)
         window.speechSynthesis.speak(voice)
-        makeUnknownWordsKnown()
     }
-    const makeUnknownWordsKnown = () =>{
-        const wordsIds = test.filter(el => el._id).map((el)=>el._id)
-        request("unknownWords/makeThemKnown","POST", {wordsIds}).subscribe(
-            (res)=>{
 
-            },
-            (error)=>{
-
-            }
-        )
-    }
     const answerClickHandler=(index:number)=>{
         answerRefs.current[index].classList.add(styles.clicked);
         setTimeout(()=>{
