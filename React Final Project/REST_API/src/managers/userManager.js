@@ -34,3 +34,12 @@ exports.login = async (email,password)=>{
     return {token,email,userId:user._id,role:user.role}
 
 }
+exports.getUserInfo = async (_id)=>{
+    const user = await userModel.findById(_id);
+
+    delete user.password
+
+    return user.toObject()
+
+
+}

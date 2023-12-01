@@ -46,7 +46,7 @@ exports.createChapter =async(bookId,text,userId,chapterName)=>{
        }
        )
    const book = await models.bookModel.findById(bookId)
-   book.chapters.push(chapter._id)
+   book.chapters.push(chapter._id.toString())
     book.length+=1
     await wordManager.storeTestForChapter(chapter)
    return book.save()

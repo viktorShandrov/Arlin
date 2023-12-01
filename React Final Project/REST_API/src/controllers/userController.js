@@ -31,5 +31,18 @@ router.post("/login",async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/userInfo/:userId",isAuth,async (req,res)=>{
+    try {
+
+        const {userId} = req.params
+
+        const userInfo = await userManager.getUserInfo(userId)
+
+        res.status(201).json(userInfo)
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
 
 module.exports = router

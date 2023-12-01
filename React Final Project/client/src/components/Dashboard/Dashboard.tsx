@@ -1,6 +1,6 @@
 
 import styles from "./Dashboard.module.css"
-import React, { PureComponent } from 'react';
+import React, {PureComponent, useEffect, useState} from 'react';
 import {
     LineChart,
     Line,
@@ -12,7 +12,20 @@ import {
     ReferenceLine,
     ResponsiveContainer,
 } from 'recharts';
+import {request} from "../../functions";
+import {useSelector} from "react-redux";
+import DashboardStat from "./DashboardStat/DashboardStat";
 export default function Dashboard(){
+    const [userInfo,setUserInfo] = useState({})
+    const {user} = useSelector((state)=>state.user)
+
+    useEffect(()=>{
+        request(`users/userInfo/${user.userId}`).subscribe(
+            (res)=>{
+                setUserInfo(res)
+            }
+        )
+    },[])
 
 
     const data = [
@@ -61,6 +74,11 @@ export default function Dashboard(){
     ];
     return(
         <div className={styles.dashboardWrapper}>
+            <div className={styles.summaryWrapper}>
+                <DashboardStat name={"Тестове на произволни думи"} value={userInfo.randomWordsTests} />
+                <DashboardStat name={"Тестове на думи от текст"} value={userInfo.wordsFromChapterTests} />
+                <DashboardStat name={'Тестове за "Четене с разбиране"'} value={userInfo.chapterPlotTests} />
+            </div>
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart width={500} height={300} data={data}>
                     <CartesianGrid strokeDasharray="3 3" />

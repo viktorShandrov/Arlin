@@ -57,10 +57,30 @@ import('random-words')
                             return await makeTestOutOfWords(testWords)
                         }if(testType === utils.testTypes.textQuestions){
                             // 3 questions from the text
-                        }
+                            let questions = [...await allModels.chapterQuestionsModel.find({chapterId})]
+                            questions = refactorQuestionAnswers(questions)
+                            return questions
                     }
-                    exports.makePlotTestForChapter =async (chapter)=>{
+                    function refactorQuestionAnswers(questions){
+                        return questions.map(question=>{
 
+
+
+                            const updatedAnswers = question.answers.map((answer)=>{
+                                const updatedAnswer = answer.toObject()
+
+                                if(updatedAnswer.hasOwnProperty("isCorrect")&&!updatedAnswer.isCorrect){
+                                    delete updatedAnswer.isCorrect
+                                }
+                                return updatedAnswer
+                            })
+
+                            question.answers = updatedAnswers
+
+
+                            return question
+                        })
+                    }
                     }
                     exports.storeTestForChapter =async (chapter)=>{
                         // const API = new ChatGPTUnofficialProxyAPI({

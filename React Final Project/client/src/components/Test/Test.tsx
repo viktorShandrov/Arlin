@@ -121,7 +121,7 @@ export default function Test(){
                                             {question.answers.map((el,index)=>{
                                                 // @ts-ignore
                                                 return  <div onClick={()=>answerClickHandler(index)} ref={el => answerRefs.current[index] = el} key={index} data-iscorrect={el.isCorrect} className={styles.answer}>
-                                                    <p className={styles.answerText}>{el.answer}</p>
+                                                    <p className={styles.answerText}>{el.answer||el.option}</p>
                                                 </div>
                                             })}
                                         </>

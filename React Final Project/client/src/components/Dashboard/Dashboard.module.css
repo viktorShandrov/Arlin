@@ -1,4 +1,15 @@
 .dashboardWrapper{
+    flex: 1;
     background-color: white;
-    height: 500px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.dashboardWrapper>*{
+    flex: 1;
+}
+.summaryWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
