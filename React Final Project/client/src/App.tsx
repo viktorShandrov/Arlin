@@ -4,7 +4,7 @@ import styles from './App.module.css'
 import {Route, Routes} from "react-router-dom";
 // import AdminPanel from "./admin/AdminPanel";
 import Main from "./components/Main/Main";
-import React, {createContext, useEffect} from "react";
+import React, {createContext, useEffect,Suspense} from "react";
 import {Provider} from "react-redux";
 // @ts-ignore
 import {store} from "./redux/store.js";
@@ -31,7 +31,13 @@ function App() {
           <Provider store={store}>
               <div className={styles.mainWrapper}>
                   <Routes>
-                      <Route path={"/admin/*"} element={<AdminPanel />}></Route>
+
+                        <Route path={"/admin/*"} element={
+                            <Suspense fallback={<p>Entering admin panel</p>}>
+                                <AdminPanel />
+                            </Suspense>
+                        }></Route>
+
 
                       <Route path={"/user/*"} element={<User />}></Route>
                       <Route path={"/main/*"} element={<Main />}></Route>
