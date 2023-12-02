@@ -6,6 +6,8 @@ import BuyBtn from "../BuyBtn/BuyBtn";
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import {useSelector} from "react-redux";
+import {toast} from "react-toastify";
+import {Toast} from "react-bootstrap";
 
 export default function  BookDetails(){
 
@@ -16,6 +18,7 @@ export default function  BookDetails(){
     // const {user} = useContext(userContext)
     const {user}:any = useSelector((selector:any)=>selector.user)
     const [image,setImage] = useState("")
+    const [isDialogShown,setIsDialogShown] = useState(false)
     const [book,setBook] = useState({
         name:"",
         resume:"",
@@ -40,6 +43,16 @@ export default function  BookDetails(){
                     },
             )
     }
+    const deleteBook = ()=>{
+        request(`books/${book._id}/delete`,"GET").subscribe(
+            (res:any)=>{
+                toast.success("Successfully deleted")
+            }
+        )
+    }
+    const toggleDeleteDialog=()=>{
+        setIsDialogShown((oldState:boolean)=>!oldState)
+    }
 
 
 
@@ -52,6 +65,15 @@ export default function  BookDetails(){
     // @ts-ignore
     return(
         <>
+            {isDialogShown&&<div className={styles.overlay}>
+                <dialog className={styles.dialog} open={isDialogShown} >
+                    Are you sure you want to delete this book?
+                    <button onClick={deleteBook}>Yes</button>
+                    <button>No</button>
+                </dialog>
+            </div>}
+
+
             <div className={styles.wrapper}>
                 <div className={styles.container}>
                     <div className={styles.imageAndBtns}>
@@ -68,7 +90,7 @@ export default function  BookDetails(){
                             {user.role==="admin"&&
                                 <>
                                     <Link to={`/admin/addBook/${book._id}`} className={styles.editBtn}>Edit</Link>
-                                    <button className={styles.deleteBtn}>Delete</button>
+                                    <button onClick={toggleDeleteDialog} className={styles.deleteBtn}>Delete</button>
                                 </>
                             }
 

@@ -81,11 +81,11 @@ router.post("/:id/edit",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.post("/:id/delete",isAuth,async (req,res)=>{
+router.get("/:id/delete",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
         const bookId = req.params.id
-
+        console.log(bookId)
         await bookManager.deleteBook(bookId,_id)
         res.status(200).end()
     } catch (error) {

@@ -44,7 +44,15 @@ exports.bookIsPurchased =async (userId,bookId)=>{
 }
 exports.deleteBook =async(bookId,userId)=>{
    await isAdmin(null,userId)
+   await deleteBookChapters(bookId)
    return models.bookModel.findByIdAndDelete(bookId)
+}
+async function deleteBookChapters(bookId){
+    const chapters = await models.chapterModel.find({bookId})
+    for (const chapter of chapters) {
+        console.log(chapter)
+        await chapter.delete()
+    }
 }
 exports.addImageToBook =async(bookId,userId,image)=>{
    await isAdmin(null,userId)
