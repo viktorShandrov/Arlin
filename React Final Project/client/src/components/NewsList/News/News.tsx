@@ -1,7 +1,7 @@
 import styles from "./News.module.css"
 import {useNavigate} from "react-router-dom";
 
-export default function News({el}){
+export default function News({el}:any){
     const navigate = useNavigate()
 
      const newsClickHandler = ()=>{

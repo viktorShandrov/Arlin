@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import {request} from "../../functions";
 import {Link, useParams} from "react-router-dom";
 import styles from "./ChapterList.module.css"
-import {createLogger} from "vite";
 export default function ChapterList(){
     const [chapters,setChapters] = useState([])
     const {bookId} = useParams()

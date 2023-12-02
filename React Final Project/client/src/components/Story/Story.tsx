@@ -9,7 +9,7 @@ export default function Story(){
     const navigate = useNavigate();
 
     const [chapter,setChapter] = useState({
-        currentChapter: {text:""},
+        currentChapter: {text:"", _id: undefined},
         previousChapterId:'',
         nextChapterId:'',
         _id:""
@@ -20,12 +20,9 @@ export default function Story(){
     const {chapterId} = useParams()
     const getChapter=(chapterId:string)=>{
          request(`chapters/${chapterId}`).subscribe(
-             (res)=>{
+             (res:any)=>{
                  console.log(res)
                  setChapter(res)
-             },
-             (error)=>{
-                 console.log(error)
              }
          )
     }

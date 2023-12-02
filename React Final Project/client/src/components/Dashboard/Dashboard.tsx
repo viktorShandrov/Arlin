@@ -1,6 +1,6 @@
 
 import styles from "./Dashboard.module.css"
-import React, {PureComponent, useEffect, useState} from 'react';
+import  { useEffect, useState} from 'react';
 import {
     LineChart,
     Line,
@@ -9,19 +9,22 @@ import {
     CartesianGrid,
     Tooltip,
     Legend,
-    ReferenceLine,
     ResponsiveContainer,
 } from 'recharts';
 import {request} from "../../functions";
 import {useSelector} from "react-redux";
 import DashboardStat from "./DashboardStat/DashboardStat";
 export default function Dashboard(){
-    const [userInfo,setUserInfo] = useState({})
-    const {user} = useSelector((state)=>state.user)
+    const [userInfo,setUserInfo] = useState({
+        randomWordsTests: undefined,
+        wordsFromChapterTests: undefined,
+        chapterPlotTests: undefined
+    })
+    const {user} = useSelector((state:any)=>state.user)
 
     useEffect(()=>{
         request(`users/userInfo/${user.userId}`).subscribe(
-            (res)=>{
+            (res:any)=>{
                 setUserInfo(res)
             }
         )

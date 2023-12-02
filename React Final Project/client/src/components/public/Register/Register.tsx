@@ -1,4 +1,4 @@
-import {useContext, useState} from "react";
+import { useState} from "react";
 import styles from "./Register.module.css"
 import {Link, useNavigate} from "react-router-dom";
 import {request} from "../../../functions";
@@ -26,7 +26,7 @@ export default function  Register(){
     }
     const onSubmit=()=>{
         request("users/register","POST",formValues).subscribe(
-            (res)=>{
+            (res:any)=>{
                 // localStorage.setItem("user",JSON.stringify(res))
                 if(res){
                     dispatch(setUser(res))
@@ -34,9 +34,6 @@ export default function  Register(){
                     // navigate("/main")
                     navigate(-1)
                 }
-            },
-            (error)=>{
-                console.log(error)
             }
         )
     }

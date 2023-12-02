@@ -16,27 +16,29 @@ export default function AllBooks(){
         authors:[],
         genres:[]
     })
+
     const [appliedFilters,setAppliedFilters] = useState({
         author:[],
         genre:[],
     })
-    const {user} = useSelector((selector)=>selector.user)
+    const {user} = useSelector((selector:any)=>selector.user)
     useEffect(()=>{
         filterByFilters()
     },[appliedFilters])
     const filterByFilters = ()=>{
-        setBooks(oldState=>{
-            let filteredResult = []
+        setBooks(()=>{
+            let filteredResult:any = []
 
             let data = reqBooks
             if(isOwnedFilter){
-                data = data.filter(el=>el.ownedBy.includes(user.userId))
+                data = data.filter((el:any)=>el.ownedBy.includes(user.userId))
             }
 
             const filtered = data.filter(el=>{
                 const results = []
                 for (const filter of Object.keys(appliedFilters)) {
                     //author,genre ...
+                    // @ts-ignore
                     for (const filterValue of appliedFilters[filter]) {
                         results.push(el[filter]===filterValue)
                     }
@@ -58,7 +60,7 @@ export default function AllBooks(){
             return filteredResult
         })
     }
-    const filterChangeHandler = (e)=>{
+    const filterChangeHandler = (e:any)=>{
         setAppliedFilters(oldState=>{
             const filterValue = e.target.parentElement.getAttribute("data-filterValue")
             const propName = [e.target.parentElement.parentElement.getAttribute("data-filter")]
@@ -66,15 +68,18 @@ export default function AllBooks(){
 
                 return {
                     ...oldState,
+                // @ts-ignore
                     [propName]: appliedFilters[propName].includes(filterValue)?[...appliedFilters[propName]]:[...appliedFilters[propName],filterValue]
                 }
             }else{
+                // @ts-ignore
                 const index = appliedFilters[propName].indexOf(filterValue)
-
+                // @ts-ignore
                 appliedFilters[propName].splice(index,1)
 
                 return {
                     ...oldState,
+                    // @ts-ignore
                     [propName]: appliedFilters[propName]
                 }
             }
@@ -86,7 +91,7 @@ export default function AllBooks(){
 
 
     }
-    const searchParamsChangeHandler = (e)=>{
+    const searchParamsChangeHandler = (e:any)=>{
         const searchParam = e.currentTarget.value
         setBooks(()=>{
             return reqBooks.filter((el:any)=>el.name.toLowerCase().indexOf(searchParam.toLowerCase()) ==0)
@@ -95,10 +100,10 @@ export default function AllBooks(){
     }
      const getAll = ()=>{
         request("books/all","GET").subscribe(
-            (res)=>{
+            (res:any)=>{
                 setReqBooks(res.allBooks)
                 setBooks(res.allBooks)
-                setCompletions(res.allBooks.map((book)=>{
+                setCompletions(res.allBooks.map((book:any)=>{
                     return {
                         bookId:book._id,
                         bookName:book.name
@@ -110,9 +115,10 @@ export default function AllBooks(){
 
     const getFilteringData = () =>{
         request("books/getDataForFilters",'GET').subscribe(
-            (res)=>{
+            (res:any)=>{
                 const data = res
                 for (const filter of Object.values(data)) {
+                    // @ts-ignore
                     for (const filterValue of filter) {
                         data[filterValue] = false
 
@@ -122,11 +128,11 @@ export default function AllBooks(){
             }
         )
     }
-    const ownedFilterClickHandler = (e)=>{
+    const ownedFilterClickHandler = ()=>{
             setIsOwnedFilter((oldValue)=>!oldValue)
     }
     const changeAutoCompletions = ()=>{
-        const data = completions.filter(completion=>completion.bookName.indexOf(searchParams)==0)
+        const data = completions.filter((completion:any)=>completion.bookName.indexOf(searchParams)==0)
         console.log(data)
         setFilteredAutoCompletions(data)
     }
@@ -145,7 +151,7 @@ export default function AllBooks(){
                     <div className={styles.searchBarC}>
                         <input value={searchParams} onChange={searchParamsChangeHandler} placeholder={"Search here"}  />
                         <div className={styles.autoCompletionC}>
-                            {filteredAutoCompletions.length>0&&filteredAutoCompletions.map((completion)=>{
+                            {filteredAutoCompletions.length>0&&filteredAutoCompletions.map((completion:any)=>{
                                 return <div key={completion.bookId} className={styles.autoCompletion}>
                                     <p className={styles.completion}>{completion.bookName}</p>
                                 </div>
@@ -159,7 +165,7 @@ export default function AllBooks(){
 
                 <div className={styles.bookWrapper}>
                     <div className={styles.booksC}>
-                        {books.length>0&&books.map((book)=>{
+                        {books.length>0&&books.map((book:any)=>{
 
 
                             if(isOwnedFilter&&book.ownedBy.includes(user.userId)){

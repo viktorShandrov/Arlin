@@ -1,17 +1,23 @@
 import styles from "./NewsDetails.module.css"
 import {useEffect, useState} from "react";
 import {request} from "../../functions";
-import {Route, Routes, useNavigate, useNavigation, useParams} from "react-router-dom";
+import {Route, Routes, useNavigate, useParams} from "react-router-dom";
 import TranslationContainer from "../TranslationContainer/TranslationContainer";
 import Sentence from "../Story/Sentence/Sentence";
 
 export default function NewsDetails(){
     const {id} = useParams()
     const navigate = useNavigate()
-    const [news,setNews] = useState({})
+    const [news,setNews] = useState<any>({
+        _id: undefined,
+        title: undefined,
+        date: undefined,
+        urlToImage: undefined,
+        splitedText:undefined
+    })
     useEffect(()=>{
         request(`news/${id}`,"GET").subscribe(
-            (res)=>{
+            (res:any)=>{
 
                 const date = new Date(res.news.publishedAt).toLocaleString('en-GB', {
                     day: '2-digit',
@@ -33,8 +39,8 @@ export default function NewsDetails(){
             }
         )
     },[])
-    const sentenceClickHandler = (senctence)=>{
-        navigate(`/main/news/${news._id}/${senctence}`)
+    const sentenceClickHandler = (sentence:string)=>{
+        navigate(`/main/news/${news._id}/${sentence}`)
     }
 
     return(
@@ -50,7 +56,7 @@ export default function NewsDetails(){
                     </div>
                     <div className={styles.content} >
 
-                        {news.splitedText?.map((sentence,index)=>{
+                        {news.splitedText&&news.splitedText.map((sentence:string,index:number)=>{
                             return <div onClick={()=>sentenceClickHandler(sentence)} key={index}>
                                 <Sentence  text={sentence}/>
 

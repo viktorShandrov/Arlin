@@ -3,8 +3,6 @@ import styles from "./Test.module.css"
 import {useEffect, useRef, useState} from "react";
 import {request} from "../../functions";
 import Spinner from 'react-bootstrap/Spinner';
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 import {useParams} from "react-router-dom";
 
 export default function Test(){
@@ -30,22 +28,26 @@ export default function Test(){
     }
 
     const answerClickHandler=(index:number)=>{
+        // @ts-ignore
         answerRefs.current[index].classList.add(styles.clicked);
         setTimeout(()=>{
+            // @ts-ignore
             answerRefs.current[index].classList.remove(styles.clicked);
         },1000)
         // @ts-ignore
         if(answerRefs.current[index].getAttribute("data-iscorrect")){
+            // @ts-ignore
             containerRef?.current.classList.add(styles.wrightAnswerAnimation)
             setTimeout(()=>{
+                // @ts-ignore
                 containerRef?.current.classList.remove(styles.wrightAnswerAnimation)
                 const questionIndex = test.findIndex(question1=>question1==question)
                 if(questionIndex==11){
                     setIsTestDone(true)
-                    makeUnknownWordsKnown()
+                    // makeUnknownWordsKnown()
 
                 }else{
-                    setQuestion(oldQuestion=>{
+                    setQuestion(()=>{
                         return test[questionIndex+1]
                     })
                 }
@@ -56,24 +58,18 @@ export default function Test(){
 
     useEffect(()=>{
         request("unknownWords/giveTest","POST",{testType,chapterId}).subscribe(
-            (res)=>{
+            (res:any)=>{
                 console.log(res)
                 setTest(res.test)
                 setQuestion(res.test[0])
                 setIsLoading(false)
-            },
-            (error)=>{
-                console.log(error)
             }
         )
     },[])
     const proceedClickHandler = ()=>{
         request("unknownWords/testCompleted","POST",{testType:"randomWords"}).subscribe(
-            (res)=>{
+            ()=>{
 
-            },
-            (error)=>{
-                console.log(error)
             }
         )
     }
@@ -107,9 +103,9 @@ export default function Test(){
                                     <div className={styles.answersC}>
 
                                         <>
-                                            {question.answers.map((el,index)=>{
+                                            {question.answers.map((el:any,index)=>{
                                                 // @ts-ignore
-                                                return  <div onClick={()=>answerClickHandler(index)} ref={el => answerRefs.current[index] = el} key={index} data-iscorrect={el.isCorrect} className={styles.answer}>
+                                                return  <div onClick={()=>answerClickHandler(index)} ref={(el:any) => answerRefs.current[index] = el} key={index} data-iscorrect={el.isCorrect} className={styles.answer}>
                                                     <p className={styles.answerText}>{el.answer||el.option}</p>
                                                 </div>
                                             })}
@@ -132,11 +128,11 @@ export default function Test(){
                     <div className={styles.testDoneContainer}>
                         <h1>Какво научихме днес:</h1>
                         <div className={styles.rowsC}>
-                            {test.map((question,index)=>{
+                            {test.map((question:any,index:number)=>{
                                 return <div key={index} className={styles.row}>
                                     <span>{question.question}</span>
                                     <span>{"--->"}</span>
-                                    <span>{question.answers.find(el=>el.isCorrect).answer}</span>
+                                    <span>{question.answers.find((el:any)=>el.isCorrect).answer}</span>
 
                                 </div>
                             })}

@@ -1,7 +1,7 @@
 
 import styles from "./DashboardStat.module.css"
 
-export default function DashboardStat({name,value}){
+export default function DashboardStat({name,value}:any){
     return(
         <div className={styles.summary}>
             <label className={styles.text}>{name}</label>

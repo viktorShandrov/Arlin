@@ -2,8 +2,8 @@
 import styles from "./AddBook.module.css"
 import {useEffect, useState} from "react";
 import {request} from "../../functions";
-import {useNavigate, useNavigationType, useParams} from "react-router-dom";
-import { toast, ToastContainer } from 'react-toastify';
+import {useNavigate, useParams} from "react-router-dom";
+import { toast } from 'react-toastify';
 export default function AddBook(){
     const {bookId} = useParams()
     const navigate = useNavigate()
@@ -17,10 +17,10 @@ const [formValues,setFormValues] = useState({
 
     const [selectedFile, setSelectedFile] = useState(null);
 
-    const handleFileChange = (event) => {
+    const handleFileChange = (event:any) => {
         setSelectedFile(event.target.files[0]);
     };
-    const formValueChangeHandler = (e)=>{
+    const formValueChangeHandler = (e:any)=>{
         setFormValues(()=>{
             return {
                 ...formValues,
@@ -32,7 +32,7 @@ const [formValues,setFormValues] = useState({
     useEffect(()=>{
         if(bookId){
             request(`books/${bookId}`).subscribe(
-                (res)=>{
+                (res:any)=>{
                     console.log(res.book)
                     delete res.book.image
                     setFormValues(res.book)
@@ -49,6 +49,7 @@ const [formValues,setFormValues] = useState({
         // for (const formValue of Object.entries(formValues)) {
         //     payload.append(formValue[0],formValue[1])
         // }
+        // @ts-ignore
         payload.append("file",selectedFile!,selectedFile!.name)
         payload.append("upload_preset","xw4yrog1")
 
@@ -56,13 +57,13 @@ const [formValues,setFormValues] = useState({
         request("books/create","POST",{bookData: formValues},
 
             ).subscribe(
-            (res)=>{
+            (res:any)=>{
 
                 fetch(`http://localhost:3000/books/addImageToBook/${res._id}`, {
                     method: 'POST',
                     body: payload,
                     headers:{
-                        Authorization: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : null
+                        Authorization: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!).token : null
                     }
                 }).then((response)=>{
                     if(response.ok){
@@ -72,15 +73,12 @@ const [formValues,setFormValues] = useState({
                     toast.error("Cannot upload image")
                 });
 
-            },
-            (error)=>{
-                console.log(error)
             }
         )
     }
     const editBookHandler = ()=>{
         request(`books/${bookId}/edit`,"POST",{bookData:formValues}).subscribe(
-            (res)=>{
+            ()=>{
                 toast.success("Book edit is successful")
                 navigate("/main/AllBooks")
             },

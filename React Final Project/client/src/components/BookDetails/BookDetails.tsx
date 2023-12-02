@@ -1,8 +1,7 @@
 import styles from "./BookDetails.module.css"
-import {useContext, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import {Link, useParams} from "react-router-dom";
 import {request} from "../../functions";
-import {userContext} from "../../App";
 import BuyBtn from "../BuyBtn/BuyBtn";
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -15,7 +14,7 @@ export default function  BookDetails(){
     const {id} = useParams()
 
     // const {user} = useContext(userContext)
-    const {user} = useSelector((selector)=>selector.user)
+    const {user}:any = useSelector((selector:any)=>selector.user)
     const [image,setImage] = useState("")
     const [book,setBook] = useState({
         name:"",
@@ -30,7 +29,7 @@ export default function  BookDetails(){
     })
     const getBook = ()=>{
             request(`books/${id}/details`,"GET").subscribe(
-                async (res)=>{
+                async (res:any)=>{
                     const imageData = res.book.image.data;
 
                     const base64Image = btoa(new Uint8Array(imageData).reduce((data, byte) => data + String.fromCharCode(byte), ''));
@@ -48,6 +47,9 @@ export default function  BookDetails(){
          getBook()
     },[])
 
+
+    // @ts-ignore
+    // @ts-ignore
     return(
         <>
             <div className={styles.wrapper}>
@@ -56,8 +58,8 @@ export default function  BookDetails(){
                         <img src={image} alt="Your Image" />
                         <div className={styles.btns}>
 
-                            {book&&!book.ownedBy?.includes(user.userId)||user.role!=="admin"&&true
-                            }
+                            {/*{book&&!book.ownedBy?.includes(user.userId)||user.role!=="admin"&&true*/}
+                            {/*}*/}
                                 <Elements stripe={stripePromise}>
                                     <BuyBtn bookId={book._id} />
                                 </Elements>
@@ -93,9 +95,10 @@ export default function  BookDetails(){
                         </div>
                         <div className={styles.btns}>
                             <button className={styles.seeFreeChaptersBtn}>See free chapters</button>
-                            {book.ownedBy.includes(user.userId)&&
+                            {((book.ownedBy as any) || []).includes(user.userId) &&
                                 <Link to={`/main/read/${book._id}`} className={styles.readBtn}>Read</Link>
                             }
+
 
                         </div>
                     </div>

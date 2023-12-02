@@ -14,7 +14,7 @@ exports.isProduction = false
 process.env.GOOGLE_APPLICATION_CREDENTIALS =path.join(__dirname,'./gc-cred.json')
 exports.port = 3000
 exports.secret = "kjsdhgLKJGHDLKJGHkljhlkjhh43iu4h8osioduhfis"
-exports.FEdomain = "http://127.0.0.1:5173"
+exports.FEdomains = ["http://127.0.0.1:5173","http://127.0.0.1:4173"]
 exports.testTypes ={
     randomWords:"randomWords",
     textWords:"textWords",

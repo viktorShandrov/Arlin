@@ -20,7 +20,7 @@ export default function AddChapterPanel(){
     const submitForm = ()=>{
         // console.log(JSON.stringify(form))
         request("chapters/create","POST",formValues).subscribe(
-            (res)=>{
+            ()=>{
 
             },
         )

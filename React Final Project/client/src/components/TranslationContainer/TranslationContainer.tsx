@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import  { useEffect, useRef, useState } from "react";
 import "./TranslationContainer.module.css";
 import styles from "./TranslationContainer.module.css";
 import { useParams } from "react-router-dom";
@@ -7,13 +7,16 @@ import { request } from "../../functions";
 export default function TranslationContainer() {
     const [translatedSentence, setTranslatedSentence] = useState("");
     const [clickedWords, setClickedWords] = useState([]);
-    const wordsContainerRef = useRef()
+    const wordsContainerRef = useRef<HTMLParagraphElement>(null)
 
     let { textToTranslate } = useParams();
 
     useEffect(() => {
-         textToTranslate = decodeURIComponent(textToTranslate);
+         textToTranslate = decodeURIComponent(textToTranslate!);
+
+        // @ts-ignore
         for (const wordRef of Array.from(wordsContainerRef.current!.children)) {
+            // @ts-ignore
             wordRef.removeAttribute("data-isclicked")
         }
 
@@ -65,16 +68,15 @@ export default function TranslationContainer() {
 
     const saveWordsClickHandler = () => {
         const words = [];
+        // @ts-ignore
         for (const elements of Array.from(wordsContainerRef.current!.children).filter(el=>el.getAttribute("data-isclicked"))) {
+            // @ts-ignore
             words.push(elements.textContent);
         }
         console.log(words);
         request("unknownWords/create", "POST", { words }).subscribe(
-            (res) => {
+            () => {
                 console.log("success");
-            },
-            (error) => {
-                console.log(error);
             }
         );
     };

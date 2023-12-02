@@ -1,15 +1,14 @@
 import "./StoryList.css"
-import {useContext, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import {request} from "../../functions";
 import styles from "../ChapterList/ChapterList.module.css";
 import {Link} from "react-router-dom";
-import {userContext} from "../../App";
 import {useSelector} from "react-redux";
 export default function StoryList(){
 
 
     // const {user} = useContext(userContext)
-    const {user} = useSelector((selector)=>selector.user)
+    const {user} = useSelector((selector:any)=>selector.user)
 
 
     const [books,setBooks] = useState([])
@@ -35,7 +34,7 @@ export default function StoryList(){
         <div className={styles.chapterListWrapper}>
             <div className={styles.chapterList}>
                 {books.map((book: any, index: number) => (
-                    <div className={styles.bookElementWrapper}>
+                    <div key={index} className={styles.bookElementWrapper}>
                         {!book.ownedBy.includes(user.userId)&&
                             <i className={`fa-solid fa-lock ${styles.lockIcon}`}></i>
                         }

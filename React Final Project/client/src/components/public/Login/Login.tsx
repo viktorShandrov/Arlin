@@ -1,14 +1,14 @@
-import {useContext, useEffect, useState} from "react";
+import { useState} from "react";
 import styles from "./Login.module.css"
 import {Link, useNavigate} from "react-router-dom";
 import {request} from "../../../functions";
 // import {userContext} from "../../App";
 import {setUser} from "../../../redux/user"
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 export default function  Login(){
 
     // const {user,setUser} = useContext(userContext)
-    const {user} = useSelector((state)=>state.user)
+    // const {user} = useSelector((state:any)=>state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [formValues,setFormValues] = useState({
@@ -28,7 +28,7 @@ export default function  Login(){
 
     const onSubmit=()=>{
         request("users/login","POST",formValues).subscribe(
-            (res)=>{
+            (res:any)=>{
                 if(res){
                     dispatch(setUser(res))
                     localStorage.setItem("user",JSON.stringify(res))
@@ -36,9 +36,6 @@ export default function  Login(){
                     navigate(-1)
 
                 }
-            },
-            (error)=>{
-                console.log(error)
             }
         )
     }

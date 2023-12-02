@@ -10,7 +10,7 @@ exports.expressConfig = (app) => {
     app.use(bodyParser.urlencoded({extended:true}))
     app.use(bodyParser.json())
 
-    const allowedOrigins = [utils.FEdomain];
+    const allowedOrigins = utils.FEdomains;
 
     // app.use(corsMiddleware)
     app.use(cors({

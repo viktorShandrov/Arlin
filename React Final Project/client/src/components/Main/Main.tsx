@@ -1,6 +1,7 @@
 import {Route, Routes} from "react-router-dom";
 import Test from "../Test/Test";
-import UnknownWords from "../UnknownWords/UnknownWords";
+// @ts-ignore
+import UnknownWords from "../UnknownWords/UnknownWords.jsx";
 import AllBooks from "../AllBooks/AllBooks";
 import BookDetails from "../BookDetails/BookDetails";
 import Read from "../Read/Read";

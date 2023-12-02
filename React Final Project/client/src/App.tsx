@@ -2,18 +2,21 @@
 
 import styles from './App.module.css'
 import {Route, Routes} from "react-router-dom";
-import AdminPanel from "./admin/AdminPanel";
-import {createContext, useEffect, useState} from "react";
+// import AdminPanel from "./admin/AdminPanel";
+import Main from "./components/Main/Main";
+import React, {createContext, useEffect} from "react";
 import {Provider} from "react-redux";
+// @ts-ignore
 import {store} from "./redux/store.js";
+
+const AdminPanel = React.lazy(()=>import("./admin/AdminPanel"))
 
 
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer ,toast} from "react-toastify";
 import User from "./components/Users/Users";
-import Main from "./components/Main/Main";
 import useLocalStorage from "./hooks/useLocalStorage";
-    export const userContext=createContext({})
+export const userContext=createContext({})
 function App() {
         const [user,setUser]= useLocalStorage("user",{})
     useEffect(()=>{

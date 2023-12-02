@@ -8,12 +8,10 @@ export default function UnknownWords(){
         request("unknownWords/all","GET").subscribe(
             (res)=>{
                 setWords(res)
-            },
-                (error)=>{
-                    console.log(error)
-                }
+            }
         )
     },[])
+    // @ts-ignore
     return(
         <>
             <div className={styles.wrapper}>
