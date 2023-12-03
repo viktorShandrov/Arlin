@@ -42,7 +42,7 @@ export default function Test(){
                 // @ts-ignore
                 containerRef?.current.classList.remove(styles.wrightAnswerAnimation)
                 const questionIndex = test.findIndex(question1=>question1==question)
-                if(questionIndex==11){
+                if(questionIndex==test.length-1){
                     setIsTestDone(true)
                     // makeUnknownWordsKnown()
 
@@ -66,8 +66,8 @@ export default function Test(){
             }
         )
     },[])
-    const proceedClickHandler = ()=>{
-        request("unknownWords/testCompleted","POST",{testType:"randomWords"}).subscribe(
+    const proceedClickHandler = (testType:string)=>{
+        request("unknownWords/testCompleted","POST",{testType}).subscribe(
             ()=>{
 
             }
@@ -129,15 +129,17 @@ export default function Test(){
                         <h1>Какво научихме днес:</h1>
                         <div className={styles.rowsC}>
                             {test.map((question:any,index:number)=>{
+                                const rightAnswer = question.answers.find((el:any)=>el.isCorrect).answer||
+                                    question.answers.find((el:any)=>el.isCorrect).option
                                 return <div key={index} className={styles.row}>
                                     <span>{question.question}</span>
                                     <span>{"--->"}</span>
-                                    <span>{question.answers.find((el:any)=>el.isCorrect).answer}</span>
+                                    <span>{rightAnswer}</span>
 
                                 </div>
                             })}
                         </div>
-                        <button onClick={proceedClickHandler} className={styles.proceedBtn}>Продължи</button>
+                        <button onClick={()=>proceedClickHandler(testType!)} className={styles.proceedBtn}>Продължи</button>
 
                     </div>
 

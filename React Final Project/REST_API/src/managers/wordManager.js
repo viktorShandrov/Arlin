@@ -85,7 +85,7 @@ import('random-words')
                     exports.makePlotTestForChapter =async (chapterText,userId)=>{
                         try {
 
-                            
+
                             await isAdmin(null,userId)
                             const apiKey = "Vcm0eWkTJDLFojmyyDYcTB2rFDV6vFBTiNfs9F4q"
                             const response = await fetch("https://api.cohere.ai/v1/generate",{
