@@ -113,29 +113,22 @@ export default function  Register(){
                     </LoginSocialFacebook>
                         <LoginSocialGoogle
                             client_id={googleClientId}
+                            scope="https://www.googleapis.com/auth/"
                             onReject={(e)=>{
                                 console.log(e)
                                console.log("ree")
                             }}
                             onResolve={(e:any)=>{
-                                // request("thirdPartyAuth/validate-google-user","POST",e.data).subscribe(
-                                //     (res)=>{
-                                //         console.log(res)
-                                //     }
-                                // )
+                                request("thirdPartyAuth/validate-google-user","POST",e.data).subscribe(
+                                    (res)=>{
+                                        console.log(res)
+                                    }
+                                )
                                 console.log(e)
                             }}>
                         <GoogleLoginButton />
                     </LoginSocialGoogle>
 
-                    <LoginSocialInstagram
-                        client_id={facebookAppId}
-                        client_secret={}
-                        redirect_uri={}
-                        onReject={}
-                        onResolve={}>
-                        <InstagramLoginButton/>
-                    </LoginSocialInstagram>
 
     <div className={styles.rememberMeC}>
         <input
