@@ -36,7 +36,7 @@ exports.deleteChapter =async(chapterId,userId)=>{
     await book.save()
    return models.chapterModel.findByIdAndDelete(chapterId)
 }
-exports.createChapter =async(bookId,text,userId,chapterName)=>{
+exports.createChapter =async(bookId,text,userId,chapterName,questions)=>{
    await isAdmin(null,userId)
    const chapter = await models.chapterModel.create(
        {
@@ -48,7 +48,7 @@ exports.createChapter =async(bookId,text,userId,chapterName)=>{
    const book = await models.bookModel.findById(bookId)
    book.chapters.push(chapter._id.toString())
     book.length+=1
-    await wordManager.storeTestForChapter(chapter)
+    await wordManager.storeChapterQuestions(questions,chapter._id.toString())
    return book.save()
 }
 const weeklyJob = schedule.scheduleJob({ hour: 2, minute: 0, dayOfWeek: 1 }, async () => {
@@ -76,12 +76,6 @@ async function changeBookFreeRotation(){
 }
 exports.createChapterQuestion =async(chapterId,userId,rightAnswer,answers)=>{
    await isAdmin(null,userId)
-   const chapter = await models.chapterModel.findById(chapterId)
-
-    return models.chapterQuestionsModel.create({
-        chapterId:chapterId,
-        rightAnswer:rightAnswer,
-        answers,
-    })
+   exports.store
 
 }

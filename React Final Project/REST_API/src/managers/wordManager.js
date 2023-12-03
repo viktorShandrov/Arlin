@@ -82,34 +82,11 @@ import('random-words')
                         })
                     }
                     }
-                    exports.storeTestForChapter =async (chapter)=>{
-                        // const API = new ChatGPTUnofficialProxyAPI({
-                        //     accessToken: utils.chatgptAccessToken,
-                        //     apiReverseProxyUrl: "https://ai.fakeopen.com/api/conversation" ,
-                        // })
-                        //
-                        // const Response = await API.sendMessage("Hello")
-
-                        // const response = await fetch("https://api.pawan.krd/v1/completions",{
-                        //     method :"POST",
-                        //     headers:{
-                        //         "Content-Type":"application/json",
-                        //         "Authorization":"Bearer "+ utils.openAIPReoxyToken
-                        //     },
-                        //     body:JSON.stringify(
-                        //         {
-                        //         "model": "pai-001-light-beta",
-                        //         "prompt": exports.makeGPTInput(chapter.text),
-                        //         // "temperature": 0.7,
-                        //         "max_tokens": 240,
-                        //         // "stop": [
-                        //         //     "Human:",
-                        //         //     "AI:"
-                        //         // ]
-                        // }
-                        //     )
-                        // })
+                    exports.makePlotTestForChapter =async (chapterText,userId)=>{
                         try {
+
+                            
+                            await isAdmin(null,userId)
                             const apiKey = "Vcm0eWkTJDLFojmyyDYcTB2rFDV6vFBTiNfs9F4q"
                             const response = await fetch("https://api.cohere.ai/v1/generate",{
                                 method:"POST",
@@ -122,117 +99,37 @@ import('random-words')
 
 
 
-                                    "prompt":exports.makeGPTInput(chapter),
+                                    "prompt":exports.makeGPTInput(chapterText),
                                     "connectors": [{"id": "web-search"}]
 
                                 })
                             })
-                            const data = (await response.json()).generations[0].text.slice(0,-3)
-                            const parsedData = JSON.parse(data)
-                            console.log(data)
-                            console.log(parsedData)
+                            const responseText = (await response.json()).generations[0].text
+                            const extractJsonFromText = (text) => {
+                                const jsonRegex = /{(?:[^{}]|{(?:[^{}]|{[^{}]*})*})*}/g;
+                                const matches = text.match(jsonRegex);
+                                return matches ? matches.map(JSON.parse) : [];
+                            };
+                            const extractedJson = extractJsonFromText(responseText);
 
-                            for (const questionElement of parsedData) {
-                               await allModels.chapterQuestionsModel.create(
-                                    {
-                                        chapterId:chapter._id,
-                                        question:questionElement.question,
-                                        answers:questionElement.options,
-                                    }
-                                )
-                            }
+                            return extractedJson
+
+
                         }catch (error){
                             console.log(error)
                         }
 
-
-
-                        // import("openai")
-                        //     .then(async(openaiImport)=>{
-                        //         const {Configuration, OpenAIApi} =openaiImport
-                        //         console.log(Configuration)
-                        //         const configuration = new Configuration({
-                        //             apiKey: utils.openAIAPIkey,
-                        //             basePath: "https://api.pawan.krd/v1",
-                        //         });
-                        //
-                        //         const openai = new OpenAIApi(configuration);
-                        //
-                        //         const response = await openai.createCompletion({
-                        //             model: "text-davinci-003",
-                        //             prompt: "Human: Hello\nAI:",
-                        //             temperature: 0.7,
-                        //             max_tokens: 256,
-                        //             top_p: 1,
-                        //             frequency_penalty: 0,
-                        //             presence_penalty: 0,
-                        //             stop: ["Human: ", "AI: "],
-                        //         });
-                        //
-                        //         console.log(response.data.choices[0].text);
-                        //     })
-
-
-                        // const sdk = require('api')('@pplx/v0#1k349py3lp77geqk');
-                        //
-                        // sdk.post_chat_completions({
-                        //     model: 'mistral-7b-instruct',
-                        //     messages: [{content: 'string', role: 'system'}],
-                        //     max_tokens: 0,
-                        //     temperature: 1,
-                        //     top_p: 1,
-                        //     top_k: 0,
-                        //     stream: false,
-                        //     presence_penalty: 0,
-                        //     frequency_penalty: 1
-                        // })
-                        //     .then(( data ) => console.log(data))
-                        //     .catch(err => console.error(err));
-
-
-                        // const response =await  fetch("https://api.perplexity.ai/chat/completions",{
-                        //     method:"POST",
-                        //     headers:{
-                        //         "content-type": "application/json ",
-                        //         "accept": "application/json"
-                        //     },
-                        //     body:JSON.stringify({
-                        //         "model": "mistral-7b-instruct",
-                        //         "messages": [
-                        //             {
-                        //                 "role": "system",
-                        //                 "content": "Be precise and concise."
-                        //             },
-                        //             {
-                        //                 "role": "user",
-                        //                 "content": "How many stars are there in our galaxy?"
-                        //             }
-                        //         ]
-                        //     })
-                        //
-                        // })
-                        // if(!response.ok){
-                        //     console.log("not ok")
-                        // }
-                        // const data = await response.json()
-
-                        // let splitedText = data.choices.text.split("\n")
-                        // splitedText = trimResponseArray(splitedText)
-                        // const test = []
-                        //
-                        // for (let i = 0; i < splitedText.length; i+=5) {
-                        //     test.push(getQuestionAndAnswersObj(i,splitedText))
-                        // }
-                        // for (const questionElement of test) {
-                        //    await allModels.chapterQuestionsModel.create(
-                        //         {
-                        //             chapterId:chapter._id,
-                        //             rightAnswerIndex:questionElement.rightAnswerIndex,
-                        //             answers:questionElement.answers,
-                        //         }
-                        //     )
-                        // }
-                        return test
+                    }
+                    exports.storeChapterQuestions = async(questions,chapterId)=>{
+                        for (const questionElement of questions) {
+                            await allModels.chapterQuestionsModel.create(
+                                {
+                                    chapterId,
+                                    question:questionElement.question,
+                                    answers:questionElement.options,
+                                }
+                            )
+                        }
                     }
                     function trimResponseArray(splitedText){
                         while (splitedText.includes("")){
@@ -299,9 +196,9 @@ import('random-words')
                           }
                         ]
 
-
                         
                         `
+                         // Please, return me only the JSON data. Nothing else like any other human interaction!
 
                     }
 
