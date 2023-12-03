@@ -32,6 +32,17 @@ const schema = mongoose.Schema({
         type:Number,
         default: 0
     },
+    lastReading: {
+        bookId:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Book",
+        },
+        chapterId:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Chapter",
+        },
+        default: {},
+    },
     isPasswordHashed: {
         type: Boolean,
         default: false,

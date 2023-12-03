@@ -100,34 +100,34 @@ export default function  Register(){
     <button  className={styles.otherAuthBtn}>
         <img src="/public/google.png" alt="google" /> Google
         </button>
-                    <LoginSocialFacebook
-                        appId={facebookAppId}
-                        onReject={()=>{
-                            console.log("rejected")
-                        }
-                        }
-                        onResolve={(e:any)=>{
-                            console.log(e)
-                        }}>
-                        <FacebookLoginButton />
-                    </LoginSocialFacebook>
-                        <LoginSocialGoogle
-                            client_id={googleClientId}
-                            scope="https://www.googleapis.com/auth/"
-                            onReject={(e)=>{
-                                console.log(e)
-                               console.log("ree")
-                            }}
-                            onResolve={(e:any)=>{
-                                request("thirdPartyAuth/validate-google-user","POST",e.data).subscribe(
-                                    (res)=>{
-                                        console.log(res)
-                                    }
-                                )
-                                console.log(e)
-                            }}>
-                        <GoogleLoginButton />
-                    </LoginSocialGoogle>
+                    {/*<LoginSocialFacebook*/}
+                    {/*    appId={facebookAppId}*/}
+                    {/*    onReject={()=>{*/}
+                    {/*        console.log("rejected")*/}
+                    {/*    }*/}
+                    {/*    }*/}
+                    {/*    onResolve={(e:any)=>{*/}
+                    {/*        console.log(e)*/}
+                    {/*    }}>*/}
+                    {/*    <FacebookLoginButton />*/}
+                    {/*</LoginSocialFacebook>*/}
+                    {/*    <LoginSocialGoogle*/}
+                    {/*        client_id={googleClientId}*/}
+                    {/*        scope="https://www.googleapis.com/auth/"*/}
+                    {/*        onReject={(e)=>{*/}
+                    {/*            console.log(e)*/}
+                    {/*           console.log("ree")*/}
+                    {/*        }}*/}
+                    {/*        onResolve={(e:any)=>{*/}
+                    {/*            request("thirdPartyAuth/validate-google-user","POST",e.data).subscribe(*/}
+                    {/*                (res)=>{*/}
+                    {/*                    console.log(res)*/}
+                    {/*                }*/}
+                    {/*            )*/}
+                    {/*            console.log(e)*/}
+                    {/*        }}>*/}
+                    {/*    <GoogleLoginButton />*/}
+                    {/*</LoginSocialGoogle>*/}
 
 
     <div className={styles.rememberMeC}>

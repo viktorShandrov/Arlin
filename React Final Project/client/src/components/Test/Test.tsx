@@ -3,7 +3,7 @@ import styles from "./Test.module.css"
 import {useEffect, useRef, useState} from "react";
 import {request} from "../../functions";
 import Spinner from 'react-bootstrap/Spinner';
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 export default function Test(){
 
@@ -17,6 +17,7 @@ export default function Test(){
     })
     const answerRefs = useRef([])
     const containerRef = useRef(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         answerRefs.current = answerRefs.current.slice(0, question.answers.length);
@@ -69,7 +70,7 @@ export default function Test(){
     const proceedClickHandler = (testType:string)=>{
         request("unknownWords/testCompleted","POST",{testType}).subscribe(
             ()=>{
-
+                navigate("/main/read")
             }
         )
     }

@@ -3,10 +3,14 @@ import {useEffect, useState} from "react";
 import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
 import {request} from "../../functions";
 import styles from "./Story.module.css"
+import {useDispatch, useSelector} from "react-redux";
+import {setUser} from "../../redux/user";
 export default function Story(){
 
     const urlLocation = useLocation()
     const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const {user} = useSelector((state:any)=>state.user)
 
     const [chapter,setChapter] = useState({
         currentChapter: {text:"", _id: undefined},
@@ -18,10 +22,14 @@ export default function Story(){
 
 
     const {chapterId} = useParams()
+    const {bookId} = useParams()
     const getChapter=(chapterId:string)=>{
          request(`chapters/${chapterId}`).subscribe(
              (res:any)=>{
-                 console.log(res)
+                 dispatch(setUser({...user,lastReading:{
+                         bookId,
+                         chapterId
+                     }}))
                  setChapter(res)
              }
          )

@@ -13,14 +13,26 @@ exports.getChapter =async(chapterId,userId)=>{
     const currentChapterIndex = book.chapters.findIndex(el=>el.equals(chapterId))
        const previousChapterId = book.chapters[currentChapterIndex-1]
        const nextChapterId = book.chapters[currentChapterIndex+1]
+    const chapter = await models.chapterModel.findById(chapterId)
+    await changeUserLastReading(book._id,chapter._id,userId)
 
     return{
-        currentChapter:await models.chapterModel.findById(chapterId),
+        currentChapter:chapter,
         previousChapterId,
         nextChapterId
     }
 
 }
+
+async function changeUserLastReading(bookId,chapterId,userId){
+    const user = await models.userModel.findById(userId)
+    user.lastReading = {
+        bookId,
+        chapterId
+    }
+    return user.save()
+}
+
 exports.editChapter =async(chapterId,bookId,text,userId)=>{
    await isAdmin(null,userId)
    const chapter = await models.chapterModel.findById(chapterId)

@@ -30,10 +30,11 @@ export default function  Login(){
         request("users/login","POST",formValues).subscribe(
             (res:any)=>{
                 if(res){
+                    console.log(res)
                     dispatch(setUser(res))
                     localStorage.setItem("user",JSON.stringify(res))
-                    // navigate("/main")
-                    navigate(-1)
+                    navigate("/main/read")
+                    // navigate(-1)
 
                 }
             }

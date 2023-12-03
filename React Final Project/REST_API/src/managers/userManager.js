@@ -30,8 +30,13 @@ exports.login = async (email,password)=>{
         _id:user._id,
     }
     const token = await utils.sign(payload,utils.secret)
-
-    return {token,email,userId:user._id,role:user.role}
+    return {
+        token,
+        email,
+        userId:user._id,
+        role:user.role,
+        lastReading:user.lastReading
+    }
 
 }
 exports.getUserInfo = async (_id)=>{

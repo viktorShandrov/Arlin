@@ -32,6 +32,9 @@ export default function StoryList(){
 
     return(
         <div className={styles.chapterListWrapper}>
+            <Link to={`/main/read/${user.lastReading.bookId}/chapterId=${user.lastReading.chapterId}`}>
+                <button>Continue reading</button>
+            </Link>
             <div className={styles.chapterList}>
                 {books.map((book: any, index: number) => (
                     <div key={index} className={styles.bookElementWrapper}>
