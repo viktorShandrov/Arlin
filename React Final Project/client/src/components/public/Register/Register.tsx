@@ -4,6 +4,14 @@ import {Link, useNavigate} from "react-router-dom";
 import {request} from "../../../functions";
 import {setUser} from "../../../redux/user";
 import {useDispatch} from "react-redux";
+import {LoginSocialFacebook, LoginSocialGithub, LoginSocialGoogle, LoginSocialInstagram} from "reactjs-social-login";
+import {
+    FacebookLoginButton,
+    GithubLoginButton,
+    GoogleLoginButton,
+    InstagramLoginButton
+} from "react-social-login-buttons";
+import {facebookAppId, googleClientId} from "../../../contants";
 
 export default function  Register(){
 
@@ -92,6 +100,42 @@ export default function  Register(){
     <button  className={styles.otherAuthBtn}>
         <img src="/public/google.png" alt="google" /> Google
         </button>
+                    <LoginSocialFacebook
+                        appId={facebookAppId}
+                        onReject={()=>{
+                            console.log("rejected")
+                        }
+                        }
+                        onResolve={(e:any)=>{
+                            console.log(e)
+                        }}>
+                        <FacebookLoginButton />
+                    </LoginSocialFacebook>
+                        <LoginSocialGoogle
+                            client_id={googleClientId}
+                            onReject={(e)=>{
+                                console.log(e)
+                               console.log("ree")
+                            }}
+                            onResolve={(e:any)=>{
+                                // request("thirdPartyAuth/validate-google-user","POST",e.data).subscribe(
+                                //     (res)=>{
+                                //         console.log(res)
+                                //     }
+                                // )
+                                console.log(e)
+                            }}>
+                        <GoogleLoginButton />
+                    </LoginSocialGoogle>
+
+                    <LoginSocialInstagram
+                        client_id={facebookAppId}
+                        client_secret={}
+                        redirect_uri={}
+                        onReject={}
+                        onResolve={}>
+                        <InstagramLoginButton/>
+                    </LoginSocialInstagram>
 
     <div className={styles.rememberMeC}>
         <input

@@ -26,6 +26,10 @@ exports.stripeSecretKey="sk_test_51OEwwSAPrNaPFyVR8ratcB8BTCUKEMzYiSIF8iQiBNBzOm
 exports.openAIAPIkey = "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"
 exports.openAIPReoxyToken = "pk-YkGnWlSytCvQzNQVUvPYkfRvCdFfxmFKcgGRYZAEdrXyHkaY"
 exports.dbxAccessToken = "sl.Bqd8661L9fVn0Wf6cHyqhSu7SKPPCddVXUsBYpvoj9xzLqXuJMr0Jdx5AOrYoAJk8QGLjYnOXLo3wvsDQp2yQcK1tRX7nHoceo-af89pRK3-pAURe5DmR8DkmnzANiTFdPZ_to_WFBVq"
+exports.facebookAppId = "350005497676561"
+exports.facebookAppSecret = "201b0438ac600da907d9471d9ff0daf1"
+exports.GoogleClientId = "638123872925-ss6qml6jnp2ltb4v11jtd63lkhgmrikk.apps.googleusercontent.com"
+exports.GoogleClientSecret = "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"
 exports.commonWords = [
     "a",
     "about",
