@@ -109,6 +109,12 @@ export default function AllBooks(){
                         bookName:book.name
                     }
                 }))
+                setFilteredAutoCompletions(res.allBooks.map((book:any)=>{
+                    return {
+                        bookId:book._id,
+                        bookName:book.name
+                    }
+                }))
             }
         )
     }

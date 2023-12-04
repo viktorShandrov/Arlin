@@ -19,7 +19,7 @@ export default function Navigation(){
                         <Link to={"/main/unknownWords"} className={styles.navItem}>My unknown words</Link>
                         <Link to={"/user/login"} className={`${styles.navItem} ${styles.testsNav}`}>Tests</Link>
                         <div className={styles.testsMenu}>
-                            <Link to={"/main/dashboard"} className={styles.navItem}>My tests</Link>
+                            <Link to={"/main/dashboard"} className={styles.navItem}>Dashboard</Link>
                             <Link to={"/main/test/randomWords"} className={styles.navItem}>Random words</Link>
                             {/*<Link to={"/main/test/textWords/:chapterId"} className={styles.navItem}>Words from text</Link>*/}
                             {/*<Link to={"/main/test/textQuestions"} className={styles.navItem}>Chapter plot</Link>*/}

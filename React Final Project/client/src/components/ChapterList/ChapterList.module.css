@@ -20,10 +20,13 @@
     margin: 0;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
+
 }
 .bookElementWrapper{
     position: relative;
     user-select:none ;
+    max-width: 150px;
+
 }
 .lockIcon{
     border-radius: 20px ;
