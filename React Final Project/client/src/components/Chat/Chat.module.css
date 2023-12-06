@@ -1,0 +1,64 @@
+
+.chatWrapper{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.chatC{
+    flex: 1;
+    padding: 0 250px;
+    padding-top: 50px;
+}
+.chatC>*{
+    width: 100%;
+    height: fit-content;
+}
+.message{
+    display: flex;
+}
+.icon{
+    background-color: greenyellow;
+    border-radius: 120px;
+    width: 60px;
+    aspect-ratio: 1/1;
+}
+.text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.text p{
+    margin: 0 0 0 10px;
+
+}
+[data-role="user"]{
+    justify-content: end;
+    flex-flow: row-reverse;
+
+}
+[data-role="user"] .text{
+    order: 3;
+}
+[data-role="user"] .text p{
+    margin: 0 10px 0 0;
+}
+
+.sendC{
+    display: flex;
+    width: 100%;
+    padding:20px;
+    background-color: black;
+}
+.sendC input{
+    flex: 1;
+}
+.paperIcon{
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 100px;
+    background-color: red;
+    margin-left: 10px;
+}

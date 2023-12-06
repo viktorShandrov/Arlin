@@ -12,6 +12,7 @@ import Dashboard from "../Dashboard/Dashboard";
 import NewsList from "../NewsList/NewsList";
 import NewsDetails from "../NewsDetails/NewsDetails";
 import AuthGuard from "../../guards/AuthGuard/AuthGuard";
+import Chat from "../Chat/Chat";
 export default function Main(){
     return(
         <>
@@ -26,6 +27,7 @@ export default function Main(){
                         <Route path={"/AllBooks/:id"} element={<BookDetails />}></Route>
                         <Route path={"/dashboard"} element={<Dashboard />}></Route>
                         <Route path={"/news/:id/*"} element={<NewsDetails />}></Route>
+                        <Route path={"/chat"} element={<Chat />}></Route>
                     </Route>
                         <Route path={"/news/:id/"} element={<NewsDetails />}></Route>
                         <Route path={"/news"} element={<NewsList />}></Route>
