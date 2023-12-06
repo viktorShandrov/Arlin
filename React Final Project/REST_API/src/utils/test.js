@@ -15,6 +15,7 @@ const models = require("../models/allModels"); // Import a fetch-compatible libr
 const newsManager = require("../managers/newsManager")
 const {response} = require("express");
 const wordManager = require("../managers/wordManager");
+const {setTodayNews} = require("../managers/newsManager");
 
 
 const openai = new OpenAI({ apiKey: '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' });
@@ -165,8 +166,12 @@ exports.test=async ()=> {
 
 
     // newsManager.setTodayNews()
-    return {}
+    // const newsData = JSON.parse(fs.readFileSync("P:\\Folder-Deliivanova\\SoftUni\\Repository\\React\\SoftUni-react-2023\\React Final Project\\REST_API\\src\\utils\\newsJson.json"))
 
+
+
+
+    setTodayNews()
     // console.log("repsonse",await repsonse.json())
 
 
