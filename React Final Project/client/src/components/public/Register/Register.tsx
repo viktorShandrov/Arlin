@@ -4,14 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {request} from "../../../functions";
 import {setUser} from "../../../redux/user";
 import {useDispatch} from "react-redux";
-import {LoginSocialFacebook, LoginSocialGithub, LoginSocialGoogle, LoginSocialInstagram} from "reactjs-social-login";
-import {
-    FacebookLoginButton,
-    GithubLoginButton,
-    GoogleLoginButton,
-    InstagramLoginButton
-} from "react-social-login-buttons";
-import {facebookAppId, googleClientId} from "../../../contants";
+
 
 export default function  Register(){
 

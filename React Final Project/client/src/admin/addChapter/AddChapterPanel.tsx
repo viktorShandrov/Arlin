@@ -2,7 +2,6 @@ import {useState} from "react";
 import {request} from "../../functions";
 import styles from "../addBook/AddBook.module.css";
 import {toast} from "react-toastify";
-import success = toast.success;
 export default function AddChapterPanel(){
     const [formValues,setFormValues] = useState({
         bookId:"",
@@ -52,7 +51,7 @@ export default function AddChapterPanel(){
                 </div>
 
                 {questions.length>0&&<div className={styles.questionsC}>
-                    {questions.map((question,index)=>{
+                    {questions.map((question:any,index:number)=>{
                         return <div key={index} className={styles.questionC}>
                             <label className={styles.question}>{question.question}</label>
                             <p className={styles.answer}>{question.options[0].option}</p>

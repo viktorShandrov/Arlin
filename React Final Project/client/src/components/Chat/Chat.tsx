@@ -1,6 +1,5 @@
 
 import styles from "./Chat.module.css"
-import Navigation from "../Navigation/Navigation";
 export default function Chat(){
     return(
         <div className={styles.chatWrapper}>

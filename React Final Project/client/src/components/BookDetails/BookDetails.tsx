@@ -7,7 +7,6 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
-import {Toast} from "react-bootstrap";
 
 export default function  BookDetails(){
 
@@ -45,7 +44,7 @@ export default function  BookDetails(){
     }
     const deleteBook = ()=>{
         request(`books/${book._id}/delete`,"GET").subscribe(
-            (res:any)=>{
+            ()=>{
                 toast.success("Successfully deleted")
             }
         )
