@@ -1,7 +1,7 @@
 
 
 import styles from './App.module.css'
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 // import AdminPanel from "./admin/AdminPanel";
 import Main from "./components/Main/Main";
 import React, {createContext, useEffect,Suspense} from "react";
@@ -38,7 +38,7 @@ function App() {
                             </Suspense>
                         }></Route>
 
-
+                      <Route path={"/"} element={<Navigate to={"/main/read"}/>}></Route>
                       <Route path={"/user/*"} element={<User />}></Route>
                       <Route path={"/main/*"} element={<Main />}></Route>
                   </Routes>
