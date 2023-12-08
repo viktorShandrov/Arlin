@@ -13,7 +13,7 @@ exports.getAnswer=async(question)=>{
                 "index": 0,
                 "message": {
                     "role": "assistant",
-                    "content": " Hello there!\n```\nThe day hadfgdfgdfgdfgdfgdfgdfgdsfghdfgbdfgb dfgbdfgbdfgbdfgbdfgbdfgbdfgbfs come and gone,\nAnd the sun now bids adieu.\nBut as it sets, we meet,\nIn this realm of virtual sweets.\n```\n"
+                    "content": " Hello there!\n```\nThe day come and gone,\nAnd the sun now bids adieu.\nBut as it sets, we meet,\nIn this realm of virtual sweets.\n```\n"
                 },
                 "finish_reason": "stop"
             }

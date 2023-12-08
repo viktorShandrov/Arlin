@@ -1,5 +1,6 @@
 import * as constants from "./contants";
 import {toast} from "react-toastify";
+import {googleTranslateAPIKey} from "./contants";
 
 export function request(url: string, method?: string, body?: any, headers: any = {}) {
     return {
@@ -57,6 +58,44 @@ export function request(url: string, method?: string, body?: any, headers: any =
 
         }
     };
+}
+export async function translateText(textToTranslate:string){
+    try {
+
+
+        const headers = new Headers({
+            "Content-Type": "application/json",
+        });
+
+
+
+        const requestOptions = {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({
+                q: textToTranslate,
+                target: "bg",
+            }),
+        };
+
+
+
+
+
+
+        const response = await fetch(
+            `https://translation.googleapis.com/language/translate/v2?key=${googleTranslateAPIKey}`,
+            requestOptions
+        )
+        const data = await response.json()
+        //@ts-ignore
+        return data.data.translations[0].translatedText;
+    }catch (err){
+        console.log(err)
+    }
+
+
+
 }
 
 export const functions:any = {

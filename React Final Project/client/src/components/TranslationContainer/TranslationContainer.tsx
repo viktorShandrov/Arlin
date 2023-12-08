@@ -2,7 +2,7 @@ import  { useEffect, useRef, useState } from "react";
 import "./TranslationContainer.module.css";
 import styles from "./TranslationContainer.module.css";
 import { useParams } from "react-router-dom";
-import { request } from "../../functions";
+import {request, translateText} from "../../functions";
 
 export default function TranslationContainer() {
     const [translatedSentence, setTranslatedSentence] = useState("");
@@ -20,33 +20,24 @@ export default function TranslationContainer() {
             wordRef.removeAttribute("data-isclicked")
         }
 
-        const API_KEY = "AIzaSyCwcafxQT_4clYPFoz6pR5C3KOAbNhvTc8";
-        const headers = new Headers({
-            "Content-Type": "application/json",
-            // 'Authorization': `Bearer ${API_KEY}`,
-        });
 
-        const requestOptions = {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify({
-                q: textToTranslate,
-                target: "bg",
-            }),
-        };
 
-        fetch(
-            `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-            requestOptions
-        )
-            .then((data) => data.json())
-            .then((response: any) => {
-                const translatedText = response.data.translations[0].translatedText;
-                setTranslatedSentence(translatedText);
-            })
-            .catch((error) => {
-                console.error("Translation error:", error);
-            });
+
+        translateText(textToTranslate)
+            .then(setTranslatedSentence)
+
+        // fetch(
+        //     `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
+        //     requestOptions
+        // )
+        //     .then((data) => data.json())
+        //     .then((response: any) => {
+        //         const translatedText = response.data.translations[0].translatedText;
+        //         setTranslatedSentence(translatedText);
+        //     })
+        //     .catch((error) => {
+        //         console.error("Translation error:", error);
+        //     });
     }, [textToTranslate]);
 
     const handleWordClick = (index: number) => {

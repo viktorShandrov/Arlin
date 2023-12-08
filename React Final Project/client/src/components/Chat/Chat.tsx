@@ -1,7 +1,7 @@
 
 import styles from "./Chat.module.css"
 import useForm from "../../hooks/useForm";
-import {request} from "../../functions";
+import {request, translateText} from "../../functions";
 import {useEffect, useRef, useState} from "react";
 import Typed from 'react-typed';
 
@@ -22,11 +22,20 @@ export default function Chat(){
 
 
         request("chat/getResponse","POST", {question:formValues.chatInput}).subscribe(
-            (res:any)=>{
+            async (res:any)=>{
                 setIsWaiting(false)
                 // @ts-ignore
                 setMessages((oldMessages:any)=>{
                     return [...oldMessages, {message:res.message}]
+                })
+
+                const translation = await translateText(res.message)
+
+                // @ts-ignore
+                setMessages((oldMessages:any)=>{
+                    const lastMessage = oldMessages[oldMessages.length-1]
+                    console.log(lastMessage)
+                    return [...oldMessages.slice(0,-1), {...lastMessage,translation }]
                 })
             }
         )
@@ -38,6 +47,7 @@ export default function Chat(){
     useEffect(()=>{
         const chatContainer:any = chatC.current
         chatContainer.scrollTop = chatContainer.scrollHeight;
+        console.log(messages)
     },[messages])
     // @ts-ignore
     return(
@@ -50,17 +60,19 @@ export default function Chat(){
 
                             </div>
                             <div className={styles.text}>
-                                {/**/}
                                 {message.isByUser&&
                                     <p>{message.message}</p>}
 
                                 {!message.isByUser&&<Typed
-                                    strings={["lkdjgfdljfgldjfgljdlfgjdljfgldjflgjdlfgjdlfjgldkjfgldjfgldjflgkjdflkgjdlkfjgldkjfglkdjfglkdjfg"]}
+                                    strings={[message.message]}
                                     typeSpeed={40}
                                     backSpeed={25}
                                     showCursor
                                     cursorChar="|"
                                 />}
+                                <div className={styles.translation}>
+                                    {message.translation}
+                                </div>
                             </div>
                         </div>
                 })}
