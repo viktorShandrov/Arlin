@@ -18,7 +18,9 @@ exports.dropboxAccessToken = "sl.BrY7K_i_FLAlqdhaQn95_k8kpQIe5a_sH-oYUgRpWoBIYDh
 exports.FEdomains = [
     "http://127.0.0.1:5173",
     "http://127.0.0.1:4173",
-    "https://soft-uni-react-2023-viktorshandrov.vercel.app"]
+    "https://soft-uni-react-2023-viktorshandrov.vercel.app",
+    "https://soft-uni-react-2023-git-main-viktorshandrov.vercel.app"
+]
 exports.testTypes ={
     randomWords:"randomWords",
     textWords:"textWords",
