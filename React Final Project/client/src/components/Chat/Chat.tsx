@@ -7,7 +7,7 @@ import Typed from 'react-typed';
 
 export default function Chat(){
 
-
+    const typeSpeed = 40;
     const [formValues,onChange] = useForm({
         chatInput:''
     })
@@ -29,14 +29,24 @@ export default function Chat(){
                     return [...oldMessages, {message:res.message}]
                 })
 
-                const translation = await translateText(res.message)
+                const messageLength = res.message.length;
+                 // Adjust the typeSpeed based on your requirements
 
+                // Calculate the typing duration
+                const duration = messageLength * typeSpeed // Convert to milliseconds
+
+
+                const translation = await translateText(res.message)
+                // const translation = "Здравей! ``` Денят дойде и си отиде, И слънцето сега се сбогува. Но както настъпва, ние се срещаме в това царство на виртуални сладкиши. ```"
+                setTimeout(()=>{
                 // @ts-ignore
-                setMessages((oldMessages:any)=>{
-                    const lastMessage = oldMessages[oldMessages.length-1]
-                    console.log(lastMessage)
-                    return [...oldMessages.slice(0,-1), {...lastMessage,translation }]
-                })
+                    setMessages((oldMessages:any)=>{
+                        const lastMessage = oldMessages[oldMessages.length-1]
+                        console.log(lastMessage)
+                        return [...oldMessages.slice(0,-1), {...lastMessage,translation }]
+                    })
+                },duration)
+
             }
         )
 
@@ -47,7 +57,6 @@ export default function Chat(){
     useEffect(()=>{
         const chatContainer:any = chatC.current
         chatContainer.scrollTop = chatContainer.scrollHeight;
-        console.log(messages)
     },[messages])
     // @ts-ignore
     return(
@@ -65,10 +74,11 @@ export default function Chat(){
 
                                 {!message.isByUser&&<Typed
                                     strings={[message.message]}
-                                    typeSpeed={40}
+                                    typeSpeed={typeSpeed}
                                     backSpeed={25}
                                     showCursor
                                     cursorChar="|"
+
                                 />}
                                 <div className={styles.translation}>
                                     {message.translation}

@@ -79,11 +79,12 @@ export default function  BookDetails(){
                         <img src={image} alt="Your Image" />
                         <div className={styles.btns}>
 
-                            {/*{book&&!book.ownedBy?.includes(user.userId)||user.role!=="admin"&&true*/}
-                            {/*}*/}
+                            {book&&!book.ownedBy?.includes(user.userId)&&
                                 <Elements stripe={stripePromise}>
                                     <BuyBtn bookId={book._id} />
                                 </Elements>
+                                // ||user.role!=="admin"
+                            }
 
 
                             {user.role==="admin"&&

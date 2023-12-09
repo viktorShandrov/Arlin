@@ -32,8 +32,8 @@ router.post('/create-checkout-session',isAuth, async (req, res) => {
             // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
             // the actual Session ID is returned in the query parameter when your customer
             // is redirected to the success page.
-            success_url: `${utils.FEdomain}/main/read`,
-            cancel_url: `${utils.FEdomain}/main/read`,
+            success_url: `${utils.FEdomains[0]}/main/read`,
+            cancel_url: `${utils.FEdomains[0]}/main/read`,
         });
 
 

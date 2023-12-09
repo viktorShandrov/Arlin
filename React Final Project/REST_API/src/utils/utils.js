@@ -14,6 +14,7 @@ exports.isProduction = false
 process.env.GOOGLE_APPLICATION_CREDENTIALS =path.join(__dirname,'./gc-cred.json')
 exports.port = 3000
 exports.secret = "kjsdhgLKJGHDLKJGHkljhlkjhh43iu4h8osioduhfis"
+exports.dropboxAccessToken = "sl.BrY7K_i_FLAlqdhaQn95_k8kpQIe5a_sH-oYUgRpWoBIYDhFpDOAxZVBEs_E-WID8Q2IrgCBadlv1ftVbcC_g2WBQc8NrlWbEaRF90hdHEEvIshM8_Vi5dyW3j997ON4UkFQLTbkf7_P"
 exports.FEdomains = [
     "http://127.0.0.1:5173",
     "http://127.0.0.1:4173",

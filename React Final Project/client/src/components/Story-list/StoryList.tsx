@@ -38,7 +38,8 @@ export default function StoryList(){
             <div className={styles.chapterList}>
                 {books.map((book: any, index: number) => (
                     <div key={index} className={styles.bookElementWrapper}>
-                        {user.role!=='admin'&&!book.ownedBy.includes(user.userId)&&
+                        {/*user.role!=='admin'&&*/}
+                        {book&&!book.ownedBy.includes(user.userId)&&
                             <i className={`fa-solid fa-lock ${styles.lockIcon}`}></i>
                         }
 

@@ -61,23 +61,23 @@
     background-color: white;
 }
 
-@keyframes typing {
-    from {
-        width: 0;
-    }
-    to {
-        width: 100%;
-    }
-}
+/*@keyframes typing {*/
+/*    from {*/
+/*        width: 0;*/
+/*    }*/
+/*    to {*/
+/*        width: 100%;*/
+/*    }*/
+/*}*/
 
-@keyframes blink-caret {
-    from, to {
-        border-color: transparent;
-    }
-    50% {
-        border-color: #000; /* Adjust the cursor color */
-    }
-}
+/*@keyframes blink-caret {*/
+/*    from, to {*/
+/*        border-color: transparent;*/
+/*    }*/
+/*    50% {*/
+/*        border-color: #000; !* Adjust the cursor color *!*/
+/*    }*/
+/*}*/
 [data-role="user"]{
     justify-content: end;
     flex-flow: row-reverse;

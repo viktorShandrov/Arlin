@@ -5,6 +5,7 @@ const fs = require("fs");
 const AdmZip = require("adm-zip");
 const path = require("path");
 const utils = require("../utils/utils");
+const {dropboxAccessToken} = require("../utils/utils");
 
 exports.mongodbConfig=()=>{
     mongoose.connect('mongodb://localhost:27017/language-trough-literature', {
@@ -21,7 +22,7 @@ exports.mongodbConfig=()=>{
 async function backupDB(){
     const filePath = "P:\\Folder-Deliivanova\\SoftUni\\Repository\\React\\MongoDbBackUp\\backup.zip"
     const dbx = new Dropbox({
-        accessToken: "sl.Bqi1VLPo08c77kZgbWClXgS-QXHDd_2pN9eaR0jJnExzMxPfVpsplOxA3QR7g8sJZ5YgV0_vMOtTU3QdViKrOWRDm1oWq_Z2mRX_GF0mhATvQ7JhBrtxpGfaXL9Dgu6GAORUpG6ipnbx",
+        accessToken: dropboxAccessToken,
         fetch
     });
 
