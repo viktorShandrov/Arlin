@@ -63,26 +63,23 @@ Your project is designed for learning English through literature. Users can buy 
 
 ## Installation
 
-Provide instructions on how to install and set up the project. Include dependencies, environment setup, and configuration steps.
+"npm i" for both client and rest api
 
 ## Usage
 
-Explain how users can use your application. Include examples and screenshots if possible.
-
-## Contributing
-
-Provide guidelines for potential contributors. Include information on how to report issues, submit feature requests, and contribute to the codebase.
+navigate to "React-Final-Project" folder and start the client with "npm run dev" and the REST API with : "npm start"
 
 ## License
 
-Specify the project's license to clarify how others can use, modify, and distribute the code.
+MIT
 
 ## Acknowledgments
 
-If your project uses third-party libraries, APIs, or other resources, acknowledge them here.
+Google Translate
+Dropbox
+COHERE
+hugging faces
 
-## Contact
 
-Provide contact information or links to reach out for support or collaboration.
 
 
