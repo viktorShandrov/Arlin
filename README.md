@@ -9,15 +9,25 @@ Your project is designed for learning English through literature. Users can buy 
 
 ## Features
 
+  -Main idea
+  
+   https://github.com/viktorShandrov/SoftUni-react-2023/assets/114256191/1cbb3d7e-387d-47de-9b3f-bb64e25f41d6
+
+
 - **Buy and Read Books:** Purchase and read literature. Translate difficult sentences and select challenging words.
 
 - **Unknown Words List:** Create a list of unknown words and view translations.
 
 - **Examinations:** Test your knowledge on text plots, random words, and words from the text. Move words from unknown to known on correct answers.
 
+
+https://github.com/viktorShandrov/SoftUni-react-2023/assets/114256191/3ee59ff9-0a02-4897-8fb0-568683e12d8f
+
+
 - **All Books Page:** Explore all available books with search and filter options.
 
 - **Dashboard:** Track the number of tests taken in different categories.
+  ![dashboard](https://github.com/viktorShandrov/SoftUni-react-2023/assets/114256191/165d126f-9233-4f41-979a-afaed413f4e6)
 
 - **Read News:** Access free news articles.
 
