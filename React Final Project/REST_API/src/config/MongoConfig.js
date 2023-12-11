@@ -8,10 +8,11 @@ const utils = require("../utils/utils");
 const {dropboxAccessToken} = require("../utils/utils");
 
 exports.mongodbConfig=()=>{
-    mongoose.connect('mongodb+srv://viktor_shandrov:#69BGshadopest43@learn-through-literatur.t3m1yqz.mongodb.net/', {
+    mongoose.connect('mongodb+srv://viktor_shandrov:%2369BGshadopest43@learn-through-literatur.t3m1yqz.mongodb.net/', {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
     });
+
     if(utils.isProduction){
         backupDB()
         setInterval(backupDB,1000 * 60 *10)
