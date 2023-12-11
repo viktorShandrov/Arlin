@@ -8,7 +8,7 @@ const utils = require("../utils/utils");
 const {dropboxAccessToken} = require("../utils/utils");
 
 exports.mongodbConfig=()=>{
-    mongoose.connect('mongodb+srv://BorisPavelbanski:shadopest43@borispavelbanskiindustr.4toyxfu.mongodb.net/', {
+    mongoose.connect('mongodb+srv://viktor_shandrov:#69BGshadopest43@learn-through-literatur.t3m1yqz.mongodb.net/', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
