@@ -1,5 +1,5 @@
 const OpenAI = require("openai")
-const utils = require("../utils/utils")
+const utils = require("./utils")
 const { MongoClient } = require('mongodb');
 const { google } = require('googleapis');
 const { Storage } = require('@google-cloud/storage');

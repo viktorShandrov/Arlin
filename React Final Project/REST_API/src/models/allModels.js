@@ -1,8 +1,8 @@
 module.exports = {
-    chapterModel : require("../models/chapterModel"),
-    bookModel : require("../models/bookModel"),
-    userModel : require("../models/userModel"),
-    wordModel : require("../models/wordModel"),
-    chapterQuestionsModel : require("../models/chapterQuestionsModel"),
-    newsModel : require("../models/newsModel"),
+    chapterModel : require("./chapterModel"),
+    bookModel : require("./bookModel"),
+    userModel : require("./userModel"),
+    wordModel : require("./wordModel"),
+    chapterQuestionsModel : require("./chapterQuestionsModel"),
+    newsModel : require("./newsModel"),
 }

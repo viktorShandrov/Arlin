@@ -8,7 +8,7 @@ const utils = require("../utils/utils");
 const {dropboxAccessToken} = require("../utils/utils");
 
 exports.mongodbConfig=()=>{
-    mongoose.connect('mongodb://localhost:27017/language-trough-literature', {
+    mongoose.connect('mongodb+srv://BorisPavelbanski:shadopest43@borispavelbanskiindustr.4toyxfu.mongodb.net/', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });

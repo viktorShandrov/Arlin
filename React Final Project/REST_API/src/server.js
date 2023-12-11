@@ -1,6 +1,6 @@
 const express = require("express")
-const {expressConfig} = require("./config/expressConfig");
-const {mongodbConfig} = require("./config/MongoConfig");
+const {expressConfig} = require("./config/expressConfig.js");
+const {mongodbConfig} = require("./config/MongoConfig.js");
 const {port} = require("./utils/utils");
 const {test} = require("./utils/test");
 
@@ -12,8 +12,8 @@ expressConfig(server)
 mongodbConfig()
 setTimeout(()=>{
 
-test()
+    test()
 },1000)
-server.listen(port,()=>{
-    console.log("Server is listening on port " + port)
-})
+
+
+module.exports = server
