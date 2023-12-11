@@ -17,6 +17,7 @@ exports.secret = "kjsdhgLKJGHDLKJGHkljhlkjhh43iu4h8osioduhfis"
 exports.dropboxAccessToken = "sl.BreX7v7ZN5INnqzES9rbGC-bHLUD52tUEYt8JojoqxvHL4shqYvbRi6-6R0zzc3es1bZ1rGgAcXNdfVJagv1PInfzuM6MhL0gxtUvySq9Gq6ZVCIP-6MR_nt-6Xc-InqZnP5PSNrdLwR"
 exports.FEdomains = [
     "http://127.0.0.1:5173",
+    "http://localhost:5173",
     "http://127.0.0.1:4173",
     "https://soft-uni-react-2023-viktorshandrov.vercel.app",
     "https://soft-uni-react-2023-git-main-viktorshandrov.vercel.app"
