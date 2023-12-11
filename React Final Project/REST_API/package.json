@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon src/startServer.js"
+    "start": "nodemon src/startServer.js",
+    "vercel-build": "echo hello"
   },
   "keywords": [],
   "author": "",
