@@ -4,7 +4,8 @@ import {Link, useNavigate} from "react-router-dom";
 import {request} from "../../../functions";
 import {setUser} from "../../../redux/user";
 import {useDispatch} from "react-redux";
-
+import googleImage from "../../../../public/google.png"
+import registerImage from "../../../../public/register.png"
 
 export default function  Register(){
 
@@ -91,7 +92,7 @@ export default function  Register(){
         />
     </div>
     <button  className={styles.otherAuthBtn}>
-        <img src="/public/google.png" alt="google" /> Google
+        <img src={googleImage} alt="google" /> Google
         </button>
                     {/*<LoginSocialFacebook*/}
                     {/*    appId={facebookAppId}*/}
@@ -139,7 +140,7 @@ export default function  Register(){
 </form>
 </div>
     <div className={styles.right}>
-        <img src="/public/register.png" alt="register" />
+        <img src={registerImage} alt="register" />
         <div className={styles.headingRight}>Connect with any device.</div>
         <p>Everything you need is an internet connection.</p>
     </div>

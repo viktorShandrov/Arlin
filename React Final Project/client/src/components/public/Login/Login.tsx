@@ -5,6 +5,8 @@ import {request} from "../../../functions";
 // import {userContext} from "../../App";
 import {setUser} from "../../../redux/user"
 import {useDispatch} from "react-redux";
+import googleImage from "../../../../public/google.png"
+import registerImage from "../../../../public/register.png"
 export default function  Login(){
 
     // const {user,setUser} = useContext(userContext)
@@ -89,7 +91,7 @@ export default function  Login(){
         </div>
 
     <button  className={styles.otherAuthBtn}>
-        <img src="/public/google.png" alt="google" /> Google
+        <img src={googleImage} alt="google" /> Google
         </button>
 
 
@@ -102,7 +104,7 @@ export default function  Login(){
 </form>
 </div>
     <div className={styles.right}>
-        <img src="/public/register.png" alt="register" />
+        <img src={registerImage} alt="register" />
         <div className={styles.headingRight}>Connect with any device.</div>
         <p>Everything you need is an internet connection.</p>
     </div>

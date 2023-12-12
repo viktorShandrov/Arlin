@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {request} from "../../functions";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
+import chapterImage from "../../../public/chapter.jpg"
 export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
@@ -176,14 +177,14 @@ export default function AllBooks(){
 
                             if(isOwnedFilter&&book.ownedBy.includes(user.userId)){
                                 return <Link data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
-                                    <img src={"/public/chapter.jpg"}></img>
+                                    <img src={chapterImage}></img>
                                     <h3 className={styles.heading}>{book.name}</h3>
                                     <h3 className={styles.heading}>{book.author}</h3>
                                     <h3 className={styles.heading}>{book.genre}</h3>
                                 </Link>
                             }else if(!isOwnedFilter){
                                 return <Link data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
-                                    <img src={"/public/chapter.jpg"}></img>
+                                    <img src={chapterImage}></img>
                                     <h3 className={styles.heading}>{book.name}</h3>
                                     <h3 className={styles.heading}>{book.author}</h3>
                                     <h3 className={styles.heading}>{book.genre}</h3>

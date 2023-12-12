@@ -3,6 +3,8 @@ import styles from "./Chat.module.css"
 import useForm from "../../hooks/useForm";
 import {request, translateText} from "../../functions";
 import {useEffect, useRef, useState} from "react";
+import userImage from "../../../public/user.jpg"
+import aiImage from "../../../public/AI.png"
 
 export default function Chat(){
 
@@ -65,7 +67,7 @@ export default function Chat(){
                 {messages.map((message:any,index:number)=>{
                  return       <div key={index} data-role={message.isByUser?"user":"bot"} className={styles.message}>
                             <div className={styles.icon}>
-                                <img src={message.isByUser?"/public/user.jpg":"/public/AI.png"} alt="AI.png"/>
+                                <img src={message.isByUser?userImage:aiImage} alt="AI.png"/>
 
                             </div>
                             <div className={styles.text}>
