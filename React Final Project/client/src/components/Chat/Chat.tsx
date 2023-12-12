@@ -60,6 +60,7 @@ export default function Chat(){
     // @ts-ignore
     return(
         <div className={styles.chatWrapper}>
+            {/*//@ts-ignore*/}
             <div ref={chatC} className={styles.chatC}>
                 {messages.map((message:any,index:number)=>{
                  return       <div key={index} data-role={message.isByUser?"user":"bot"} className={styles.message}>

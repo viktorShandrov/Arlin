@@ -63,6 +63,7 @@ export default function  BookDetails(){
 
     // @ts-ignore
     // @ts-ignore
+    // @ts-ignore
     return(
         <>
             {isDialogShown&&<div className={styles.overlay}>
@@ -79,7 +80,7 @@ export default function  BookDetails(){
                     <div className={styles.imageAndBtns}>
                         <img src={image} alt="Your Image" />
                         <div className={styles.btns}>
-
+                                {/*//@ts-ignore*/}
                             {book&&!book.ownedBy?.includes(user.userId)&&
                                 <Elements stripe={stripePromise}>
                                     <BuyBtn bookId={book._id} />
