@@ -3,7 +3,6 @@ import styles from "./Chat.module.css"
 import useForm from "../../hooks/useForm";
 import {request, translateText} from "../../functions";
 import {useEffect, useRef, useState} from "react";
-import Typed from 'react-typed';
 
 export default function Chat(){
 
@@ -69,17 +68,17 @@ export default function Chat(){
 
                             </div>
                             <div className={styles.text}>
-                                {message.isByUser&&
-                                    <p>{message.message}</p>}
 
-                                {!message.isByUser&&<Typed
-                                    strings={[message.message]}
-                                    typeSpeed={typeSpeed}
-                                    backSpeed={25}
-                                    showCursor
-                                    cursorChar="|"
+                                    <p>{message.message}</p>
 
-                                />}
+                                {/*{!message.isByUser&&<Typed*/}
+                                {/*    strings={[message.message]}*/}
+                                {/*    typeSpeed={typeSpeed}*/}
+                                {/*    backSpeed={25}*/}
+                                {/*    showCursor*/}
+                                {/*    cursorChar="|"*/}
+
+                                {/*/>}*/}
                                 <div className={styles.translation}>
                                     {message.translation}
                                 </div>
