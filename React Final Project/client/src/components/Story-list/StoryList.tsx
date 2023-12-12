@@ -4,6 +4,7 @@ import {request} from "../../functions";
 import styles from "../ChapterList/ChapterList.module.css";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
+import chapterImage from "../../../public/chapter.jpg"
 export default function StoryList(){
 
 
@@ -47,7 +48,7 @@ export default function StoryList(){
 
                             <div className={styles.item}>
                                 <div className={styles.chapterImg}>
-                                    <img className={"img"} src={"/public/chapter.jpg"} alt={`Book ${book.name}`} />
+                                    <img className={"img"} src={chapterImage} alt={`Book ${book.name}`} />
                                 </div>
 
                                 <h3 className={styles.chapterName}>{book.name}</h3>

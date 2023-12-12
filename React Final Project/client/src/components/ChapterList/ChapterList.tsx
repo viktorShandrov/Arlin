@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {request} from "../../functions";
 import {Link, useParams} from "react-router-dom";
 import styles from "./ChapterList.module.css"
+import chapterImage from "../../../public/chapter.jpg"
 export default function ChapterList(){
     const [chapters,setChapters] = useState([])
     const {bookId} = useParams()
@@ -32,7 +33,7 @@ export default function ChapterList(){
                     <Link key={chapter}  to={`/main/read/${bookId}/chapterId=${chapter}`}>
                         <div className={styles.item}>
                             <div className={styles.chapterImg}>
-                                <img className={"img"} src={"/public/chapter.jpg"} alt={`Chapter ${index+1}`} />
+                                <img className={"img"} src={chapterImage} alt={`Chapter ${index+1}`} />
                             </div>
 
                             <h3 className={styles.chapterName}>{index+1}</h3>
