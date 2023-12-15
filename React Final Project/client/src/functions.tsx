@@ -8,18 +8,25 @@ export function request(url: string, method?: string, body?: any, headers: any =
             if (!headers.hasOwnProperty("Content-Type")) {
                 headers["Content-Type"] = "application/json";
             }
+
+            const abortController = new AbortController();
+            const signal = abortController.signal;
+
+
+
             const promiseRequest = fetch(constants.REST_API + url, {
                 headers: {
                     ...headers,
                     Authorization: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!).token : null
                 },
                 body: headers["Content-Type"] = "application/json"?JSON.stringify(body):body,
-                method
+                method,
+                signal
             });
             toast.promise(promiseRequest, {
                 pending: 'Sending server request',
                 // success: 'Successful server request 👌',
-                error: 'Unsuccessful server request 🤯'
+                // error: 'Unsuccessful server request 🤯'
             });
             promiseRequest
                 .then((response: any) => {
@@ -48,14 +55,16 @@ export function request(url: string, method?: string, body?: any, headers: any =
                 })
                 .catch((err: any) => {
                     console.error('Fetch Error:', err);
-                    toast.error(err.message);
+                    if(err.message!=="The user aborted a request."){
+                        toast.error(err.message);
+                    }
                     if (error) {
                         error(err); // Call the error function if provided
                     } else if (res) {
                         res(null); // Optionally call res with null if there is no error function
                     }
                 });
-
+            return abortController
         }
     };
 }
