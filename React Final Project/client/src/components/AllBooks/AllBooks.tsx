@@ -4,6 +4,7 @@ import {request} from "../../functions";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import chapterImage from "../../../public/chapter.jpg"
+import {toast} from "react-toastify";
 export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
@@ -26,6 +27,15 @@ export default function AllBooks(){
     useEffect(()=>{
         filterByFilters()
     },[appliedFilters])
+    const clearFilters = ()=>{
+        setAppliedFilters((old:any)=>{
+            return{
+                author:[],
+                genre:[],
+            }
+
+        })
+    }
     const filterByFilters = ()=>{
         setBooks(()=>{
             let filteredResult:any = []
@@ -118,6 +128,7 @@ export default function AllBooks(){
                 }))
             }
         )
+
     }
 
     const getFilteringData = () =>{
@@ -147,6 +158,7 @@ export default function AllBooks(){
     useEffect(()=>{
         getAll()
         getFilteringData()
+
     },[])
     useEffect(()=>{
         changeAutoCompletions()
@@ -160,7 +172,7 @@ export default function AllBooks(){
                         <div className={styles.autoCompletionC}>
                             {filteredAutoCompletions.length>0&&filteredAutoCompletions.map((completion:any)=>{
                                 return <div key={completion.bookId} className={styles.autoCompletion}>
-                                    <p className={styles.completion}>{completion.bookName}</p>
+                                    <Link to={completion.bookId} className={styles.completion}>{completion.bookName}</Link>
                                 </div>
                             })}
 
@@ -209,7 +221,7 @@ export default function AllBooks(){
                         <summary>Автор</summary>
                         {filterData.authors&&filterData.authors.length>0&&filterData.authors.map((el,index)=>{
                             return <div data-filtervalue={el} key={index} className={styles.pair}>
-                                <input onChange={filterChangeHandler} name={"author"} type={"checkbox"} />
+                                <input onChange={filterChangeHandler} name={"author"} checked={appliedFilters["author"].includes(el)} type={"checkbox"} />
                                 <label>{el}</label>
                             </div>
                         })}
@@ -218,11 +230,12 @@ export default function AllBooks(){
                         <summary>Жанр</summary>
                         {filterData.genres&&filterData.genres.length>0&&filterData.genres.map((el,index)=>{
                             return <div data-filtervalue={el} key={index} className={styles.pair}>
-                                <input value={filterData[el]} onChange={filterChangeHandler} name={"genre"} type={"checkbox"} />
+                                <input value={filterData[el]} onChange={filterChangeHandler} name={"genre"} checked={appliedFilters["genre"].includes(el)} type={"checkbox"} />
                                 <label>{el}</label>
                             </div>
                         })}
                     </details>
+                     <button onClick={clearFilters}>Изчисти</button>
                 </div>}
 
 
