@@ -2,6 +2,7 @@ const models = require("../models/allModels")
 const {isOwnedByUser, isAdmin} = require("../managerUtils/managerUtil");
 const wordManager = require("./wordManager");
 const schedule = require('node-schedule');
+const {model} = require("mongoose");
 
 
 exports.getChapter =async(chapterId,userId)=>{
@@ -11,17 +12,28 @@ exports.getChapter =async(chapterId,userId)=>{
         }
     });
     const currentChapterIndex = book.chapters.findIndex(el=>el.equals(chapterId))
-       const previousChapterId = book.chapters[currentChapterIndex-1]
-       const nextChapterId = book.chapters[currentChapterIndex+1]
+
     const chapter = await models.chapterModel.findById(chapterId)
     await changeUserLastReading(book._id,chapter._id,userId)
-
+    const [prev,next] = getPreviousAndNextChapters(book,currentChapterIndex)
     return{
         currentChapter:chapter,
-        previousChapterId,
-        nextChapterId
+        previousChapterId:prev,
+        nextChapterId:next,
+        hasChapterPlotTest:await hasChapterPlotTest(chapter._id)
     }
 
+}
+function getPreviousAndNextChapters(book,currentChapterIndex){
+    return[
+        book.chapters[currentChapterIndex-1],
+        book.chapters[currentChapterIndex+1]
+    ]
+
+}
+async function hasChapterPlotTest(chapterId){
+    const plotTest = await models.chapterQuestionsModel.findOne({chapterId})
+    return !!plotTest
 }
 
 async function changeUserLastReading(bookId,chapterId,userId){

@@ -16,7 +16,8 @@ export default function Story(){
         currentChapter: {text:"", _id: undefined},
         previousChapterId:'',
         nextChapterId:'',
-        _id:""
+        _id:"",
+        hasChapterPlotTest: false
     })
 
 
@@ -26,6 +27,7 @@ export default function Story(){
     const getChapter=(chapterId:string)=>{
          request(`chapters/${chapterId}`).subscribe(
              (res:any)=>{
+                 console.log(res)
                  dispatch(setUser({...user,lastReading:{
                          bookId,
                          chapterId
@@ -88,8 +90,8 @@ export default function Story(){
                             <Link className={`${styles.btn}`} to={`/main/test/textWords/${chapter.currentChapter._id}`}>
                                 <button  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={styles.previousChapter}>Word test</button>
                             </Link>
-                            <Link className={`${styles.btn}`} to={`/main/test/textQuestions/${chapter.currentChapter._id}`}>
-                                <button  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={styles.previousChapter}>Plot test</button>
+                            <Link to={`/main/test/textQuestions/${chapter.currentChapter._id}`}>
+                                <button   disabled={!chapter.hasChapterPlotTest}  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={`${styles.previousChapter} ${styles.btn}`}>Plot test</button>
                             </Link>
                         </div>
                     <div className={styles.navigationBtns}>
