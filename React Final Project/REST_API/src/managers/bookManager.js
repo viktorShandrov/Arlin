@@ -24,7 +24,7 @@ exports.getBookDetails =async(bookId)=>{
 
 }
 exports.getAllBooks =async()=>{
-   return  models.bookModel.find()
+   return  models.bookModel.find().select("-image")
 
 }
 exports.editBook =async(bookId,bookData,userId)=>{
