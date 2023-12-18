@@ -27,6 +27,9 @@ export default function Story(){
     const getChapter=(chapterId:string)=>{
          request(`chapters/${chapterId}`).subscribe(
              (res:any)=>{
+                 if(!res){
+                     navigate("/main/read")
+                 }
                  console.log(res)
                  dispatch(setUser({...user,lastReading:{
                          bookId,
@@ -83,17 +86,18 @@ export default function Story(){
                             <Sentence   text={sentence} />
                         </div>
                     )}
+                    {!chapter&&
+                    <h1>Problem with getting chapter</h1>}
                 </div>
-
-                <div className={styles.btns}>
-                        <div className={`${styles.testBtns}`}>
-                            <Link className={`${styles.btn}`} to={`/main/test/textWords/${chapter.currentChapter._id}`}>
-                                <button  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={styles.previousChapter}>Word test</button>
-                            </Link>
-                            <Link to={`/main/test/textQuestions/${chapter.currentChapter._id}`}>
-                                <button   disabled={!chapter.hasChapterPlotTest}  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={`${styles.previousChapter} ${styles.btn}`}>Plot test</button>
-                            </Link>
-                        </div>
+                {chapter&&<div className={styles.btns}>
+                    <div className={`${styles.testBtns}`}>
+                        <Link className={`${styles.btn}`} to={`/main/test/textWords/${chapter.currentChapter._id}`}>
+                            <button  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={styles.previousChapter}>Word test</button>
+                        </Link>
+                        <Link to={`/main/test/textQuestions/${chapter.currentChapter._id}`}>
+                            <button   disabled={!chapter.hasChapterPlotTest}  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={`${styles.previousChapter} ${styles.btn}`}>Plot test</button>
+                        </Link>
+                    </div>
                     <div className={styles.navigationBtns}>
                         <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={`${styles.previousChapter} ${styles.btn}`}>
                             <i className="fa-solid fa-caret-left"></i>
@@ -103,7 +107,8 @@ export default function Story(){
                         </button>
                     </div>
 
-                </div>
+                </div>}
+
             </div>
         </div>
 

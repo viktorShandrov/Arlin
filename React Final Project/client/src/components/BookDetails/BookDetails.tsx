@@ -7,6 +7,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
+import Loading from "../Spinner/Loading";
 
 export default function  BookDetails(){
 
@@ -18,6 +19,7 @@ export default function  BookDetails(){
     const {user}:any = useSelector((selector:any)=>selector.user)
     const [image,setImage] = useState("")
     const [isDialogShown,setIsDialogShown] = useState(false)
+    const [isLoading,setIsLoading] = useState(true)
     const [book,setBook] = useState({
         name:"",
         resume:"",
@@ -39,6 +41,7 @@ export default function  BookDetails(){
                     // Set Base64-encoded image as the source
                     setImage(`data:image/jpeg;base64,${base64Image}`);
                     setBook(res.book)
+                    setIsLoading(false)
                     },
             )
     }
@@ -56,8 +59,9 @@ export default function  BookDetails(){
 
 
     useEffect(()=>{
+        setIsLoading(true)
          getBook()
-        
+
     },[])
 
 
@@ -66,6 +70,7 @@ export default function  BookDetails(){
     // @ts-ignore
     return(
         <>
+            {isLoading&&<Loading/>}
             {isDialogShown&&<div className={styles.overlay}>
                 <dialog className={styles.dialog} open={isDialogShown} >
                     Are you sure you want to delete this book?

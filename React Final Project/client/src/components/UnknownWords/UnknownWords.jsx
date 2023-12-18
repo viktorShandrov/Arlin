@@ -1,13 +1,18 @@
 import styles from "./UnknownWords.module.css"
 import {useEffect, useState} from "react";
 import {request} from "../../functions";
+import ComponentLoading from "../ComponentLoading/ComponentLoading.tsx";
 
 export default function UnknownWords(){
     const [words,setWords] = useState([])
+    const [isLoading,setIsLoading] = useState(true)
     useEffect(()=>{
+        setIsLoading(true)
         request("unknownWords/all","GET").subscribe(
             (res)=>{
                 setWords(res)
+                setIsLoading(false)
+
             }
         )
     },[])
@@ -23,6 +28,7 @@ export default function UnknownWords(){
 
                     <hr className={styles.hr}/>
                     <div className={styles.wordsWrapper}>
+                        {isLoading&&<ComponentLoading />}
                         <div className={styles.wordsContainer}>
                             {words.length>0&&words.reverse().map((word,index)=>{
 

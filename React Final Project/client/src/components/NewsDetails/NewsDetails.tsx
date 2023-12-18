@@ -4,6 +4,7 @@ import {request} from "../../functions";
 import {Route, Routes, useNavigate, useParams} from "react-router-dom";
 import TranslationContainer from "../TranslationContainer/TranslationContainer";
 import Sentence from "../Story/Sentence/Sentence";
+import ComponentLoading from "../ComponentLoading/ComponentLoading";
 
 export default function NewsDetails(){
     const {id} = useParams()
@@ -15,6 +16,7 @@ export default function NewsDetails(){
         urlToImage: undefined,
         splitedText:undefined
     })
+    const [isLoading,setIsloading] = useState(true)
     useEffect(()=>{
         request(`news/${id}`,"GET").subscribe(
             (res:any)=>{
@@ -36,6 +38,7 @@ export default function NewsDetails(){
                 }
                 res.news.splitedText = res.news.splitedText.split(". ")
                 setNews(res.news)
+                setIsloading(false)
             }
         )
     },[])
@@ -46,6 +49,7 @@ export default function NewsDetails(){
     return(
         <>
             <div className={styles.detailsWrapper} >
+                {isLoading&&<ComponentLoading/>}
                 <div className={styles.detailsC} >
                     <h1 className={styles.title}>
                         {news.title}

@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import chapterImage from "../../../public/chapter.jpg"
 import {toast} from "react-toastify";
+import Loading from "../Spinner/Loading";
 export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
@@ -18,6 +19,7 @@ export default function AllBooks(){
         authors:[],
         genres:[]
     })
+    const [isLoading,setIsLoading] = useState(false)
 
     const [appliedFilters,setAppliedFilters] = useState({
         author:[],
@@ -110,6 +112,7 @@ export default function AllBooks(){
         setSearchParams(searchParam)
     }
      const getAll = ()=>{
+         setIsLoading(true)
         request("books/all","GET").subscribe(
             (res:any)=>{
                 setReqBooks(res.allBooks)
@@ -126,6 +129,7 @@ export default function AllBooks(){
                         bookName:book.name
                     }
                 }))
+                setIsLoading(false)
             }
         )
 
@@ -164,7 +168,8 @@ export default function AllBooks(){
         changeAutoCompletions()
     },[searchParams])
     return(
-        <>
+            <>
+                {isLoading&&<Loading />}
             <div className={styles.wrapper}>
                 <div className={styles.searchBarWrapper}>
                     <div className={styles.searchBarC}>

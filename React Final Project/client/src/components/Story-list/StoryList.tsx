@@ -5,6 +5,7 @@ import styles from "../ChapterList/ChapterList.module.css";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import chapterImage from "../../../public/chapter.jpg"
+import ComponentLoading from "../ComponentLoading/ComponentLoading";
 export default function StoryList(){
 
 
@@ -13,11 +14,13 @@ export default function StoryList(){
 
 
     const [books,setBooks] = useState([])
+    const [isLoading,setIsLoading] = useState(true)
     const fetchAllBooks = ()=>{
         request("books/all").subscribe(
             (res:any)=>{
                 const {allBooks}=res
                 setBooks(allBooks)
+                setIsLoading(false)
             },
             (error:any)=>{
                 console.log(error)
@@ -33,6 +36,7 @@ export default function StoryList(){
 
     return(
         <div className={styles.chapterListWrapper}>
+            {isLoading&&<ComponentLoading/>}
             <Link to={`/main/read/${user.lastReading.bookId}/chapterId=${user.lastReading.chapterId}`}>
                 <button>Continue reading</button>
             </Link>

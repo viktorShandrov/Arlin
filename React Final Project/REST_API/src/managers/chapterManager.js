@@ -6,12 +6,18 @@ const {model} = require("mongoose");
 
 
 exports.getChapter =async(chapterId,userId)=>{
+    console.log(chapterId)
     const book = await models.bookModel.findOne({
         chapters: {
             $in: chapterId
         }
     });
     const currentChapterIndex = book.chapters.findIndex(el=>el.equals(chapterId))
+    const user = await models.userModel.findById(userId)
+
+    if(user.role!=="admin"){
+        await isOwnedByUser(userId,book._id,models.bookModel,"ownedBy")
+    }
 
     const chapter = await models.chapterModel.findById(chapterId)
     await changeUserLastReading(book._id,chapter._id,userId)

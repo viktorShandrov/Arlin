@@ -26,6 +26,7 @@
 .wordsWrapper {
     height: 100%;
     overflow: auto;
+    position: relative;
 }
 .wordsContainer{
     display: flex;
