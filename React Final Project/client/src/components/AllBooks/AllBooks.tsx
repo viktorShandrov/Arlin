@@ -4,7 +4,6 @@ import {request} from "../../functions";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import chapterImage from "../../../public/chapter.jpg"
-import {toast} from "react-toastify";
 import Loading from "../Spinner/Loading";
 export default function AllBooks(){
 
@@ -30,7 +29,7 @@ export default function AllBooks(){
         filterByFilters()
     },[appliedFilters])
     const clearFilters = ()=>{
-        setAppliedFilters((old:any)=>{
+        setAppliedFilters(()=>{
             return{
                 author:[],
                 genre:[],
