@@ -59,7 +59,7 @@ export default function  BookDetails(){
 
 
     useEffect(()=>{
-        setIsLoading(true)
+        // setIsLoading(true)
          getBook()
 
     },[])
