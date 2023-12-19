@@ -63,7 +63,9 @@ router.get("/:id",isAuth,async (req,res)=>{
 router.get("/:id/details",isAuth,async (req,res)=>{
     try{
         const bookId = req.params.id
+        console.log("here 2")
         const book = await bookManager.getBookDetails(bookId)
+        console.log(book)
         res.status(200).json({book})
     } catch (error) {
         res.status(400).json({message:error.message})
