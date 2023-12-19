@@ -278,7 +278,7 @@ import('random-words')
                         console.log(container)
                         return container
                     }
-            
+
             exports.translateWord=async(word)=>{
                 const fetch = await import("node-fetch")
 
