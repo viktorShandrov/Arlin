@@ -8,7 +8,7 @@ exports.getBook =async(bookId,userId)=>{
     if(user.role!=="admin"){
         await isOwnedByUser(userId,bookId,models.bookModel,"ownedBy")
     }
-   return  models.bookModel.findById(bookId)
+   return  models.bookModel.findById(bookId).select("-image")
 
 }
 exports.getBookDetails =async(bookId)=>{
