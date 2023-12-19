@@ -12,8 +12,7 @@ import('random-words')
         globalThis.fetch = (await import('node-fetch')).default;
 
         const randomWords = randomWordsModule;
-        import("chatgpt")
-            .then(async(chatgpt)=>{
+
 
 
 
@@ -279,10 +278,7 @@ import('random-words')
                         console.log(container)
                         return container
                     }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
+            
             exports.translateWord=async(word)=>{
                 const fetch = await import("node-fetch")
 
