@@ -14,7 +14,8 @@ exports.getBook =async(bookId,userId)=>{
 exports.getBookDetails =async(bookId)=>{
     let book
     try{
-         book = models.bookModel.findById(bookId)
+         book = await models.bookModel.findById(bookId)
+            delete book.image
     }catch (error){
         throw new Error("No such book")
     }
