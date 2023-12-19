@@ -20,9 +20,6 @@ exports.FEdomains = [
     "http://localhost:5173",
     "http://127.0.0.1:4173",
     "https://theconfederacy.site",
-    "https://arlin-client-viktorshandrov.vercel.app",
-    "https://arlin-client-k78n0baqt-viktorshandrov.vercel.app",
-    "https://arlin-client-git-main-viktorshandrov.vercel.app"
 ]
 exports.testTypes ={
     randomWords:"randomWords",
