@@ -34,16 +34,18 @@ export default function  BookDetails(){
     const getBook = ()=>{
             request(`books/${id}/details`,"GET").subscribe(
                 async (res:any)=>{
-                    // const imageData = res.book.image.data;
-                    //
-                    // const base64Image = btoa(new Uint8Array(imageData).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-                    //
-                    // // Set Base64-encoded image as the source
-                    // setImage(`data:image/jpeg;base64,${base64Image}`);
+                    setDetailsBookImage      //do not call
                     setBook(res.book)
                     setIsLoading(false)
                     },
             )
+    }
+    const setDetailsBookImage = (res:any) =>{
+        const imageData = res.book.image.data;
+
+        const base64Image = btoa(new Uint8Array(imageData).reduce((data, byte) => data + String.fromCharCode(byte), ''));
+
+        setImage(`data:image/jpeg;base64,${base64Image}`);
     }
     const deleteBook = ()=>{
         request(`books/${book._id}/delete`,"GET").subscribe(
