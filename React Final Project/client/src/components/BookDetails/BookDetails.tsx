@@ -10,14 +10,16 @@ import {toast} from "react-toastify";
 import Loading from "../Spinner/Loading";
 import BookElement from "../AllBooks/BookElement/BookElement";
 import AddtionalInfo from "../AddtionalInfo/AddtionalInfo";
+import additional from "../AddtionalInfo/AddtionalInfo.module.css";
+import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
 
 export default function  BookDetails(){
 
     const stripePromise = loadStripe('pk_test_51OEwwSAPrNaPFyVRyPTVcpxfNfy2RJiSVgl3frnwPgKe2tQZhlOVVz5PCvVN8nqoEyT2HwarufbQcoQzNy1giqkg00bLGKyRr4');
-    const scroller = useRef(null)
-    const scrollerData = useRef(null)
+
     const {id} = useParams()
-    const [scrollerClickPosition,setScrollerClickPosition] = useState(0)
+    const additionalInfos = useRef([])
+    const wrapper = useRef(0)
 
     // const {user} = useContext(userContext)
     const {user}:any = useSelector((selector:any)=>selector.user)
@@ -64,10 +66,18 @@ export default function  BookDetails(){
 
 
 
-    useEffect(()=>{
-        // setIsLoading(true)
-         getBook()
 
+    useEffect(()=>{
+        getBook()
+        wrapper.current.addEventListener("scroll",()=>{
+            for (const additionalInfo of additionalInfos.current) {
+                const position = additionalInfo.getBoundingClientRect();
+                // Check if the element is in the viewport
+                if (position.top < window.innerHeight-600 && position.bottom >= 0) {
+                    additionalInfo.classList.add(additional.fadeIn);
+                }
+            }
+        })
     },[])
 
 
@@ -157,24 +167,24 @@ const books=[
 
 ]
 
-    const rightArrowClick = ()=>{
-        const value = (scrollerClickPosition+1) * scroller.current.getBoundingClientRect().width
-
-        if(value < scrollerData.current.getBoundingClientRect().width){
-            // @ts-ignore
-            scrollerData.current.style.transform = `translateX(-${value}px)`
-            setScrollerClickPosition(oldValue => oldValue+1)
-
-        }
-    }
-    const leftArrowClick = ()=>{
-        if(scrollerClickPosition-1>=0){
-            // @ts-ignore
-            scrollerData.current.style.transform = `translateX(-${(scrollerClickPosition-1) * scroller.current.getBoundingClientRect().width}px)`
-            setScrollerClickPosition(oldValue => oldValue-1)
-        }
-
-    }
+    // const rightArrowClick = ()=>{
+    //     const value = (scrollerClickPosition+1) * scroller.current.getBoundingClientRect().width
+    //
+    //     if(value < scrollerData.current.getBoundingClientRect().width){
+    //         // @ts-ignore
+    //         scrollerData.current.style.transform = `translateX(-${value}px)`
+    //         setScrollerClickPosition(oldValue => oldValue+1)
+    //
+    //     }
+    // }
+    // const leftArrowClick = ()=>{
+    //     if(scrollerClickPosition-1>=0){
+    //         // @ts-ignore
+    //         scrollerData.current.style.transform = `translateX(-${(scrollerClickPosition-1) * scroller.current.getBoundingClientRect().width}px)`
+    //         setScrollerClickPosition(oldValue => oldValue-1)
+    //     }
+    //
+    // }
     // @ts-ignore
     return(
         <>
@@ -186,7 +196,7 @@ const books=[
                     <button>No</button>
                 </dialog>
             </div>}
-                <div className={styles.bookDetailsWrapper}>
+                <div ref={wrapper} className={styles.bookDetailsWrapper}>
                     <section className={styles.bookNameAndRating}>
                         <h1 className={styles.bookName}>Под Игото</h1>
                         <h1 className={styles.rating}>6/10</h1>
@@ -323,19 +333,17 @@ const books=[
                         </div>
                     </section>
 
-                    <section ref={scroller} className={styles.moreBooksWrapper}>
+                    <section  className={styles.moreBooksWrapper}>
                         <h1 className={styles.moreOfThisGenre}>Още от този жанр</h1>
-                        <i onClick={leftArrowClick} className={`${"fa-solid fa-angle-left"} ${styles.arrowLeft}`}></i>
-                        <i onClick={rightArrowClick} className={`${"fa-solid fa-angle-right"} ${styles.arrowRight}`}></i>
-                        <div  className={styles.moreBooksC}>
-                            <div ref={scrollerData} className={styles.booksC}>
-                                {books.length>0&&books.map(book=><BookElement book={book}  />) }
-                            </div>
-                        </div>
+                        <ScrollerContainer>
+                            {books.length>0&&books.map(book=><BookElement book={book}  />) }
+                        </ScrollerContainer>
+
                     </section>
 
                     <section className={styles.helpfulInformationWrapper}>
                         <AddtionalInfo
+                            reference = {additionalInfos}
                             question={"Защо четенето на книги увеличава запоманянето на информация"}
                             info={" Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias assumenda beatae dicta distinctio eius ex explicabo inventore ipsam laborum libero molestias provident quod repellendus, rerum suscipit voluptatibus. Dicta ea, et eum exercitationem soluta ut voluptatem. Adipisci eligendi est impedit nulla quaerat quisquam reprehenderit unde. Culpa eaque esse in ipsum iure numquam praesentium qui reprehenderit rerum veniam! A accusantium adipisci aliquid asperiores assumenda, eos esse et facere harum inventore quae quia quo saepe ut voluptatum! Ab ad beatae delectus earum eligendi expedita fugit nostrum provident repudiandae voluptate. Ducimus explicabo, temporibus." }
                         />

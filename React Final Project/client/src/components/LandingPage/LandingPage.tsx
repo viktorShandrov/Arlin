@@ -3,6 +3,9 @@ import styles from "./LandingPage.module.css"
 import additional from "../AddtionalInfo/AddtionalInfo.module.css"
 import AddtionalInfo from "../AddtionalInfo/AddtionalInfo";
 import {useEffect, useRef} from "react";
+import FreeChapter from "./FreeChapter/FreeChapter";
+import BookElement from "../AllBooks/BookElement/BookElement";
+import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
 export default function LandingPage(){
     const additionalInfos = useRef([])
     const wrapper = useRef(0)
@@ -60,6 +63,20 @@ export default function LandingPage(){
                             question={"Защо четенето на книги увеличава запоманянето на информация"}
                             info={" Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias assumenda beatae dicta distinctio eius ex explicabo inventore ipsam laborum libero molestias provident quod repellendus, rerum suscipit voluptatibus. Dicta ea, et eum exercitationem soluta ut voluptatem. Adipisci eligendi est impedit nulla quaerat quisquam reprehenderit unde. Culpa eaque esse in ipsum iure numquam praesentium qui reprehenderit rerum veniam! A accusantium adipisci aliquid asperiores assumenda, eos esse et facere harum inventore quae quia quo saepe ut voluptatum! Ab ad beatae delectus earum eligendi expedita fugit nostrum provident repudiandae voluptate. Ducimus explicabo, temporibus." }
                         />
+                        <section className={styles.freeChaptersWrapper}>
+                            <ScrollerContainer>
+                                <FreeChapter />
+                                <FreeChapter />
+                                <FreeChapter />
+                                <FreeChapter />
+                                <FreeChapter />
+                                <FreeChapter />
+                                <FreeChapter />
+                                <FreeChapter />
+                                <FreeChapter />
+                            </ScrollerContainer>
+                        </section>
+
                         <AddtionalInfo
                             reference = {additionalInfos}
                             question={"Защо четенето на книги увеличава запоманянето на информация"}

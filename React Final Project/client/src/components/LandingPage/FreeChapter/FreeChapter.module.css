@@ -1,0 +1,47 @@
+.freeChapterC{
+    width: 300px;
+    padding: 40px;
+    background-color: #859D7A;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    /*transform: scale(0.5);*/
+}
+@media (max-width: 500px){
+    .freeChapterC{
+        transform: scale(0.7);
+    }
+}
+.imgC{
+    border-radius: 20px;
+    width: 150px;
+    aspect-ratio: 1/1;
+}
+.heading{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: white;
+    font-size: 18px;
+}
+.btn{
+    display: block;
+    border: none;
+    border-radius: 20px;
+    padding: 20px 40px;
+    font-weight:  bolder;
+    font-size: 20px;
+    width:   100%;
+    color: white;
+}
+.readBtn{
+    background-color: #A73701;
+}
+.viewBookBtn{
+    background-color: #7E0030;
+}

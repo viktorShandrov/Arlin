@@ -1,3 +1,8 @@
+.landingPageWrapper{
+    overflow: auto;
+    font-family: "Shantell Sans", serif;
+    padding-bottom: 300px;
+}
 .helpfulInformationWrapper{
     display: flex;
     height: fit-content;
@@ -5,16 +10,15 @@
     align-items: center;
     flex-direction: column;
     gap: 50px;
+}
 
+.freeChaptersWrapper{
+    /*overflow-x: scroll;*/
+    width: 90%;
+    /*transform: scaleY(0.5);*/
 
 }
 
-
-
-.landingPageWrapper{
-    overflow: auto;
-    font-family: "Shantell Sans", serif;
-}
 
 .heroSectionWrapper{
     display: flex;
