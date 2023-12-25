@@ -1,0 +1,70 @@
+
+.helpfulInformationC{
+    display: flex;
+    width: 80%;
+}
+
+.helpfulInformationC>*{
+    flex: 1;
+}
+.helpfulInformationC:nth-child(odd){
+    flex-direction: row-reverse;
+}
+.information{
+    background-color: #4C6A69;
+    color: white;
+    font-weight: bolder;
+    padding: 30px;
+    font-family: "Shantell Sans", serif;
+
+}
+
+.question{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+    padding: 0 100px    ;
+    font-size: clamp(30px,3vw,50px);
+    font-family: "Shantell Sans", serif;
+
+}
+
+@media (max-width: 1200px) {
+    .helpfulInformationC{
+        flex-direction: column;
+        width: 50%;
+        gap: 20px;
+    }
+    .helpfulInformationC:nth-child(odd){
+        flex-direction: column;
+        width: 50%;
+        gap: 20px;
+    }
+
+    .question{
+        order: 1;
+        text-align: center;
+    }
+    .information{
+        order: 2;
+        text-align: center;
+        border-radius: 10px;
+
+    }
+    .helpfulInformationC>*{
+        flex: auto;
+    }
+}
+@media (max-width: 1000px) {
+    .helpfulInformationC{
+        width: 90%;
+    }
+    .helpfulInformationC:nth-child(odd){
+        width: 90%;
+    }
+    .information{
+        padding: clamp(5px,3vw,30px);
+    }
+
+}

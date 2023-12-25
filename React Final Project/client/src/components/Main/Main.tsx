@@ -13,22 +13,24 @@ import NewsList from "../NewsList/NewsList";
 import NewsDetails from "../NewsDetails/NewsDetails";
 import AuthGuard from "../../guards/AuthGuard/AuthGuard";
 import Chat from "../Chat/Chat";
+import LandingPage from "../LandingPage/LandingPage";
 export default function Main(){
     return(
         <>
             <div className={styles.templateWrapper}>
                 <Navigation />
                 <Routes>
-                    <Route element={<AuthGuard/>}>
-                        <Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>
-                        <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
-                        <Route path={"/AllBooks/"} element={<AllBooks />}></Route>
-                        <Route path={"/read/*"} element={<Read />}></Route>
-                        <Route path={"/AllBooks/:id"} element={<BookDetails />}></Route>
-                        <Route path={"/dashboard"} element={<Dashboard />}></Route>
-                        <Route path={"/news/:id/*"} element={<NewsDetails />}></Route>
-                        <Route path={"/chat"} element={<Chat />}></Route>
-                    </Route>
+                        <Route element={<AuthGuard/>}>
+                            <Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>
+                            <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
+                            <Route path={"/AllBooks/"} element={<AllBooks />}></Route>
+                            <Route path={"/read/*"} element={<Read />}></Route>
+                            <Route path={"/AllBooks/:id"} element={<BookDetails />}></Route>
+                            <Route path={"/dashboard"} element={<Dashboard />}></Route>
+                            <Route path={"/news/:id/*"} element={<NewsDetails />}></Route>
+                            <Route path={"/chat"} element={<Chat />}></Route>
+                        </Route>
+                        <Route path={"/hero"} element={<LandingPage />}></Route>
                         <Route path={"/news/:id/"} element={<NewsDetails />}></Route>
                         <Route path={"/news"} element={<NewsList />}></Route>
                 </Routes>

@@ -1,0 +1,40 @@
+.helpfulInformationWrapper{
+    display: flex;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+
+
+}
+
+.landingPageWrapper{
+    overflow: auto;
+    font-family: "Shantell Sans", serif;
+}
+
+.heroSectionWrapper{
+    display: flex;
+    margin-bottom: 190px;
+}
+.heroImageC img{
+    width: 100%;
+    height: 100%;
+}
+
+.textC{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 60px;
+}
+.heading{
+    font-weight: bolder;
+    font-size: 50px;
+}
+
+.afterHeading{
+    font-size: 25px;
+}

@@ -1,130 +1,523 @@
 
-.wrapper{
-    height: 100%;
-}
-.container{
-    display: flex;
-    padding: 50px;
-    border-radius: 10px;
-    height: 100%;
-    justify-content: space-around;
-    gap: 200px;
-    background-color: #c8c8c8;
+@import url('https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
 
+
+@font-face {
+    font-family: 'caveat'; /* Choose a name for your font */
+    src: url('client/public/fonts/caveat.bold.ttf') ; /* Update the path and format */
 }
-.container>*{
-    flex: 1;
+@font-face {
+    font-family: 'BAHNSCHRIFT'; /* Choose a name for your font */
+    src: url('client/public/fonts/BAHNSCHRIFT.ttf') ; /* Update the path and format */
 }
-.overlay{
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(98, 98, 98, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.dialog{
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border: solid 1px black;
-    padding-top: 20px;
-}
-.imageAndBtns{
-    /*padding: 0 150px;*/
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.imageAndBtns img{
-    width: 100%;
-    max-width: 400px;
-    border-radius: 10px;
+@font-face {
+    font-family: 'shantell1'; /* Choose a name for your font */
+    src: url('client/public/fonts/shantell/ShantellSans-Italic-VariableFont_BNCE,INFM,SPAC,wght.ttf') ; /* Update the path and format */
 }
 
-.detailsAndBtns{
-    height: 100%;
+
+.bookDetailsWrapper{
+    font-family: "Shantell Sans", serif;
+    overflow: auto;
+    padding-top: 50px;
+    padding-bottom: 500px;
+}
+
+.bookNameAndRating {
     display: flex;
-    flex-direction: column;
+    width: 70%;
+    margin: 0 auto;
 }
-.leftAndRightC{
-    display: flex;
-}
-.leftAndRightC h2{
-    text-overflow: ellipsis;
-    font-size: 20px;
-    font-weight: normal;
-}
-.left h2{
-    text-align: right;
-}
-.right h2{
-    text-align: left;
-}
-.left>*,
-.right>*{
-    flex: 1;
-}
-.leftAndRightC>*{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-.details{
+
+.bookNameAndRating>*{
+    padding: clamp(10px,3vw,20px);
+    font-weight: bolder;
     border-radius: 20px;
+}
 
-    display: flex;
-    flex-direction: column;
+.bookName{
+    padding-right: 40px;
+    font-family: "Shantell Sans", serif;
     flex: 1;
+    text-align: center;
+    background-color: #D9D9D9;
+
+}
+.rating{
+    background-color: #B2B2B2;
+    transform: translateX(-40px);
+    font-family: "Shantell Sans", serif;
+    font-size: clamp(20px,5vw,34px);
+    display: flex;
+    align-items: center;
+    /*font-weight: bolder;*/
 }
 
-.bookName,
-.chaptersCount{
-    background-color: #6D6D6D;
-    padding: 10px;
-    text-align: center;
-    margin: 0;
+.resumeAndBookImage{
+    display: flex;
+    margin-top: 150px;
 }
-.left .chaptersCount{
-    font-size: 18px;
+
+.resumeAndBookImage>*{
+    flex: 1;
+
+}
+
+
+
+.resumeWrapper,
+.bookImageWrapper{
+    display: flex;
+    justify-content: center;
 }
 .resume{
-    flex-grow: 1;
-    overflow-y: auto;
-    max-height: 500px;
-    padding: 10px;
-    background-color: white;
-    margin: 0;
-
+    background-color: #75A9AB;
+    width: 80%;
+    padding: clamp(10px,4vw,50px);
+    color: white;
+    max-height: 400px;
+    font-weight: bolder ;
 }
+
+.resume p {
+
+    font-family: "Shantell Sans", serif;
+    font-size: 20px;
+    height: 100%;
+    overflow:auto;
+    margin: 0;
+}
+.bookImageC{
+    width: 40%;
+    justify-content: center;
+    /*margin: 0 200px;*/
+    height: fit-content;
+    border-radius: 40px;
+    border-top: 30px solid #4C6A69;
+}
+
+
+
+.image img{
+    width: 100%;
+}
+
 .btns{
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-
 }
-.btns>*{
-    border-radius: 10px;
+.btn{
     border: none;
-    padding: 10px 45px  ;
-    font-weight: bold;
-    color: #000000;
-    background-color: white;
-    text-align: center;
-    text-decoration: none;
+    color: white;
+    padding: 15px;
+    font-weight: bolder ;
+    font-size: 25px;
+    font-family: "Shantell Sans", serif;
+
 }
 
-.buyBtn{
-    background-color: #05FF00;
-}
 .editBtn{
-    background-color: #fcff20;
+    background-color: #FFE500;
+    color: black;
 }
 .deleteBtn{
-    background-color: #ff0d0d;
+    background-color: #7E0030;
 }
+.buyBtn{
+    background-color: #75A9AB;
+}
+
+
+.bookDetailsTableWrapper{
+    display: flex;
+    margin-top: 200px;
+    justify-content: center;
+}
+
+.bookDetailsTable{
+    width: 50%
+}
+
+.row{
+    display: flex;
+}
+.cell{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bolder;
+    text-align: center;
+    padding: clamp(10px,4vw,50px);
+    /*border-bottom: solid white 0.1px;*/
+}
+.cell:first-child{
+    background-color: #6699BB;
+}
+.cell:last-child{
+    background-color: #4C6A69;
+}
+
+.tableHeading{
+    margin: 0;
+    font-weight: 800;
+    font-size: clamp(18px,5vw,45px);
+    font-family: "Shantell Sans", serif;
+    padding: 0 5px;
+}
+
+.freeChaptersBtnAndReadBtnWrapper{
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+    height: fit-content;
+}
+.freeChaptersBtnAndReadBtnC{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    height: fit-content;
+}
+
+
+.freeChaptersBtnAndReadBtnC .btn{
+    flex: 1;
+    font-size: 20px;
+    /*height: 100%;*/
+}
+
+.freeChaptersBtnAndReadBtnC .btn:first-child{
+    background-color: #A73701;
+
+}
+.freeChaptersBtnAndReadBtnC .btn:last-child{
+    background-color: #859D7A;
+}
+
+
+
+
+
+
+
+
+
+.feedbackWrapper{
+    margin-top: 200px;
+}
+
+.feedbackCHeading{
+    text-align: center;
+    font-weight: bolder;
+    margin-bottom: 40px;
+    /*font-family: "Shantell Sans", serif;*/
+
+}
+
+.feedbacksC{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.feedback{
+    padding: 30px;
+    border-radius: 20px;
+    background-color: #75A9AB;
+}
+
+.pictureAndName{
+    display: flex;
+
+}
+.picture{
+    width: 80px;
+    border-radius: 1000px;
+    aspect-ratio: 1/1;
+}
+.picture img{
+    width: 100%;
+}
+
+.userName{
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    font-family: "Shantell Sans", serif;
+}
+
+
+
+.message{
+    margin: 0;
+    padding-top: 10px;
+    font-weight: bolder;
+    color: white;
+    font-family: "Shantell Sans", serif;
+}
+
+.showMoreBtn{
+    width: fit-content;
+    align-self: flex-end;
+    background-color: #A73701;
+    border-radius: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+.moreBooksWrapper{
+    /*overflow: scroll;*/
+    margin: 150px 70px 0 70px;
+    /*width: 100%;*/
+    position: relative;
+}
+.arrowRight{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    padding: 10px;
+    z-index: 99;
+    background-color: white;
+}
+.arrowLeft{
+    position: absolute;
+    left: 0;
+    top: 50%;
+    padding: 10px;
+    z-index: 99;
+    background-color: white;
+}
+.booksC{
+    display: flex;
+    gap: 30px;
+    width: fit-content;
+    transition: transform 1s;
+
+}
+
+.moreOfThisGenre{
+    margin-bottom: 40px;
+    text-align: center;
+    font-family: "Shantell Sans", serif;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.helpfulInformationWrapper{
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+
+@media (max-width:500px){
+    .moreBooksWrapper{
+        /*transform: scale(0.5);*/
+
+        margin: 100px 10px 0 10px;
+    }
+    .moreBooksC{
+        overflow: scroll;
+    }
+    .arrowRight,
+    .arrowLeft{
+        display: none;
+    }
+    .freeChaptersBtnAndReadBtnC{
+        width: 60%;
+    }
+    .freeChaptersBtnAndReadBtnWrapper,
+    .feedbackWrapper,
+    .bookDetailsTableWrapper,
+    .resumeAndBookImage{
+        margin-top: 100px;
+    }
+    .bookNameAndRating{
+        width: 90%;
+        transform: translateX(30px);
+
+    }
+    .resume{
+        width: 90%;
+    }
+
+
+}
+@media (max-width: 800px){
+    .freeChaptersBtnAndReadBtnC{
+        flex-direction: column;
+    }
+    .bookDetailsTable{
+        width: 90%;
+    }
+    .resumeAndBookImage{
+        flex-direction: column;
+        gap: 50px;
+
+    }
+    .bookNameAndRating{
+        transform: translateX(30px);
+
+    }
+}
+@media (max-width: 1000px) {
+    .bookImageC{
+        width: 60%;
+    }
+}
+@media (max-width: 1200px) {
+
+}
+/*.wrapper{*/
+/*    height: 100%;*/
+/*}*/
+/*.container{*/
+/*    display: flex;*/
+/*    padding: 50px;*/
+/*    border-radius: 10px;*/
+/*    height: 100%;*/
+/*    justify-content: space-around;*/
+/*    gap: 200px;*/
+/*    background-color: #c8c8c8;*/
+
+
+/*}*/
+/*.container>*{*/
+/*    flex: 1;*/
+/*}*/
+/*.overlay{*/
+/*    position: fixed;*/
+/*    width: 100vw;*/
+/*    height: 100vh;*/
+/*    background-color: rgba(98, 98, 98, 0.7);*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*}*/
+/*.dialog{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    background-color: white;*/
+/*    border: solid 1px black;*/
+/*    padding-top: 20px;*/
+/*}*/
+/*.imageAndBtns{*/
+/*    !*padding: 0 150px;*!*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    flex-direction: column;*/
+/*}*/
+/*.imageAndBtns img{*/
+/*    width: 100%;*/
+/*    max-width: 400px;*/
+/*    border-radius: 10px;*/
+/*}*/
+
+/*.detailsAndBtns{*/
+/*    height: 100%;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+/*.leftAndRightC{*/
+/*    display: flex;*/
+/*}*/
+/*.leftAndRightC h2{*/
+/*    text-overflow: ellipsis;*/
+/*    font-size: 20px;*/
+/*    font-weight: normal;*/
+/*}*/
+/*.left h2{*/
+/*    text-align: right;*/
+/*}*/
+/*.right h2{*/
+/*    text-align: left;*/
+/*}*/
+/*.left>*,*/
+/*.right>*{*/
+/*    flex: 1;*/
+/*}*/
+/*.leftAndRightC>*{*/
+/*    height: 100%;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    flex: 1;*/
+/*}*/
+/*.details{*/
+/*    border-radius: 20px;*/
+
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    flex: 1;*/
+/*}*/
+
+/*.bookName,*/
+/*.chaptersCount{*/
+/*    background-color: #6D6D6D;*/
+/*    padding: 10px;*/
+/*    text-align: center;*/
+/*    margin: 0;*/
+/*}*/
+/*.left .chaptersCount{*/
+/*    font-size: 18px;*/
+/*}*/
+/*.resume{*/
+/*    flex-grow: 1;*/
+/*    overflow-y: auto;*/
+/*    max-height: 500px;*/
+/*    padding: 10px;*/
+/*    background-color: white;*/
+/*    margin: 0;*/
+
+/*}*/
+/*.btns{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 10px;*/
+/*    margin-top: 20px;*/
+
+/*}*/
+/*.btns>*{*/
+/*    border-radius: 10px;*/
+/*    border: none;*/
+/*    padding: 10px 45px  ;*/
+/*    font-weight: bold;*/
+/*    color: #000000;*/
+/*    background-color: white;*/
+/*    text-align: center;*/
+/*    text-decoration: none;*/
+/*}*/
+
+/*.buyBtn{*/
+/*    background-color: #05FF00;*/
+/*}*/
+/*.editBtn{*/
+/*    background-color: #fcff20;*/
+/*}*/
+/*.deleteBtn{*/
+/*    background-color: #ff0d0d;*/
+/*}*/

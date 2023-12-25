@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+
+
+.bookElementWrapper{
+    border-radius: 10px  ;
+    border: 1px solid black;
+    max-width: 300px;
+    position: relative;
+}
+
+.imageC{
+    width: 300px;
+    height: 240px;
+}
+.imageC img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.infoC {
+    padding: 15px;
+}
+.icon{
+    position: absolute;
+    padding: 10px;
+    border-radius: 100px;
+    background-color: white;
+    border: solid 1px black;
+    top: 240px;
+    right: 10px;
+    width: 60px;
+    transform: translateY(-50%);
+    z-index: 9;
+}
+.icon img{
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+}
+.bookName{
+    font-family: "Shantell Sans", serif;
+}
+.bookAuthor{
+    color: #BDBDBD;
+    font-family: "Shantell Sans", serif;
+}
+.genre{
+
+    font-family: "Shantell Sans", serif;
+}
+.line{
+    width: 3px;
+    height: 100%;
+    margin: 0 5px;
+    display: inline-block;
+    background-color: #BDBDBD;
+    border-radius: 10px;
+}
+.container{
+    display: flex;
+    align-items: center;
+}
+.rating{
+
+    font-family: "Shantell Sans", serif;
+    border-radius: 5px;
+}
+
