@@ -9,6 +9,8 @@
 
 }
 
+
+
 .landingPageWrapper{
     overflow: auto;
     font-family: "Shantell Sans", serif;
@@ -17,10 +19,13 @@
 .heroSectionWrapper{
     display: flex;
     margin-bottom: 190px;
+    animation: fadeIn 1s;
+
 }
 .heroImageC img{
     width: 100%;
     height: 100%;
+    object-fit: contain;
 }
 
 .textC{
@@ -29,6 +34,8 @@
     align-items: center;
     justify-content: center;
     padding-left: 60px;
+    margin-top: 20px;
+    animation: fadeIn 1s;
 }
 .heading{
     font-weight: bolder;
@@ -37,4 +44,50 @@
 
 .afterHeading{
     font-size: 25px;
+}
+.beginBtn{
+    background-color: #75A9AB;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 30px;
+    font-weight: bolder;
+    border: none;
+    align-self: flex-start;
+    margin-top: 20px;
+}
+@keyframes fadeIn {
+  0%{
+      opacity: 0;
+      transform: translateY(70px);
+  }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@media (max-width: 1000px){
+    .heroSectionWrapper{
+        background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("/hero.png");
+        background-size: cover;
+        /*box-shadow: 0 30px 40px rgba(0,0,0,0.6);*/
+
+        border-left: 1px solid #dbd8cf;
+        background: -moz-linear-gradient(left, #eee  0%,#fff 50%);
+        box-shadow: -44px 120px 80px -72px #fff inset, -44px -120px 80px -72px #fff inset;
+
+    }
+    .heroImageC{
+        display: none;
+    }
+    .textC{
+        padding:20px;
+        text-align: center;
+    }
+    .textC>*:not(.beginBtn){
+        background-color: white;
+        border-radius: 20px;
+    }
+    .beginBtn{
+        align-self: center;
+    }
 }

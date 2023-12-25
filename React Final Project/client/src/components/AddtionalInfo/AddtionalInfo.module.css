@@ -2,6 +2,8 @@
 .helpfulInformationC{
     display: flex;
     width: 80%;
+    opacity: 0;
+    transform: translateX(-100px);
 }
 
 .helpfulInformationC>*{
@@ -9,7 +11,19 @@
 }
 .helpfulInformationC:nth-child(odd){
     flex-direction: row-reverse;
+    transform: translateX(100px);
 }
+.fadeIn{
+    opacity: 1;
+    transform: translateX(0);
+    transition: 1s;
+}
+.fadeIn:nth-child(odd){
+    opacity: 1;
+    transform: translateX(0);
+    transition: 1s;
+}
+
 .information{
     background-color: #4C6A69;
     color: white;
