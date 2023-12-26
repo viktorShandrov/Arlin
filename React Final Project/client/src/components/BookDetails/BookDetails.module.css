@@ -56,7 +56,8 @@
 
 .resumeAndBookImage{
     display: flex;
-    margin-top: 150px;
+    max-width: 90%;
+    margin:150px auto 0 auto;
 }
 
 .resumeAndBookImage>*{
@@ -74,6 +75,7 @@
 .resume{
     background-color: #75A9AB;
     width: 80%;
+    max-width: 600px;
     padding: clamp(10px,4vw,50px);
     color: white;
     max-height: 400px;
@@ -89,7 +91,7 @@
     margin: 0;
 }
 .bookImageC{
-    width: 40%;
+    width: 50%;
     justify-content: center;
     /*margin: 0 200px;*/
     height: fit-content;
@@ -116,6 +118,10 @@
     font-family: "Shantell Sans", serif;
 
 }
+.btn:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+}
 
 .editBtn{
     background-color: #FFE500;
@@ -136,7 +142,8 @@
 }
 
 .bookDetailsTable{
-    width: 50%
+    /*min-width: 30%;*/
+    max-width: 90%;
 }
 
 .row{
@@ -163,7 +170,7 @@
 .tableHeading{
     margin: 0;
     font-weight: 800;
-    font-size: clamp(18px,5vw,45px);
+    font-size: clamp(15px,5vw,35px);
     font-family: "Shantell Sans", serif;
     padding: 0 5px;
 }
@@ -306,6 +313,31 @@
 
 
 
+@media (max-width: 800px){
+    .freeChaptersBtnAndReadBtnC{
+        flex-direction: column;
+    }
+    .bookDetailsTable{
+        width: 90%;
+    }
+
+    .bookNameAndRating{
+        transform: translateX(30px);
+
+    }
+}
+@media (max-width: 1000px) {
+    .bookImageC{
+        width: 60%;
+    }
+}
+@media (max-width: 900px) {
+    .resumeAndBookImage{
+        flex-direction: column;
+        gap: 50px;
+
+    }
+}
 @media (max-width:500px){
     .moreBooksWrapper{
         /*transform: scale(0.5);*/
@@ -336,32 +368,10 @@
     .resume{
         width: 90%;
     }
-
-
-}
-@media (max-width: 800px){
-    .freeChaptersBtnAndReadBtnC{
-        flex-direction: column;
-    }
-    .bookDetailsTable{
-        width: 90%;
-    }
-    .resumeAndBookImage{
-        flex-direction: column;
-        gap: 50px;
-
-    }
-    .bookNameAndRating{
-        transform: translateX(30px);
-
-    }
-}
-@media (max-width: 1000px) {
     .bookImageC{
-        width: 60%;
+        width: 80%;
     }
-}
-@media (max-width: 1200px) {
+
 
 }
 /*.wrapper{*/

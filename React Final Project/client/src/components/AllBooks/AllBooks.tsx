@@ -193,12 +193,12 @@ export default function AllBooks(){
 
 
                             if(isOwnedFilter&&book.ownedBy.includes(user.userId)){
-                                return <Link data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
+                                return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
                                     <BookElement book ={book} />
                                 </Link>
                             }else if(!isOwnedFilter){
 
-                                return <Link data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
+                                return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
                                     <BookElement  book ={book} />
                                 </Link>
                             }

@@ -6,6 +6,7 @@ import {useEffect, useRef} from "react";
 import FreeChapter from "./FreeChapter/FreeChapter";
 import BookElement from "../AllBooks/BookElement/BookElement";
 import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
+import {request} from "../../functions";
 export default function LandingPage(){
     const additionalInfos = useRef([])
     const wrapper = useRef(0)
@@ -20,7 +21,16 @@ export default function LandingPage(){
                 }
             }
         })
+        getFreeChapters()
     },[])
+
+    function getFreeChapters(){
+        request("chapters/freeRotation","GET").subscribe(
+            (res)=>{
+                console.log(res)
+            }
+        )
+    }
     return(
             <>
                 <div ref={wrapper} className={styles.landingPageWrapper}>

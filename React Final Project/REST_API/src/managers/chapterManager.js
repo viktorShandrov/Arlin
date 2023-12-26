@@ -6,7 +6,6 @@ const {model} = require("mongoose");
 
 
 exports.getChapter =async(chapterId,userId)=>{
-    console.log(chapterId)
     const book = await models.bookModel.findOne({
         chapters: {
             $in: chapterId
@@ -15,11 +14,11 @@ exports.getChapter =async(chapterId,userId)=>{
     const currentChapterIndex = book.chapters.findIndex(el=>el.equals(chapterId))
     const user = await models.userModel.findById(userId)
 
-    if(user.role!=="admin"){
+    const chapter = await models.chapterModel.findById(chapterId)
+    if(user.role!=="admin"||!chapter.isFree){
         await isOwnedByUser(userId,book._id,models.bookModel,"ownedBy")
     }
 
-    const chapter = await models.chapterModel.findById(chapterId)
     await changeUserLastReading(book._id,chapter._id,userId)
     const [prev,next] = getPreviousAndNextChapters(book,currentChapterIndex)
     return{
@@ -29,6 +28,9 @@ exports.getChapter =async(chapterId,userId)=>{
         hasChapterPlotTest:await hasChapterPlotTest(chapter._id)
     }
 
+}
+exports.getFreeRotationChapters = async()=>{
+    return models.chapterModel.find({isFree:true})
 }
 function getPreviousAndNextChapters(book,currentChapterIndex){
     return[
@@ -104,8 +106,11 @@ async function changeBookFreeRotation(){
         await previousChapter.save()
     }
 }
+
+
+
 exports.createChapterQuestion =async(chapterId,userId,rightAnswer,answers)=>{
    await isAdmin(null,userId)
-   exports.store
+
 
 }

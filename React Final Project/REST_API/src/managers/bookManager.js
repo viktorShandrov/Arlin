@@ -1,6 +1,7 @@
 const models = require("../models/allModels")
 const {isOwnedByUser, isAdmin} = require("../managerUtils/managerUtil");
 const mongoose = require("mongoose");
+const {model} = require("mongoose");
 
 
 exports.getBook =async(bookId,userId)=>{
@@ -8,24 +9,46 @@ exports.getBook =async(bookId,userId)=>{
     if(user.role!=="admin"){
         await isOwnedByUser(userId,bookId,models.bookModel,"ownedBy")
     }
-   return  models.bookModel.findById(bookId).select("-image")
+   return  models.bookModel.findById(bookId)
 
 }
-exports.getBookDetails =async(bookId)=>{
+exports.getBookDetails =async(bookId,userId)=>{
     let book
     try{
-         book = await models.bookModel.findById(bookId).select("-image")
-            delete book.image
+         book = await models.bookModel.findById(bookId)
     }catch (error){
         throw new Error("No such book")
     }
+    book = book.toObject()
 
     delete book.chapters
+
+    book.isBookOwnedByUser = isBookOwnedByUser(book,userId)
+    book.similarBooks = await getSimilarBooks(book)
    return book
 
 }
+
+
+async function getSimilarBooks(book){
+    const genre = book.genre
+    return (await models.bookModel.find({genre}).limit(10)).map(book=>
+    {
+        book = book.toObject()
+        delete book.chapters
+        return book
+    })
+}
+function isBookOwnedByUser(book,userId){
+    return book.ownedBy.some(id=>id.toString()===userId.toString())
+}
+
+
+
+
+
 exports.getAllBooks =async()=>{
-   return  models.bookModel.find().select("-image")
+   return  models.bookModel.find()
 
 }
 exports.editBook =async(bookId,bookData,userId)=>{
@@ -55,10 +78,10 @@ async function deleteBookChapters(bookId){
         await chapter.delete()
     }
 }
-exports.addImageToBook =async(bookId,userId,image)=>{
+exports.addImageToBook =async(bookId,userId,imageUrl)=>{
    await isAdmin(null,userId)
     const book = await models.bookModel.findById(bookId)
-    book.image = image
+    book.image = imageUrl
    return book.save()
 }
 exports.getFilteringData =async(userId)=>{

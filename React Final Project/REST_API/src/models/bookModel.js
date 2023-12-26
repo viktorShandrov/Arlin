@@ -13,7 +13,7 @@ const schema = mongoose.Schema({
     }],
     name:String,
     length: Number,
-    image:Buffer,
+    image:String,
     author:String,
     resume:String,
     genre:String,

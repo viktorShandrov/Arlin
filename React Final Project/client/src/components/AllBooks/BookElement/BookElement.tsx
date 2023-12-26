@@ -8,7 +8,7 @@ export default function BookElement({book}){
                             <img src="../../../../public/bookIcon.png" alt=""/>
                         </div>
                     <div className={styles.imageC}>
-                        <img src="public/chapter.jpg" alt=""/>
+                        <img src={book.image||"public/chapter.jpg"} alt=""/>
                     </div>
                     <section className={styles.infoC}>
                         <h1 className={styles.bookName}>{book.name}</h1>

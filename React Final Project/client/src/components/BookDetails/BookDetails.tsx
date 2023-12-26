@@ -1,6 +1,6 @@
 import styles from "./BookDetails.module.css"
 import {useEffect, useRef, useState} from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {request} from "../../functions";
 import BuyBtn from "../BuyBtn/BuyBtn";
 import { Elements } from '@stripe/react-stripe-js';
@@ -20,10 +20,10 @@ export default function  BookDetails(){
     const {id} = useParams()
     const additionalInfos = useRef([])
     const wrapper = useRef(0)
+    const navigate = useNavigate()
 
     // const {user} = useContext(userContext)
     const {user}:any = useSelector((selector:any)=>selector.user)
-    const [image,setImage] = useState("")
     const [isDialogShown,setIsDialogShown] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
     const [book,setBook] = useState({
@@ -31,28 +31,21 @@ export default function  BookDetails(){
         resume:"",
         author:"",
         length:"",
+        isBookOwnedByUser:false,
         _id:"",
-        image: {
-            data:''
-        },
-        ownedBy:[]
+        image: "",
+        ownedBy:[],
+        similarBooks:[]
     })
     const getBook = ()=>{
             request(`books/${id}/details`,"GET").subscribe(
                 async (res:any)=>{
-                    setDetailsBookImage      //do not call
                     setBook(res.book)
                     setIsLoading(false)
                     },
             )
     }
-    const setDetailsBookImage = (res:any) =>{
-        const imageData = res.book.image.data;
 
-        const base64Image = btoa(new Uint8Array(imageData).reduce((data, byte) => data + String.fromCharCode(byte), ''));
-
-        setImage(`data:image/jpeg;base64,${base64Image}`);
-    }
     const deleteBook = ()=>{
         request(`books/${book._id}/delete`,"GET").subscribe(
             ()=>{
@@ -64,13 +57,20 @@ export default function  BookDetails(){
         setIsDialogShown((oldState:boolean)=>!oldState)
     }
 
-
+    function scrollToTopSmooth() {
+        wrapper.current.scrollTop = 0;
+    }
 
 
     useEffect(()=>{
         getBook()
+        scrollToTopSmooth()
+        additionalInfoAnimationTrigger()
+    },[id])
+    function additionalInfoAnimationTrigger(){
         wrapper.current.addEventListener("scroll",()=>{
             for (const additionalInfo of additionalInfos.current) {
+                if(!additionalInfo) continue
                 const position = additionalInfo.getBoundingClientRect();
                 // Check if the element is in the viewport
                 if (position.top < window.innerHeight-600 && position.bottom >= 0) {
@@ -78,7 +78,7 @@ export default function  BookDetails(){
                 }
             }
         })
-    },[])
+    }
 
 
 const books=[
@@ -167,24 +167,7 @@ const books=[
 
 ]
 
-    // const rightArrowClick = ()=>{
-    //     const value = (scrollerClickPosition+1) * scroller.current.getBoundingClientRect().width
-    //
-    //     if(value < scrollerData.current.getBoundingClientRect().width){
-    //         // @ts-ignore
-    //         scrollerData.current.style.transform = `translateX(-${value}px)`
-    //         setScrollerClickPosition(oldValue => oldValue+1)
-    //
-    //     }
-    // }
-    // const leftArrowClick = ()=>{
-    //     if(scrollerClickPosition-1>=0){
-    //         // @ts-ignore
-    //         scrollerData.current.style.transform = `translateX(-${(scrollerClickPosition-1) * scroller.current.getBoundingClientRect().width}px)`
-    //         setScrollerClickPosition(oldValue => oldValue-1)
-    //     }
-    //
-    // }
+
     // @ts-ignore
     return(
         <>
@@ -198,39 +181,26 @@ const books=[
             </div>}
                 <div ref={wrapper} className={styles.bookDetailsWrapper}>
                     <section className={styles.bookNameAndRating}>
-                        <h1 className={styles.bookName}>Под Игото</h1>
+                        <h1 className={styles.bookName}>{book.name}</h1>
                         <h1 className={styles.rating}>6/10</h1>
                     </section>
 
                     <section className={styles.resumeAndBookImage}>
                         <div className={styles.resumeWrapper}>
                             <div className={styles.resume}>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                </p>
-                                 </div>
+                                <p>{book.resume}</p>
+                            </div>
                         </div>
                         <div className={styles.bookImageWrapper}>
                             <div className={styles.bookImageC}>
                                 <div className={styles.image}>
-                                    <img src="../../../public/chapter.jpg" alt=""/>
+                                    <img src={book.image||"../../../public/chapter.jpg"} alt=""/>
                                 </div>
                                 <div className={styles.btns}>
-                                    <button className={`${styles.btn} ${styles.editBtn}`}>
+                                    <button onClick={()=>navigate(`/admin/addBook/${book._id}`)} className={`${styles.btn} ${styles.editBtn}`}>
                                             Редактирай
                                     </button>
-                                    <button className={`${styles.btn} ${styles.deleteBtn}`}>
+                                    <button onClick={toggleDeleteDialog} className={`${styles.btn} ${styles.deleteBtn}`}>
                                         Изтрий
                                     </button>
                                     <button className={`${styles.btn} ${styles.buyBtn}`}>
@@ -250,7 +220,7 @@ const books=[
                                 </div>
                                 <div className={styles.cell}>
                                     <h2 className={styles.tableHeading}>
-                                        И. Вазов
+                                        {book.author}
                                     </h2>
                                 </div>
 
@@ -263,7 +233,7 @@ const books=[
                                 </div>
                                 <div className={styles.cell}>
                                     <h2 className={styles.tableHeading}>
-                                        роман
+                                        {book.genre}
                                     </h2>
                                 </div>
                             </section>
@@ -275,7 +245,7 @@ const books=[
                                 </div>
                                 <div className={styles.cell}>
                                     <h2 className={styles.tableHeading}>
-                                        43
+                                        {book.length}
                                     </h2>
                                 </div>
                             </section>
@@ -287,7 +257,7 @@ const books=[
                                 </div>
                                 <div className={styles.cell}>
                                     <h2 className={styles.tableHeading}>
-                                        лесна
+                                        {book.difficalty||"няма зададена трудност"}
                                     </h2>
                                 </div>
                             </section>
@@ -295,8 +265,8 @@ const books=[
                     </section>
                     <section className={styles.freeChaptersBtnAndReadBtnWrapper}>
                         <div className={styles.freeChaptersBtnAndReadBtnC}>
-                            <button className={styles.btn}>виж безплатни глави от книгата</button>
-                            <button className={styles.btn}>прочети</button>
+                            {book.freeChpaters&&<button  className={styles.btn}>виж безплатни глави от книгата</button>}
+                            {book.isBookOwnedByUser&&<button  className={styles.btn}>прочети</button>}
                         </div>
                     </section>
 
@@ -336,7 +306,11 @@ const books=[
                     <section  className={styles.moreBooksWrapper}>
                         <h1 className={styles.moreOfThisGenre}>Още от този жанр</h1>
                         <ScrollerContainer>
-                            {books.length>0&&books.map(book=><BookElement book={book}  />) }
+                            {book.similarBooks.length>0&&book.similarBooks.map(book=>
+                                <Link to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
+                                    <BookElement book={book}  />
+                                </Link>
+                                ) }
                         </ScrollerContainer>
 
                     </section>

@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@google-cloud/storage": "^7.6.0",
+    "@supabase/supabase-js": "^2.39.1",
     "@waylaidwanderer/chatgpt-api": "^1.37.3",
     "adm-zip": "^0.5.10",
     "api": "^6.1.1",

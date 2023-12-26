@@ -20,12 +20,13 @@ router.post("/create",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.post("/addImageToBook/:bookId",upload.single('file'),isAuth,async (req,res)=>{
+router.post("/addImageToBook/:bookId",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
         const {bookId} = req.params
+        const {imageUrl} = req.body
 
-        await bookManager.addImageToBook(bookId,_id,req.file.buffer)
+        await bookManager.addImageToBook(bookId,_id,imageUrl)
         res.status(200).end()
     } catch (error) {
         res.status(400).json({message:error.message})
@@ -62,8 +63,9 @@ router.get("/:id",isAuth,async (req,res)=>{
 })
 router.get("/:id/details",isAuth,async (req,res)=>{
     try{
+        const {_id} = req.user
         const bookId = req.params.id
-        const book = await bookManager.getBookDetails(bookId)
+        const book = await bookManager.getBookDetails(bookId,_id)
         res.status(200).json({book})
     } catch (error) {
         res.status(400).json({message:error.message})
