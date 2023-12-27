@@ -173,14 +173,16 @@ export default function AllBooks(){
             <div className={styles.wrapper}>
                 <div className={styles.searchBarWrapper}>
                     <div className={styles.searchBarC}>
-                        <input value={searchParams} onChange={searchParamsChangeHandler} placeholder={"Search here"}  />
-                        <div className={styles.autoCompletionC}>
-                            {filteredAutoCompletions.length>0&&filteredAutoCompletions.map((completion:any)=>{
-                                return <div key={completion.bookId} className={styles.autoCompletion}>
-                                    <Link to={completion.bookId} className={styles.completion}>{completion.bookName}</Link>
-                                </div>
-                            })}
+                        <input className={styles.searchBarInput} value={searchParams} onChange={searchParamsChangeHandler} placeholder={"Потърси книга"}  />
+                        <div className={styles.autoCompletionWrapper}>
+                            <div className={styles.autoCompletionC}>
+                                {filteredAutoCompletions.length>0&&filteredAutoCompletions.map((completion:any)=>{
+                                    return <div key={completion.bookId} className={styles.autoCompletion}>
+                                        <Link to={completion.bookId} className={styles.completion}>{completion.bookName}</Link>
+                                    </div>
+                                })}
 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -210,32 +212,34 @@ export default function AllBooks(){
 
                     </div>
                 </div>
+
                 <div onClick={()=>setIsFilterPanelShown(true)} className={styles.filterIcon}>
                     <i className="fa-solid fa-filter"></i>
                 </div>
+
                 {isFilterPanelShown&&<div className={styles.filterMenu}>
                     <i  onClick={()=>setIsFilterPanelShown(false)} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
                     <input onChange={ownedFilterClickHandler}  type={"checkbox"} />
                     <label>Купена</label>
-                    <details data-filter={"author"}>
+                    <details className={styles.detailsC} data-filter={"author"}>
                         <summary>Автор</summary>
                         {filterData.authors&&filterData.authors.length>0&&filterData.authors.map((el,index)=>{
-                            return <div data-filtervalue={el} key={index} className={styles.pair}>
-                                <input onChange={filterChangeHandler} name={"author"} checked={appliedFilters["author"].includes(el)} type={"checkbox"} />
-                                <label>{el}</label>
-                            </div>
+                            return <article data-filtervalue={el} key={index} className={styles.pair}>
+                                <input onChange={filterChangeHandler} name={"author"} checked={appliedFilters["author"].includes(el)} className={styles.filterInput} type={"checkbox"} />
+                                <label className={styles.filterLabel}>{el}</label>
+                            </article>
                         })}
                     </details>
-                    <details data-filter={"genre"}>
+                    <details className={styles.detailsC} data-filter={"genre"}>
                         <summary>Жанр</summary>
                         {filterData.genres&&filterData.genres.length>0&&filterData.genres.map((el,index)=>{
-                            return <div data-filtervalue={el} key={index} className={styles.pair}>
-                                <input value={filterData[el]} onChange={filterChangeHandler} name={"genre"} checked={appliedFilters["genre"].includes(el)} type={"checkbox"} />
-                                <label>{el}</label>
-                            </div>
+                            return <article data-filtervalue={el} key={index} className={styles.pair}>
+                                <input value={filterData[el]} onChange={filterChangeHandler} name={"genre"} checked={appliedFilters["genre"].includes(el)} className={styles.filterInput} type={"checkbox"} />
+                                <label className={styles.filterLabel}>{el}</label>
+                            </article>
                         })}
                     </details>
-                     <button onClick={clearFilters}>Изчисти</button>
+                     <button className={styles.clearFiltersBtn} onClick={clearFilters}>Изчисти</button>
                 </div>}
 
 

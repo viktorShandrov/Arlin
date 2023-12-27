@@ -3,6 +3,8 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    font-family: "Shantell Sans", serif;
+
 }
 .wrapper >*{
     /*z-index: 1;*/
@@ -10,19 +12,17 @@
 }
 .searchBarWrapper{
     display: flex;
+    left: 50%;
+    position: absolute;
     /*transform: translateX(-50%);*/
     justify-content: center;
-    position: absolute;
-    left: 50%;
-    height: 400px;
 
 }
 .searchBarC{
     display: flex;
     align-items: center;
-    /*justify-content: center;*/
     flex-direction: column;
-    height: 200px;
+    height: fit-content;
     width: 300px;
     position: relative;
     z-index: 9999;
@@ -32,35 +32,35 @@
 }
 .searchBarC input{
     padding: 10px;
-    border-radius: 50px;
+    border-radius: 10px;
     background-color: white;
-    border: none;
+    border: 1px solid grey;
     width: 100%;
 }
 .searchBarC input:focus{
     outline: none;
 
 }
+.autoCompletionWrapper{
+    max-height: 200px;
+    width: 0;
+    overflow-y: auto;
+    transition: 0.7s;
+    height: 0;
+}
 .autoCompletionC{
-    top: 11%;
-    left: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: 1s;
-    width: 100%;
-    position: absolute;
-    z-index: 1;
     justify-self: center;
     height: fit-content;
     border-radius: 20px;
-    /*transform: translateZ(0);*/
 }
 
 .autoCompletion{
-    width: 0;
+    width: 100%;
     background-color: pink;
-    transition: 0.7s;
     height: fit-content;
 }
 .completion{
@@ -80,8 +80,21 @@
     display: flex;
 
 }
-.searchBarC input:focus ~ .autoCompletionC .autoCompletion{
+.searchBarC input:focus ~ .autoCompletionWrapper{
     width: 100%;
+    height: fit-content;
+}
+.searchBarC input:not(:focus) ~ .autoCompletionWrapper{
+    animation: showHeight 0.7s;
+}
+
+@keyframes showHeight{
+    0%{
+        height: fit-content;
+    }
+    100%{
+        height: fit-content;
+    }
 }
 
 
@@ -138,9 +151,35 @@ background-color: #b5b5b5;
     display: block;
     position: absolute;
     background-color: white;
-    padding: 20px;
-    padding-top: 50px;
-    height: 100%;
+    padding: 50px 30px 80px 30px;
+    height:fit-content;
+    border: 1px solid grey;
+    border-radius: 5px;
+    margin-left: 10px;
+    width: 200px;
+}
+
+.detailsC summary{
+    position: relative;
+    padding-left: 30px;
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+}
+
+.detailsC summary::before{
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-size: contain;
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="8" viewBox="0 0 256 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>');
+    margin-right: 10px;
+}
+
+.detailsC[open] summary::before{
+    content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="16" width="10" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>');
 }
 
 
@@ -150,6 +189,23 @@ background-color: #b5b5b5;
 }
 
 
+
+
+.pair{
+    display: flex;
+    /*align-items: center;*/
+    margin-left: 20px;
+    gap: 5px;
+}
+.filterInput{
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+
+}
+.filterLabel{
+    flex: 1;
+}
 .xmark{
     position: absolute;
     left: 50%;
@@ -165,4 +221,16 @@ background-color: #b5b5b5;
     background-color: black;
     color: white;
     cursor: pointer;
+}
+
+.clearFiltersBtn{
+    border: none;
+    background-color: white;
+    border-radius: 100px;
+    padding: 10px 30px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
 }
