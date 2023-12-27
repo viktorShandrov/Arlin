@@ -30,7 +30,20 @@ exports.getChapter =async(chapterId,userId)=>{
 
 }
 exports.getFreeRotationChapters = async()=>{
-    return models.chapterModel.find({isFree:true})
+    const payload = []
+    const chapters = await models.chapterModel.find({isFree:true})
+    for (const chapter of chapters) {
+        const book = await models.bookModel.findById(chapter.book)
+        payload.push(
+            {
+                bookId:book._id,
+                bookName:book.name,
+                chapterName:chapter.chapterName,
+                chapterId:chapter._id,
+            }
+        )
+    }
+    return payload
 }
 function getPreviousAndNextChapters(book,currentChapterIndex){
     return[

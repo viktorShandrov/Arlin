@@ -2,7 +2,7 @@
 import styles from "./LandingPage.module.css"
 import additional from "../AddtionalInfo/AddtionalInfo.module.css"
 import AddtionalInfo from "../AddtionalInfo/AddtionalInfo";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import FreeChapter from "./FreeChapter/FreeChapter";
 import BookElement from "../AllBooks/BookElement/BookElement";
 import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
@@ -10,6 +10,7 @@ import {request} from "../../functions";
 export default function LandingPage(){
     const additionalInfos = useRef([])
     const wrapper = useRef(0)
+    const [freeChapters,setFreeChapters] = useState([])
     useEffect(()=>{
 
         wrapper.current.addEventListener("scroll",()=>{
@@ -27,7 +28,7 @@ export default function LandingPage(){
     function getFreeChapters(){
         request("chapters/freeRotation","GET").subscribe(
             (res)=>{
-                console.log(res)
+                setFreeChapters(res.freeRotationChapters)
             }
         )
     }
@@ -75,15 +76,7 @@ export default function LandingPage(){
                         />
                         <section className={styles.freeChaptersWrapper}>
                             <ScrollerContainer>
-                                <FreeChapter />
-                                <FreeChapter />
-                                <FreeChapter />
-                                <FreeChapter />
-                                <FreeChapter />
-                                <FreeChapter />
-                                <FreeChapter />
-                                <FreeChapter />
-                                <FreeChapter />
+                                {freeChapters.length>0&&freeChapters.map((chapter:any)=><FreeChapter key={chapter.chapterId} chapter={chapter} />) }
                             </ScrollerContainer>
                         </section>
 
