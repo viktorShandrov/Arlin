@@ -190,27 +190,63 @@ export default function AllBooks(){
 
 
                 <div className={styles.bookWrapper}>
-                    <div className={styles.booksC}>
-                        {books.length>0&&books.map((book:any)=>{
+
+                                {!books.length>0&&books.map((book:any)=>{
+                                    if(isOwnedFilter&&book.ownedBy.includes(user.userId)){
+                                        return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
+                                            <BookElement book ={book} />
+                                        </Link>
+                                    }else if(!isOwnedFilter){
+
+                                        return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
+                                            <BookElement  book ={book} />
+                                        </Link>
+                                    }
+                                })}
 
 
-                            if(isOwnedFilter&&book.ownedBy.includes(user.userId)){
-                                return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
-                                    <BookElement book ={book} />
-                                </Link>
-                            }else if(!isOwnedFilter){
+                    {books.some(book=>book.ownedBy.includes(user.userId))&&
+                        <section  className={styles.bookSection}>
+                            <h1 className={styles.sectionHeader}>Мои книги</h1>
+                            <div className={styles.booksC}>
+                                {books.filter(book=>book.ownedBy.includes(user.userId)).map((book:any)=>{
+                                    return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
+                                        <BookElement book ={book} />
+                                    </Link>
+                                })}
+                            </div>
+                        </section>
+                    }
 
-                                return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
-                                    <BookElement  book ={book} />
-                                </Link>
-                            }
+                    {books.some((book:any)=>book.isRecommended)&&
+                        <section  className={styles.bookSection}>
+                            <h1 className={styles.sectionHeader}>Препоръчани</h1>
+                            <div className={styles.booksC}>
+                                {books.filter((book:any)=>book.isRecommended).map((book:any)=>{
+                                    return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
+                                        <BookElement book ={book} />
+                                    </Link>
+                                })}
+                            </div>
+                        </section>
+                    }
+
+                    {books.some((book:any)=>book.wishedBy?.includes(user.userId))&&
+                        <section  className={styles.bookSection}>
+                            <h1 className={styles.sectionHeader}>В списъка с желания</h1>
+                            <div className={styles.booksC}>
+                                {books.filter((book:any)=>book.wishedBy?.includes(user.userId)).map((book:any)=>{
+                                    return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
+                                        <BookElement book ={book} />
+                                    </Link>
+                                })}
+                            </div>
+                        </section>
+                    }
 
 
 
-                        })}
 
-
-                    </div>
                 </div>
 
                 <div onClick={()=>setIsFilterPanelShown(true)} className={styles.filterIcon}>

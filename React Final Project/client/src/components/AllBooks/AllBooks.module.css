@@ -99,10 +99,32 @@
 
 
 
+
+
+
+
+
+
+
+
+
 .bookWrapper{
     height: 100%;
     flex: 1;
     overflow-y: auto;
+}
+
+.bookSection{
+    margin-top: 45px;
+    padding-bottom: 45px;
+    border-bottom: solid 2px grey;
+
+}
+.sectionHeader{
+    margin-bottom: 40px;
+    /*color: grey;*/
+    font-weight: bolder;
+    text-align: center;
 }
 
 .booksC{
@@ -110,12 +132,17 @@
     gap: 30px;
     justify-content: center;
     flex-wrap: wrap;
-    margin-top: 45px;
+    /*overflow: visible;*/
+
 
 }
 .bookC{
+
     text-decoration: none   ;
     color: black;
+    display: flex;
+    justify-content: center;
+    /*overflow: visible;*/
     /*border-radius: 20px;*/
     /*max-width: 200px;*/
     /*margin: 15px;*/

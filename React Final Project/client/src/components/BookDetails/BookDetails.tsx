@@ -81,91 +81,7 @@ export default function  BookDetails(){
     }
 
 
-const books=[
-    {
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },
-    {
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },{
-        name:"Ivan",
-        genre:"Пътепис",
-        author:"Spas",
-    },
 
-]
 
 
     // @ts-ignore
@@ -182,7 +98,7 @@ const books=[
                 <div ref={wrapper} className={styles.bookDetailsWrapper}>
                     <section className={styles.bookNameAndRating}>
                         <h1 className={styles.bookName}>{book.name}</h1>
-                        <h1 className={styles.rating}>6/10</h1>
+                        <h1 className={styles.rating}>{book.rating}/10</h1>
                     </section>
 
                     <section className={styles.resumeAndBookImage}>

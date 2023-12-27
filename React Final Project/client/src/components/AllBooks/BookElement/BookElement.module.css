@@ -2,16 +2,47 @@
 
 
 
-.bookElementWrapper{
+.behindBookWrapper{
+
+
+}
+.behindBook{
+    /*background-color: red;*/
     border-radius: 10px  ;
-    border: 1px solid black;
+    /*transform: translateY(10px) translateX(60px);*/
+    /*width: 80%;*/
+    height: 100%;
+    margin-left: auto;
+}
+
+.bookElementWrapper{
+
+    display: flex;
     max-width: 300px;
+    width: 95%;
+    height: 95%;
     position: relative;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    background-color: white;
+    justify-content: space-between;
+    border-radius: 10px  ;
+    border: 10px solid brown;
+    /*transform: translateY(-10px) translateX(-10px);*/
+    /*box-shadow: 9px 9px 1px 1px rgba(100, 0, 0, 0.8);*/
+
+}
+.bookElementWrapper:hover{
+    transform:rotate(-20deg) skewX(-200deg) translateX(-10px) translateY(-57px) ;
+    position: relative;
+    z-index: 99999;
 }
 
 .imageC{
     width: 300px;
     height: 240px;
+    border-bottom: solid 1px;
 }
 .imageC img{
     object-fit: cover;
@@ -21,6 +52,7 @@
 
 .infoC {
     padding: 15px;
+    /*flex:1 1 auto;*/
 }
 .icon{
     position: absolute;
