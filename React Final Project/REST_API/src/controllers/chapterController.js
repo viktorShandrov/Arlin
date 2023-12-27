@@ -27,23 +27,22 @@ router.post("/createChapterQuestions",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/freeRotation",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const  freeRotationChapters = await chapterManager.getFreeRotationChapters()
+        res.status(200).json({freeRotationChapters})
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
 router.get("/:id",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
         const chapterId = req.params.id
         const  chapter = await chapterManager.getChapter(chapterId,_id)
         res.status(200).json(chapter)
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({message:error.message})
-    }
-})
-router.get("/freeRotation",isAuth,async (req,res)=>{
-    try{
-        console.log("fff")
-        const {_id} = req.user
-        const  freeRotationChapters = await chapterManager.getFreeRotationChapters()
-        res.status(200).json({freeRotationChapters})
     } catch (error) {
         console.log(error)
         res.status(400).json({message:error.message})
