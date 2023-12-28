@@ -37,10 +37,15 @@ export default function  BookDetails(){
         ownedBy:[],
         similarBooks:[]
     })
+
+
     const getBook = ()=>{
             request(`books/${id}/details`,"GET").subscribe(
                 async (res:any)=>{
-                    setBook(res.book)
+                    const dateString = res.book.releaseDate;
+                    const date = new Date(dateString);
+                    const year = date.getFullYear();
+                    setBook({...res.book,year})
                     setIsLoading(false)
                     },
             )
@@ -98,7 +103,9 @@ export default function  BookDetails(){
                 <div ref={wrapper} className={styles.bookDetailsWrapper}>
                     <section className={styles.bookNameAndRating}>
                         <h1 className={styles.bookName}>{book.name}</h1>
-                        <h1 className={styles.rating}>{book.rating}/10</h1>
+                        <div className={styles.ratingC}>
+                            <h1 className={styles.rating}>{book.rating}/10</h1>
+                        </div>
                     </section>
 
                     <section className={styles.resumeAndBookImage}>
@@ -177,11 +184,23 @@ export default function  BookDetails(){
                                     </h2>
                                 </div>
                             </section>
+                            <section className={styles.row}>
+                                <div className={styles.cell}>
+                                    <h2 className={styles.tableHeading}>
+                                        Година
+                                    </h2>
+                                </div>
+                                <div className={styles.cell}>
+                                    <h2 className={styles.tableHeading}>
+                                        {book.year}
+                                    </h2>
+                                </div>
+                            </section>
                         </div>
                     </section>
                     <section className={styles.freeChaptersBtnAndReadBtnWrapper}>
                         <div className={styles.freeChaptersBtnAndReadBtnC}>
-                            {book.freeChpaters&&<button  className={styles.btn}>виж безплатни глави от книгата</button>}
+                            {<button  className={styles.btn}>виж безплатни глави от книгата</button>}
                             {book.isBookOwnedByUser&&<button  className={styles.btn}>прочети</button>}
                         </div>
                     </section>
@@ -235,7 +254,7 @@ export default function  BookDetails(){
                         <AddtionalInfo
                             reference = {additionalInfos}
                             question={"Защо четенето на книги увеличава запоманянето на информация"}
-                            info={" Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias assumenda beatae dicta distinctio eius ex explicabo inventore ipsam laborum libero molestias provident quod repellendus, rerum suscipit voluptatibus. Dicta ea, et eum exercitationem soluta ut voluptatem. Adipisci eligendi est impedit nulla quaerat quisquam reprehenderit unde. Culpa eaque esse in ipsum iure numquam praesentium qui reprehenderit rerum veniam! A accusantium adipisci aliquid asperiores assumenda, eos esse et facere harum inventore quae quia quo saepe ut voluptatum! Ab ad beatae delectus earum eligendi expedita fugit nostrum provident repudiandae voluptate. Ducimus explicabo, temporibus." }
+                            info={"Четенето на книги е като пътешествие, където твоят мозък е изследовател. Страници са магични портали към светове на знание, които разгръщат пред теб богатство от идеи. Когато се потапяш в думите, мозъкът ти танцува със сюжетите, създавайки креативен фойерверк от асоциации. Този умствен танц подобрява запомнянето, като го правиш гъвкав и силен. В света на книгите, всяка страница е тренировка за интелекта, а читателят става състезател на умове, готов да преодолява интелектуални върхове. 📚🌟" }
                         />
                     </section>
 

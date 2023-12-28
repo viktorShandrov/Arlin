@@ -36,6 +36,7 @@ exports.getFreeRotationChapters = async()=>{
         const book = await models.bookModel.findById(chapter.book)
         payload.push(
             {
+                bookImage:book.image,
                 bookId:book._id,
                 bookName:book.name,
                 chapterName:chapter.chapterName,

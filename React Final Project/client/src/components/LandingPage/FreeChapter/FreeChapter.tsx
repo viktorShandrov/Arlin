@@ -3,11 +3,12 @@ import styles from "./FreeChapter.module.css"
 import {useNavigate} from "react-router-dom";
 export default function FreeChapter({chapter}){
     const navigate = useNavigate()
+    console.log(chapter)
     return(
         <article className={styles.freeChapterC}>
             <div className={styles.freeLabel}>БЕЗПЛАТНО</div>
             <div className={styles.imgC}>
-                <img src="/chapter.jpg" alt=""/>
+                <img src={chapter.bookImage||"/chapter.jpg"} alt=""/>
             </div>
             <h2 className={styles.heading}>
                 Книга: {chapter.bookName}

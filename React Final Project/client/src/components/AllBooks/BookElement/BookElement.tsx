@@ -1,10 +1,19 @@
 
 import styles from "./BookElement.module.css"
 export default function BookElement({book}){
+    const dateString = book.releaseDate;
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+
+
     return(
             <>
-                <div className={styles.behindBookWrapper}>
-                    <div className={styles.behindBook}>
+                <div className={styles.fundament}>
+                        <div className={styles.behindBook}></div>
+                        <div className={styles.paper}></div>
+                        <div className={styles.paper}></div>
+                        <div className={styles.paper}>{year}</div>
+
                         <article className={styles.bookElementWrapper}>
                             <div className={styles.icon}>
                                 <img src="../../../../public/bookIcon.png" alt=""/>
@@ -24,7 +33,6 @@ export default function BookElement({book}){
                             </section>
 
                         </article>
-                    </div>
                 </div>
 
             </>

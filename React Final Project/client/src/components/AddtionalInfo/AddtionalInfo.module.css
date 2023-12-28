@@ -13,6 +13,12 @@
     flex-direction: row-reverse;
     transform: translateX(100px);
 }
+.helpfulInformationC:nth-child(even) .question{
+    padding-right: 30px;
+}
+.helpfulInformationC:nth-child(odd) .question{
+    padding-left: 30px;
+}
 .fadeIn{
     opacity: 1;
     transform: translateX(0);
@@ -30,6 +36,7 @@
     font-weight: bolder;
     padding: 30px;
     font-family: "Shantell Sans", serif;
+    line-height: 2pc;
 
 }
 

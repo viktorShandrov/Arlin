@@ -2,17 +2,50 @@
 
 
 
-.behindBookWrapper{
-
-
+.fundament{
+    position: relative;
+    width: 300px;
+    height: 400px;
 }
 .behindBook{
-    /*background-color: red;*/
+    background-color: red;
     border-radius: 10px  ;
     /*transform: translateY(10px) translateX(60px);*/
     /*width: 80%;*/
-    height: 100%;
     margin-left: auto;
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    bottom: 0;
+    right: 0;
+    max-width: 300px;
+    transform: scale(0.8) translateY(50px);
+}
+.paper{
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    bottom: 3px;
+    right: 3px;
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    font-size: 25px;
+    padding: 20px;
+    background-color: white;
+    border: solid 1px black;
+    border-radius: 10px;
+    max-width: 300px;
+    color: black;
+    transform: scale(0.8) translateY(50px);
+}
+.paper:nth-child(3){
+    bottom: 5px;
+    right: 5px;
+}
+.paper:nth-child(4){
+    bottom: 7px;
+    right: 7px;
 }
 
 .bookElementWrapper{
@@ -21,26 +54,28 @@
     max-width: 300px;
     width: 95%;
     height: 95%;
-    position: relative;
-    top: 0;
-    left: 0;
+    position: absolute;
+    bottom: 9px;
+    right: 9px;
     flex-direction: column;
     background-color: white;
     justify-content: space-between;
     border-radius: 10px  ;
     border: 10px solid brown;
+    transform: scale(0.8) translateY(50px);
     /*transform: translateY(-10px) translateX(-10px);*/
     /*box-shadow: 9px 9px 1px 1px rgba(100, 0, 0, 0.8);*/
+    transition: 1s;
 
 }
 .bookElementWrapper:hover{
-    transform:rotate(-20deg) skewX(-200deg) translateX(-10px) translateY(-57px) ;
-    position: relative;
+    transform:scale(0.8) rotate(-20deg) skewX(-200deg) translateX(-10px) translateY(-7px) ;
+    /*position: relative;*/
     z-index: 99999;
 }
 
 .imageC{
-    width: 300px;
+    /*width: 300px;*/
     height: 240px;
     border-bottom: solid 1px;
 }
@@ -60,7 +95,7 @@
     border-radius: 100px;
     background-color: white;
     border: solid 1px black;
-    top: 240px;
+    top: 220px;
     right: 10px;
     width: 60px;
     transform: translateY(-50%);
@@ -72,6 +107,9 @@
     border-radius: 100px;
 }
 .bookName{
+    white-space: nowrap;
+    color: black;
+    text-overflow: ellipsis;
     font-family: "Shantell Sans", serif;
 }
 .bookAuthor{
@@ -93,6 +131,7 @@
 .container{
     display: flex;
     align-items: center;
+    color: black;
 }
 .rating{
 

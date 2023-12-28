@@ -1,3 +1,9 @@
+.arrowLeft:hover,
+.arrowRight:hover{
+    cursor: pointer;
+}
+
+
 .arrowRight{
     position: absolute;
     right: 0;
@@ -32,6 +38,8 @@
 }
 .scrollerContainer{
     position: relative;
+
+
 }
 
 
