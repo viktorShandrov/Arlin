@@ -1,48 +1,74 @@
-.nav{
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    height: 30px;
-    background-color: #309BFF;
-    transition: 0.6s;
-    margin-bottom: 10px;
-    border-radius: 5px;
+.navigationWrapper{
+    width: 80px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    background-color: #75A9AB;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    transition: 1s;
+    font-family: "Shantell Sans", serif;
+    z-index: 99999999999999;
 }
-.nav:hover{
-    height: 100px;
+.navigationWrapper:hover{
+    width: 300px;
 }
-.nav:hover .booksNav,
-.nav:hover .testsNav  {
-    display: none;
-    color: red;
+
+.navigationWrapper:hover .linksC .linkItem{
+    opacity: 1;
 }
-.nav:hover .booksMenu,
-.nav:hover .testsMenu{
+
+
+
+
+
+.linksC{
     display: flex;
     flex-direction: column;
-}
-.navItem{
-    display: flex;
     align-items: center;
-    padding: 0 60px;
-    color: white;
-    transition: 0.4s;
-    margin: 0;
-    height: 100%;
+    justify-content: center;
+    padding: 30px;
+    gap: 20px;
+}
+.linkItem{
+    width: 100%;
+    opacity: 0;
     text-decoration: none;
+    transition: 0.7s;
 }
-
-.navItem:hover{
-    background-color: white;
-    color:grey;
-    cursor: pointer;
+.linkC{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    background-color: rgba(226, 227, 243, 0.2);
+    border: 1px solid black;
+    border-radius: 10px;
+    color: white;
+    gap: 10px;
 }
+.linkC:hover{
+    background-color: rgba(68, 69, 90, 0.2);
 
-.booksMenu{
-    display: none;
+;
 
 }
-.testsMenu{
-    display: none;
+.linkC>*{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.imageC{
+    width: 40px;
+    height: 40px;
+}
+.navItemLabel{
+    font-size: 18px;
+    margin: 0;
+    flex-shrink: 0;
 
+}
+.imageC img{
+    width: 100%;
+    height: 100%;
 }

@@ -245,6 +245,10 @@ export default function  BookDetails(){
                                 <Link to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
                                     <BookElement book={book}  />
                                 </Link>
+                                ) }{book.similarBooks.length>0&&book.similarBooks.map(book=>
+                                <Link to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
+                                    <BookElement book={book}  />
+                                </Link>
                                 ) }
                         </ScrollerContainer>
 

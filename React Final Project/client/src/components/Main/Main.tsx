@@ -5,7 +5,7 @@ import UnknownWords from "../UnknownWords/UnknownWords.jsx";
 import AllBooks from "../AllBooks/AllBooks";
 import BookDetails from "../BookDetails/BookDetails";
 import Read from "../Read/Read";
-import Navigation from "../Navigation/Navigation";
+import NavigationOld from "../NavigationOld/Navigation";
 
 import styles from "./Main.module.css"
 import Dashboard from "../Dashboard/Dashboard";
@@ -14,11 +14,12 @@ import NewsDetails from "../NewsDetails/NewsDetails";
 import AuthGuard from "../../guards/AuthGuard/AuthGuard";
 import Chat from "../Chat/Chat";
 import LandingPage from "../LandingPage/LandingPage";
+import Navigation from "../Navigation/Navigation";
 export default function Main(){
     return(
         <>
             <div className={styles.templateWrapper}>
-                <Navigation />
+                <Navigation/>
                 <Routes>
                         <Route element={<AuthGuard/>}>
                             <Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>

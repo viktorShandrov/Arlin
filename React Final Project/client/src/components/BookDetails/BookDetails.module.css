@@ -72,6 +72,7 @@
 .resumeAndBookImage{
     display: flex;
     max-width: 70%;
+    /*max-height: 750px;*/
     margin:150px auto 0 auto;
 }
 
@@ -91,7 +92,7 @@ justify-content: flex-end}
 .resume{
     justify-self: flex-start;
     background-color: #75A9AB;
-    width: 80%;
+    /*width: 80%;*/
     max-width: 600px;
     padding: clamp(10px,4vw,50px);
     color: white;

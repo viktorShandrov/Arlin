@@ -1,6 +1,8 @@
 .templateWrapper{
     display: flex;
     height: 100%;
+    padding-left: 80px;
+    position: relative;
     flex-direction: column;
     background-color: white;
 }
