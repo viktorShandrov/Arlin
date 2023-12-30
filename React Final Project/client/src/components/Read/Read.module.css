@@ -6,6 +6,13 @@
 .main{
     flex: 1;
 }
-
+.clicked{
+    position: fixed;
+    top: 0;
+    left: 300px;
+    transform: translateY(250px) scale(3);
+    opacity: 0;
+    transition: 1s;
+}
 
 

@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+
+
+.fundament{
+    position: relative;
+    width: 400px;
+    height: 400px;
+    transition: 2s;
+}
+
+
+.behindBook{
+    background-color: red;
+    border-radius: 10px  ;
+    /*transform: translateY(10px) translateX(60px);*/
+    /*width: 80%;*/
+    margin-left: auto;
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    bottom: 0;
+    right: 0;
+    max-width: 300px;
+    transform: scale(0.8) translateY(50px);
+}
+.paper{
+    position: absolute;
+    width: 95%;
+    height: 95%;
+    bottom: 3px;
+    right: 3px;
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    font-size: 25px;
+    padding: 20px;
+    background-color: white;
+    border: solid 1px black;
+    border-radius: 10px;
+    max-width: 300px;
+    color: black;
+    transform: scale(0.8) translateY(50px);
+}
+.paper:nth-child(3){
+    bottom: 5px;
+    right: 5px;
+}
+.paper:nth-child(4){
+    bottom: 7px;
+    right: 7px;
+}
+
+.bookElementWrapper{
+
+    display: flex;
+    max-width: 300px;
+    width: 95%;
+    height: 95%;
+    position: absolute;
+    bottom: 9px;
+    right: 9px;
+    flex-direction: column;
+    background-color: white;
+    justify-content: space-between;
+    border-radius: 10px  ;
+    border: 10px solid brown;
+    transform: scale(0.8) translateY(50px);
+    /*transform: translateY(-10px) translateX(-10px);*/
+    /*box-shadow: 9px 9px 1px 1px rgba(100, 0, 0, 0.8);*/
+    transition: 1s;
+
+}
+.clicked .bookElementWrapper,
+.fundament:hover .bookElementWrapper{
+    animation: openBook 0.8s linear forwards;
+}
+@keyframes openBook {
+    20%{
+        transform: scale(0.8) rotate(-20deg) skewX(-200deg)  translateX(-10px) translateY(-7px) ;
+    }
+    40%{
+        transform: scale(0.8) rotate(-40deg) skewX(-220deg) scaleY(0.8)  translateX(-50px) translateY(-57px);
+    }
+    60%{
+        transform: scale(0.8) rotate(-60deg) skewX(-240deg) scaleY(0.6)  translateX(-150px) translateY(-137px);
+    }
+    80%{
+        transform: scale(0.8) rotate(-80deg) skewX(-260deg) scaleY(0.2)  translateX(-700px) translateY(-657px);
+    }
+    90%{
+        transform:  scaleX(-1)  scale(0.8)  rotate(-80deg)  skewX(-260deg) translateX(1000px) scaleY(0.2)    translateY(770px);
+    }
+    100%{
+        transform:  scaleX(-1)  scale(0.8)  rotate(-70deg)  skewX(-250deg) translateX(600px) scaleY(0.36)    translateY(460px);
+
+    }
+        /*transform: scale(0.8) skewX(200deg) rotate(20deg)    translateX(-100%) translateY(97px) ;*/
+
+
+}
+
+.imageC{
+    /*width: 300px;*/
+    height: 240px;
+    border-bottom: solid 1px;
+}
+.imageC img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.infoC {
+    padding: 15px;
+    /*flex:1 1 auto;*/
+}
+.icon{
+    position: absolute;
+    padding: 10px;
+    border-radius: 100px;
+    background-color: white;
+    border: solid 1px black;
+    top: 220px;
+    right: 10px;
+    width: 60px;
+    transform: translateY(-50%);
+    z-index: 9;
+}
+.icon img{
+    width: 100%;
+    height: 100%;
+    border-radius: 100px;
+}
+.bookName{
+    white-space: nowrap;
+    color: black;
+    text-overflow: ellipsis;
+    font-family: "Shantell Sans", serif;
+}
+.bookAuthor{
+    color: #BDBDBD;
+    font-family: "Shantell Sans", serif;
+}
+.genre{
+
+    font-family: "Shantell Sans", serif;
+}
+.line{
+    width: 3px;
+    height: 100%;
+    margin: 0 5px;
+    display: inline-block;
+    background-color: #BDBDBD;
+    border-radius: 10px;
+}
+.container{
+    display: flex;
+    align-items: center;
+    color: black;
+}
+.rating{
+
+    font-family: "Shantell Sans", serif;
+    border-radius: 5px;
+}
+
