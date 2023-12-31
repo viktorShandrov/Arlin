@@ -3,9 +3,10 @@ import {useEffect, useState} from "react";
 import {request} from "../../functions";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
-import chapterImage from "../../../public/chapter.jpg"
 import Loading from "../Spinner/Loading";
 import BookElement from "./BookElement/BookElement";
+import SearchBar from "../SearchBar/SearchBar";
+import BookSection from "../BookSection/BookSection";
 export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
@@ -167,81 +168,45 @@ export default function AllBooks(){
     useEffect(()=>{
         changeAutoCompletions()
     },[searchParams])
+    // @ts-ignore
     return(
             <>
                 {isLoading&&<Loading />}
             <div className={styles.wrapper}>
-                <div className={styles.searchBarWrapper}>
-                    <div className={styles.searchBarC}>
-                        <input className={styles.searchBarInput} value={searchParams} onChange={searchParamsChangeHandler} placeholder={"Потърси книга"}  />
-                        <div className={styles.autoCompletionWrapper}>
-                            <div className={styles.autoCompletionC}>
-                                {filteredAutoCompletions.length>0&&filteredAutoCompletions.map((completion:any)=>{
-                                    return <div key={completion.bookId} className={styles.autoCompletion}>
-                                        <Link to={completion.bookId} className={styles.completion}>{completion.bookName}</Link>
-                                    </div>
-                                })}
 
-                            </div>
-                        </div>
-                    </div>
+
+                <div className={styles.searchBarCWrapper}>
+                    <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
                 </div>
 
 
 
                 <div className={styles.bookWrapper}>
 
-                                {!books.length>0&&books.map((book:any)=>{
-                                    if(isOwnedFilter&&book.ownedBy.includes(user.userId)){
-                                        return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
-                                            <BookElement book ={book} />
-                                        </Link>
-                                    }else if(!isOwnedFilter){
+                                {/*{!books.length>0&&books.map((book:any)=>{*/}
+                                {/*    if(isOwnedFilter&&book.ownedBy.includes(user.userId)){*/}
+                                {/*        return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>*/}
+                                {/*            <BookElement book ={book} />*/}
+                                {/*        </Link>*/}
+                                {/*    }else if(!isOwnedFilter){*/}
 
-                                        return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
-                                            <BookElement  book ={book} />
-                                        </Link>
-                                    }
-                                })}
+                                {/*        return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>*/}
+                                {/*            <BookElement  book ={book} />*/}
+                                {/*        </Link>*/}
+                                {/*    }*/}
+                                {/*})}*/}
 
 
-                    {books.some(book=>book.ownedBy.includes(user.userId))&&
-                        <section  className={styles.bookSection}>
-                            <h1 className={styles.sectionHeader}>Мои книги</h1>
-                            <div className={styles.booksC}>
-                                {books.filter(book=>book.ownedBy.includes(user.userId)).map((book:any)=>{
-                                    return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
-                                        <BookElement book ={book} />
-                                    </Link>
-                                })}
-                            </div>
-                        </section>
+                    {books.some((book:any)=>book.ownedBy.includes(user.userId))&&
+                        <BookSection books={books.filter((book:any)=>book.ownedBy.includes(user.userId))} sectionHeader={"Мои книги"}/>
                     }
 
                     {books.some((book:any)=>book.isRecommended)&&
-                        <section  className={styles.bookSection}>
-                            <h1 className={styles.sectionHeader}>Препоръчани</h1>
-                            <div className={styles.booksC}>
-                                {books.filter((book:any)=>book.isRecommended).map((book:any)=>{
-                                    return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
-                                        <BookElement book ={book} />
-                                    </Link>
-                                })}
-                            </div>
-                        </section>
+                        <BookSection books={books.filter((book:any)=>book.isRecommended)} sectionHeader={"Препоръчани"}/>
                     }
 
                     {books.some((book:any)=>book.wishedBy?.includes(user.userId))&&
-                        <section  className={styles.bookSection}>
-                            <h1 className={styles.sectionHeader}>В списъка с желания</h1>
-                            <div className={styles.booksC}>
-                                {books.filter((book:any)=>book.wishedBy?.includes(user.userId)).map((book:any)=>{
-                                    return <Link  data-isowned={book.ownedBy.includes(user.userId)} to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
-                                        <BookElement book ={book} />
-                                    </Link>
-                                })}
-                            </div>
-                        </section>
+                        <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(user.userId))} sectionHeader={"В списъка с желания"}/>
                     }
 
 

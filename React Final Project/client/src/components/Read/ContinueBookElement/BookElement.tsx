@@ -1,6 +1,6 @@
 
 import styles from "./BookElement.module.css"
-import {useEffect, useRef} from "react";
+// @ts-ignore
 export default function ContinueBookElement({book}){
     // const bookRef = useRef(null)
     const dateString = book.releaseDate;
@@ -9,9 +9,7 @@ export default function ContinueBookElement({book}){
     const bookClickHandler = (e:any)  =>{
         e.currentTarget.classList.add(styles.clicked)
     }
-    useEffect(()=>{
-        console.log(111)
-    },[])
+
 
     return(
             <>
@@ -19,7 +17,7 @@ export default function ContinueBookElement({book}){
                         <div className={styles.behindBook}></div>
                         <div className={styles.paper}></div>
                         <div className={styles.paper}></div>
-                        <div className={styles.paper}>{year}</div>
+                        <div className={styles.paper}>“There is more treasure in books than in all the pirate's loot on Treasure Island.” ― Walt Disney</div>
 
                         <article   className={styles.bookElementWrapper}>
                             <div className={styles.icon}>
@@ -29,14 +27,8 @@ export default function ContinueBookElement({book}){
                                 <img src={book.image||"public/chapter.jpg"} alt=""/>
                             </div>
                             <section className={styles.infoC}>
+                                <h2 className={styles.bookName}>Продължете:</h2>
                                 <h1 className={styles.bookName}>{book.name}</h1>
-                                <h3 className={styles.bookAuthor}>{book.author}</h3>
-                                <div className={styles.container}>
-                                    <span className={styles.genre}>{book.genre}</span>
-                                    <div className={styles.line}><p></p></div>
-                                    <span className={styles.rating}>{book.rating}/10</span>
-                                </div>
-
                             </section>
 
                         </article>

@@ -1,18 +1,24 @@
 .main {
     height: 100%;
-    display: flex;
+    /*display: flex;*/
     justify-content: space-between;
 }
 .main{
     flex: 1;
 }
-.clicked{
-    position: fixed;
-    top: 0;
-    left: 300px;
-    transform: translateY(250px) scale(3);
-    opacity: 0;
-    transition: 1s;
+.listC{
+    height: 100%;
+    overflow-y: auto;
+
 }
+/*.clicked{*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 100px;*/
+/*    transform: translateY(250px) scale(3);*/
+/*    opacity: 0;*/
+/*    z-index: 9999;*/
+/*    transition: 1s;*/
+/*}*/
 
 

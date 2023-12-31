@@ -1,0 +1,106 @@
+.myBooksListWrapper{
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    background-color: #4C6A69;
+    border-radius: 20px;
+    padding: 20px;
+}
+.myBooksListC{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: #75A9AB;
+    border-radius: 20px;
+    padding: 20px;
+}
+@media (max-width: 1400px){
+    .myBooksListC{
+        flex-direction: column;
+    }
+    .myBooksListWrapper{
+        height: 100%;
+    }
+    .readBookWrapper{
+        display: flex;
+        justify-content: center;
+    }
+}
+@media (max-width: 800px){
+
+    .myBooksListWrapper{
+        /*margin: 0 10px;*/
+    }
+
+}
+.myBooksListC>*{
+    flex: 1;
+}
+.myBooksWrapper{
+    position: relative;
+    border-radius: 20px;
+    background-color: #A73701;
+    padding: 10px;
+    z-index: 10;
+}
+.myBooksC {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    height: 100%;
+    overflow: hidden; /* Ensure child elements don't overflow */
+}
+
+.myBooksC::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('libraly.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    z-index: 0; /* Place the pseudo-element behind the content */
+    opacity: 0.3; /* Adjust the opacity as needed (0.0 to 1.0) */
+}
+
+.readBookWrapper{
+    /*transform: translateY(60px);*/
+}
+
+.searchBarC{
+    /*transform-origin: top left; !* Set the transform origin to the center *!*/
+    position: absolute;
+    width: 70%;
+    left: 20%;
+    margin-top: 20px;
+    /*transform: translateX(50%);*/
+    z-index: 20;
+}
+
+.myBooksScrollerWrapper{
+    flex: 1;
+    margin-top: 55px;
+    height: 100%;
+    overflow-y: auto;
+    padding-bottom: 60px;
+}
+.myBooksScrollerC{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.clicked{
+    position: fixed;
+    top: 0;
+    left: 300px;
+    transform: translateY(250px) scale(3);
+    opacity: 0;
+    transition: 2s;
+    z-index: 9999;
+}

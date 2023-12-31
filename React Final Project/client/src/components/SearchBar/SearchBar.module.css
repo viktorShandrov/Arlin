@@ -1,0 +1,85 @@
+.searchBarWrapper{
+    display: flex;
+
+    /*transform: translateX(-50%);*/
+    justify-content: center;
+
+}
+.searchBarC{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: fit-content;
+    width: 300px;
+    position: relative;
+    z-index: 99999;
+
+
+
+}
+.searchBarC input{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid grey;
+    width: 100%;
+}
+.searchBarC input:focus{
+    outline: none;
+
+}
+.autoCompletionWrapper{
+    max-height: 200px;
+    width: 0;
+    overflow-y: auto;
+    transition: 0.7s;
+    height: 0;
+}
+.autoCompletionC{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 1s;
+    justify-self: center;
+    height: fit-content;
+    border-radius: 20px;
+}
+
+.autoCompletion{
+    width: 100%;
+    background-color: pink;
+    height: fit-content;
+}
+.completion{
+    width: 100%;
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+    white-space: nowrap;
+    margin: 0;
+}
+.completion:hover{
+    cursor: pointer;
+    background-color: #00bed8;
+}
+.searchBarC input:focus ~ .autoCompletionC{
+    display: flex;
+
+}
+.searchBarC input:focus ~ .autoCompletionWrapper{
+    width: 100%;
+    height: fit-content;
+}
+.searchBarC input:not(:focus) ~ .autoCompletionWrapper{
+    animation: showHeight 0.7s;
+}
+
+@keyframes showHeight{
+    0%{
+        height: fit-content;
+    }
+    100%{
+        height: fit-content;
+    }
+}

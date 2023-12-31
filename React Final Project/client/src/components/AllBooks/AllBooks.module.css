@@ -10,93 +10,6 @@
     /*z-index: 1;*/
     position: relative;
 }
-.searchBarWrapper{
-    display: flex;
-    left: 50%;
-    position: absolute;
-    /*transform: translateX(-50%);*/
-    justify-content: center;
-
-}
-.searchBarC{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    height: fit-content;
-    width: 300px;
-    position: relative;
-    z-index: 9999;
-
-
-
-}
-.searchBarC input{
-    padding: 10px;
-    border-radius: 10px;
-    background-color: white;
-    border: 1px solid grey;
-    width: 100%;
-}
-.searchBarC input:focus{
-    outline: none;
-
-}
-.autoCompletionWrapper{
-    max-height: 200px;
-    width: 0;
-    overflow-y: auto;
-    transition: 0.7s;
-    height: 0;
-}
-.autoCompletionC{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: 1s;
-    justify-self: center;
-    height: fit-content;
-    border-radius: 20px;
-}
-
-.autoCompletion{
-    width: 100%;
-    background-color: pink;
-    height: fit-content;
-}
-.completion{
-    width: 100%;
-    display: block;
-    color: black;
-    text-decoration: none;
-    padding: 10px;
-    white-space: nowrap;
-    margin: 0;
-}
-.completion:hover{
-    cursor: pointer;
-    background-color: #00bed8;
-}
-.searchBarC input:focus ~ .autoCompletionC{
-    display: flex;
-
-}
-.searchBarC input:focus ~ .autoCompletionWrapper{
-    width: 100%;
-    height: fit-content;
-}
-.searchBarC input:not(:focus) ~ .autoCompletionWrapper{
-    animation: showHeight 0.7s;
-}
-
-@keyframes showHeight{
-    0%{
-        height: fit-content;
-    }
-    100%{
-        height: fit-content;
-    }
-}
-
 
 
 
@@ -114,47 +27,16 @@
     overflow-y: auto;
 }
 
-.bookSection{
-    margin-top: 45px;
-    padding-bottom: 45px;
-    border-bottom: solid 2px grey;
-
-}
-.sectionHeader{
-    margin-bottom: 40px;
-    /*color: grey;*/
-    font-weight: bolder;
-    text-align: center;
+.searchBarCWrapper{
+    /*transform-origin: top left; !* Set the transform origin to the center *!*/
+    position: absolute;
+    left: 50%;
+    margin-top: 20px;
+    transform: translateX(-50%);
+    z-index: 99999990;
 }
 
-.booksC{
-    display: flex;
-    gap: 30px;
-    justify-content: center;
-    flex-wrap: wrap;
-    /*overflow: visible;*/
 
-
-}
-.bookC{
-
-    text-decoration: none   ;
-    color: black;
-    display: flex;
-    justify-content: center;
-    /*overflow: visible;*/
-    /*border-radius: 20px;*/
-    /*max-width: 200px;*/
-    /*margin: 15px;*/
-    /*transition: 0.5s;*/
-    /*box-shadow: 0 0 10px 5px rgb(53, 174, 31);*/
-}
-/*.bookC:hover{*/
-/*    transform: translateY(-10px);*/
-/*}*/
-.bookC img{
-    width: 100%;
-}
 .heading{
     text-align: center;
     padding: 10px;

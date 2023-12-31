@@ -32,7 +32,7 @@
     right: 3px;
     display: flex;
     justify-content: right;
-    align-items: flex-end;
+    /*align-items: flex-end;*/
     font-size: 25px;
     padding: 20px;
     background-color: white;
