@@ -62,6 +62,12 @@
         width: 50%;
         gap: 20px;
     }
+    .helpfulInformationC:nth-child(even) .question{
+        padding: 0 30px;
+    }
+    .helpfulInformationC:nth-child(odd) .question{
+        padding: 0 30px;
+    }
 
     .question{
         order: 1;

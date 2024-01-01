@@ -17,7 +17,7 @@ export default function LandingPage(){
             for (const additionalInfo of additionalInfos.current) {
                 const position = additionalInfo.getBoundingClientRect();
                 // Check if the element is in the viewport
-                if (position.top < window.innerHeight-600 && position.bottom >= 0) {
+                if (position.top < window.innerHeight-200 && position.bottom >= 0) {
                     additionalInfo.classList.add(additional.fadeIn);
                 }
             }
@@ -32,6 +32,12 @@ export default function LandingPage(){
             }
         )
     }
+    const handleScroll = () => {
+        const container = document.getElementById(styles.freeChaptersWrapper); // Replace with your actual container ID
+        if (container) {
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
     return(
             <>
                 <div ref={wrapper} className={styles.landingPageWrapper}>
@@ -43,7 +49,8 @@ export default function LandingPage(){
                             <p className={styles.afterHeading}>
                                 учи чужд език по лесен и интерактивен начин с Arlin - твоята дигитална библиотека
                             </p>
-                            <button className={styles.beginBtn}>Започни сега</button>
+                            <button onClick={handleScroll} className={styles.beginBtn}>Започни сега</button>
+
                         </div>
                         <div className={styles.heroImageC}>
                             <img src="../../../public/hero.png" alt=""/>
@@ -69,7 +76,7 @@ export default function LandingPage(){
                             question={"Не е нужно да плащам?!?"}
                             info={"Да! Ние именно вярваме в идеята, че знанието трябва да бъде свободно и достъпно за всеки, поради което приложението ни осигурява безплатни ресурси за учене на чужд език. Ти можеш да се възползваш от обширния ни набор от материали и инструменти без да плащаш. Нашата мисия е да направим ученето възможно най-лесно и достъпно за всеки, без да слагаме финансови бариери пред знание. Така че не, не е нужно да плащаш, за да се насладиш на обучението и да развиваш уменията си по нов език в нашето приятелско образователно общество. 🌐📘🆓" }
                         />
-                        <section className={styles.freeChaptersWrapper}>
+                        <section id={styles.freeChaptersWrapper} className={styles.freeChaptersWrapper}>
                             <h1 className={styles.freeMaterialsHeading}>Безплатни материали тази седмица</h1>
                             <ScrollerContainer>
                                 {freeChapters.length>0&&freeChapters.map((chapter:any)=><FreeChapter key={chapter.chapterId} chapter={chapter} />) }

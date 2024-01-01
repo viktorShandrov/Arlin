@@ -1,5 +1,6 @@
 
 import styles from "./BookElement.module.css"
+import Rating from '@mui/material/Rating';
 export default function BookElement({book}){
     const dateString = book.releaseDate;
     const date = new Date(dateString);
@@ -12,7 +13,7 @@ export default function BookElement({book}){
                         <div className={styles.behindBook}></div>
                         <div className={styles.paper}></div>
                         <div className={styles.paper}></div>
-                        <div className={styles.paper}>{year}</div>
+                        <div className={styles.paper}>{<Rating name="read-only" value={book.rating} readOnly />}</div>
 
                         <article className={styles.bookElementWrapper}>
                             <div className={styles.icon}>
@@ -27,7 +28,7 @@ export default function BookElement({book}){
                                 <div className={styles.container}>
                                     <span className={styles.genre}>{book.genre}</span>
                                     <div className={styles.line}><p></p></div>
-                                    <span className={styles.rating}>{book.rating}/10</span>
+                                    <span className={styles.rating}>{year}</span>
                                 </div>
 
                             </section>

@@ -33,6 +33,7 @@
 }
 .heading{
     display: flex;
+    width: 100%;
     align-items: center;
     justify-content: center;
     font-weight: bolder;
@@ -45,7 +46,7 @@
     display: block;
     border: none;
     border-radius: 20px;
-    padding: 20px 40px;
+    padding: 10px 40px;
     font-weight:  bolder;
     font-size: 20px;
     width:   100%;
