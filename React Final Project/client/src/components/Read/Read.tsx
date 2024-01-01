@@ -39,9 +39,9 @@ export default  function Read(){
                         </Routes>
                 </div>
                 <div className={styles.storyC}>
-                    <div onClick={continueReadingHandler} className={styles.readBookC}>
-                        {/*<ContinueBookElement book={book}/>*/}
-                    </div>
+                    {/*<div onClick={continueReadingHandler} className={styles.readBookC}>*/}
+                    {/*    /!*<ContinueBookElement book={book}/>*!/*/}
+                    {/*</div>*/}
                     <Routes>
                         <Route path={"/:bookId/:chapterId/:textToTranslate?"} element={<Story />}/>
                     </Routes>

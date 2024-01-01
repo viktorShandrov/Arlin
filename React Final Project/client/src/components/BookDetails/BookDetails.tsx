@@ -200,7 +200,7 @@ export default function  BookDetails(){
                     </section>
                     <section className={styles.freeChaptersBtnAndReadBtnWrapper}>
                         <div className={styles.freeChaptersBtnAndReadBtnC}>
-                            {<button  className={styles.btn}>виж безплатни глави от книгата</button>}
+                            {<button  className={styles.btn}>виж съдържание на книгата</button>}
                             {book.isBookOwnedByUser&&<button  className={styles.btn}>прочети</button>}
                         </div>
                     </section>
