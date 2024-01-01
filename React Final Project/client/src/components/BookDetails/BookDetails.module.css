@@ -38,11 +38,16 @@
     font-family: "Shantell Sans", serif;
     flex: 1;
     text-align: center;
-    background-color: #D9D9D9;
+    /*background-color: #D9D9D9;*/
     margin: 0;
     border-radius: 20px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+
+    background: radial-gradient(circle at center, #b2a5a5, transparent 90%),
+    linear-gradient(to left, #d3d3d3, transparent 70%),
+    linear-gradient(to right, #d3d3d3, transparent 70%);
+
 
 }
 .ratingC{
@@ -96,7 +101,7 @@ justify-content: flex-end}
     max-width: 600px;
     padding: clamp(10px,4vw,50px);
     color: white;
-    max-height: 400px;
+    max-height: 600px;
     font-weight: bolder ;
 
 }
@@ -202,7 +207,7 @@ justify-content: flex-end}
     height: fit-content;
 }
 .freeChaptersBtnAndReadBtnC{
-    width: 40%;
+    width: 70%;
     display: flex;
     justify-content: center;
     height: fit-content;
@@ -212,6 +217,7 @@ justify-content: flex-end}
 .freeChaptersBtnAndReadBtnC .btn{
     flex: 1;
     font-size: 20px;
+    padding: 30px;
     /*height: 100%;*/
 }
 
@@ -332,10 +338,31 @@ justify-content: flex-end}
 
 
 
+@media (max-width: 1400px) {
+    .resumeAndBookImage{
+        flex-direction: column;
+        gap: 150px;
+        align-items: center;
+    }
+    .bookImageWrapper,
+    .resumeWrapper{
+        justify-content: center;
+
+    }
+    .resumeWrapper{
+        order: 2;
+
+    }
+    .bookImageWrapper{
+        order: 1;
+        max-width: 70%;
+    }
+}
 
 @media (max-width: 800px){
     .freeChaptersBtnAndReadBtnC{
         flex-direction: column;
+        width: 90%;
     }
     .bookDetailsTable{
         width: 90%;
@@ -345,6 +372,9 @@ justify-content: flex-end}
         /*transform: translateX(30px);*/
         width: 90%;
 
+    }
+    .bookImageWrapper{
+        max-width: 100%;
     }
 
 }
@@ -356,17 +386,6 @@ justify-content: flex-end}
 @media (max-width: 1200px) {
     .resume{
         width: 100%;
-    }
-}
-@media (max-width: 900px) {
-    .resumeAndBookImage{
-        flex-direction: column;
-        gap: 50px;
-
-    }
-    .bookImageWrapper,
-    .resumeWrapper{
-        justify-content: center;
     }
 }
 
@@ -384,7 +403,7 @@ justify-content: flex-end}
         display: none;
     }
     .freeChaptersBtnAndReadBtnC{
-        width: 60%;
+        width: 90%;
     }
     .freeChaptersBtnAndReadBtnWrapper,
     .feedbackWrapper,
@@ -406,6 +425,8 @@ justify-content: flex-end}
     .bookImageC{
         width: 80%;
     }
+ 
+
 
 
 }

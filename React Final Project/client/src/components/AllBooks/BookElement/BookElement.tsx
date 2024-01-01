@@ -16,8 +16,10 @@ export default function BookElement({book}){
                         <div className={styles.paper}>{<Rating name="read-only" value={book.rating} readOnly />}</div>
 
                         <article className={styles.bookElementWrapper}>
-                            <div className={styles.icon}>
-                                <img src="../../../../public/bookIcon.png" alt=""/>
+                            <div className={styles.year}>
+                                {/*<img src="../../../../public/bookIcon.png" alt=""/>*/}
+
+                                <h1 className={styles.yearLabel}>{year}</h1>
                             </div>
                             <div className={styles.imageC}>
                                 <img src={book.image||"public/chapter.jpg"} alt=""/>

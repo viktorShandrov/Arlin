@@ -78,17 +78,21 @@
 }
 @media (max-width: 1000px){
     .heroSectionWrapper{
-        background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("/hero.png");
-        background-size: cover;
+        /*background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("/hero.png");*/
+        /*background-size: cover;*/
+        /*border-left: 1px solid #dbd8cf;*/
+        /*background: -moz-linear-gradient(left, #eee  0%,#fff 50%);*/
+        /*box-shadow: -44px 120px 80px -72px #fff inset, -44px -120px 80px -72px #fff inset;*/
+        flex-direction: column;
+        gap: 60px;
         /*box-shadow: 0 30px 40px rgba(0,0,0,0.6);*/
 
-        border-left: 1px solid #dbd8cf;
-        background: -moz-linear-gradient(left, #eee  0%,#fff 50%);
-        box-shadow: -44px 120px 80px -72px #fff inset, -44px -120px 80px -72px #fff inset;
+
+
 
     }
     .heroImageC{
-        display: none;
+        /*display: none;*/
     }
     .textC{
         padding:20px;

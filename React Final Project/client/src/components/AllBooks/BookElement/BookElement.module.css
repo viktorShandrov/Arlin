@@ -89,7 +89,7 @@
     padding: 15px;
     /*flex:1 1 auto;*/
 }
-.icon{
+.year{
     position: absolute;
     padding: 10px;
     border-radius: 100px;
@@ -97,9 +97,13 @@
     border: solid 1px black;
     top: 220px;
     right: 10px;
-    width: 60px;
+    /*width: 60px;*/
     transform: translateY(-50%);
     z-index: 9;
+}
+.yearLabel{
+    font-size: 16px;
+    margin: 0;
 }
 .icon img{
     width: 100%;
