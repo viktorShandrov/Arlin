@@ -11,17 +11,7 @@
     font-family: "Shantell Sans", serif;
     z-index: 99999999999999;
 }
-.navigationWrapper:hover{
-    width: 300px;
-}
 
-.navigationWrapper:hover .linksC .linkItem{
-    opacity: 1;
-}
-.navigationWrapper:hover .currentSectionLabelC{
-    opacity: 0;
-    z-index: -1;
-}
 
 .currentSectionLabelC{
     position: absolute;
@@ -96,13 +86,7 @@
     height: 60px;
 }
 
-.navigationWrapper:hover .logoNameC{
-    display: block;
-    opacity: 1;
-}
-.navigationWrapper:hover .logoC{
-    height: 80px;
-}
+
 
 
 
@@ -164,6 +148,29 @@
     display: none;
 }
 
+@media (min-width: 800px) {
+    .navigationWrapper:hover .logoNameC{
+        display: block;
+        opacity: 1;
+    }
+    .navigationWrapper:hover .logoC{
+        height: 80px;
+    }
+
+    .navigationWrapper:hover{
+        width: 300px;
+    }
+
+    .navigationWrapper:hover .linksC .linkItem{
+        opacity: 1;
+    }
+    .navigationWrapper:hover .currentSectionLabelC{
+        opacity: 0;
+        z-index: -1;
+    }
+
+}
+
 @media (max-width: 800px){
     .navigationWrapper{
         width: 100%;
@@ -174,13 +181,25 @@
         flex-direction: row;
         align-items: center;
     }
-    .navigationWrapper:hover .currentSectionLabelC{
+    .navigationWrapper.opened{
+        width: 100%;
+        height: fit-content;
+    }
+    .navigationWrapper.opened .currentSectionLabelC{
         display: none;
         z-index: 1;
     }
-    .navigationWrapper:hover{
-        width: 100%;
-        height: fit-content;
+    .navigationWrapper.opened .linksC .linkItem{
+        opacity: 1;
+    }
+    .navigationWrapper.opened .logoNameC{
+        
+        display: block;
+        opacity: 1;
+    }
+    .navigationWrapper.opened .logoC{
+        height: 80px;
+        padding-right: 25px;
     }
     .logoC{
         width: fit-content;
