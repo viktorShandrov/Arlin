@@ -13,13 +13,11 @@ export default function TranslationContainer() {
 
     useEffect(() => {
          textToTranslate = decodeURIComponent(textToTranslate!);
-
         // @ts-ignore
         for (const wordRef of Array.from(wordsContainerRef.current!.children)) {
             // @ts-ignore
             wordRef.removeAttribute("data-isclicked")
         }
-
 
 
 
@@ -78,7 +76,7 @@ export default function TranslationContainer() {
             <h3>Избери думите, които са ти непознати:</h3>
             <p className={styles.textForTranslate} ref={wordsContainerRef}>
                 {textToTranslate!.split(" ").map((el, index) => {
-
+                    console.log("i")
                     if(!el){
                         return null
                     }
@@ -104,7 +102,7 @@ export default function TranslationContainer() {
 
             <hr />
             <h3>Превод:</h3>
-            <p>{translatedSentence}</p>
+            <p className={styles.translation}>{translatedSentence}</p>
         </div>
     );
 }

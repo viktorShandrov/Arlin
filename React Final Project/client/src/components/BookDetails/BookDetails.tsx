@@ -78,7 +78,7 @@ export default function  BookDetails(){
                 if(!additionalInfo) continue
                 const position = additionalInfo.getBoundingClientRect();
                 // Check if the element is in the viewport
-                if (position.top < window.innerHeight-600 && position.bottom >= 0) {
+                if (position.top < window.innerHeight-200 && position.bottom >= 0) {
                     additionalInfo.classList.add(additional.fadeIn);
                 }
             }

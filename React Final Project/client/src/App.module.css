@@ -7,3 +7,6 @@ main{
     border-radius: 10px;
     height: 100%;
 }
+button{
+    font-family: "Russo One", serif !important;
+}

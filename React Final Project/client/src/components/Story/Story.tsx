@@ -5,40 +5,19 @@ import {request} from "../../functions";
 import styles from "./Story.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {setUser} from "../../redux/user";
-export default function Story(){
+export default function Story({chapter,changeChapterClickHandler}){
 
     const urlLocation = useLocation()
     const navigate = useNavigate();
-    const dispatch = useDispatch()
+
     const {user} = useSelector((state:any)=>state.user)
 
-    const [chapter,setChapter] = useState({
-        currentChapter: {text:"", _id: undefined},
-        previousChapterId:'',
-        nextChapterId:'',
-        _id:"",
-        hasChapterPlotTest: false
-    })
 
 
 
-    const {chapterId} = useParams()
-    const {bookId} = useParams()
-    const getChapter=(chapterId:string)=>{
-         request(`chapters/${chapterId}`).subscribe(
-             (res:any)=>{
-                 if(!res){
-                     navigate("/main/read")
-                 }
-                 console.log(res)
-                 dispatch(setUser({...user,lastReading:{
-                         bookId,
-                         chapterId
-                     }}))
-                 setChapter(res)
-             }
-         )
-    }
+
+
+
     const handleNavigation = (sentence:string) => {
         const pathArr = urlLocation.pathname.split("/")
 
@@ -55,20 +34,10 @@ export default function Story(){
         console.log(encodedText)
         navigate(`${currentPathWithoutLastSegment}/${encodedText}`);
     };
-    const changeChapterClickHandler =(chapterId:string)=>{
-        const index = urlLocation.pathname.indexOf("chapterId")
-        if(index!==-1){
-            const urlWithoutChapter = urlLocation.pathname.slice(0,index)
-            navigate(urlWithoutChapter+"chapterId="+chapterId)
-        }
-
-    }
 
 
-    useEffect(()=>{
-        getChapter(chapterId!.split("chapterId=")[1])
 
-    },[chapterId])
+
 
         let sentences:any =[]
         if(chapter){
@@ -89,25 +58,20 @@ export default function Story(){
                     {!chapter&&
                     <h1>Problem with getting chapter</h1>}
                 </div>
-                {chapter&&<div className={styles.btns}>
-                    <div className={`${styles.testBtns}`}>
-                        <Link className={`${styles.btn}`} to={`/main/test/textWords/${chapter.currentChapter._id}`}>
-                            <button  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={styles.previousChapter}>Word test</button>
-                        </Link>
-                        <Link to={`/main/test/textQuestions/${chapter.currentChapter._id}`}>
-                            <button   disabled={!chapter.hasChapterPlotTest}  onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={`${styles.previousChapter} ${styles.btn}`}>Plot test</button>
-                        </Link>
-                    </div>
-                    <div className={styles.navigationBtns}>
-                        <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={`${styles.previousChapter} ${styles.btn}`}>
-                            <i className="fa-solid fa-caret-left"></i>
-                        </button>
-                        <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={`${styles.nextChapter} ${styles.btn}`}>
-                            <i className="fa-solid fa-caret-right"></i>
-                        </button>
-                    </div>
+                {/*{chapter&&<div className={styles.btns}>*/}
+                {/*    <div className={`${styles.testBtns}`}>*/}
 
-                </div>}
+                {/*    </div>*/}
+                {/*    <div className={styles.navigationBtns}>*/}
+                {/*        <button>*/}
+                {/*            <i className="fa-solid fa-caret-left"></i>*/}
+                {/*        </button>*/}
+                {/*        <button >*/}
+                {/*            <i className="fa-solid fa-caret-right"></i>*/}
+                {/*        </button>*/}
+                {/*    </div>*/}
+
+                {/*</div>}*/}
 
             </div>
         </div>

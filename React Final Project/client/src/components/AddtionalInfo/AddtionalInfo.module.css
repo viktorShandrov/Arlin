@@ -35,7 +35,8 @@
     color: white;
     font-weight: bolder;
     padding: 30px;
-    font-family: "Shantell Sans", serif;
+    /*font-family: "Shantell Sans", serif;*/
+    font-family:  Calibri;
     line-height: 2pc;
 
 }

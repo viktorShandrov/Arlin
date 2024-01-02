@@ -1,0 +1,39 @@
+.ReadNavigationToolBox{
+    height: 80%;
+    width: 200px;
+    padding: 30px;
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 20px;
+    justify-content: space-around;
+
+
+}
+.btn{
+    border-radius: 20px;
+    /*flex: 1;*/
+    padding: 10px;
+    color: white;
+    font-size: 15px;
+    text-align: center;
+    aspect-ratio: 1/1;
+}
+.btn:disabled{
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn:nth-child(1){
+    background-color: #7E0030;
+}
+.btn:nth-child(2){
+    background-color: #75A9AB;
+}
+.btn:nth-child(3){
+    background-color: #4C6A69;
+}
+.btn:nth-child(4){
+    background-color: #A73701;
+}

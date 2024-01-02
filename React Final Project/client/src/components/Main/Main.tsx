@@ -15,6 +15,7 @@ import AuthGuard from "../../guards/AuthGuard/AuthGuard";
 import Chat from "../Chat/Chat";
 import LandingPage from "../LandingPage/LandingPage";
 import Navigation from "../Navigation/Navigation";
+import MyBooksList from "../MyBooksList/MyBooksList";
 export default function Main(){
     return(
         <>
@@ -25,7 +26,8 @@ export default function Main(){
                             <Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>
                             <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
                             <Route path={"/AllBooks/"} element={<AllBooks />}></Route>
-                            <Route path={"/read/*"} element={<Read />}></Route>
+                            <Route path={"/read"} element={<MyBooksList />}></Route>
+                            <Route path={"/read/:bookId/:chapterId/:textToTranslate?"} element={<Read />}></Route>
                             <Route path={"/AllBooks/:id"} element={<BookDetails />}></Route>
                             <Route path={"/dashboard"} element={<Dashboard />}></Route>
                             <Route path={"/news/:id/*"} element={<NewsDetails />}></Route>

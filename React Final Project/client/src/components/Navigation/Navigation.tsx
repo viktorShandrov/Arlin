@@ -44,7 +44,7 @@ export default function Navigation(){
                 <Link onClick={navigateHandler} to={"/main/read"} className={styles.linkItem} >
                     <article className={styles.linkC}>
                         <div className={styles.imageC}>
-                            <img src="/Navigation%20Icons/Картина5.png" alt=""/>
+                            <img src="/Navigation%20Icons/book.png" alt=""/>
                         </div>
                         <h1 className={styles.navItemLabel}>Четене</h1>
                     </article>
@@ -52,7 +52,7 @@ export default function Navigation(){
                 <Link onClick={navigateHandler} to={"/main/AllBooks"} className={styles.linkItem} >
                     <article className={styles.linkC}>
                         <div className={styles.imageC}>
-                            <img src="/Navigation%20Icons/Картина5.png" alt=""/>
+                            <img src="/Navigation%20Icons/book.png" alt=""/>
                         </div>
                         <h1 className={styles.navItemLabel}>Kниги</h1>
                     </article>
@@ -68,7 +68,7 @@ export default function Navigation(){
                 <Link onClick={navigateHandler} to={"/main/unknownWords"} className={styles.linkItem} >
                     <article className={styles.linkC}>
                         <div className={styles.imageC}>
-                            <img src="/Navigation%20Icons/Картина1.png" alt=""/>
+                            <img src="/Navigation%20Icons/dictionary.png" alt=""/>
                         </div>
                         <h1 className={styles.navItemLabel}>Непознати думи</h1>
                     </article>
@@ -84,7 +84,7 @@ export default function Navigation(){
                 <Link onClick={navigateHandler} to={"/main/dashboard"}  className={styles.linkItem} >
                     <article className={styles.linkC}>
                         <div className={styles.imageC}>
-                            <img src="/Navigation%20Icons/Картина3.png" alt=""/>
+                            <img src="/Navigation%20Icons/chat.png" alt=""/>
                         </div>
                         <h1 className={styles.navItemLabel}>Чат с изк. интелект</h1>
                     </article>

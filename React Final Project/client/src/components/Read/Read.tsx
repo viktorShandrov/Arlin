@@ -1,55 +1,79 @@
-import StoryList from "../Story-list/StoryList";
 import Story from "../Story/Story";
 import TranslationContainer from "../TranslationContainer/TranslationContainer";
-import {Link, Route, Routes, useNavigate} from "react-router-dom";
-import ChapterList from "../ChapterList/ChapterList";
+import {Link, Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
 import styles from "./Read.module.css"
-import ContinueBookElement from "./ContinueBookElement/BookElement";
-import {useSelector} from "react-redux";
-import {useEffect} from "react";
-import MyBooksList from "../MyBooksList/MyBooksList";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import ReadToolBox from "../ReadToolBox/ReadToolBox";
+import {request} from "../../functions";
+import {setUser} from "../../redux/user";
 export default  function Read(){
+
+    const {chapterId} = useParams()
+    const {bookId} = useParams()
 
     const {user} = useSelector((selector:any)=>selector.user)
     const navigate = useNavigate()
-    const continueReadingHandler=(e:any)=>{
-        const target = e.currentTarget
-        target.classList.add(styles.clicked)
-        setTimeout(()=>{
+    const dispatch = useDispatch()
+    const urlLocation = useLocation()
+    const [chapter,setChapter] = useState({
+        currentChapter: {text:"", _id: undefined},
+        previousChapterId:'',
+        nextChapterId:'',
+        _id:"",
+        hasChapterPlotTest: false
+    })
 
-            // navigate(`/main/read/${user.lastReading.bookId}/chapterId=${user.lastReading.chapterId}`)
-            // target.classList.remove(styles.clicked)
-        },1000)
+
+    useEffect(()=>{
+        getChapter(chapterId!.split("chapterId=")[1])
+    },[chapterId])
+
+
+    const getChapter=(chapterId:string)=>{
+        request(`chapters/${chapterId}`).subscribe(
+            (res:any)=>{
+                if(!res){
+                    navigate("/main/read")
+                }
+                console.log(res)
+                dispatch(setUser({...user,lastReading:{
+                        bookId,
+                        chapterId
+                    }}))
+                setChapter(res)
+            }
+        )
+    }
+    const changeChapterClickHandler =(chapterId:string)=>{
+        const index = urlLocation.pathname.indexOf("chapterId")
+        if(index!==-1){
+            const urlWithoutChapter = urlLocation.pathname.slice(0,index)
+            navigate(urlWithoutChapter+"chapterId="+chapterId)
+        }
 
     }
-    useEffect(()=>{
-
-    },[])
 
     return(
         <>
             <section className={styles.main}>
+
                 <div className={styles.listC}>
-                        <Routes>
-
-
-                            <Route path={"/"} element={<MyBooksList />}/>
-                            <Route path={"/:bookId/:chapterId?/:textToTranslate?"} element={<ChapterList />}/>
-
-                        </Routes>
+                    <ReadToolBox chapter={chapter} changeChapterClickHandler={changeChapterClickHandler} />
+                        {/*<Routes>*/}
+                            {/*<Route path={"/:bookId/:chapterId?/:textToTranslate?"} element={}/>*/}
+                        {/*</Routes>*/}
                 </div>
                 <div className={styles.storyC}>
-                    {/*<div onClick={continueReadingHandler} className={styles.readBookC}>*/}
-                    {/*    /!*<ContinueBookElement book={book}/>*!/*/}
-                    {/*</div>*/}
-                    <Routes>
-                        <Route path={"/:bookId/:chapterId/:textToTranslate?"} element={<Story />}/>
-                    </Routes>
+                    <Story chapter={chapter} changeChapterClickHandler={changeChapterClickHandler}  />
+                    {/*<Routes>*/}
+                    {/*    <Route path={"/:bookId/:chapterId/:textToTranslate?"} element={}/>*/}
+                    {/*</Routes>*/}
                 </div>
 
                 <div className={styles.translatePanelC}>
                     <Routes>
-                        <Route path={"/:bookId/:chapterId/:textToTranslate"} element={<TranslationContainer/>}/>
+                        {/*<Route path={"/:textToTranslate?"} element={<TranslationContainer/>}/>*/}
                     </Routes>
                 </div>
 
