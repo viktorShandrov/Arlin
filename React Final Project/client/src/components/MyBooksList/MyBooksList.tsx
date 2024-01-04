@@ -105,31 +105,35 @@ export default function MyBooksList(){
 
     return(
         <>
-            <section className={styles.myBooksListWrapper}>
-                <div className={styles.myBooksListC}>
-                    <div className={styles.readBookWrapper}>
-                        <div onClick={continueReadingHandler} className={styles.readBookC}>
-                            <ContinueBookElement book={currentReadingBook}/>
-                        </div>
-                    </div>
-                    <div className={styles.myBooksWrapper}>
-                        <div className={styles.myBooksC}>
-                            <div className={styles.searchBarC}>
-                                <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
+            <div className={styles.myBooksListWrapperWrapper}>
+                <h1 className={styles.heading}>Моята библиотека</h1>
+                <section className={styles.myBooksListWrapper}>
+                    <div className={styles.myBooksListC}>
+                        <div className={styles.readBookWrapper}>
+                            <div onClick={continueReadingHandler} className={styles.readBookC}>
+                                <ContinueBookElement book={currentReadingBook}/>
                             </div>
+                        </div>
+                        <div className={styles.myBooksWrapper}>
+                            <div className={styles.myBooksC}>
+                                <div className={styles.searchBarC}>
+                                    <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
+                                </div>
 
-                            <div className={styles.myBooksScrollerWrapper}>
-                                <div className={styles.myBooksScrollerC}>
-                                    {books.length>0&&books.map((book:any)=><BookElement book={book}/>)}
+                                <div className={styles.myBooksScrollerWrapper}>
+                                    <div className={styles.myBooksScrollerC}>
+                                        {books.length>0&&books.map((book:any)=><BookElement book={book}/>)}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <section className={styles.moreOfThisGenreWrapper}>
-                <BookSection books={books.filter((book:any)=>book.genre === currentReadingBook.genre)} sectionHeader={"Може да харесате"}/>
-            </section>
+                </section>
+                <section className={styles.moreOfThisGenreWrapper}>
+                    <BookSection books={books.filter((book:any)=>book.genre === currentReadingBook.genre)} sectionHeader={"Може да харесате"}/>
+                </section>
+            </div>
+
         </>
 
     )

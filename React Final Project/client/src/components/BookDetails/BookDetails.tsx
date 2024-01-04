@@ -108,31 +108,51 @@ export default function  BookDetails(){
                         </div>
                     </section>
 
-                    <section className={styles.resumeAndBookImage}>
-                        <div className={styles.resumeWrapper}>
+
+                    <section className={styles.bookImageAndResume}>
+                        <article className={styles.image}>
+                            <img src={book.image||"../../../public/chapter.jpg"} alt=""/>
+                            <div className={styles.adminBtnsC}>
+                                {/*<button className={styles.adminBtn}>Редактирай</button>*/}
+                                {/*<button className={styles.adminBtn}>Изтрий</button>*/}
+                            </div>
+                        </article>
+                        <article className={styles.resumeAndBtns}>
                             <div className={styles.resume}>
-                                <p>{book.resume}</p>
+                                {book.resume}
                             </div>
-                        </div>
-                        <div className={styles.bookImageWrapper}>
-                            <div className={styles.bookImageC}>
-                                <div className={styles.image}>
-                                    <img src={book.image||"../../../public/chapter.jpg"} alt=""/>
-                                </div>
-                                <div className={styles.btns}>
-                                    <button onClick={()=>navigate(`/admin/addBook/${book._id}`)} className={`${styles.btn} ${styles.editBtn}`}>
-                                            Редактирай
-                                    </button>
-                                    <button onClick={toggleDeleteDialog} className={`${styles.btn} ${styles.deleteBtn}`}>
-                                        Изтрий
-                                    </button>
-                                    <button className={`${styles.btn} ${styles.buyBtn}`}>
-                                        Купи
-                                    </button>
-                                </div>
+                            <div className={styles.btns}>
+                                <button className={styles.btn}>надникни</button>
+                                <button className={styles.btn}>КУПИ</button>
                             </div>
-                        </div>
+                        </article>
                     </section>
+
+                    {/*<section className={styles.resumeAndBookImage}>*/}
+                    {/*    <div className={styles.resumeWrapper}>*/}
+                    {/*        <div className={styles.resume}>*/}
+                    {/*            <p>{book.resume}</p>*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*    <div className={styles.bookImageWrapper}>*/}
+                    {/*        <div className={styles.bookImageC}>*/}
+                    {/*            <div className={styles.image}>*/}
+                    {/*                <img src={book.image||"../../../public/chapter.jpg"} alt=""/>*/}
+                    {/*            </div>*/}
+                    {/*            <div className={styles.btns}>*/}
+                    {/*                <button onClick={()=>navigate(`/admin/addBook/${book._id}`)} className={`${styles.btn} ${styles.editBtn}`}>*/}
+                    {/*                        Редактирай*/}
+                    {/*                </button>*/}
+                    {/*                <button onClick={toggleDeleteDialog} className={`${styles.btn} ${styles.deleteBtn}`}>*/}
+                    {/*                    Изтрий*/}
+                    {/*                </button>*/}
+                    {/*                <button className={`${styles.btn} ${styles.buyBtn}`}>*/}
+                    {/*                    Купи*/}
+                    {/*                </button>*/}
+                    {/*            </div>*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</section>*/}
                     <section className={styles.bookDetailsTableWrapper}>
                         <div className={styles.bookDetailsTable}>
                             <section className={styles.row}>
@@ -198,12 +218,12 @@ export default function  BookDetails(){
                             </section>
                         </div>
                     </section>
-                    <section className={styles.freeChaptersBtnAndReadBtnWrapper}>
-                        <div className={styles.freeChaptersBtnAndReadBtnC}>
-                            {<button  className={styles.btn}>виж съдържание на книгата</button>}
-                            {book.isBookOwnedByUser&&<button  className={styles.btn}>прочети</button>}
-                        </div>
-                    </section>
+                    {/*<section className={styles.freeChaptersBtnAndReadBtnWrapper}>*/}
+                    {/*    <div className={styles.freeChaptersBtnAndReadBtnC}>*/}
+                    {/*        {<button  className={styles.btn}>виж съдържание на книгата</button>}*/}
+                    {/*        {book.isBookOwnedByUser&&<button  className={styles.btn}>прочети</button>}*/}
+                    {/*    </div>*/}
+                    {/*</section>*/}
 
                     <section className={styles.feedbackWrapper}>
                         <div className={styles.feedbackC}>
