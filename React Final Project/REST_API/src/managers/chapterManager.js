@@ -46,6 +46,14 @@ exports.getFreeRotationChapters = async()=>{
     }
     return payload
 }
+exports.getBookContent = async(bookId)=>{
+    let chapters = await models.chapterModel.find({bookId})
+    chapters = chapters.map(el=>el.toObject())
+    for (const chapter of chapters) {
+        delete chapter.text
+    }
+    return chapters
+}
 function getPreviousAndNextChapters(book,currentChapterIndex){
     return[
         book.chapters[currentChapterIndex-1],

@@ -1,0 +1,52 @@
+.bookContentWrapper{
+    display: flex;
+    justify-content: center;
+}
+.bookContentCWrapper{
+    width: 700px;
+    background-color: #4C6A69;
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 50px;
+}
+.bookContentC{
+    background-color: #75A9AB;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 50px 0;
+    border-radius: 7px;
+    align-items: center;
+
+}
+
+.chapterWrapper{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+}
+
+.chapterC{
+    display: flex;
+    border-radius: 10px;
+    color: white;
+    width: 100%;
+}
+
+.chapterC>*{
+    padding: 10px;
+    margin: 0;
+}
+
+
+.chapterNumber{
+    background-color: #666666;
+    width: 50px;
+    text-align: center;
+}
+.chapterName{
+    background-color: #4C6A69;
+    flex: 1;
+    text-align: center;
+}

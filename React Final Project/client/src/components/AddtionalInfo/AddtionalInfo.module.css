@@ -36,7 +36,8 @@
     font-weight: bolder;
     padding: 30px;
     /*font-family: "Shantell Sans", serif;*/
-    font-family:  Calibri;
+    /*font-family:  Calibri;*/
+    font-size: 25px;
     line-height: 2pc;
 
 }

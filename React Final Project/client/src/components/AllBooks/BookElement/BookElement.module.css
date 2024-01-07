@@ -114,15 +114,16 @@
     white-space: nowrap;
     color: black;
     text-overflow: ellipsis;
-    font-family: "Shantell Sans", serif;
+    /*font-family: "Shantell Sans", serif;*/
 }
 .bookAuthor{
     color: #BDBDBD;
-    font-family: "Shantell Sans", serif;
+    /*font-family: "Shantell Sans", serif;*/
+    font-size: 27px;
 }
 .genre{
 
-    font-family: "Shantell Sans", serif;
+    /*font-family: "Shantell Sans", serif;*/
 }
 .line{
     width: 3px;
@@ -139,7 +140,7 @@
 }
 .rating{
 
-    font-family: "Shantell Sans", serif;
+    /*font-family: "Shantell Sans", serif;*/
     border-radius: 5px;
 }
 

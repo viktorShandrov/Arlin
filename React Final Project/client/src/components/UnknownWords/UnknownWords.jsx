@@ -22,8 +22,8 @@ export default function UnknownWords(){
             <div className={styles.wrapper}>
                 <div className={styles.container}>
                     <div className={styles.headingAndCountC}>
-                        <h3 className={styles.heading}>Непознати думи</h3>
-                        <div className={styles.count}>{words.length>99?"99+":words.length}</div>
+                        <h1 className={styles.heading}>Непознати думи</h1>
+                        <h1 className={styles.count}>{words.length>99?"99+":words.length}</h1>
                     </div>
 
                     <hr className={styles.hr}/>

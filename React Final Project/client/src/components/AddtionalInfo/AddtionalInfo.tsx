@@ -8,9 +8,9 @@ export default function AddtionalInfo({question,info,reference}){
             <p className={styles.information}>
                 {info}
             </p>
-            <h3 className={styles.question}>
+            <h1 className={styles.question}>
                 {question}
-            </h3>
+            </h1>
         </article>
     )
 }

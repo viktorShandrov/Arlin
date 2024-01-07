@@ -200,6 +200,9 @@
 .bookImageWrapper{
 justify-content: flex-end
 }
+.image{
+    border-radius: 20px;
+}
 /*.resume{*/
 /*    justify-self: flex-start;*/
 /*    background-color: #75A9AB;*/

@@ -108,11 +108,13 @@
     opacity: 0;
     text-decoration: none;
     transition: 0.7s;
+    transform: scale(1.1);
+
 }
 .linkC{
     display: flex;
     width: 100%;
-    padding: 5px;
+    /*padding: 5px;*/
     background-color: rgba(226, 227, 243, 0.2);
     border: 1px solid black;
     border-radius: 10px;
@@ -135,7 +137,8 @@
     height: 40px;
     padding: 4px;
     border-radius: 10px;
-    background-color: #4c6a69;
+
+    /*background-color: #4c6a69;*/
 }
 .navItemLabel{
     font-size: 18px;

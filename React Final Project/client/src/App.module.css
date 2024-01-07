@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Cuprum:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Oswald:wght@200;300;400;500;600;700&family=Sawarabi+Gothic&family=Unbounded:wght@200;300;400;500;600;700;800;900&family=Yanone+Kaffeesatz:wght@200;300;400;500;600;700&display=swap');
+
+
 main{
     display: flex;
 }
@@ -8,6 +11,69 @@ main{
     height: 100%;
 }
 button{
-    font-family: "Russo One", serif !important;
+    /*font-family: "Russo One", serif !important;*/
+
+    /*font-family: "Shantell Sans", serif !important;*/
+
+    /*font-family: "Cuprum", serif !important;*/
+
+    /*font-family: "Istok Web", serif !important;*/
+
+    font-family: "Oswald", serif !important;
+
+    /*font-family: "Sawarabi Gothic", serif !important;*/
+    /*font-family: "Unbounded", serif !important;*/
+    /*font-family: "Advent Pro", serif !important;*/
+    /*font-family: "Yanone Kaffeesatz", serif !important;*/
+}
+h1{
+    /*font-family: "Shantell Sans", serif !important;*/
+    /*font-family: "Cuprum", serif !important;*/
+    /*font-family: "Istok Web", serif !important;*/
+    /*font-family: "Sawarabi Gothic", serif !important;*/
+    /*font-family: "Unbounded", serif !important;*/
+    /*font-family: "Advent Pro", serif !important;*/
+
+    /*font-family: "Yanone Kaffeesatz", serif !important;*/
+    font-family: "Oswald", serif !important;
+
+    /*font-weight: 300;*/
+}
+h2{
+    /*font-family: "Shantell Sans", serif !important;*/
+    /*font-family: "Cuprum", serif !important;*/
+
+    font-family: "Istok Web", serif !important;
+    font-size: 40px!important;
+
+    /*font-family: "Sawarabi Gothic", serif !important;*/
+    /*font-family: "Unbounded", serif !important;*/
+    /*font-family: "Advent Pro", serif !important;*/
+    /*font-family: "Yanone Kaffeesatz", serif !important;*/
+    /*font-family: "Oswald", serif !important;*/
+
+}
+p{
+    /*font-family: Calibri, serif !important;*/
+    /*font-family: "Russo One", serif !important;*/
+    /*font-family: "Shantell Sans", serif !important;*/
+
+
+
+
+    font-family: "Istok Web", serif !important;
+    /*font-family: "Cuprum", serif !important;*/
+    font-weight: 100 !important;
+
+
+
+
+    /*font-family: "Istok Web", serif !important;*/
+    /*font-weight: 500;*/
+    /*font-family: "Sawarabi Gothic", serif !important;*/
+    /*font-family: "Unbounded", serif !important;*/
+    /*font-family: "Advent Pro", serif !important;*/
+    /*font-family: "Yanone Kaffeesatz", serif !important;*/
+    /*font-family: "Oswald", serif !important;*/
 }
 

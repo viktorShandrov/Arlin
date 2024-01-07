@@ -118,9 +118,9 @@ export default function  BookDetails(){
                             </div>
                         </article>
                         <article className={styles.resumeAndBtns}>
-                            <div className={styles.resume}>
+                            <p className={styles.resume}>
                                 {book.resume}
-                            </div>
+                            </p>
                             <div className={styles.btns}>
                                 <button className={styles.btn}>надникни</button>
                                 <button className={styles.btn}>КУПИ</button>
@@ -157,63 +157,63 @@ export default function  BookDetails(){
                         <div className={styles.bookDetailsTable}>
                             <section className={styles.row}>
                                 <div className={styles.cell}>
-                                    <h2 className={styles.tableHeading}>
+                                    <h1 className={styles.tableHeading}>
                                         Автор
-                                    </h2>
+                                    </h1>
                                 </div>
                                 <div className={styles.cell}>
-                                    <h2 className={styles.tableHeading}>
+                                    <h1 className={styles.tableHeading}>
                                         {book.author}
-                                    </h2>
+                                    </h1>
                                 </div>
 
                             </section>
                             <section className={styles.row}>
                                 <div className={styles.cell}>
-                                    <h2 className={styles.tableHeading}>
+                                    <h1 className={styles.tableHeading}>
                                         Жанр
-                                    </h2>
+                                    </h1>
                                 </div>
                                 <div className={styles.cell}>
-                                    <h2 className={styles.tableHeading}>
+                                    <h1 className={styles.tableHeading}>
                                         {book.genre}
-                                    </h2>
+                                    </h1>
                                 </div>
                             </section>
                             <section className={styles.row}>
                                 <div className={styles.cell}>
-                                    <h2 className={styles.tableHeading}>
+                                    <h1 className={styles.tableHeading}>
                                         Брой глави
-                                    </h2>
+                                    </h1>
                                 </div>
                                 <div className={styles.cell}>
-                                    <h2 className={styles.tableHeading}>
+                                    <h1 className={styles.tableHeading}>
                                         {book.length}
-                                    </h2>
+                                    </h1>
                                 </div>
                             </section>
                             <section className={styles.row}>
                                 <div className={styles.cell}>
-                                    <h2 className={styles.tableHeading}>
+                                    <h1 className={styles.tableHeading}>
                                         Трудност
-                                    </h2>
+                                    </h1>
                                 </div>
                                 <div className={styles.cell}>
-                                    <h2 className={styles.tableHeading}>
+                                    <h1 className={styles.tableHeading}>
                                         {book.difficalty||"няма зададена трудност"}
-                                    </h2>
+                                    </h1>
                                 </div>
                             </section>
                             <section className={styles.row}>
                                 <div className={styles.cell}>
-                                    <h2 className={styles.tableHeading}>
+                                    <h1 className={styles.tableHeading}>
                                         Година
-                                    </h2>
+                                    </h1>
                                 </div>
                                 <div className={styles.cell}>
-                                    <h2 className={styles.tableHeading}>
+                                    <h1 className={styles.tableHeading}>
                                         {book.year}
-                                    </h2>
+                                    </h1>
                                 </div>
                             </section>
                         </div>
@@ -234,7 +234,7 @@ export default function  BookDetails(){
                                         <div className={styles.picture}>
                                             <img src="../../../public/user.jpg" alt=""/>
                                         </div>
-                                        <h5 className={styles.userName}>Надя Иванова</h5>
+                                        <h2 className={styles.userName}>Надя Иванова</h2>
                                     </div>
                                     <p className={styles.message}>
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
@@ -246,7 +246,7 @@ export default function  BookDetails(){
                                         <div className={styles.picture}>
                                             <img src="../../../public/user.jpg" alt=""/>
                                         </div>
-                                        <h5 className={styles.userName}>Надя Иванова</h5>
+                                        <h2 className={styles.userName}>Надя Иванова</h2>
                                     </div>
                                     <p className={styles.message}>
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers

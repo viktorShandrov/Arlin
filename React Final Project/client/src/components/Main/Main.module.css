@@ -9,7 +9,23 @@
 .templateWrapper:nth-child(2){
     flex: 1;
 }
-
+.templateWrapper>*{
+    position: relative;
+}
+.templateWrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    z-index: 0; /* Place the pseudo-element behind the content */
+    opacity: 0.1; /* Adjust the opacity as needed (0.0 to 1.0) */
+}
 @media (max-width: 800px) {
     .templateWrapper{
         padding: 80px 0 0 0 ;

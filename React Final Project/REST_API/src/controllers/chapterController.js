@@ -37,6 +37,17 @@ router.get("/freeRotation",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/bookContent/:id",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {id} = req.body
+        const  bookContent = await chapterManager.getBookContent(id)
+        res.status(200).json({bookContent})
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
 router.get("/:id",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user

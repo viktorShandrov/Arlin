@@ -2,7 +2,7 @@
     position: relative;
     width: 300px;
     padding: 40px;
-    background-color: #859D7A;
+    background-color: #5F705A;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -39,7 +39,8 @@
     font-weight: bolder;
     padding: 10px;
     border-radius: 20px;
-    background-color: white;
+    /*background-color: white;*/
+    color: white;
     font-size: 18px;
 }
 .btn{

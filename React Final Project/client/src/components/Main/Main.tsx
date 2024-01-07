@@ -16,6 +16,7 @@ import Chat from "../Chat/Chat";
 import LandingPage from "../LandingPage/LandingPage";
 import Navigation from "../Navigation/Navigation";
 import MyBooksList from "../MyBooksList/MyBooksList";
+import BookContent from "../BookContent/BookContent";
 export default function Main(){
     return(
         <>
@@ -29,6 +30,7 @@ export default function Main(){
                             <Route path={"/read"} element={<MyBooksList />}></Route>
                             <Route path={"/read/:bookId/:chapterId/:textToTranslate?"} element={<Read />}></Route>
                             <Route path={"/AllBooks/:id"} element={<BookDetails />}></Route>
+                            <Route path={"/AllBooks/:id/content"} element={<BookContent />}></Route>
                             <Route path={"/dashboard"} element={<Dashboard />}></Route>
                             <Route path={"/news/:id/*"} element={<NewsDetails />}></Route>
                             <Route path={"/chat"} element={<Chat />}></Route>

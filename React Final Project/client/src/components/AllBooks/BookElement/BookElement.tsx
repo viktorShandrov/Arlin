@@ -26,7 +26,7 @@ export default function BookElement({book}){
                             </div>
                             <section className={styles.infoC}>
                                 <h1 className={styles.bookName}>{book.name}</h1>
-                                <h3 className={styles.bookAuthor}>{book.author}</h3>
+                                <h2 className={styles.bookAuthor}>{book.author}</h2>
                                 <div className={styles.container}>
                                     <span className={styles.genre}>{book.genre}</span>
                                     <div className={styles.line}><p></p></div>
