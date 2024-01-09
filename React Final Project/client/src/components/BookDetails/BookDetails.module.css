@@ -279,15 +279,18 @@ justify-content: flex-end
 
 .bookDetailsTable{
     /*min-width: 30%;*/
-    width: 70%;
-    max-width: 700px;
+    width: 80%;
+    /*max-width: 700px;*/
 }
 
 .row{
     display: flex;
+    border-bottom: solid grey 1px;
+    transition: 1s;
+
 }
 .cell{
-    flex: 1;
+    /*flex: 1;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -298,10 +301,17 @@ justify-content: flex-end
     /*border-bottom: solid white 0.1px;*/
 }
 .cell:first-child{
-    background-color: #6699BB;
+    min-width: 260px;
+    max-width: 260px;
+    background-color: #4C6A69;
 }
 .cell:last-child{
-    background-color: #4C6A69;
+    flex-grow: 1;
+    background-color: #859D7A;
+}
+
+.row.closed{
+    height: 0;
 }
 
 .tableHeading{
@@ -309,6 +319,13 @@ justify-content: flex-end
     font-weight: 800;
     font-size: clamp(15px,5vw,35px);
     padding: 0 5px;
+    flex-wrap: wrap;
+    text-wrap: normal;
+    white-space: break-spaces;
+}
+.authorDesc{
+    font-size: clamp(15px,5vw,25px);
+    /*font-weight: lighter !important;*/
 }
 
 .freeChaptersBtnAndReadBtnWrapper{
@@ -495,8 +512,15 @@ justify-content: flex-end
     .bookImageC{
         width: 80%;
     }
+    .row{
+        flex-direction: column;
+    }
+    .cell:first-child{
+        max-width: 100%;
+        width: 100%;
+    }
 }
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
     .resume{
         width: 100%;
     }

@@ -19,6 +19,7 @@ export default function  BookDetails(){
 
     const {id} = useParams()
     const additionalInfos = useRef([])
+    const authorDetails = useRef(null)
     const wrapper = useRef(0)
     const navigate = useNavigate()
 
@@ -65,7 +66,16 @@ export default function  BookDetails(){
     function scrollToTopSmooth() {
         wrapper.current.scrollTop = 0;
     }
-
+    const setAuthorDetails = ()=>{
+        // @ts-ignore
+        if(authorDetails.current.classList.contains(styles.closed)){
+            // @ts-ignore
+            authorDetails.current.classList.remove(styles.closed)
+        }else{
+            // @ts-ignore
+            authorDetails.current.classList.add(styles.closed)
+        }
+    }
 
     useEffect(()=>{
         getBook()
@@ -155,7 +165,7 @@ export default function  BookDetails(){
                     {/*</section>*/}
                     <section className={styles.bookDetailsTableWrapper}>
                         <div className={styles.bookDetailsTable}>
-                            <section className={styles.row}>
+                            <section onClick={setAuthorDetails} className={styles.row}>
                                 <div className={styles.cell}>
                                     <h1 className={styles.tableHeading}>
                                         Автор
@@ -165,6 +175,18 @@ export default function  BookDetails(){
                                     <h1 className={styles.tableHeading}>
                                         {book.author}
                                     </h1>
+                                    <button className={styles.showMoreInfoBtn}>Повече</button>
+                                </div>
+
+                            </section>
+                            <section ref={authorDetails} className={styles.row}>
+                                <div className={styles.cell}>
+                                    <img src="/author.jpg" alt=""/>
+                                </div>
+                                <div className={styles.cell}>
+                                    <p className={`${styles.tableHeading} ${styles.authorDesc}`}>
+                                        Ivan Minchov Vazov (Bulgarian: Иван Минчов Вазов; 9 July [O.S. 27 June] 1850 – 22 September 1921) was a Bulgarian poet, novelist and playwright, often referred to as "the Patriarch of Bulgarian literature".[1][2][3] He was born in Sopot, a town in the Rose Valley of Bulgaria (then part of the Ottoman Empire). The works of Ivan Vazov reveal two historical epochs - the Bulgarian Renaissance and the Post-Liberation (from Ottoman Empire January 30, 1899, representing the People's Party.
+                                    </p>
                                 </div>
 
                             </section>

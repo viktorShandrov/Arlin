@@ -31,7 +31,7 @@
 
 .heroSectionWrapper{
     display: flex;
-    margin-bottom: 190px;
+    margin-bottom: 150px;
     animation: fadeIn 1s;
 
 }
@@ -46,7 +46,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-left: 60px;
+    padding-left: 100px;
     margin-top: 20px;
     animation: fadeIn 1s;
 }
@@ -57,7 +57,7 @@
 }
 
 .afterHeading{
-    font-size: 25px;
+    font-size: 30px !important;
 }
 .beginBtn{
     background-color: #75A9AB;

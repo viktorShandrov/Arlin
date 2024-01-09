@@ -41,7 +41,7 @@
     border-radius: 20px;
     /*background-color: white;*/
     color: white;
-    font-size: 18px;
+    font-size: 20px!important;
 }
 .btn{
     display: block;

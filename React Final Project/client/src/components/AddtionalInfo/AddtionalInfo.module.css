@@ -1,7 +1,7 @@
 
 .helpfulInformationC{
     display: flex;
-    width: 80%;
+    width: 90%;
     opacity: 0;
     transform: translateX(-100px);
 }
@@ -48,7 +48,7 @@
     align-items: center;
     font-weight: bolder;
     padding: 0 100px    ;
-    font-size: clamp(30px,3vw,50px);
+    font-size: clamp(30px,3.2vw,60px);
     font-family: "Shantell Sans", serif;
 
 }
