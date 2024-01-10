@@ -197,6 +197,7 @@
     }
     .navigationWrapper.opened .linksC .linkItem{
         opacity: 1;
+        transform: scale(1);
     }
     .navigationWrapper.opened .logoNameC{
 

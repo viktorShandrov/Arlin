@@ -175,7 +175,7 @@ export default function  BookDetails(){
                                     <h1 className={styles.tableHeading}>
                                         {book.author}
                                     </h1>
-                                    <button className={styles.showMoreInfoBtn}>Повече</button>
+                                    {/*<button className={styles.showMoreInfoBtn}>Повече</button>*/}
                                 </div>
 
                             </section>

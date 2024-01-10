@@ -81,7 +81,7 @@
 
 .bookImageAndResume{
     display: flex;
-    width: 70%;
+    width: 75%;
     height: 750px;
     background-color: #859D7A;
     margin: 50px auto;
@@ -146,7 +146,7 @@
     font-size: 30px;
     gap: 20px;
 }
-.btn{
+.bookImageAndResume .btn{
     flex: 1;
     border: none;
     padding: 30px;
@@ -155,12 +155,19 @@
     justify-content: center;
     align-items: center;
     color: #859D7A;
+    font-size: 24px;
 }
-.btn:first-child{
-    height: 80%;
-    font-size: 20px;
-    align-items: flex-end;
+.bookImageAndResume .btn:first-child{
+    /*height: 100% !important;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #859D7A;
+    color: white;
+    border: solid white 2px;
 }
+
+
 
 
 
@@ -489,23 +496,24 @@ justify-content: flex-end
     }
 }
 
-@media (max-width: 800px){
-    .freeChaptersBtnAndReadBtnC{
+@media (max-width: 1300px) {
+    .resume{
+        width: 100%;
+    }
+    .bookImageAndResume{
         flex-direction: column;
-        width: 90%;
+        height: fit-content;
+        align-items: center;
+
+        /*max-height: 1700px;*/
     }
-    .bookDetailsTable{
-        width: 90%;
+    .bookImageAndResume .image{
+        width: 70%;
+    }
+    .bookImageAndResume .btn{
+        height: 100%;
     }
 
-    .bookNameAndRating{
-        /*transform: translateX(30px);*/
-        width: 90%;
-
-    }
-    .bookImageWrapper{
-        max-width: 100%;
-    }
 
 }
 @media (max-width: 1000px) {
@@ -519,18 +527,6 @@ justify-content: flex-end
         max-width: 100%;
         width: 100%;
     }
-}
-@media (max-width: 1300px) {
-    .resume{
-        width: 100%;
-    }
-    .bookImageAndResume{
-        flex-direction: column;
-        height: fit-content;
-        /*max-height: 1700px;*/
-    }
-
-
 }
 
 @media (max-width:500px){
@@ -569,10 +565,43 @@ justify-content: flex-end
     .bookImageC{
         width: 80%;
     }
+    .btns{
+        flex-direction: column;
+        align-items: center;
+    }
+    .btns .btn:last-child{
+        width: 80%;
+    }
+    .bookImageAndResume{
+        width: 95%;
+        padding: 20px;
+    }
 
 
 
 
+}
+@media (max-width: 800px){
+    .freeChaptersBtnAndReadBtnC{
+        flex-direction: column;
+        width: 90%;
+    }
+    .bookDetailsTable{
+        width: 90%;
+    }
+
+    .bookNameAndRating{
+        /*transform: translateX(30px);*/
+        width: 90%;
+
+    }
+    .bookImageWrapper{
+        max-width: 100%;
+    }
+
+    .bookImageAndResume .image{
+        width: 100%;
+    }
 }
 /*.wrapper{*/
 /*    height: 100%;*/
