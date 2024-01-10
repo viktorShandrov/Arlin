@@ -9,6 +9,15 @@
     height: fit-content;
     border-radius: 20px;
     background-color: #EBEBEB;
+
+}
+@media (max-width:1200px){
+    .container{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 .textForTranslate{
     padding: 15px;

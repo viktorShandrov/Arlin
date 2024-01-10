@@ -57,6 +57,11 @@ export default function Story({chapter,changeChapterClickHandler}){
                     {!chapter&&
                     <h1>Problem with getting chapter</h1>}
                 </div>
+                <div className={styles.btns}>
+                    <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={`    ${styles.btn}`} >следваща глава</button>
+                    <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={` ${styles.btn}`} >предишна глава</button>
+                </div>
+
                 {/*{chapter&&<div className={styles.btns}>*/}
                 {/*    <div className={`${styles.testBtns}`}>*/}
 

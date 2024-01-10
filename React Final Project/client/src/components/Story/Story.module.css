@@ -19,6 +19,30 @@
 .story>*{
     flex-grow:1 ;
 }
+.btns{
+    display: flex;
+    justify-content: space-evenly;
+}
+.btns .btn{
+    padding:15px 40px;
+    display: flex;
+    align-items: center;
+    color: white;
+    border: none;
+    border-radius: 100px;
+}
+
+.btns .btn:first-child{
+    background-color: #4C6A69;
+}
+.btns .btn:last-child{
+    background-color: #A73701;
+}
+.btns .btn:disabled{
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
 /*.btns{*/
 /*    display: flex;*/
 /*    justify-content: space-evenly;*/

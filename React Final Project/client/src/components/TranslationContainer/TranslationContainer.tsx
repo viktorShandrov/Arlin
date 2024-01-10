@@ -1,7 +1,7 @@
 import  { useEffect, useRef, useState } from "react";
 import "./TranslationContainer.module.css";
 import styles from "./TranslationContainer.module.css";
-import { useParams } from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {request, translateText} from "../../functions";
 
 export default function TranslationContainer() {
@@ -10,6 +10,8 @@ export default function TranslationContainer() {
     const wordsContainerRef = useRef<HTMLParagraphElement>(null)
 
     let { textToTranslate } = useParams();
+    const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
          textToTranslate = decodeURIComponent(textToTranslate!);
@@ -73,11 +75,18 @@ export default function TranslationContainer() {
         }
 
     };
+    const closeTextToTranslatePanel = ()=>{
+        const newUrlArr =  location.pathname.split("/")
+        newUrlArr.pop()
+        const newUrl = newUrlArr.join("/")
+        navigate(newUrl)
+    }
 
     // @ts-ignore
     return (
         <>
             {textToTranslate&&<div className={styles.container}>
+                <i  onClick={()=>closeTextToTranslatePanel()} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
                 <h3>Избери думите, които са ти непознати:</h3>
                 <p className={styles.textForTranslate} ref={wordsContainerRef}>
                     {textToTranslate?.split(" ").map((el, index) => {
