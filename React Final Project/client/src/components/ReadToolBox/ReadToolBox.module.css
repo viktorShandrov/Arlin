@@ -35,7 +35,11 @@
 
 
 
-
+@media (max-width: 1200px){
+    .testsWrapper{
+        display: none;
+    }
+}
 
 
 

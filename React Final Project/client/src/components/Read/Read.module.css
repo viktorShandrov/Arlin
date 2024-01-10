@@ -15,6 +15,18 @@
     margin:0 clamp(5px,1vw,20px);
 
 }
+@media (max-width: 1200px) {
+    .listC{
+        margin: 0;
+    }
+
+}
+@media (max-width: 1200px) {
+ .main{
+     padding: 5px;
+ }
+}
+
 /*.clicked{*/
 /*    position: fixed;*/
 /*    top: 0;*/

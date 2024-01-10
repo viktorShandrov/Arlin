@@ -23,7 +23,6 @@ export default function ReadToolBox({chapter, changeChapterClickHandler}){
                     </Link>
                 </>
             }
-
         </div>
             // <div className={styles.ReadNavigationToolBox}>
             //

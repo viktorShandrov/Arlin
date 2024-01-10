@@ -4,8 +4,9 @@
     border-radius: 10px;
     height: 1000px;
     max-height: 100%;
-    min-width: 400px;
+    /*min-width: 400px;*/
     max-width: 600px;
+    position: relative;
 }
 .story{
     padding: 30px;
@@ -15,6 +16,9 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    position: relative;
+    z-index: 0;
+
 }
 .story>*{
     flex-grow:1 ;
@@ -22,7 +26,15 @@
 .btns{
     display: flex;
     justify-content: space-evenly;
+    position: relative;
+    z-index: 1;
+    max-height: 100px;
+    overflow: visible;
+
+
 }
+
+
 .btns .btn{
     padding:15px 40px;
     display: flex;
@@ -35,13 +47,75 @@
 .btns .btn:first-child{
     background-color: #4C6A69;
 }
-.btns .btn:last-child{
+.btns .btn:nth-child(2){
     background-color: #A73701;
 }
 .btns .btn:disabled{
     opacity: 0.3;
     cursor: not-allowed;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+.testsWrapper{
+    width: 100px;
+    margin: 0;
+    border-radius: 1000px;
+    background-color: #D9D9D9;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    align-self: start;
+    /*margin-top: 50px;*/
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 999999;
+    font-size: 14px;
+    border: solid black 1px;
+    /*transform: translateY(50%);*/
+
+}
+
+
+.testsWrapper .btn{
+    border: none;
+    border-radius: 100px;
+    aspect-ratio: 1/1;
+    color: white;
+}
+.testsWrapper .btn:not(.testIcon){
+    padding: 10px;
+}
+.testsWrapper .btn.textWordsTest{
+    background-color: #7E0030;
+    text-decoration: none;
+}
+.testsWrapper .btn.textTest{
+    background-color: #75A9AB;
+}
+.btn.testIcon{
+    width: 100%;
+    padding:0;
+}
+.testIcon img{
+    width: 100%;
+}
+.btnIcon{
+    display: none;
+}
+
+
 
 /*.btns{*/
 /*    display: flex;*/
@@ -106,4 +180,45 @@
 /* Handle on hover */
 .storyWrapper *::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+@media (max-width: 1200px){
+    .testsWrapper{
+        display: flex;
+    }
+    .btnName{
+        display: none;
+    }
+    .btnIcon{
+        display: block;
+    }
+    .btns{
+        height: 140px;
+        align-items: center;
+    }
+    .btns .btn:not(.testsWrapper .btn){
+        padding: clamp(30px,6vw,50px)  ;
+        height: 54px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+    .storyWrapper{
+        padding: 5px;
+    }
+    .story{
+        padding: 5px;
+    }
+    .textContainer{
+        padding: 15px;
+    }
+}
+
+@media (max-width: 450px) {
+    .btns{
+        /*transform: translateX(-20px);*/
+        justify-content: flex-start;
+        gap: 20px;
+    }
 }
