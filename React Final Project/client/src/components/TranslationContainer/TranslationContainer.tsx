@@ -13,29 +13,30 @@ export default function TranslationContainer() {
 
     useEffect(() => {
          textToTranslate = decodeURIComponent(textToTranslate!);
-        // @ts-ignore
-        for (const wordRef of Array.from(wordsContainerRef.current!.children)) {
+        if(wordsContainerRef.current) {
             // @ts-ignore
-            wordRef.removeAttribute("data-isclicked")
+            for (const wordRef of Array.from(wordsContainerRef.current!.children)) {
+                // @ts-ignore
+                wordRef.removeAttribute("data-isclicked")
+            }
+
+
+            translateText(textToTranslate)
+                .then(setTranslatedSentence)
+
+            // fetch(
+            //     `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
+            //     requestOptions
+            // )
+            //     .then((data) => data.json())
+            //     .then((response: any) => {
+            //         const translatedText = response.data.translations[0].translatedText;
+            //         setTranslatedSentence(translatedText);
+            //     })
+            //     .catch((error) => {
+            //         console.error("Translation error:", error);
+            //     });
         }
-
-
-
-        translateText(textToTranslate)
-            .then(setTranslatedSentence)
-
-        // fetch(
-        //     `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,
-        //     requestOptions
-        // )
-        //     .then((data) => data.json())
-        //     .then((response: any) => {
-        //         const translatedText = response.data.translations[0].translatedText;
-        //         setTranslatedSentence(translatedText);
-        //     })
-        //     .catch((error) => {
-        //         console.error("Translation error:", error);
-        //     });
     }, [textToTranslate]);
 
     const handleWordClick = (index: number) => {
@@ -57,52 +58,59 @@ export default function TranslationContainer() {
 
     const saveWordsClickHandler = () => {
         const words = [];
-        // @ts-ignore
-        for (const elements of Array.from(wordsContainerRef.current!.children).filter(el=>el.getAttribute("data-isclicked"))) {
+        if(wordsContainerRef.current){
             // @ts-ignore
-            words.push(elements.textContent);
-        }
-        console.log(words);
-        request("unknownWords/create", "POST", { words }).subscribe(
-            () => {
-                console.log("success");
+            for (const elements of Array.from(wordsContainerRef.current!.children).filter(el=>el.getAttribute("data-isclicked"))) {
+                // @ts-ignore
+                words.push(elements.textContent);
             }
-        );
+            console.log(words);
+            request("unknownWords/create", "POST", { words }).subscribe(
+                () => {
+                    console.log("success");
+                }
+            );
+        }
+
     };
 
     // @ts-ignore
     return (
-        <div className={styles.container}>
-            <h3>Избери думите, които са ти непознати:</h3>
-            <p className={styles.textForTranslate} ref={wordsContainerRef}>
-                {textToTranslate!.split(" ").map((el, index) => {
-                    console.log("i")
-                    if(!el){
-                        return null
-                    }
-                    el = el.replace(/^[,."\s:]+|[,\s:]+$/g, "")
-                    return (
-                        <span
-                            key={index}
-                            className={`${styles.word} `}
-                            data-isclicked={clickedWords[index]}
-                            onClick={() => handleWordClick(index)}
-                            // ref={spanRef}
-                        >
+        <>
+            {textToTranslate&&<div className={styles.container}>
+                <h3>Избери думите, които са ти непознати:</h3>
+                <p className={styles.textForTranslate} ref={wordsContainerRef}>
+                    {textToTranslate?.split(" ").map((el, index) => {
+                        console.log("i")
+                        if(!el){
+                            return null
+                        }
+                        el = el.replace(/^[,."\s:]+|[,\s:]+$/g, "")
+                        return (
+                            <span
+                                key={index}
+                                className={`${styles.word} `}
+                                data-isclicked={clickedWords[index]}
+                                onClick={() => handleWordClick(index)}
+                                // ref={spanRef}
+                            >
                           {el}
                         </span>
-                    );
-                })}
-            </p>
-            {clickedWords.some((el) => el) && (
-                <button onClick={saveWordsClickHandler} className={styles.saveWords}>
-                    Запази думи
-                </button>
-            )}
+                        );
+                    })}
+                </p>
+                {clickedWords.some((el) => el) && (
+                    <button onClick={saveWordsClickHandler} className={styles.saveWords}>
+                        Запази думи
+                    </button>
+                )}
 
-            <hr />
-            <h3>Превод:</h3>
-            <p className={styles.translation}>{translatedSentence}</p>
-        </div>
+                <hr />
+                <h3>Превод:</h3>
+                <p className={styles.translation}>{translatedSentence}</p>
+            </div>}
+        </>
+
+
     );
 }

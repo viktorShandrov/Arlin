@@ -31,7 +31,6 @@ export default function Story({chapter,changeChapterClickHandler}){
         }
         const properUrl = sentence.replace(/\n/g, ' ')
         const encodedText = encodeURIComponent(properUrl);
-        console.log(encodedText)
         navigate(`${currentPathWithoutLastSegment}/${encodedText}`);
     };
 

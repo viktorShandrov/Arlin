@@ -73,7 +73,7 @@ export default  function Read(){
 
                 <div className={styles.translatePanelC}>
                     <Routes>
-                        {/*<Route path={"/:textToTranslate?"} element={<TranslationContainer/>}/>*/}
+                        <Route path={"/:textToTranslate?"} element={<TranslationContainer/>}/>
                     </Routes>
                 </div>
 
