@@ -25,7 +25,7 @@ export default function Navigation(){
         <div ref={navigationWrapperRef} className={styles.navigationWrapper}>
 
             <div className={styles.currentSectionLabelC}>
-                {currentSectionName.length>0&&currentSectionName.split("").map((char,index)=><h1 key={index} className={styles.currentSectionLabelChar}>{char}</h1>)}
+                {currentSectionName.length>0&&currentSectionName.split("").map((char,index)=><h6 key={index} className={styles.currentSectionLabelChar}>{char}</h6>)}
             </div>
             <div onClick={burgerMenuClickHandler}  className={styles.burgerMenuIcon}>
                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
@@ -49,7 +49,7 @@ export default function Navigation(){
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/read.png" alt=""/>
                         </div>
-                        <h1 className={styles.navItemLabel}>Четене</h1>
+                        <h6 className={styles.navItemLabel}>Четене</h6>
                     </article>
                 </Link>
                 <Link onClick={navigateHandler} to={"/main/AllBooks"} className={styles.linkItem} >
@@ -57,7 +57,7 @@ export default function Navigation(){
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/books.png" alt=""/>
                         </div>
-                        <h1 className={styles.navItemLabel}>Kниги</h1>
+                        <h6 className={styles.navItemLabel}>Kниги</h6>
                     </article>
                 </Link>
                 <Link onClick={navigateHandler} to={"/main/news"} className={styles.linkItem} >
@@ -65,7 +65,7 @@ export default function Navigation(){
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/news.png" alt=""/>
                         </div>
-                        <h1 className={styles.navItemLabel}>Новини</h1>
+                        <h6 className={styles.navItemLabel}>Новини</h6>
                     </article>
                 </Link>
                 <Link onClick={navigateHandler} to={"/main/unknownWords"} className={styles.linkItem} >
@@ -73,7 +73,7 @@ export default function Navigation(){
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/dictionary.png" alt=""/>
                         </div>
-                        <h1 className={styles.navItemLabel}>Непознати думи</h1>
+                        <h6 className={styles.navItemLabel}>Непознати думи</h6>
                     </article>
                 </Link>
                 <Link onClick={navigateHandler} to={"/main/test/randomWords"}  className={styles.linkItem} >
@@ -81,7 +81,7 @@ export default function Navigation(){
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/test.png" alt=""/>
                         </div>
-                        <h1 className={styles.navItemLabel}>Тестове</h1>
+                        <h6 className={styles.navItemLabel}>Тестове</h6>
                     </article>
                 </Link>
                 <Link onClick={navigateHandler} to={"/main/dashboard"}  className={styles.linkItem} >
@@ -89,7 +89,7 @@ export default function Navigation(){
                         <div className={styles.imageC}>
                             <img src="/Navigation%20Icons/chat.png" alt=""/>
                         </div>
-                        <h1 className={styles.navItemLabel}>Чат с изк. интелект</h1>
+                        <h6 className={styles.navItemLabel}>Чат с изк. интелект</h6>
                     </article>
                 </Link>
                 <Link onClick={navigateHandler} to={"/main/dashboard"}  className={styles.linkItem} >
@@ -97,7 +97,7 @@ export default function Navigation(){
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/prodile.png" alt=""/>
                         </div>
-                        <h1 className={styles.navItemLabel}>Профил</h1>
+                        <h6 className={styles.navItemLabel}>Профил</h6>
                     </article>
                 </Link>
 

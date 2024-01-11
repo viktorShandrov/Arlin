@@ -10,12 +10,12 @@ export default function FreeChapter({chapter}){
             <div className={styles.imgC}>
                 <img src={chapter.bookImage||"/chapter.jpg"} alt=""/>
             </div>
-            <h2 className={styles.heading}>
-                Книга: {chapter.bookName}
-            </h2>
-            <h2 className={styles.heading}>
-                Глава: {chapter.chapterName}
-            </h2>
+            <h6 className={styles.heading}>
+                Книга: <h5>{chapter.bookName}</h5>
+            </h6>
+            <h6 className={styles.heading}>
+                Глава: <h5>{chapter.chapterName}</h5>
+            </h6>
             <button onClick={()=>navigate(`/main/read/${chapter.bookId}/chapterId=${chapter.chapterId}`)} className={`${styles.btn} ${styles.readBtn}`}>Прочети</button>
             <button onClick={()=>navigate(`/main/AllBooks/${chapter.bookId}`)} className={`${styles.btn} ${styles.viewBookBtn}`}>Виж книгата</button>
         </article>
