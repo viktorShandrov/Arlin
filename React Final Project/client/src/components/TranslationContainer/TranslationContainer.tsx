@@ -87,7 +87,7 @@ export default function TranslationContainer() {
         <>
             {textToTranslate&&<div className={ `${styles.container} ${textToTranslate?styles.visible:null}` }>
                 <i  onClick={()=>closeTextToTranslatePanel()} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
-                <h3>Избери думите, които са ти непознати:</h3>
+                <h6 className={styles.heading}>Избери думите, които са ти непознати:</h6>
                 <p className={styles.textForTranslate} ref={wordsContainerRef}>
                     {textToTranslate?.split(" ").map((el, index) => {
                         console.log("i")
@@ -115,7 +115,7 @@ export default function TranslationContainer() {
                 )}
 
                 <hr />
-                <h3>Превод:</h3>
+                <h6 className={styles.heading}>Превод:</h6>
                 <p className={styles.translation}>{translatedSentence}</p>
             </div>}
             <div className={styles.overlay}></div>

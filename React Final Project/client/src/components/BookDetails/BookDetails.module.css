@@ -17,16 +17,18 @@
 }
 
 
+
 .bookDetailsWrapper{
     font-family: "Shantell Sans", serif;
     overflow: auto;
     padding-top: 50px;
     padding-bottom: 500px;
+    --sectionsWidth: 80%
 }
 
 .bookNameAndRating {
     display: flex;
-    width: 70%;
+    width: var(--sectionsWidth);
     margin: 0 auto;
 }
 
@@ -81,7 +83,7 @@
 
 .bookImageAndResume{
     display: flex;
-    width: 75%;
+    width: var(--sectionsWidth);
     height: 750px;
     background-color: #859D7A;
     margin: 50px auto;
@@ -188,7 +190,7 @@
 
 .resumeAndBookImage{
     display: flex;
-    max-width: 70%;
+    max-width: 80%;
     /*max-height: 750px;*/
     margin:150px auto 0 auto;
 }
@@ -286,7 +288,8 @@ justify-content: flex-end
 
 .bookDetailsTable{
     /*min-width: 30%;*/
-    width: 80%;
+    width: var(--sectionsWidth);
+    border-radius: 20px;
     /*max-width: 700px;*/
 }
 
@@ -387,7 +390,7 @@ justify-content: flex-end
 }
 
 .feedbacksC{
-    width: 80%;
+    width: var(--sectionsWidth);;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -528,6 +531,12 @@ justify-content: flex-end
         width: 100%;
     }
 }
+@media (max-width:600px) {
+    .bookDetailsWrapper{
+        --sectionsWidth: 90%
+    }
+
+}
 
 @media (max-width:500px){
     .moreBooksWrapper{
@@ -555,7 +564,7 @@ justify-content: flex-end
         max-width: 90%;
     }
     .bookNameAndRating{
-        width: 90%;
+        /*width: 90%;*/
         /*transform: translateX(30px);*/
 
     }
@@ -573,7 +582,7 @@ justify-content: flex-end
         width: 80%;
     }
     .bookImageAndResume{
-        width: 95%;
+        /*width: 95%;*/
         padding: 20px;
     }
 
@@ -584,15 +593,15 @@ justify-content: flex-end
 @media (max-width: 800px){
     .freeChaptersBtnAndReadBtnC{
         flex-direction: column;
-        width: 90%;
+        /*width: 90%;*/
     }
     .bookDetailsTable{
-        width: 90%;
+        /*width: 90%;*/
     }
 
     .bookNameAndRating{
         /*transform: translateX(30px);*/
-        width: 90%;
+        /*width: 90%;*/
 
     }
     .bookImageWrapper{

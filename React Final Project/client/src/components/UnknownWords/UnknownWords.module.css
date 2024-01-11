@@ -71,8 +71,8 @@
     display: flex;
     align-items: center;
 }
-.row h5{
-    margin: 15px 20px;
+.row .translation{
+    margin: 15px 20px !important;
 }
 .buyBtnWrapper{
     display: flex;

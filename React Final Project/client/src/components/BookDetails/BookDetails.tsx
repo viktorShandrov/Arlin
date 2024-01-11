@@ -167,14 +167,14 @@ export default function  BookDetails(){
                         <div className={styles.bookDetailsTable}>
                             <section onClick={setAuthorDetails} className={styles.row}>
                                 <div className={styles.cell}>
-                                    <h1 className={styles.tableHeading}>
+                                    <h4 className={styles.tableHeading}>
                                         Автор
-                                    </h1>
+                                    </h4>
                                 </div>
                                 <div className={styles.cell}>
-                                    <h1 className={styles.tableHeading}>
+                                    <h4 className={styles.tableHeading}>
                                         {book.author}
-                                    </h1>
+                                    </h4>
                                     {/*<button className={styles.showMoreInfoBtn}>Повече</button>*/}
                                 </div>
 
@@ -192,50 +192,50 @@ export default function  BookDetails(){
                             </section>
                             <section className={styles.row}>
                                 <div className={styles.cell}>
-                                    <h1 className={styles.tableHeading}>
+                                    <h4 className={styles.tableHeading}>
                                         Жанр
-                                    </h1>
+                                    </h4>
                                 </div>
                                 <div className={styles.cell}>
-                                    <h1 className={styles.tableHeading}>
+                                    <h4 className={styles.tableHeading}>
                                         {book.genre}
-                                    </h1>
+                                    </h4>
                                 </div>
                             </section>
                             <section className={styles.row}>
                                 <div className={styles.cell}>
-                                    <h1 className={styles.tableHeading}>
+                                    <h4 className={styles.tableHeading}>
                                         Брой глави
-                                    </h1>
+                                    </h4>
                                 </div>
                                 <div className={styles.cell}>
-                                    <h1 className={styles.tableHeading}>
+                                    <h4 className={styles.tableHeading}>
                                         {book.length}
-                                    </h1>
+                                    </h4>
                                 </div>
                             </section>
                             <section className={styles.row}>
                                 <div className={styles.cell}>
-                                    <h1 className={styles.tableHeading}>
+                                    <h4 className={styles.tableHeading}>
                                         Трудност
-                                    </h1>
+                                    </h4>
                                 </div>
                                 <div className={styles.cell}>
-                                    <h1 className={styles.tableHeading}>
+                                    <h4 className={styles.tableHeading}>
                                         {book.difficalty||"няма зададена трудност"}
-                                    </h1>
+                                    </h4>
                                 </div>
                             </section>
                             <section className={styles.row}>
                                 <div className={styles.cell}>
-                                    <h1 className={styles.tableHeading}>
+                                    <h4 className={styles.tableHeading}>
                                         Година
-                                    </h1>
+                                    </h4>
                                 </div>
                                 <div className={styles.cell}>
-                                    <h1 className={styles.tableHeading}>
+                                    <h4 className={styles.tableHeading}>
                                         {book.year}
-                                    </h1>
+                                    </h4>
                                 </div>
                             </section>
                         </div>

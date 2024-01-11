@@ -22,8 +22,8 @@ export default function UnknownWords(){
             <div className={styles.wrapper}>
                 <div className={styles.container}>
                     <div className={styles.headingAndCountC}>
-                        <h1 className={styles.heading}>Непознати думи</h1>
-                        <h1 className={styles.count}>{words.length>99?"99+":words.length}</h1>
+                        <h4 className={styles.heading}>Непознати думи</h4>
+                        <h5 className={styles.count}>{words.length>99?"99+":words.length}</h5>
                     </div>
 
                     <hr className={styles.hr}/>
@@ -37,7 +37,7 @@ export default function UnknownWords(){
                                         {word.word}
                                         <i className="fa-solid fa-caret-down"></i>
                                     </summary>
-                                    <h5>{word.translatedText}</h5>
+                                    <h6 className={styles.translation}>{word.translatedText}</h6>
                                 </details>
 
 

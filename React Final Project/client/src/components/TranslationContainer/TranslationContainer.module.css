@@ -24,6 +24,10 @@
     background-color: #EBEBEB;
 
 }
+.heading{
+    margin-bottom: 20px!important;
+    margin-left: 10px!important;
+}
 .textForTranslate{
     padding: 15px;
     border-radius: 20px;

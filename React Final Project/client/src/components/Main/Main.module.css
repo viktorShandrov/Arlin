@@ -26,7 +26,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     z-index: 0; /* Place the pseudo-element behind the content */
-    opacity: 0.04; /* Adjust the opacity as needed (0.0 to 1.0) */
+    opacity: 0.06; /* Adjust the opacity as needed (0.0 to 1.0) */
 }
 @media (max-width: 800px) {
     .templateWrapper{
