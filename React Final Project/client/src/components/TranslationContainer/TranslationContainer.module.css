@@ -2,7 +2,20 @@
 /**{*/
 /*    font-family: Inter;*/
 /*}*/
+
+.overlay{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.3;
+}
 .container{
+    display: flex;
+    flex-direction: column;
     padding: 20px;
     width: 300px;
     border: solid 1px black;
@@ -10,14 +23,6 @@
     border-radius: 20px;
     background-color: #EBEBEB;
 
-}
-@media (max-width:1200px){
-    .container{
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
 }
 .textForTranslate{
     padding: 15px;
@@ -51,4 +56,28 @@
     padding: 15px;
     border-radius: 20px;
     background-color: white;
+}
+.xmark{
+    width: fit-content;
+    padding: 10px;
+    border-radius: 100px;
+    transition: 0.3s;
+    align-self: flex-end;
+}
+.xmark:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+@media (max-width:1200px){
+    .container{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999999;
+    }
+    .visible + .overlay{
+        display: block;
+    }
 }

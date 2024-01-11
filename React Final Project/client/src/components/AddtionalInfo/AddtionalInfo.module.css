@@ -47,6 +47,7 @@
     justify-content: center;
     align-items: center;
     font-weight: bolder;
+    text-align: center;
     padding: 0 100px    ;
     font-size: clamp(30px,3.2vw,60px);
     font-family: "Shantell Sans", serif;

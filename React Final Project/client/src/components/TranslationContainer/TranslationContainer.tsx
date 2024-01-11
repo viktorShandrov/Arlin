@@ -85,7 +85,7 @@ export default function TranslationContainer() {
     // @ts-ignore
     return (
         <>
-            {textToTranslate&&<div className={styles.container}>
+            {textToTranslate&&<div className={ `${styles.container} ${textToTranslate?styles.visible:null}` }>
                 <i  onClick={()=>closeTextToTranslatePanel()} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
                 <h3>Избери думите, които са ти непознати:</h3>
                 <p className={styles.textForTranslate} ref={wordsContainerRef}>
@@ -118,6 +118,7 @@ export default function TranslationContainer() {
                 <h3>Превод:</h3>
                 <p className={styles.translation}>{translatedSentence}</p>
             </div>}
+            <div className={styles.overlay}></div>
         </>
 
 
