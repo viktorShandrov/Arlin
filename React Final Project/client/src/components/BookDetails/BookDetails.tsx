@@ -114,7 +114,7 @@ export default function  BookDetails(){
                     <section className={styles.bookNameAndRating}>
                         <h1 className={styles.bookName}>{book.name}</h1>
                         <div className={styles.ratingC}>
-                            <h1 className={styles.rating}>{book.rating}/10</h1>
+                            <h4 className={styles.rating}>{book.rating}/10</h4>
                         </div>
                     </section>
 

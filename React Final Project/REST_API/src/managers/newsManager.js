@@ -33,6 +33,10 @@ exports.getAll=async()=>{
 exports.get=async(id)=>{
     return  models.newsModel.findById(id)
 }
+
+
+
+//old
 function fetchViaNewsAPI(){
     const url = 'https://newsapi.org/v2/top-headlines?' +
         'country=us&' +

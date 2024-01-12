@@ -39,15 +39,16 @@
     font-weight: bolder;
     flex: 1;
     text-align: center;
+    overflow-wrap: break-word;
     /*background-color: #D9D9D9;*/
     margin: 0;
     border-radius: 20px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-
-    background: radial-gradient(circle at center, #b2a5a5, transparent 90%),
-    linear-gradient(to left, #d3d3d3, transparent 70%),
-    linear-gradient(to right, #d3d3d3, transparent 70%);
+    color: white;
+    background: radial-gradient(circle at center, #a73701, transparent 90%),
+    linear-gradient(to left, #7e0030, transparent 70%),
+    linear-gradient(to right, #7e0030, transparent 70%);
 
 
 }
@@ -56,12 +57,13 @@
     /*height: 100%;*/
     display: flex;
     align-items: center;
-    background-color: #D9D9D9;
+    background-color: #7e0030;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
 .rating{
-    background-color: #B2B2B2;
+    background-color: #540021;
+    color: white;
     /*transform: translateX(-40px);*/
     padding: clamp(10px,3vw,20px);
     font-size: clamp(20px,5vw,34px);
@@ -150,7 +152,6 @@
 }
 .bookImageAndResume .btn{
     flex: 1;
-    border: none;
     padding: 30px;
     border-radius: 5px;
     display: flex;
@@ -158,6 +159,7 @@
     align-items: center;
     color: #859D7A;
     font-size: 24px;
+    border: solid #859D7A 2px;
 }
 .bookImageAndResume .btn:first-child{
     /*height: 100% !important;*/

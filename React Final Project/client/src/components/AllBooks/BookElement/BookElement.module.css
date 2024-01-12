@@ -95,9 +95,10 @@
     border-radius: 100px;
     background-color: white;
     border: solid 1px black;
-    top: 220px;
+    top: 230px;
     right: 10px;
     /*width: 60px;*/
+    color: black;
     transform: translateY(-50%);
     z-index: 9;
 }

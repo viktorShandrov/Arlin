@@ -39,6 +39,8 @@
     /*font-family:  Calibri;*/
     font-size: 25px;
     line-height: 2pc;
+    border-radius: 20px;
+
 
 }
 
@@ -79,7 +81,6 @@
     .information{
         order: 2;
         text-align: center;
-        border-radius: 10px;
 
     }
     .helpfulInformationC>*{
