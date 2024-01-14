@@ -278,7 +278,7 @@ export default function  BookDetails(){
                                 <article className={styles.feedback}>
                                     <div className={styles.pictureAndName}>
                                         <div className={styles.picture}>
-                                            <img src="../../../public/user.jpg" alt=""/>
+                                            <img src="/user.jpg" alt=""/>
                                         </div>
                                         <h2 className={styles.userName}>Надя Иванова</h2>
                                     </div>
