@@ -1,15 +1,15 @@
 import Sentence from "./Sentence/Sentence.tsx";
-import {useEffect, useState} from "react";
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
-import {request} from "../../functions";
+import { useState} from "react";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import styles from "./Story.module.css"
-import {useDispatch, useSelector} from "react-redux";
-import {setUser} from "../../redux/user";
+import { useSelector} from "react-redux";
+// import {setUser} from "../../redux/user";
+// @ts-ignore
 export default function Story({chapter,changeChapterClickHandler}){
 
     const urlLocation = useLocation()
     const navigate = useNavigate();
-
+// @ts-ignore
     const {user} = useSelector((state:any)=>state.user)
 
 
@@ -62,8 +62,8 @@ export default function Story({chapter,changeChapterClickHandler}){
                     <h1>Problem with getting chapter</h1>}
                 </div>
                 <div className={styles.btns}>
-                    <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={`    ${styles.btn}`} ><span className={styles.btnName}>следваща глава</span> <i className={`fa-solid fa-caret-left ${styles.btnIcon}`}></i> </button>
                     <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={` ${styles.btn}`} ><span className={styles.btnName}>предишна глава</span> <i className={`fa-solid fa-caret-right ${styles.btnIcon}`}></i> </button>
+                    <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={`    ${styles.btn}`} ><span className={styles.btnName}>следваща глава</span> <i className={`fa-solid fa-caret-left ${styles.btnIcon}`}></i> </button>
                     <p></p>
                     <div className={styles.testsWrapper}>
                         {!areTestsHidden&&

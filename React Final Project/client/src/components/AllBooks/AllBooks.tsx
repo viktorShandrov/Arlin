@@ -1,10 +1,10 @@
 import styles from "./AllBooks.module.css"
 import {useEffect, useState} from "react";
 import {request} from "../../functions";
-import {Link} from "react-router-dom";
+// import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import Loading from "../Spinner/Loading";
-import BookElement from "./BookElement/BookElement";
+// import BookElement from "./BookElement/BookElement";
 import SearchBar from "../SearchBar/SearchBar";
 import BookSection from "../BookSection/BookSection";
 export default function AllBooks(){
@@ -208,6 +208,7 @@ export default function AllBooks(){
                     {books.some((book:any)=>book.wishedBy?.includes(user.userId))&&
                         <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(user.userId))} sectionHeader={"В списъка с желания"}/>
                     }
+                    <BookSection books={books} sectionHeader={"Всички книги"}/>
 
 
 

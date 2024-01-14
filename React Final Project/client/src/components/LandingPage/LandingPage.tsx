@@ -4,7 +4,6 @@ import additional from "../AddtionalInfo/AddtionalInfo.module.css"
 import AddtionalInfo from "../AddtionalInfo/AddtionalInfo";
 import {useEffect, useRef, useState} from "react";
 import FreeChapter from "./FreeChapter/FreeChapter";
-import BookElement from "../AllBooks/BookElement/BookElement";
 import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
 import {request} from "../../functions";
 import News from "./News/News";
@@ -13,23 +12,26 @@ export default function LandingPage(){
     const wrapper = useRef(0)
     const [freeChapters,setFreeChapters] = useState([])
     useEffect(()=>{
-
+// @ts-ignore
         wrapper.current.addEventListener("scroll",()=>{
             for (const additionalInfo of additionalInfos.current) {
+                // @ts-ignore
                 const position = additionalInfo.getBoundingClientRect();
                 // Check if the element is in the viewport
                 if (position.top < window.innerHeight-200 && position.bottom >= 0) {
+                    // @ts-ignore
                     additionalInfo.classList.add(additional.fadeIn);
                 }
             }
         })
+        // @ts-ignore
         additionalInfos.current[0].classList.add(additional.fadeIn);
         getFreeChapters()
     },[])
 
     function getFreeChapters(){
         request("chapters/freeRotation","GET").subscribe(
-            (res)=>{
+            (res:any)=>{
                 setFreeChapters(res.freeRotationChapters)
             }
         )
@@ -74,6 +76,7 @@ export default function LandingPage(){
     ]
     return(
             <>
+                {/*// @ts-ignore*/}
                 <div ref={wrapper} className={styles.landingPageWrapper}>
                     <section className={styles.heroSectionWrapper}>
                         <div className={styles.textC}>
@@ -117,7 +120,7 @@ export default function LandingPage(){
                             </ScrollerContainer>
                         </section>
                         <section id={styles.freeChaptersWrapper} className={styles.freeChaptersWrapper}>
-                            <h1 className={styles.freeMaterialsHeading}>ТОП НОВИНИ ДНЕС</h1>
+                            <h1 className={styles.topNewsHeading}>ТОП НОВИНИ ДНЕС</h1>
                             <ScrollerContainer>
                                 {news.length>0&&news.map((newsEl:any)=><News key={newsEl._id.$oid} newsElement={newsEl} />) }
                             </ScrollerContainer>

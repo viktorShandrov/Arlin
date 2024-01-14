@@ -6,6 +6,7 @@ const {model} = require("mongoose");
 
 
 exports.getChapter =async(chapterId,userId)=>{
+
     const book = await models.bookModel.findOne({
         chapters: {
             $in: chapterId
@@ -15,7 +16,7 @@ exports.getChapter =async(chapterId,userId)=>{
     const user = await models.userModel.findById(userId)
 
     const chapter = await models.chapterModel.findById(chapterId)
-    if(user.role!=="admin"||!chapter.isFree){
+    if(!chapter.isFree&&user.role!=="admin"){
         await isOwnedByUser(userId,book._id,models.bookModel,"ownedBy")
     }
 

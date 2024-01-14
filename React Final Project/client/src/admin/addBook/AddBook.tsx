@@ -12,8 +12,6 @@ import {
     ref,
     uploadBytes,
     getDownloadURL,
-    listAll,
-    list,
 } from "firebase/storage";
 export default function AddBook() {
     const {bookId} = useParams()
@@ -85,9 +83,11 @@ export default function AddBook() {
     // const imagesListRef = ref(storage, "images/");
     const uploadFile = () => {
         if (imageUpload == null) return;
+        // @ts-ignore
         const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
         uploadBytes(imageRef, imageUpload).then((snapshot) => {
             getDownloadURL(snapshot.ref).then(url=>{
+                // @ts-ignore
                 request(`books/addImageToBook/${createdBook._id}`,"POST",{imageUrl:url}).subscribe(
                     ()=>{
                         toast.success("Image successfully attached")
@@ -149,6 +149,7 @@ export default function AddBook() {
 
                                 type="file"
                                 onChange={(event) => {
+                                    // @ts-ignore
                                     setImageUpload(event.target.files[0]);
                                 }}
                             />

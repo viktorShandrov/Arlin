@@ -20,15 +20,16 @@ export default function ContinueBookElement({book}){
                         <div className={styles.paper}>“There is more treasure in books than in all the pirate's loot on Treasure Island.” ― Walt Disney</div>
 
                         <article   className={styles.bookElementWrapper}>
-                            <div className={styles.icon}>
-                                <img src="../../../../public/bookIcon.png" alt=""/>
+                            <div className={styles.year}>
+                                {/*<img src="../../../../public/bookIcon.png" alt=""/>*/}
+                                <h5 className={styles.yearLabel}>{year}</h5>
                             </div>
                             <div className={styles.imageC}>
                                 <img src={book.image||"public/chapter.jpg"} alt=""/>
                             </div>
                             <section className={styles.infoC}>
-                                <h2 className={styles.bookName}>Продължете:</h2>
-                                <h1 className={styles.bookName}>{book.name}</h1>
+                                <h6 className={styles.bookName}>Продължете:</h6>
+                                <h5 className={styles.bookName}>{book.name}</h5>
                             </section>
 
                         </article>

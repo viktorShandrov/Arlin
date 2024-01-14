@@ -1,6 +1,7 @@
 
 import styles from "./FreeChapter.module.css"
 import {useNavigate} from "react-router-dom";
+// @ts-ignore
 export default function FreeChapter({chapter}){
     const navigate = useNavigate()
     console.log(chapter)

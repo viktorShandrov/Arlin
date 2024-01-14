@@ -1,6 +1,7 @@
 
 import styles from "./BookElement.module.css"
 import Rating from '@mui/material/Rating';
+// @ts-ignore
 export default function BookElement({book}){
     const dateString = book.releaseDate;
     const date = new Date(dateString);
@@ -25,12 +26,12 @@ export default function BookElement({book}){
                                 <img src={book.image||"public/chapter.jpg"} alt=""/>
                             </div>
                             <section className={styles.infoC}>
-                                <h3 className={styles.bookName}>{book.name}</h3>
-                                <h2 className={styles.bookAuthor}>{book.author}</h2>
+                                <h5 className={styles.bookName}>{book.name}</h5>
+                                <h6 className={styles.bookAuthor}>{book.author}</h6>
                                 <div className={styles.container}>
                                     <span className={styles.genre}>{book.genre}</span>
-                                    <div className={styles.line}><p></p></div>
-                                    <span className={styles.rating}>{year}</span>
+                                    {/*<div className={styles.line}><p></p></div>*/}
+                                    {/*<span className={styles.rating}>{year}</span>*/}
                                 </div>
 
                             </section>

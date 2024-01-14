@@ -1,5 +1,6 @@
 
 import styles from "./AddtionalInfo.module.css"
+// @ts-ignore
 export default function AddtionalInfo({question,info,reference}){
     return(
         <article ref={(element) =>{

@@ -21,11 +21,15 @@
     /*transform: scaleY(0.5);*/
 
 }
-.freeMaterialsHeading{
+.freeMaterialsHeading,
+.topNewsHeading{
     text-align: center;
     margin-bottom: 40px;
     background-color: orange;
     padding: 40px 0;
+}
+.topNewsHeading{
+    margin-bottom: 50px !important;
 }
 
 

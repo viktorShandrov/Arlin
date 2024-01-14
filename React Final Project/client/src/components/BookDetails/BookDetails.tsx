@@ -2,8 +2,8 @@ import styles from "./BookDetails.module.css"
 import {useEffect, useRef, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {request} from "../../functions";
-import BuyBtn from "../BuyBtn/BuyBtn";
-import { Elements } from '@stripe/react-stripe-js';
+// import BuyBtn from "../BuyBtn/BuyBtn";
+// import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
@@ -14,16 +14,18 @@ import additional from "../AddtionalInfo/AddtionalInfo.module.css";
 import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
 
 export default function  BookDetails(){
-
+    // @ts-ignore
     const stripePromise = loadStripe('pk_test_51OEwwSAPrNaPFyVRyPTVcpxfNfy2RJiSVgl3frnwPgKe2tQZhlOVVz5PCvVN8nqoEyT2HwarufbQcoQzNy1giqkg00bLGKyRr4');
 
     const {id} = useParams()
     const additionalInfos = useRef([])
     const authorDetails = useRef(null)
     const wrapper = useRef(0)
+    // @ts-ignore
     const navigate = useNavigate()
 
     // const {user} = useContext(userContext)
+    // @ts-ignore
     const {user}:any = useSelector((selector:any)=>selector.user)
     const [isDialogShown,setIsDialogShown] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
@@ -36,7 +38,11 @@ export default function  BookDetails(){
         _id:"",
         image: "",
         ownedBy:[],
-        similarBooks:[]
+        rating:"",
+        year:"",
+        genre:"",
+        difficulty:"",
+        similarBooks:[],
     })
 
 
@@ -59,11 +65,13 @@ export default function  BookDetails(){
             }
         )
     }
+    // @ts-ignore
     const toggleDeleteDialog=()=>{
         setIsDialogShown((oldState:boolean)=>!oldState)
     }
 
     function scrollToTopSmooth() {
+        // @ts-ignore
         wrapper.current.scrollTop = 0;
     }
     const setAuthorDetails = ()=>{
@@ -83,12 +91,15 @@ export default function  BookDetails(){
         additionalInfoAnimationTrigger()
     },[id])
     function additionalInfoAnimationTrigger(){
+        // @ts-ignore
         wrapper.current.addEventListener("scroll",()=>{
             for (const additionalInfo of additionalInfos.current) {
                 if(!additionalInfo) continue
+                // @ts-ignore
                 const position = additionalInfo.getBoundingClientRect();
                 // Check if the element is in the viewport
                 if (position.top < window.innerHeight-200 && position.bottom >= 0) {
+                    // @ts-ignore
                     additionalInfo.classList.add(additional.fadeIn);
                 }
             }
@@ -110,6 +121,7 @@ export default function  BookDetails(){
                     <button>No</button>
                 </dialog>
             </div>}
+            {/*// @ts-ignore*/}
                 <div ref={wrapper} className={styles.bookDetailsWrapper}>
                     <section className={styles.bookNameAndRating}>
                         <h1 className={styles.bookName}>{book.name}</h1>
@@ -123,8 +135,8 @@ export default function  BookDetails(){
                         <article className={styles.image}>
                             <img src={book.image||"../../../public/chapter.jpg"} alt=""/>
                             <div className={styles.adminBtnsC}>
-                                {/*<button className={styles.adminBtn}>Редактирай</button>*/}
-                                {/*<button className={styles.adminBtn}>Изтрий</button>*/}
+                                {/*<button onClick={()=>navigate(`/admin/addBook/${book._id}`)}  className={styles.adminBtn}>Редактирай</button>*/}
+                                {/*<button onClick={toggleDeleteDialog} className={styles.adminBtn}>Изтрий</button>*/}
                             </div>
                         </article>
                         <article className={styles.resumeAndBtns}>
@@ -222,7 +234,7 @@ export default function  BookDetails(){
                                 </div>
                                 <div className={styles.cell}>
                                     <h4 className={styles.tableHeading}>
-                                        {book.difficalty||"няма зададена трудност"}
+                                        {book.difficulty||"няма зададена трудност"}
                                     </h4>
                                 </div>
                             </section>
@@ -283,11 +295,11 @@ export default function  BookDetails(){
                     <section  className={styles.moreBooksWrapper}>
                         <h1 className={styles.moreOfThisGenre}>Още от този жанр</h1>
                         <ScrollerContainer>
-                            {book.similarBooks.length>0&&book.similarBooks.map(book=>
+                            {book.similarBooks.length>0&&book.similarBooks.map((book:any)=>
                                 <Link to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
                                     <BookElement book={book}  />
                                 </Link>
-                                ) }{book.similarBooks.length>0&&book.similarBooks.map(book=>
+                                ) }{book.similarBooks.length>0&&book.similarBooks.map((book:any)=>
                                 <Link to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
                                     <BookElement book={book}  />
                                 </Link>

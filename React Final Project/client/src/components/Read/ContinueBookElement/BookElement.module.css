@@ -75,6 +75,23 @@
 .fundament:hover .bookElementWrapper{
     animation: openBook 0.8s linear forwards;
 }
+.year{
+    position: absolute;
+    padding: 10px;
+    border-radius: 100px;
+    background-color: white;
+    border: solid 1px black;
+    top: 238px;
+    right: 10px;
+    /*width: 60px;*/
+    color: black;
+    transform: translateY(-50%);
+    z-index: 9;
+}
+.yearLabel{
+    font-size: 16px;
+    margin: 0;
+}
 @keyframes openBook {
     20%{
         transform: scale(0.8) rotate(-20deg) skewX(-200deg)  translateX(-10px) translateY(-7px) ;

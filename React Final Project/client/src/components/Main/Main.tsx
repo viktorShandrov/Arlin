@@ -5,7 +5,6 @@ import UnknownWords from "../UnknownWords/UnknownWords.jsx";
 import AllBooks from "../AllBooks/AllBooks";
 import BookDetails from "../BookDetails/BookDetails";
 import Read from "../Read/Read";
-import NavigationOld from "../NavigationOld/Navigation";
 
 import styles from "./Main.module.css"
 import Dashboard from "../Dashboard/Dashboard";

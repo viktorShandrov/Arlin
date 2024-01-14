@@ -1,7 +1,7 @@
 
 import styles from "./ScrollerContainer.module.css"
-import BookElement from "../AllBooks/BookElement/BookElement";
 import {useRef, useState} from "react";
+{/*// @ts-ignore*/}
 export default function ScrollerContainer({children}){
 
 
@@ -9,8 +9,9 @@ export default function ScrollerContainer({children}){
     const scroller = useRef(null)
     const scrollerData = useRef(null)
     const rightArrowClick = ()=>{
+        {/*// @ts-ignore*/}
         const value = (scrollerClickPosition+1) * scroller.current.getBoundingClientRect().width
-
+        {/*// @ts-ignore*/}
         if(value < scrollerData.current.getBoundingClientRect().width){
             // @ts-ignore
             scrollerData.current.style.transform = `translateX(-${value}px)`

@@ -1,7 +1,8 @@
 
 import styles from "./ReadToolBox.module.css"
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useState} from "react";
+{/*// @ts-ignore*/}
 export default function ReadToolBox({chapter, changeChapterClickHandler}){
     const [areTestsHidden,setAreTestsHidden] = useState(true)
     const showBtns = ()=>{

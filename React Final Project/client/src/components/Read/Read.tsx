@@ -1,6 +1,6 @@
 import Story from "../Story/Story";
 import TranslationContainer from "../TranslationContainer/TranslationContainer";
-import {Link, Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
 import styles from "./Read.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
@@ -36,7 +36,6 @@ export default  function Read(){
                 if(!res){
                     navigate("/main/read")
                 }
-                console.log(res)
                 dispatch(setUser({...user,lastReading:{
                         bookId,
                         chapterId

@@ -103,7 +103,9 @@ import('random-words')
 
                                 })
                             })
-                            const responseText = (await response.json()).generations[0].text
+                            const data = await response.json()
+                            console.log(data)
+                            const responseText = data.generations[0].text
                             const extractJsonFromText = (text) => {
                                 const jsonRegex = /{(?:[^{}]|{(?:[^{}]|{[^{}]*})*})*}/g;
                                 const matches = text.match(jsonRegex);
@@ -116,6 +118,7 @@ import('random-words')
 
                         }catch (error){
                             console.log(error)
+                                throw new Error("Problem with AI")
                         }
 
                     }
@@ -156,7 +159,27 @@ import('random-words')
                             rightAnswerIndex
                         }
                     }
+                    const trimLastSentence = (chapterText)=>{
+                            const pattern = /[\.\!\?]\s*/g;
+
+                            const matches = [...chapterText.matchAll(pattern)];
+                            if (matches.length > 0) {
+                                const lastMatch = matches[matches.length - 1];
+                                console.log(lastMatch)
+                                const index = lastMatch.index + lastMatch[0].length - 1; // Adjusting for the punctuation character
+                                return chapterText.substring(0,index)
+                            } else{
+                                return null
+                            }
+                    }
                     exports.makeGPTInput=(chapterText)=>{
+                        const maxGTPcharInput = 4081
+                        const promptStartingLength = 2020
+                        while(chapterText.length>maxGTPcharInput-promptStartingLength){
+                            chapterText = trimLastSentence(chapterText)
+                            console.log(chapterText.length)
+                        }
+
                         return `
                         Chapter Plot Analysis:
 
@@ -194,8 +217,6 @@ import('random-words')
                             ]
                           }
                         ]
-
-                        
                         `
                          // Please, return me only the JSON data. Nothing else like any other human interaction!
 

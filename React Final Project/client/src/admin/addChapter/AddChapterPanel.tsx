@@ -9,6 +9,7 @@ export default function AddChapterPanel(){
         chapterText:"",
     })
     const [questions,setQuestions] = useState([])
+    const [isLoading,setIsLoading] = useState(false)
     const onFormChange=(e:any)=>{
 
         setFormValues(state=>{
@@ -21,10 +22,12 @@ export default function AddChapterPanel(){
 
     const submitForm = ()=>{
         // console.log(JSON.stringify(form))
+        setIsLoading(true)
         if(questions.length>0){
             const payload = {...formValues,questions}
             request("chapters/create","POST",payload).subscribe(
                 ()=>{
+                    setIsLoading(false)
                     toast.success("Successfully created")
                 },
             )
@@ -32,10 +35,21 @@ export default function AddChapterPanel(){
             request("chapters/createChapterQuestions","POST",formValues).subscribe(
                 (res:any)=>{
                     setQuestions(res)
+                    setIsLoading(false)
                 },
             )
         }
 
+    }
+    const newChapterBtnHandler = ()=>{
+        setQuestions([])
+        setFormValues(state=>{
+            return {
+                ...state,
+                chapterText:"",
+                chapterName:""
+            }
+        })
     }
     return(
         <>
@@ -46,11 +60,12 @@ export default function AddChapterPanel(){
                         <input name={"bookId"} placeholder={"BookId"} value={formValues.bookId} onChange={onFormChange} />
                         <input name={"chapterName"} placeholder={"Chapter name"} value={formValues.chapterName} onChange={onFormChange} />
                         <textarea name={"chapterText"} placeholder={"Book chapterText"} value={formValues.chapterText} onChange={onFormChange} />
-                        <button onClick={submitForm} className={styles.submitBtn}>Create</button>
+                        <button disabled={isLoading} onClick={submitForm} className={styles.submitBtn}>Create</button>
                     </div>
                 </div>
-
-                {questions.length>0&&<div className={styles.questionsC}>
+                        <button disabled={isLoading} onClick={newChapterBtnHandler}>Нова глава</button>
+            {/*// @ts-ignore*/}
+                {questions.length>0&&questions[0].options&&<div className={styles.questionsC}>
                     {questions.map((question:any,index:number)=>{
                         return <div key={index} className={styles.questionC}>
                             <label className={styles.question}>{question.question}</label>
@@ -61,6 +76,8 @@ export default function AddChapterPanel(){
                         </div>
                     })}
                 </div>}
+            {/*// @ts-ignore*/}
+            {questions.length>0&&!questions[0].options&&<p>Problem with questions</p>}
 
         </>
 
