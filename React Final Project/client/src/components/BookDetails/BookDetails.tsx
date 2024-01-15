@@ -193,11 +193,11 @@ export default function  BookDetails(){
                             </section>
                             <section ref={authorDetails} className={styles.row}>
                                 <div className={styles.cell}>
-                                    <img src="/author.jpg" alt=""/>
+                                    <img src="/viktior.jpg.jpg" alt=""/>
                                 </div>
                                 <div className={styles.cell}>
                                     <p className={`${styles.tableHeading} ${styles.authorDesc}`}>
-                                        Ivan Minchov Vazov (Bulgarian: Иван Минчов Вазов; 9 July [O.S. 27 June] 1850 – 22 September 1921) was a Bulgarian poet, novelist and playwright, often referred to as "the Patriarch of Bulgarian literature".[1][2][3] He was born in Sopot, a town in the Rose Valley of Bulgaria (then part of the Ottoman Empire). The works of Ivan Vazov reveal two historical epochs - the Bulgarian Renaissance and the Post-Liberation (from Ottoman Empire January 30, 1899, representing the People's Party.
+                                        Sir Edward Victor Appleton GBE KCB FRS[1] (6 September 1892 – 21 April 1965) was an English physicist,[4][5] Nobel Prize winner (1947) and pioneer in radiophysics. He studied, and was also employed as a lab technician, at Bradford College from 1909 to 1911. 
                                     </p>
                                 </div>
 
