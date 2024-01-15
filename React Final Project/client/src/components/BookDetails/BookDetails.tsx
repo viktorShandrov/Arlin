@@ -271,8 +271,7 @@ export default function  BookDetails(){
                                         <h2 className={styles.userName}>Надя Иванова</h2>
                                     </div>
                                     <p className={styles.message}>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                        , corporis delectus, distinctio dolor doloremque excepturi harum molestiae mollitia pariatur porro reiciendis repellat rerum similique! Consequatu
+                                        Много хубава и интересна книга. Не ми допадат само началото и средата, но останалото със сигурност е супер. Браво на автора!
                                     </p>
                                 </article>
                                 <article className={styles.feedback}>
@@ -280,11 +279,10 @@ export default function  BookDetails(){
                                         <div className={styles.picture}>
                                             <img src="/user.jpg" alt=""/>
                                         </div>
-                                        <h2 className={styles.userName}>Надя Иванова</h2>
+                                        <h2 className={styles.userName}>Иван Спасибов</h2>
                                     </div>
                                     <p className={styles.message}>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid architecto aspeea earum error eveniet ex molestias numquam, pers
-                                        , corporis delectus, distinctio dolor doloremque excepturi harum molestiae mollitia pariatur porro reiciendis repellat rerum similique! Consequatu
+                                        Фен съм на такъв тип книги и следя автора от доста дълго време. Не съм особено впечатлен от тази му творба. В средата изобщо не се разбира кой от къде идва. Също трябваше и да се промени подхода на Сюзън при опита й за преврат.
                                     </p>
                                 </article>
                                 <button className={`${styles.showMoreBtn} ${styles.btn}`}>Покажи повече</button>
