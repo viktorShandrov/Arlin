@@ -24,13 +24,11 @@
 .freeMaterialsHeading,
 .topNewsHeading{
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 50px !important;
     background-color: orange;
     padding: 40px 0;
 }
-.topNewsHeading{
-    margin-bottom: 50px !important;
-}
+
 
 
 .heroSectionWrapper{

@@ -90,7 +90,7 @@ export default function LandingPage(){
 
                         </div>
                         <div className={styles.heroImageC}>
-                            <img src="../../../public/hero.png" alt=""/>
+                            <img src="/hero.png" alt=""/>
                         </div>
                     </section>
 

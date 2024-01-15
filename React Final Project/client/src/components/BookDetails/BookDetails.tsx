@@ -197,7 +197,7 @@ export default function  BookDetails(){
                                 </div>
                                 <div className={styles.cell}>
                                     <p className={`${styles.tableHeading} ${styles.authorDesc}`}>
-                                        Sir Edward Victor Appleton GBE KCB FRS[1] (6 September 1892 – 21 April 1965) was an English physicist,[4][5] Nobel Prize winner (1947) and pioneer in radiophysics. He studied, and was also employed as a lab technician, at Bradford College from 1909 to 1911. 
+                                        Sir Edward Victor Appleton GBE KCB FRS[1] (6 September 1892 – 21 April 1965) was an English physicist,[4][5] Nobel Prize winner (1947) and pioneer in radiophysics. He studied, and was also employed as a lab technician, at Bradford College from 1909 to 1911.
                                     </p>
                                 </div>
 
