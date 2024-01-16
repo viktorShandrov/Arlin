@@ -62,8 +62,8 @@ export default function Story({chapter,changeChapterClickHandler}){
                     <h1>Problem with getting chapter</h1>}
                 </div>
                 <div className={styles.btns}>
-                    <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={` ${styles.btn}`} ><span className={styles.btnName}>предишна глава</span> <i className={`fa-solid fa-caret-right ${styles.btnIcon}`}></i> </button>
-                    <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={`    ${styles.btn}`} ><span className={styles.btnName}>следваща глава</span> <i className={`fa-solid fa-caret-left ${styles.btnIcon}`}></i> </button>
+                    <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={` ${styles.btn}`} ><span className={styles.btnName}>предишна глава</span> <i className={`fa-solid fa-caret-left ${styles.btnIcon}`}></i> </button>
+                    <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={`    ${styles.btn}`} ><span className={styles.btnName}>следваща глава</span><i className={`fa-solid fa-caret-right ${styles.btnIcon}`}></i>  </button>
                     <p></p>
                     <div className={styles.testsWrapper}>
                         {!areTestsHidden&&

@@ -56,7 +56,7 @@ export default function LandingPage(){
             "publishedAt": "2023-12-06 17:10:00",
             "content": "Like many people, Taylor Swift grew up listening to Paul McCartney , but unlike most, she has had the opportunity to meet him. Swift is friends with McCartney’s daughter, Stella McCartney, and had a lengthy conversation with him for an interview. When Swift met him, she asked him to sign a paper with her favorite lyrics. They’re from a classic Beatles song, and the paper is now hanging in her bathroom. Taylor Swift has Paul McCartney lyrics hanging in her bathroom When Swift met McCartney for Rolling Stone’s Musicians on Musicians series in 2020, she asked him for a favor. “We walk into his office for a chat, and after I make a nervous request, Paul is kind enough to handwrite my favorite lyric of his and sign it,” Swift wrote. “He makes a joke about me selling it, and I laugh because it’s something I know I’ll cherish for the rest of my life .” In 2023, Time Magazine named Swift its Person of the Year. Though she didn’t identify the cherished McCartney lyric in her Rolling Stone article, she revealed to Time that the lyric is from the Beatles song “Blackbird.” The signed note reads, “Take these broken wings and learn to fly.” Taylor Swift said she learned about her own career from Paul McCartney Swift saw McCartney in concert and walked away with a lesson on how to handle her own career . “I went with my family to see you in concert in 2010 or 2011, and the thing I took away from the show most was that it was the most selfless set list I had ever seen,” Swift said. “It was completely geared toward what it would thrill us to hear. It had new stuff, but it had every hit we wanted to hear, every song we’d ever cried to, every song people had gotten married to, or been brokenhearted to. And I just remembered thinking, ‘I’ve got to remember that,’ that you do that set list for your fans.” She realized that part of her job is to play the songs her fans most want to hear. “I think that learning that lesson from you taught me at a really important stage in my career that if people want to hear ‘Love Story’ and ‘Shake It Off,’ and I’ve played them 300 million times, play them the 300-millionth-and-first time,” she said. “I think there are times to be selfish in your career, and times to be selfless, and sometimes they line up.” She has another gift from a classic artist in her home McCartney is not the only artist who has gifted Swift something she keeps on display in her home. Stevie Nicks, who has often praised Swift , sent her a Stevie Nicks Barbie doll. According to Time, it sits in Swift’s kitchen. Swift said she learned a lot from McCartney. Nicks, however, doesn’t think she should even try to teach the younger musician about fame. “I don’t give Taylor advice about being famous,” she said. “She doesn’t need it.”",
             "__v": 0,
-            "category":"POLITICS"
+            "category":"MUSIC"
         },
         {
             "_id": {
@@ -86,7 +86,7 @@ export default function LandingPage(){
             "publishedAt": "2023-12-06 17:09:33",
             "content": "Live and learn, Julia. Julia Roberts got real about her past beauty mistakes in a new interview with People , sharing the tidbit of advice she’d give her 19-year-old self in a piece published Wednesday. “Stand up straighter. It’s all going to be okay, and don’t pluck your eyebrows,” the “Pretty Woman” star, 56, said. The question comes after Roberts posted a sweet Instagram tribute to her twins Phinnaeus and Hazel, who turned 19 last month. “✨✨19✨✨ There are no words for the joy, the fun, the wild rumpus of life together. 💕” she posted on November 28, sharing a rare photo of herself holding her baby twins. The “Wonder” actress — who stars in the new Netflix movie “Leave the World Behind,” debuting Friday — is still turning heads with her beauty decades later, including promoting the film last week in London. Roberts stunned in a pink blazer short set and sparkling fringe Gucci heels that matched her massive diamond necklace. As for her beauty advice, Roberts is far from the first star to share her eyebrow woes. For more Page Six Style … When Harper’s Bazaar asked Julianne Moore about the beauty advice she’d give her daughter, Liv Freundlich, the Oscar winner gave a similar tip as Roberts. “The one thing I always say is do not touch her eyebrows. Don’t destroy your eyebrows like I did, and countless other women that I know,” she said. Charlize Theron also has brow regrets, telling InStyle this summer that she was “still recovering” from her overplucked era and saying her worst beauty mistake was “Hands down, the thin eyebrow from the ’90s.”",
             "__v": 0,
-            "category":"HOME"
+            "category":"LIFESTYLE"
         },
         {
             "_id": {
@@ -161,6 +161,14 @@ export default function LandingPage(){
                             info={"Нашето приложение разширява твоето възприятие за учене на нов език, предлагайки нестандартни и вдъхновяващи методи. През пътешествие с книги и новини, ти се поглъщаш от реални ситуации и разнообразни теми. Тестовете на думи те предизвикват да разшириш своя лексикон. 📖📰🎓" }
                         />
 
+
+                    </section>
+                    <section className={styles.callToActionBtsWrapper}>
+                        <div className={styles.callToActionBtsC}>
+                            <button  className={styles.beginBtn}>КУПИ КНИГА</button>
+                            <button  className={styles.beginBtn}>АБОНИРАЙ СЕ</button>
+                            <button  className={styles.beginBtn}>ДАРИ</button>
+                        </div>
 
                     </section>
 

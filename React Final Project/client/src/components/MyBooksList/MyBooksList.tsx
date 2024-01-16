@@ -88,32 +88,35 @@ export default function MyBooksList(){
         <>
             {isLoading&&<Loading />}
             <div className={styles.myBooksListWrapperWrapper}>
-                <h1 className={styles.heading}>Моята библиотека</h1>
                 <section className={styles.myBooksListWrapper}>
                     <div className={styles.myBooksListC}>
-                        <div className={styles.readBookWrapper}>
-                            <div onClick={continueReadingHandler} className={styles.readBookC}>
-                                {currentReading&&
-                                    <ContinueBookElement book={currentReading}/>
-                                }
+                        <h1 className={styles.heading}>Моята библиотека</h1>
+                        <div className={styles.readBookAndMyBooksWrapper}>
+                            <div className={styles.readBookWrapper}>
+                                <div onClick={continueReadingHandler} className={styles.readBookC}>
+                                    {currentReading&&
+                                        <ContinueBookElement book={currentReading}/>
+                                    }
+                                </div>
                             </div>
-                        </div>
-                        <div className={styles.myBooksWrapper}>
-                            <div className={styles.myBooksC}>
+                            <div className={styles.myBooksWrapper}>
                                 <div className={styles.searchBarC}>
                                     <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
                                 </div>
+                                <div className={styles.myBooksC}>
 
-                                <div className={styles.myBooksScrollerWrapper}>
-                                    <div className={styles.myBooksScrollerC}>
+                                    <div className={styles.myBooksScrollerWrapper}>
+                                        <div className={styles.myBooksScrollerC}>
 
-                                        {books.length>0&&books.map((book:any)=><Link to={`/main/read/${book._id}/chapterId=${book.chapters[0]}`} key={book._id} className={styles.bookC}>
-                                            <BookElement book ={book} />
-                                        </Link>)}
+                                            {books.length>0&&books.map((book:any)=><Link to={`/main/read/${book._id}/chapterId=${book.chapters[0]}`} key={book._id} className={styles.bookC}>
+                                                <BookElement book ={book} />
+                                            </Link>)}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </section>
                 <section className={styles.moreOfThisGenreWrapper}>

@@ -68,6 +68,7 @@
     padding: clamp(10px,3vw,20px);
     font-size: clamp(20px,5vw,34px);
     display: flex;
+    gap: 5px;
     align-items: center;
     margin: 0;
     width: 100%;
@@ -513,7 +514,7 @@ justify-content: flex-end
         /*max-height: 1700px;*/
     }
     .bookImageAndResume .image{
-        width: 70%;
+        width: 35%;
     }
     .bookImageAndResume .btn{
         height: 100%;

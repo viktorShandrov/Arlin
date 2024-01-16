@@ -34,6 +34,7 @@
 
 .imageC{
     position: relative;
+    height: 256px;
 }
 
 .imageC img{
