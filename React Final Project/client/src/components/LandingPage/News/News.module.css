@@ -47,6 +47,8 @@
     height: 256px;
 }
 
+
+
 .imageC img{
     transition: 0.7s;
     width: 100%;
@@ -76,4 +78,13 @@
     max-height: 100px;
     text-overflow: ellipsis;
     /*overflow-y: clip;*/
+}
+@media (min-width: 1024px){
+    .newsArticleWrapperTopNews{
+        height: fit-content;
+        max-height: 705px;
+    }
+    .newsArticleWrapperTopNews .imageC{
+        height: 456px;
+    }
 }

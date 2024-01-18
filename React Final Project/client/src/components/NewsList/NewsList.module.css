@@ -20,7 +20,20 @@
 .newsAndTopNews{
     flex-grow: 1;
     overflow-y: auto;
+    scrollbar-width: thin;
+
 }
+.newsAndTopNews::-webkit-scrollbar{
+    border-radius: 20px;
+    background-color: #75a9ab;
+}
+.newsAndTopNews::-webkit-scrollbar-thumb{
+    border-radius: 20px;
+    background-color: #4c6a69;
+}
+
+
+
 .newsWrapper{
     display: flex;
     height: 100%;
@@ -87,13 +100,38 @@
     padding: 20px;
 }
 
+.categoriesWrapperOverlay{
+    background-color: rgba(0, 0, 0, 0.57);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 7777777777;
+}
+.categoriesWrapper{
+    /*display: none;*/
+    background-color: white;
+    height: 80%;
+    width: 70%;
+    overflow-y: auto;
+}
+.categoriesWrapperOverlay.clicked{
+    display: flex;
+}
 
+.tagsWrapperOverlay.clicked{
+    display: flex;
+}
 
 
 
 .categoriesWrapper,
 .hashtagsWrapper{
-    padding: 60px 0 60px 30px;
+    padding: 20px 60px 60px 60px ;
     position: sticky;
     top: 0;
 }
@@ -106,7 +144,27 @@
     margin-top: 20px;
 }
 .label{
+
     color: #7e0030;
+}
+.catName{
+    /*color: #a73701;*/
+    padding: 20px 0;
+}
+.xmark{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 100px;
+    border: solid grey 1px;
+    transition: 0.4s;
+}
+.xmark:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+
 }
 .category,
 .hashtag{
@@ -149,7 +207,7 @@
     right: 20px;
 }
 
-@media (max-width: 500px){
+@media (max-width: 700px){
     .categoryBtnsC,
     .hashtagsWrapper{
         display: none;
@@ -157,5 +215,39 @@
     .catsMenuBtn,
     .tagsMenuBtn{
         display: flex;
+    }
+
+
+
+    .tagsWrapperOverlay{
+        background-color: rgba(0, 0, 0, 0.57);
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 7777777777;
+    }
+    .tagsWrapperOverlay.clicked .hashtagsWrapper{
+        display: block;
+        background-color: white;
+        height: 80%;
+        width: 70%;
+        overflow-y: auto;
+
+    }
+    .tagsWrapperOverlay.clicked .hashtagsWrapper .tagName{
+        padding: 20px 0;
+    }
+
+
+}
+@media (max-width: 500px){
+    .categoriesWrapper,
+    .tagsWrapperOverlay.clicked .hashtagsWrapper{
+        width: 90%;
     }
 }

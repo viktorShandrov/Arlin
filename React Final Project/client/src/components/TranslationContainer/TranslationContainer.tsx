@@ -90,7 +90,6 @@ export default function TranslationContainer() {
                 <h6 className={styles.heading}>Избери думите, които са ти непознати:</h6>
                 <p className={styles.textForTranslate} ref={wordsContainerRef}>
                     {textToTranslate?.split(" ").map((el, index) => {
-                        console.log("i")
                         if(!el){
                             return null
                         }

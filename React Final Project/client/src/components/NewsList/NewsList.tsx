@@ -1,5 +1,5 @@
 import styles from "./NewsList.module.css"
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {request} from "../../functions";
 import News from "../LandingPage/News/News";
 import Loading from "../Spinner/Loading";
@@ -8,6 +8,8 @@ import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
 export default function NewsList(){
     const [news,setNews] = useState([])
     const [isLoading,setIsLoading] = useState(true)
+    const categoriesWrapper = useRef(null)
+    const tagsWrapper = useRef(null)
     useEffect(()=>{
         request("news/all","GET").subscribe(
             (res:any)=>{
@@ -17,6 +19,12 @@ export default function NewsList(){
             }
         )
     },[])
+    const menuClickHandler= (ref:any)=>{
+        ref.current.classList.add(styles.clicked)
+    }
+    const closeMenuClickHandler= (ref:any)=>{
+        ref.current.classList.remove(styles.clicked)
+    }
     const categories = [
         "Politics",
         "World News",
@@ -63,22 +71,26 @@ export default function NewsList(){
             </div>
 
             <div className={styles.newsWrapper}>
-                <div className={styles.catsMenuBtn}>
+                <div onClick={()=>menuClickHandler(categoriesWrapper)} className={styles.catsMenuBtn}>
                     <i className="fa-solid fa-layer-group"></i>
                 </div>
-                {/*<section className={styles.categoriesWrapper}>*/}
-                {/*    <h4 className={styles.label}>Categories</h4>*/}
-                {/*    <ul className={styles.categoriesList}>*/}
-                {/*        {categories.map((cat:any)=>*/}
-                {/*                <li className={styles.category}>*/}
-                {/*                    <Link to={"kat"}>*/}
-                {/*                        <h6>{cat}</h6>*/}
-                {/*                    </Link>*/}
-                {/*                </li>)*/}
-                {/*            }*/}
-                {/*        */}
-                {/*    </ul>*/}
-                {/*</section>*/}
+                <section onClick={()=>closeMenuClickHandler(categoriesWrapper)} ref={categoriesWrapper}  className={styles.categoriesWrapperOverlay}>
+                    <div   className={styles.categoriesWrapper}>
+                        <i  className={`fa-solid fa-xmark ${styles.xmark}`}></i>
+                        <h4 className={styles.label}>Categories</h4>
+                        <ul className={styles.categoriesList}>
+                            {categories.map((cat:any)=>
+                                <li className={styles.category}>
+                                    <Link to={"kat"}>
+                                        <h6 className={styles.catName}>{cat}</h6>
+                                    </Link>
+                                </li>)
+                            }
+
+                        </ul>
+                    </div>
+                </section>
+
                 <section className={styles.newsAndTopNews}>
                     <div className={styles.newsContainer}>
                         <div className={styles.topNews}>
@@ -96,22 +108,26 @@ export default function NewsList(){
                     </div>
                 </section>
 
-                <div className={styles.tagsMenuBtn}>
+                <div onClick={()=>menuClickHandler(tagsWrapper)} className={styles.tagsMenuBtn}>
                     <i className="fa-solid fa-hashtag"></i>
                 </div>
-                <section className={styles.hashtagsWrapper}>
-                    <h4 className={styles.label}>Categories</h4>
-                    <ul className={styles.hashtagsList}>
-                        {categories.map((cat:any)=>
-                            <li className={styles.hashtag}>
-                                <Link to={"kat"}>
-                                    <h6>#{cat}</h6>
-                                </Link>
-                            </li>)
-                        }
+                <section onClick={()=>closeMenuClickHandler(tagsWrapper)} ref={tagsWrapper}  className={styles.tagsWrapperOverlay}>
+                    <div className={styles.hashtagsWrapper}>
+                        <i  className={`fa-solid fa-xmark ${styles.xmark}`}></i>
+                        <h4 className={styles.label}>Tags</h4>
+                        <ul className={styles.hashtagsList}>
+                            {categories.map((cat:any)=>
+                                <li className={styles.hashtag}>
+                                    <Link to={"kat"}>
+                                        <h6 className={styles.tagName}>#{cat}</h6>
+                                    </Link>
+                                </li>)
+                            }
 
-                    </ul>
+                        </ul>
+                    </div>
                 </section>
+
             </div>
 
         </>
