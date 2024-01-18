@@ -5,20 +5,43 @@ import News from "../LandingPage/News/News";
 import Loading from "../Spinner/Loading";
 import {Link} from "react-router-dom";
 import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
+import ComponentLoading from "../ComponentLoading/ComponentLoading";
 export default function NewsList(){
     const [news,setNews] = useState([])
+    const [isReadMoreLoading,setIsReadMoreLoading] = useState(false)
+    const [areNoNewsLeft,setAreNoNewsLeft] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
     const categoriesWrapper = useRef(null)
     const tagsWrapper = useRef(null)
     useEffect(()=>{
-        request("news/all","GET").subscribe(
+        request("news/paginated/0","GET").subscribe(
             (res:any)=>{
 
                 setNews(res.news)
                 setIsLoading(false)
+                const ress = new Set(news.map(news=>news.keywords))
+                console.log([...ress])
             }
         )
     },[])
+    const seeMoreBtnClickHandler = () =>{
+        const startIndex = news.length
+        setIsReadMoreLoading(true)
+
+        request("news/paginated/"+startIndex,"GET").subscribe(
+            (res:any)=>{
+                console.log(res.news)
+                //@ts-ignore
+                setNews((previousNews:any[])=>[...previousNews,...res.news])
+                setIsReadMoreLoading(false)
+
+                if(res.news.length<10||res.news.length===0){
+                    setAreNoNewsLeft(true)
+                }
+
+            }
+        )
+    }
     const menuClickHandler= (ref:any)=>{
         ref.current.classList.add(styles.clicked)
     }
@@ -65,7 +88,7 @@ export default function NewsList(){
             <div className={styles.categoriesList}>
                 <ul className={styles.categoryBtnsC}>
                     <ScrollerContainer>
-                        {categories.map(cat=><li className={styles.categoryBtn}> <h6>{cat}</h6> </li>)}
+                        {news.length>0&&[...new Set(news.map((news:any)=>news.category))].map(cat=><li className={styles.categoryBtn}> <h6>{cat}</h6> </li>)}
                     </ScrollerContainer>
                 </ul>
             </div>
@@ -106,6 +129,7 @@ export default function NewsList(){
 
                         )}
                     </div>
+                    <button disabled={areNoNewsLeft}  onClick={seeMoreBtnClickHandler} className={styles.seeMore}>{isReadMoreLoading&&<ComponentLoading isForReadMoreNews={true} />}  Виж още</button>
                 </section>
 
                 <div onClick={()=>menuClickHandler(tagsWrapper)} className={styles.tagsMenuBtn}>

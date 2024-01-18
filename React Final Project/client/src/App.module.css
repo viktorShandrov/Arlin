@@ -13,6 +13,10 @@ main{
 button{
     font-family: "Oswald", serif !important;
 }
+button:disabled{
+    opacity: 0.6;
+    cursor: not-allowed;
+}
 h1{
     font-size: 50px !important;
     font-family: "Oswald", serif !important;

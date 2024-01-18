@@ -30,6 +30,11 @@ exports.setTodayNews = async()=>{
 exports.getAll=async()=>{
     return  models.newsModel.find({})
 }
+exports.getPaginated=async(start)=>{
+    return  models.newsModel.find({})
+        .skip(start)
+        .limit(10)
+}
 exports.get=async(id)=>{
     return  models.newsModel.findById(id)
 }
@@ -53,22 +58,55 @@ function fetchViaNewsAPI(){
 function fetchViaNewsDATA(){
     const url = `https://newsdata.io/api/1/news?apikey=${newsDATAapiKey}&country=us`
     const req = new Request(url);
-    fetch(req)
+    fetch(url)
         .then(async function(response) {
             const newsData = await response.json()
             for (const news of newsData.results) {
                 console.log(news)
+                if(news.category.length===0||
+                    !news.title||
+                    !news.source_id||
+                    !news.description||
+                    !news.image_url||
+                    !news.content
+
+                ){
+                    continue
+                }
                 await models.newsModel.create({
-                    source:{
-                        name:news.creator?news.creator[0]:null,
-                    },
+                    source_id:news.source_id,
                     title:news.title,
                     description:news.description,
                     urlToImage:news.image_url,
                     publishedAt:news.pubDate,
-                    content:news.content
+                    content:news.content,
+                    category:news.category[0].split(", ")[0],
+                    keywords:news.keywords?.length>0? news.keywords[0].split(", "):undefined
                 })
             }
 
         })
 }
+
+const exampleRes = {
+    article_id: '17ce7ba94e6e4022d7371087f090d1e1',
+    title: 'Pakistani airstrikes on Iran killed 4 children and 3 women, a local official tells Iranian state television',
+    link: 'https://abcnews.go.com/International/wireStory/pakistani-airstrikes-iran-killed-4-children-3-women-106470740',
+    keywords: [ 'business, technology' ],
+    creator: null,
+    video_url: null,
+    description: 'Pakistani airstrikes on Iran killed 4 children and 3 women, a local official tells Iranian state television',
+    content: 'ONLY AVAILABLE IN PAID PLANS',
+    pubDate: '2024-01-18 05:10:14',
+    image_url: 'https://s.abcnews.com/images/US/abc_news_default_2000x2000_update_4x3t_384.jpg',
+    source_id: 'abcnews',
+    source_url: 'http://www.abcnews.go.com',
+    source_priority: 313,
+    country: [ 'united states of america' ],
+    category: [ 'world' ],
+    language: 'english',
+    ai_tag: 'ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS',
+    sentiment: 'ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS',
+    sentiment_stats: 'ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS'
+}
+

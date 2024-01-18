@@ -79,7 +79,7 @@
     text-overflow: ellipsis;
     /*overflow-y: clip;*/
 }
-@media (min-width: 1024px){
+@media (min-width: 1104px){
     .newsArticleWrapperTopNews{
         height: fit-content;
         max-height: 705px;

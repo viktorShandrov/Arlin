@@ -10,6 +10,7 @@
     background-color: #75a9ab;
     z-index: 99;
     border-radius: 100px;
+    transform: translateY(-50%);
 }
 .arrowLeft:hover,
 .arrowRight:hover{
@@ -24,6 +25,7 @@
     left: 0;
 }
 .itemsC {
+
     display: flex;
     gap: 30px;
     width: fit-content;
@@ -41,6 +43,7 @@
 }
 .scrollerContainer{
     position: relative;
+    padding: 0 60px;
 }
 
 

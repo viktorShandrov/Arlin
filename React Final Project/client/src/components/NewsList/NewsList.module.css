@@ -2,10 +2,13 @@
     display: flex;
     width: 100%;
     gap: 5px;
-    height: 150px;
-    /*padding: 0 32px;*/
+    height: 69px;
+    padding: 0 32px 10px 32px;
     margin: 0;
 
+}
+.categoryBtnsC>*{
+    flex: 1;
 }
 .categoryBtn{
     padding: 15px;
@@ -21,6 +24,10 @@
     flex-grow: 1;
     overflow-y: auto;
     scrollbar-width: thin;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 50px;
 
 }
 .newsAndTopNews::-webkit-scrollbar{
@@ -51,7 +58,7 @@
     justify-content: center ;
     align-items: center;
     gap: 20px;
-    padding-bottom: 140px;
+    padding-bottom: 40px;
 }
 
 .topNews{
@@ -135,6 +142,9 @@
     position: sticky;
     top: 0;
 }
+.hashtagsWrapper .xmark{
+    display: none;
+}
 .categoriesList,
 .hashtagsList{
     display: flex;
@@ -207,6 +217,18 @@
     right: 20px;
 }
 
+.seeMore{
+    padding: 20px 40px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    background-color: #a73701;
+    width: 40%;
+    align-self: center;
+    position: relative;
+
+}
+
 @media (max-width: 700px){
     .categoryBtnsC,
     .hashtagsWrapper{
@@ -241,6 +263,9 @@
     }
     .tagsWrapperOverlay.clicked .hashtagsWrapper .tagName{
         padding: 20px 0;
+    }
+    .hashtagsWrapper .xmark{
+        display: block;
     }
 
 
