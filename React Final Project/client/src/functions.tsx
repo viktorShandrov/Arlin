@@ -1,6 +1,6 @@
 import * as constants from "./contants";
 import {toast} from "react-toastify";
-import {googleTranslateAPIKey} from "./contants";
+import {googleTranslateAPIKey, translationAPI} from "./contants";
 
 export function request(url: string, method?: string, body?: any, headers: any = {}) {
     return {
@@ -73,6 +73,8 @@ export async function translateText(textToTranslate:string){
     try {
 
 
+
+
         const headers = new Headers({
             "Content-Type": "application/json",
         });
@@ -84,7 +86,8 @@ export async function translateText(textToTranslate:string){
             headers: headers,
             body: JSON.stringify({
                 q: textToTranslate,
-                target: "bg",
+                source: "en",
+                target: "bg"
             }),
         };
 
@@ -94,10 +97,11 @@ export async function translateText(textToTranslate:string){
 
 
         const response = await fetch(
-            `https://translation.googleapis.com/language/translate/v2?key=${googleTranslateAPIKey}`,
+            translationAPI,
             requestOptions
         )
         const data = await response.json()
+        console.log(data)
         //@ts-ignore
         return data.data.translations[0].translatedText;
     }catch (err){

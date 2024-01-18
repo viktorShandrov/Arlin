@@ -2,13 +2,13 @@
 import styles from "./News.module.css"
 import {Link} from "react-router-dom";
 {/*// @ts-ignore*/}
-export default function News({newsElement}){
+export default function News({newsElement,isTop=false}){
 
 
     return(
             <>
-                <Link to={`/main/news/${newsElement._id.$oid}`}>
-                    <article className={styles.newsArticleWrapper}>
+                <Link className={styles.link} to={`/main/news/${newsElement._id.$oid}`}>
+                    <article className={!isTop?styles.newsArticleWrapper:styles.newsArticleWrapperTopNews}>
                         <div className={styles.newsArticleC}>
                             <div className={styles.imageC}>
                                 <img src={newsElement.urlToImage} alt="News Image"/>
