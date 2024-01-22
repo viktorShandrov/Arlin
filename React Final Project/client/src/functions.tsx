@@ -1,6 +1,6 @@
 import * as constants from "./contants";
 import {toast} from "react-toastify";
-import {googleTranslateAPIKey, translationAPI} from "./contants";
+import { translationAPI} from "./contants";
 
 export function request(url: string, method?: string, body?: any, headers: any = {},isFileUpload = false) {
     return {

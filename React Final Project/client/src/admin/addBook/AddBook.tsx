@@ -4,15 +4,8 @@ import {useEffect, useState} from "react";
 import {request} from "../../functions";
 import {useNavigate, useParams} from "react-router-dom";
 import { toast } from 'react-toastify';
-// @ts-ignore
-import { storage } from '../../firebase.js';
-// @ts-ignore
-import { v4 } from "uuid";
-import {
-    ref,
-    uploadBytes,
-    getDownloadURL,
-} from "firebase/storage";
+
+
 export default function AddBook() {
     const {bookId} = useParams()
     const navigate = useNavigate()

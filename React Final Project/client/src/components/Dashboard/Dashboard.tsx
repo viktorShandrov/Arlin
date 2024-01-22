@@ -51,50 +51,79 @@ export default function Dashboard(){
         //     </ResponsiveContainer>
         // </div>
         <div className={styles.profileWrapper}>
-            <section className={styles.credentialsSectionWrapper}>
-                <h1 className={styles.heading}>Credentials</h1>
-                <div className={styles.profileC}>
-                    <div className={styles.credentialInfos}>
-                        <article className={styles.credential}>
-                            <h5 className={styles.info}><span>Username:</span> {userInfo.username}</h5>
-                            <button className={styles.changeBtn}>CHANGE</button>
-                        </article>
-                        <article className={styles.credential}>
-                            <h5 className={styles.info}><span>Email:</span> {userInfo.email}</h5>
-                            <button className={styles.changeBtn}>CHANGE</button>
-                        </article>
-                        <article className={styles.credential}>
-                            <h5 className={styles.info}><span>Password:</span> ********</h5>
-                            <button className={styles.changeBtn}>CHANGE</button>
-                        </article>
-                        <article className={styles.credential}>
-                            <h5 className={styles.info}><span>Subscription plan:</span> {userInfo.plan||"none"}</h5>
-                            <button className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>UPGRADE</button>
-                        </article>
+            <div className={styles.profileC}>
+                <section className={styles.credentialsSectionWrapper}>
+                    <h1 className={styles.heading}>Credentials</h1>
+                    <div className={styles.profileCredC}>
+                        <div className={styles.credentialInfos}>
+                            <article className={styles.credential}>
+                                <p className={styles.info}><span>Username:</span> {userInfo.username}</p>
+                                <button className={styles.changeBtn}>CHANGE</button>
+                            </article>
+                            <article className={styles.credential}>
+                                <p className={styles.info}><span>Email:</span> {userInfo.email}</p>
+                                <button className={styles.changeBtn}>CHANGE</button>
+                            </article>
+                            <article className={styles.credential}>
+                                <p className={styles.info}><span>Password:</span> ****************</p>
+                                <button className={styles.changeBtn}>CHANGE</button>
+                            </article>
+                            <article className={styles.credential}>
+                                <p className={styles.info}><span>Subscription plan:</span> {userInfo.plan||"none"}</p>
+                                <button className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>UPGRADE</button>
+                            </article>
+                        </div>
+                        <div className={styles.imageC}>
+                            <img className={styles.userImage} src={userInfo.imageURL} alt=""/>
+                            <span>change avatar</span>
+                        </div>
                     </div>
-                    <div className={styles.imageC}>
-                        <img className={styles.userImage} src={userInfo.imageURL} alt=""/>
-                        <span>change avatar</span>
-                    </div>
-                </div>
-            </section>
+                </section>
 
 
-            <section className={styles.expWrapper}>
-                <div className={styles.expC}>
-                    <div className={styles.fragment}></div>
-                    <div className={styles.fragment}></div>
-                    <div className={styles.fragment}></div>
-                    <div className={styles.fragment}></div>
-                    <div className={styles.fragment}></div>
-                    <div className={styles.fragment}></div>
-                    <div className={styles.fragment}></div>
-                    <div className={styles.fragment}></div>
-                    <div className={styles.fragment}></div>
-                    <div className={styles.fragment}></div>
-                </div>
-                <h6>{userInfo.exp} exp</h6>
-            </section>
+                <section className={styles.expWrapper}>
+                    <div className={styles.expC}>
+                        <div className={styles.fragment}></div>
+                        <div className={styles.fragment}></div>
+                        <div className={styles.fragment}></div>
+                        <div className={styles.fragment}></div>
+                        <div className={styles.fragment}></div>
+                        <div className={styles.fragment}></div>
+                        <div className={styles.fragment}></div>
+                        <div className={styles.fragment}></div>
+                        <div className={styles.fragment}></div>
+                        <div className={styles.fragment}></div>
+                    </div>
+                    <h6>{userInfo.exp} exp</h6>
+                </section>
+
+
+
+                <section className={styles.testsSectionWrapper}>
+                    <h1 className={styles.heading}>Tests</h1>
+                    <div className={styles.testsC}>
+                        <article className={styles.testInfo}>
+                            <span className={styles.number}>11{userInfo.randomWordsTests}</span>
+                            <p className={styles.testName}>тестa на произволни думи</p>
+                        </article>
+                        <article className={styles.testInfo}>
+                            <span className={styles.number}>{userInfo.wordsFromChapterTests}</span>
+                            <p className={styles.testName}>тестa на думи от текст</p>
+                        </article>
+                        <article className={styles.testInfo}>
+                            <span className={styles.number}>{userInfo.chapterPlotTests}</span>
+                            <p className={styles.testName}>теста за "Четене с разбиране"</p>
+                        </article>
+
+
+
+                        {/*<DashboardStat name={} value= />*/}
+                        {/*//         <DashboardStat name={""} value={userInfo.wordsFromChapterTests} />*/}
+                        {/*//         <DashboardStat name={'"'} value={userInfo.chapterPlotTests} />*/}
+                    </div>
+                </section>
+            </div>
+
         </div>
 
     )

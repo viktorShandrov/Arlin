@@ -26,10 +26,6 @@ router.post("/addImageToBook/:bookId",isAuth,upload.single('image'),async (req,r
         const {bookId} = req.params
         const image = req.file;
 
-
-        console.log(image)
-
-
         await bookManager.addImageToBook(bookId,_id,image)
         res.status(200).end()
     } catch (error) {

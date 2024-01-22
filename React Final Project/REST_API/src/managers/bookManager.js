@@ -96,7 +96,7 @@ async function deleteBookChapters(bookId){
         };
         const  fileExtension = allowedExtensions[contentType]
         if(!fileExtension) throw new Error("File type not supported")
-        
+
         // @ts-ignore
         const imageRef = ref(storage, `${bucketName}/${image.originalname + v4()}.${fileExtension}`);
         const snapshot = await uploadBytes(imageRef, image.buffer)
