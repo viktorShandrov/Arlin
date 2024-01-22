@@ -83,19 +83,32 @@ export default function AddBook() {
     // const imagesListRef = ref(storage, "images/");
     const uploadFile = () => {
         if (imageUpload == null) return;
-        // @ts-ignore
-        const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then(url=>{
-                // @ts-ignore
-                request(`books/addImageToBook/${createdBook._id}`,"POST",{imageUrl:url}).subscribe(
-                    ()=>{
-                        toast.success("Image successfully attached")
-                    }
-                )
+        console.log(imageUpload)
 
-            })
-        });
+        const formData = new FormData();
+        formData.append('image', imageUpload);
+
+
+        request(`books/addImageToBook/${createdBook._id}`,"POST",formData,{},true).subscribe(
+            ()=>{
+                toast.success("Image successfully attached")
+            }
+        )
+
+
+        // @ts-ignore
+        // const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+        // uploadBytes(imageRef, imageUpload).then((snapshot) => {
+        //     getDownloadURL(snapshot.ref).then(url=>{
+        //         // @ts-ignore
+        //         request(`books/addImageToBook/${createdBook._id}`,"POST",{imageUrl:url}).subscribe(
+        //             ()=>{
+        //                 toast.success("Image successfully attached")
+        //             }
+        //         )
+        //
+        //     })
+        // });
     };
 
 

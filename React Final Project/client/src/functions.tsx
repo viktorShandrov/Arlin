@@ -2,10 +2,10 @@ import * as constants from "./contants";
 import {toast} from "react-toastify";
 import {googleTranslateAPIKey, translationAPI} from "./contants";
 
-export function request(url: string, method?: string, body?: any, headers: any = {}) {
+export function request(url: string, method?: string, body?: any, headers: any = {},isFileUpload = false) {
     return {
         subscribe(res: any, error?: any) {
-            if (!headers.hasOwnProperty("Content-Type")) {
+            if (!headers.hasOwnProperty("Content-Type")&&!isFileUpload) {
                 headers["Content-Type"] = "application/json";
             }
 
@@ -13,13 +13,12 @@ export function request(url: string, method?: string, body?: any, headers: any =
             const signal = abortController.signal;
 
 
-
             const promiseRequest = fetch(constants.REST_API + url, {
                 headers: {
                     ...headers,
                     Authorization: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!).token : null
                 },
-                body: headers["Content-Type"] = "application/json"?JSON.stringify(body):body,
+                body: headers["Content-Type"] === "application/json"?JSON.stringify(body):body,
                 method,
                 signal,
                 credentials: "include"
@@ -103,7 +102,7 @@ export async function translateText(textToTranslate:string){
         const data = await response.json()
         console.log(data)
         //@ts-ignore
-        return data.data.translations[0].translatedText;
+        // return data.data.translations[0].translatedText;
     }catch (err){
         console.log(err)
     }
