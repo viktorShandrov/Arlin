@@ -20,13 +20,17 @@ router.post("/create",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.post("/addImageToBook/:bookId",isAuth,async (req,res)=>{
+router.post("/addImageToBook/:bookId",isAuth,upload.single('image'),async (req,res)=>{
     try{
         const {_id} = req.user
         const {bookId} = req.params
-        const {imageUrl} = req.body
+        const image = req.file;
 
-        await bookManager.addImageToBook(bookId,_id,imageUrl)
+
+        console.log(image)
+
+
+        await bookManager.addImageToBook(bookId,_id,image)
         res.status(200).end()
     } catch (error) {
         res.status(400).json({message:error.message})

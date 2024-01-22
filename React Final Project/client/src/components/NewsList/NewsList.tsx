@@ -30,7 +30,6 @@ export default function NewsList(){
 
         request("news/paginated/"+startIndex,"GET").subscribe(
             (res:any)=>{
-                console.log(res.news)
                 //@ts-ignore
                 setNews((previousNews:any[])=>[...previousNews,...res.news])
                 setIsReadMoreLoading(false)
@@ -88,7 +87,8 @@ export default function NewsList(){
             <div className={styles.categoriesList}>
                 <ul className={styles.categoryBtnsC}>
                     <ScrollerContainer>
-                        {news.length>0&&[...new Set(news.map((news:any)=>news.category))].map(cat=><li className={styles.categoryBtn}> <h6>{cat}</h6> </li>)}
+                        {/*[...new Set(news.map((news:any)=>news.category))]*/}
+                        {news.length>0&&categories.map(cat=><li className={styles.categoryBtn}> <h6>{cat}</h6> </li>)}
                     </ScrollerContainer>
                 </ul>
             </div>

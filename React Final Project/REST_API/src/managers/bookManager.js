@@ -2,6 +2,15 @@ const models = require("../models/allModels")
 const {isOwnedByUser, isAdmin} = require("../managerUtils/managerUtil");
 const mongoose = require("mongoose");
 const {model} = require("mongoose");
+const {storage} = require("../utils/firebase")
+
+
+const  { v4 } = require("uuid") ;
+const {
+    ref,
+    uploadBytes,
+    getDownloadURL,
+} = require("firebase/storage") ;
 
 
 exports.getBook =async(bookId,userId)=>{
@@ -78,8 +87,27 @@ async function deleteBookChapters(bookId){
         await chapter.delete()
     }
 }
-exports.addImageToBook =async(bookId,userId,imageUrl)=>{
+    const uploadFile =async (bucketName,image) => {
+        if (!image) throw new Error("No image uploaded");
+
+        const allowedExtensions = {
+            'image/jpeg': 'jpg',
+            'image/png': 'png',
+        };
+        const  fileExtension = allowedExtensions[contentType]
+        if(!fileExtension) throw new Error("File type not supported")
+        
+        // @ts-ignore
+        const imageRef = ref(storage, `${bucketName}/${image.originalname + v4()}.${fileExtension}`);
+        const snapshot = await uploadBytes(imageRef, image.buffer)
+        const url = await getDownloadURL(snapshot.ref)
+        return url
+    };
+exports.addImageToBook =async(bookId,userId,image)=>{
    await isAdmin(null,userId)
+
+    const imageUrl = await uploadFile("images",image)
+
     const book = await models.bookModel.findById(bookId)
     book.image = imageUrl
    return book.save()

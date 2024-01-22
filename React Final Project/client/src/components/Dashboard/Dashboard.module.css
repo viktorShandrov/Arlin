@@ -1,15 +1,128 @@
-.dashboardWrapper{
-    flex: 1;
-    background-color: white;
-    padding-top: 20px;
+.profileWrapper{
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
-.dashboardWrapper>*{
-    flex: 1;
+.heading{
+    color: #A73701;
+    text-align: center;
+    margin: 50px 0 !important;
 }
-.summaryWrapper{
+.profileC{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+.credentialInfos{
     display: flex;
     flex-direction: column;
+    gap: 30px;
+}
+.credential{
+    display: flex;
+    color: #75A9AB;
+    gap: 20px;
+}
+
+.info{
+    border-bottom: 2px solid #75A9AB;
+    padding:  0 5px 5px 5px;
+    flex-grow: 1;
+}
+
+.info span{
+    font-size: 70%;
+}
+
+.changeBtn{
+    border-radius: 100px;
+    padding: 5px 40px;
+    color: white;
+    background-color: #75A9AB;
+    border: none;
+}
+.subscriptionInfo{
+    background-color: #7E0030;
+}
+
+.imageC{
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+}
+
+.userImage{
+    border: solid black 1px;
+    width: 200px;
+    object-fit: contain;
+    aspect-ratio: 1/1;
+}
+
+
+
+
+
+
+
+.expWrapper{
+    width: 100% ;
+    display: flex;
+    justify-content: center;
+    margin-top: 200px;
+    align-items: center;
     gap: 10px;
 }
+
+
+.expC{
+    border-radius: 100px;
+    height: 10px;
+    width: 80%;
+    background-color: #D9D9D9;
+    display: flex;
+}
+
+.fragment{
+    flex: 1;
+    border-right: 1px grey solid;
+}
+
+.fragment:last-child{
+    border: none;
+}
+
+.fragment:first-child{
+    background-color: #75A9AB;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    border-right: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*.dashboardWrapper{*/
+/*    flex: 1;*/
+/*    background-color: white;*/
+/*    padding-top: 20px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+/*.dashboardWrapper>*{*/
+/*    flex: 1;*/
+/*}*/
+/*.summaryWrapper{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 10px;*/
+/*}*/

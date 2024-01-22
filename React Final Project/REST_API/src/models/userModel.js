@@ -46,7 +46,10 @@ const schema = mongoose.Schema({
     isPasswordHashed: {
         type: Boolean,
         default: false,
-    }
+    },
+    exp:Number,
+    imageURL:String,
+
 })
 
 schema.virtual("repeatedPassword").set(function(value){

@@ -7,7 +7,7 @@ export default function News({newsElement,isTop=false}){
 
     return(
             <>
-                <Link className={styles.link} to={`/main/news/${newsElement._id.$oid}`}>
+                <Link className={styles.link} to={`/main/news/${newsElement._id}`}>
                     <article className={!isTop?styles.newsArticleWrapper:styles.newsArticleWrapperTopNews}>
                         <div className={styles.newsArticleC}>
                             <div className={styles.imageC}>
