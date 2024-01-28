@@ -136,6 +136,7 @@ export default function NewsList(){
                     <div onClick={()=>menuClickHandler(tagsWrapper)} className={styles.tagsMenuBtn}>
                         <i className="fa-solid fa-hashtag"></i>
                     </div>
+
                     <section onClick={()=>closeMenuClickHandler(tagsWrapper)} ref={tagsWrapper}  className={styles.tagsWrapperOverlay}>
                         <div className={styles.hashtagsWrapper}>
                             <i  className={`fa-solid fa-xmark ${styles.xmark}`}></i>
@@ -148,8 +149,8 @@ export default function NewsList(){
                                         </Link>
                                     </li>)
                                 }
-
                             </ul>
+                            <button onClick={()=>menuClickHandler(tagsWrapper)} className={styles.showMoreCatsBtn}>more</button>
                         </div>
                     </section>
 

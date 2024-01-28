@@ -144,6 +144,11 @@
     display: flex;
 }
 
+.tagsWrapperOverlay{
+    position: sticky;
+    top: 0;
+}
+
 
 
 .categoriesWrapper,
@@ -151,6 +156,11 @@
     padding: 20px 60px 60px 60px ;
     position: sticky;
     top: 0;
+    height: 100%;
+}
+
+.tagsWrapperOverlay:not(.clicked) .hashtagsWrapper{
+    padding-top: 0;
 }
 .hashtagsWrapper .xmark{
     display: none;
@@ -229,6 +239,19 @@
 .tagsMenuBtn{
     top: 20px;
     right: 20px;
+}
+
+.showMoreCatsBtn{
+    position: absolute;
+    bottom: 0;
+    width: 150px;
+    /*width: fit-content;*/
+    align-self: flex-end;
+    background-color: #A73701;
+    border-radius: 10px;
+
+    padding: 5px 40px;
+    color: white;
 }
 
 .seeMore{
