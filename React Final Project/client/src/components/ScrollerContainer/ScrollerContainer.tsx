@@ -2,7 +2,7 @@
 import styles from "./ScrollerContainer.module.css"
 import {useRef, useState} from "react";
 {/*// @ts-ignore*/}
-export default function ScrollerContainer({children}){
+export default function ScrollerContainer({children,scrollSpeed=0}){
 
 
     const [scrollerClickPosition,setScrollerClickPosition] = useState(0)
@@ -10,7 +10,7 @@ export default function ScrollerContainer({children}){
     const scrollerData = useRef(null)
     const rightArrowClick = ()=>{
         {/*// @ts-ignore*/}
-        const value = (scrollerClickPosition+1) * scroller.current.getBoundingClientRect().width
+        const value = scrollSpeed? (scrollerClickPosition+1)*scrollSpeed: (scrollerClickPosition+1) * scroller.current.getBoundingClientRect().width
         {/*// @ts-ignore*/}
         if(value < scrollerData.current.getBoundingClientRect().width){
             // @ts-ignore
@@ -21,8 +21,9 @@ export default function ScrollerContainer({children}){
     }
     const leftArrowClick = ()=>{
         if(scrollerClickPosition-1>=0){
+            const value = scrollSpeed? (scrollerClickPosition-1)*scrollSpeed: (scrollerClickPosition+1) * scroller.current.getBoundingClientRect().width
             // @ts-ignore
-            scrollerData.current.style.transform = `translateX(-${(scrollerClickPosition-1) * scroller.current.getBoundingClientRect().width}px)`
+            scrollerData.current.style.transform = `translateX(-${value}px)`
             setScrollerClickPosition(oldValue => oldValue-1)
         }
 
