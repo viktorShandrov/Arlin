@@ -1,3 +1,11 @@
+.newsMainWrapper{
+    display: flex;
+    flex-direction: column;
+    max-width: 1300px;
+    align-items: center;
+}
+
+
 .categoryBtnsC{
     display: flex;
     width: 100%;
@@ -47,18 +55,20 @@
     position: relative;
     justify-content: space-between;
     overflow-y: auto;
+    width: 100%;
 }
 .newsContainer{
     display: grid;
     flex: 1;
     grid-template-columns: repeat(auto-fill,350px);
-    /*grid-template-rows: 1fr;*/
     height: fit-content;
     flex-wrap: wrap;
     justify-content: center ;
     align-items: center;
     gap: 20px;
     padding-bottom: 40px;
+    /*max-width: 900px;*/
+    /*align-self: end;*/
 }
 
 .topNews{
@@ -152,6 +162,10 @@
     gap: 10px;
     padding: 0;
     margin-top: 20px;
+}
+
+.categoriesList{
+ width: 100%;
 }
 .label{
 
