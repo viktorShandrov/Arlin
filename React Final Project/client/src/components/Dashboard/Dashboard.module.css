@@ -16,6 +16,7 @@
 .profileCredC{
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 50px;
 }
 .credentialInfos{
@@ -48,9 +49,7 @@
     background-color: #75A9AB;
     border: none;
 }
-.subscriptionInfo{
-    background-color: #7E0030;
-}
+
 
 .imageC{
     display: flex;
@@ -122,14 +121,20 @@
 .testInfo{
     display: flex;
     align-items: center;
+    justify-content: end;
     /*justify-content: center;*/
     color: #75A9AB;
     font-size: 30px;
     gap: 20px;
 }
+.testInfo>*{
+    flex: 1;
+}
 
 .number{
-    font-size: 150%;
+    /*flex-grow: 1;*/
+    text-align: center;
+    font-size: 250%;
     font-weight: bolder;
     transform: translateY(-4px);
 
@@ -137,8 +142,56 @@
 
 
 .testName{
+    flex-grow: 1.5;
     margin: 0!important;
 }
+
+.quote{
+    width: 40%;
+    font-size: 100px !important;
+    color: #7E0030;
+    margin: 90px auto!important;
+    text-align: center;
+    font-weight: bolder ;
+}
+
+
+
+.callToActionBtsC {
+    width: 90%;
+    display: flex;
+    gap: 100px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    /* justify-content: space-between; */
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+.callToActionBtsC>* {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #75A9AB;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 30px;
+    font-weight: bolder;
+    border: none;
+    align-self: flex-start;
+    font-size: 25px;
+    width: 100%;
+}
+
+.subscriptionInfo{
+    background-color: #A73701;
+}
+
+
+
 @media (max-width: 1500px){
     .testInfo{
         font-size: 30px;
@@ -156,6 +209,37 @@
     .number{
         transform: translateY(0);
 
+    }
+}
+
+@media (max-width: 850px){
+    .profileCredC{
+        flex-direction: column;
+    }
+}
+@media (max-width: 800px){
+    .quote{
+        width: 80%;
+    }
+}
+@media (max-width: 700px){
+    .callToActionBtsC{
+        gap: 20px;
+    }
+}
+@media (max-width: 530px){
+    .credentialInfos{
+        gap: 60px;
+    }
+    .credential{
+        flex-direction: column;
+    }
+}
+
+
+@media (max-width: 500px){
+    .callToActionBtsC{
+        flex-direction: column;
     }
 }
 

@@ -122,6 +122,20 @@ export default function Dashboard(){
                         {/*//         <DashboardStat name={'"'} value={userInfo.chapterPlotTests} />*/}
                     </div>
                 </section>
+                <section className={styles.motivationalQuoteWrapper}>
+                    <h1 className={styles.quote}>
+                        Keep going! Arlin is with you
+                    </h1>
+                </section>
+
+
+                <section className={styles.callToAction}>
+                    <div className={styles.callToActionBtsC}>
+                        <button className={`${styles.changeBtn}`}>DONATE</button>
+                        <button className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>UPGRADE</button>
+                    </div>
+
+                </section>
             </div>
 
         </div>
