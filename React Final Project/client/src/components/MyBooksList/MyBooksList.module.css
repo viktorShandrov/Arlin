@@ -12,6 +12,7 @@
 .readBookAndMyBooksWrapper{
     display: flex;
     flex: 1;
+    overflow: visible;
 }
 .heading{
     text-align: center;
@@ -39,6 +40,8 @@
     background-color: #A73701;
     padding: 10px;
     z-index: 10;
+    height: 600px;
+    overflow: hidden;
 }
 .myBooksC {
     position: relative;
@@ -66,6 +69,7 @@
 
 .readBookWrapper{
     /*transform: translateY(60px);*/
+    overflow: visible;
 }
 
 .searchBarC{
@@ -91,6 +95,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.readBookC{
+    overflow: visible;
 }
 
 .clicked{
