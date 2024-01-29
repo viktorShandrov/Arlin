@@ -145,13 +145,13 @@ export default function LandingPage(){
                         />
                         <section id={styles.freeChaptersWrapper} className={styles.freeChaptersWrapper}>
                             <h1 className={styles.freeMaterialsHeading}>Безплатни материали тази седмица</h1>
-                            <ScrollerContainer>
+                            <ScrollerContainer >
                                 {freeChapters.length>0&&freeChapters.map((chapter:any)=><FreeChapter key={chapter.chapterId} chapter={chapter} />) }
                             </ScrollerContainer>
                         </section>
                         <section id={styles.freeChaptersWrapper} className={styles.freeChaptersWrapper}>
                             <h1 className={styles.topNewsHeading}>ТОП НОВИНИ ДНЕС</h1>
-                            <ScrollerContainer>
+                            <ScrollerContainer scrollSpeed={600}>
                                 {news.length>0&&news.map((newsEl:any)=><News key={newsEl._id.$oid} newsElement={newsEl} />) }
                             </ScrollerContainer>
                         </section>

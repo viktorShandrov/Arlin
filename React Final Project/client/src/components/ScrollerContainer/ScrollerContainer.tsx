@@ -21,7 +21,8 @@ export default function ScrollerContainer({children,scrollSpeed=0}){
     }
     const leftArrowClick = ()=>{
         if(scrollerClickPosition-1>=0){
-            const value = scrollSpeed? (scrollerClickPosition-1)*scrollSpeed: (scrollerClickPosition+1) * scroller.current.getBoundingClientRect().width
+            {/*// @ts-ignore*/}
+            const value = scrollSpeed? (scrollerClickPosition-1)*scrollSpeed: (scrollerClickPosition-1) * scroller.current.getBoundingClientRect().width
             // @ts-ignore
             scrollerData.current.style.transform = `translateX(-${value}px)`
             setScrollerClickPosition(oldValue => oldValue-1)
