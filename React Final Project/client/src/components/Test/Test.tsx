@@ -82,7 +82,7 @@ export default function Test(){
                     <div ref={containerRef} className={styles.container}>
                         {isLoading&&
                             <>
-                                <h1 className={styles.creatingYouTest}>Creating your test</h1>
+                                <h5 className={styles.creatingYouTest}>Creating your test</h5>
                                 <div className={styles.spinner}>
                                     <Spinner animation="border" role="status">
                                         <span className="visually-hidden">Loading...</span>

@@ -23,8 +23,15 @@ export default function TranslationContainer() {
             }
 
 
-            translateText(textToTranslate)
-                .then(setTranslatedSentence)
+            request("unknownWords/translateText/"+textToTranslate).subscribe(
+                (res:any)=>{
+                    setTranslatedSentence(res.translation)
+                }
+            )
+
+
+            // translateText(textToTranslate)
+            //     .then(setTranslatedSentence)
 
             // fetch(
             //     `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`,

@@ -74,33 +74,20 @@ export async function translateText(textToTranslate:string){
 
 
 
-        const headers = new Headers({
-            "Content-Type": "application/json",
-        });
-
-
-
-        const requestOptions = {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify({
-                q: textToTranslate,
-                source: "en",
-                target: "bg"
-            }),
-        };
 
 
 
 
 
 
-        const response = await fetch(
-            translationAPI,
-            requestOptions
-        )
+
+
+
+
+
         const data = await response.json()
         console.log(data)
+        return data.translation
         //@ts-ignore
         // return data.data.translations[0].translatedText;
     }catch (err){

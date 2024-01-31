@@ -5,7 +5,10 @@ const utils = require("../utils/utils");
 const { isOwnedByUser, isAdmin } = require("../managerUtils/managerUtil");
 const allModels = require("../models/allModels");
 const fetch = require('isomorphic-fetch');
+// const fetch1 = await import("node-fetch")
 
+
+const {translateAPI} = require("../utils/utils");
 
 import('random-words')
     .then(async (randomWordsModule )=>{
@@ -301,29 +304,41 @@ import('random-words')
                     }
 
             exports.translateWord=async(word)=>{
-                const fetch = await import("node-fetch")
 
-                const requestOptions = {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        q: word,
-                        source: 'en',
-                        target: 'bg',
-                        format: 'text',
-                    }),
-                };
 
-                const response = await fetch.default(`https://translation.googleapis.com/language/translate/v2?key=${utils.GoogleTranslateAPI_KEY}`, requestOptions);
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
 
-                const data = await response.json();
-                return  data.data.translations[0].translatedText;
+                const response = await((await fetch(translateAPI+word)).json())
+                return response.translation
+
+
+                // const requestOptions = {
+                //     method: 'POST',
+                //     headers: {
+                //         'Content-Type': 'application/json',
+                //     },
+                //     body: JSON.stringify({
+                //         q: word,
+                //         source: 'en',
+                //         target: 'bg',
+                //         format: 'text',
+                //     }),
+                // };
+
+                // const response = await fetch.default(`https://translation.googleapis.com/language/translate/v2?key=${utils.GoogleTranslateAPI_KEY}`, requestOptions);
+
+                // if (!response.ok) {
+                //     throw new Error(`HTTP error! Status: ${response.status}`);
+                // }
+
+                // const data = await response.json();
+                // return  data.data.translations[0].translatedText;
+            }
+
+            exports.translateText=async(text)=>{
+
+                const response = await((await fetch(translateAPI+text)).json())
+                return response.translation
             }
             })
 
@@ -355,10 +370,6 @@ exports.createWords =async(words,userId)=>{
             wordRecord.unknownFor.push(userId)
             await wordRecord.save()
         }else{
-
-
-
-
 
             await models.wordModel.create(
                 {

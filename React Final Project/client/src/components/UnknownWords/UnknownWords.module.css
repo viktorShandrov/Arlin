@@ -17,6 +17,7 @@
     font-weight: bolder;
     margin:  10px 0;
     font-size: 27px;
+    height: fit-content;
 }
 .noWordsC{
     text-align: center;
@@ -42,6 +43,7 @@
     display: flex;
     margin-top: 10px;
     justify-content: space-evenly;
+    overflow: visible
 }
 .headingAndCountC .count{
     padding: 10px;
@@ -83,4 +85,16 @@ stripe-buy-button{
     padding: 20px;
     background-color: white;
 
+}
+
+
+@media (max-width: 1000px){
+    .container{
+        width: 70%;
+    }
+}
+@media (max-width: 500px){
+    .container{
+        width: 95%;
+    }
 }

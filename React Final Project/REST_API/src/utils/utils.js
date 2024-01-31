@@ -38,6 +38,7 @@ exports.facebookAppSecret = "201b0438ac600da907d9471d9ff0daf1"
 exports.GoogleClientId = "638123872925-ss6qml6jnp2ltb4v11jtd63lkhgmrikk.apps.googleusercontent.com"
 exports.GoogleClientSecret = "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"
 exports.newsDATAapiKey = "pub_342489edad85920d094b8caf8cd28224293cc"
+exports.translateAPI = "https://arlin-translate-lingva.vercel.app/api/v1/en/bg/"
 exports.commonWords = [
     "a",
     "about",
