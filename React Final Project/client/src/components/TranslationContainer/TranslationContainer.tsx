@@ -2,11 +2,13 @@ import  { useEffect, useRef, useState } from "react";
 import "./TranslationContainer.module.css";
 import styles from "./TranslationContainer.module.css";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {request, translateText} from "../../functions";
+import {request} from "../../functions";
+import ComponentLoading from "../ComponentLoading/ComponentLoading";
 
 export default function TranslationContainer() {
     const [translatedSentence, setTranslatedSentence] = useState("");
     const [clickedWords, setClickedWords] = useState([]);
+    const [isTranslationLoading, setIsTranslationLoading] = useState(false);
     const wordsContainerRef = useRef<HTMLParagraphElement>(null)
 
     let { textToTranslate } = useParams();
@@ -22,10 +24,11 @@ export default function TranslationContainer() {
                 wordRef.removeAttribute("data-isclicked")
             }
 
-
+            setIsTranslationLoading(true)
             request("unknownWords/translateText/"+textToTranslate).subscribe(
                 (res:any)=>{
                     setTranslatedSentence(res.translation)
+                    setIsTranslationLoading(false)
                 }
             )
 
@@ -73,7 +76,6 @@ export default function TranslationContainer() {
                 // @ts-ignore
                 words.push(elements.textContent);
             }
-            console.log(words);
             request("unknownWords/create", "POST", { words }).subscribe(
                 () => {
                     console.log("success");
@@ -122,9 +124,9 @@ export default function TranslationContainer() {
 
                 <hr />
                 <h6 className={styles.heading}>Превод:</h6>
-                <p className={styles.translation}>{translatedSentence}</p>
+                <p className={styles.translation}>{isTranslationLoading&&<ComponentLoading/>}{translatedSentence}</p>
             </div>}
-            <div className={styles.overlay}></div>
+            <div onClick={()=>closeTextToTranslatePanel()} className={styles.overlay}></div>
         </>
 
 
