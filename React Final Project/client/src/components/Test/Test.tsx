@@ -36,7 +36,7 @@ export default function Test(){
             answerRefs.current[index].classList.remove(styles.clicked);
         },1000)
         // @ts-ignore
-        if(answerRefs.current[index].getAttribute("data-iscorrect")){
+        if(answerRefs.current[index].getAttribute("data-iscorrect")=="true"){
             // @ts-ignore
             containerRef?.current.classList.add(styles.wrightAnswerAnimation)
             setTimeout(()=>{

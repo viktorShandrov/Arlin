@@ -258,7 +258,7 @@ import('random-words')
                         return wordsArray[randomIndex];
                     }
                     async function makeWrongAnswers(){
-                        return await exports.translateWrongAnswers([randomWords.generate(),randomWords.generate(),randomWords.generate()])
+                        return exports.translateWrongAnswers([randomWords.generate(),randomWords.generate(),randomWords.generate()])
                     }
 
 
@@ -336,7 +336,15 @@ import('random-words')
         exports.translateWrongAnswers=async(words)=>{
                         const payload = words.join(", ")
                         const response = await((await fetch(translateAPI+payload)).json())
-                        return response.translation.split(", ")
+                        console.log(response.translation)
+                        const answers = response.translation.split(", ")
+                        return answers.map(answer=>{
+                            return{
+                                answer,
+                                isCorrect:false
+                            }
+
+                        })
         }
 
             exports.translateText=async(text)=>{

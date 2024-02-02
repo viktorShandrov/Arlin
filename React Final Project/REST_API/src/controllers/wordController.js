@@ -54,6 +54,7 @@ router.post("/giveTest",isAuth,async (req,res)=>{
         const test =  await wordManager.generateTest(_id,testType,chapterId)
         res.status(200).json({test})
     } catch (error) {
+        console.log(error)
         res.status(400).json({message:error.message})
     }
 })
