@@ -258,11 +258,7 @@ import('random-words')
                         return wordsArray[randomIndex];
                     }
                     async function makeWrongAnswers(){
-                        const answers =[]
-                        for (let i =0;i<3;i++){
-                            answers[i] = {answer:await exports.translateWord(randomWords.generate()) }
-                        }
-                        return answers
+                        return await exports.translateWrongAnswers([randomWords.generate(),randomWords.generate(),randomWords.generate()])
                     }
 
 
@@ -334,6 +330,14 @@ import('random-words')
                 // const data = await response.json();
                 // return  data.data.translations[0].translatedText;
             }
+
+
+
+        exports.translateWrongAnswers=async(words)=>{
+                        const payload = words.join(", ")
+                        const response = await((await fetch(translateAPI+payload)).json())
+                        return response.translation.split(", ")
+        }
 
             exports.translateText=async(text)=>{
 
