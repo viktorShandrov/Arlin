@@ -61,7 +61,7 @@ const giveTestRoute = async (req,res)=>{
 giveTestRoute.config = {
     api: {
         externalResolver: true,
-        timeout: 30, // Set the timeout for this function (in seconds)
+        timeout: 60, // Set the timeout for this function (in seconds)
     },
 };
 router.post("/giveTest",isAuth,giveTestRoute)
