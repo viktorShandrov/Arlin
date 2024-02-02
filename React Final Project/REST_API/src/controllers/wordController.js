@@ -47,7 +47,7 @@ router.post("/makeThemKnown",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.post("/giveTest",isAuth,async (req,res)=>{
+const giveTestRoute = async (req,res)=>{
     try{
         const {_id} = req.user
         const {testType,chapterId} = req.body
@@ -57,7 +57,14 @@ router.post("/giveTest",isAuth,async (req,res)=>{
         console.log(error)
         res.status(400).json({message:error.message})
     }
-})
+}
+giveTestRoute.config = {
+    api: {
+        externalResolver: true,
+        timeout: 30, // Set the timeout for this function (in seconds)
+    },
+};
+router.post("/giveTest",isAuth,giveTestRoute)
 router.post("/testCompleted",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
