@@ -1,24 +1,19 @@
 
 import styles from "./Dashboard.module.css"
 import  { useEffect, useState} from 'react';
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    ResponsiveContainer,
-} from 'recharts';
+
 import {request} from "../../functions";
 import {useSelector} from "react-redux";
-import DashboardStat from "./DashboardStat/DashboardStat";
 export default function Dashboard(){
     const [userInfo,setUserInfo] = useState({
         randomWordsTests: undefined,
         wordsFromChapterTests: undefined,
-        chapterPlotTests: undefined
+        chapterPlotTests: undefined,
+        username: undefined,
+        email: undefined,
+        imageURL: undefined,
+        plan: "",
+        exp: undefined
     })
     const {user} = useSelector((state:any)=>state.user)
 

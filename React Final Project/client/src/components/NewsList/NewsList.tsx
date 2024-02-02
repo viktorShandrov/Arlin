@@ -19,8 +19,6 @@ export default function NewsList(){
 
                 setNews(res.news)
                 setIsLoading(false)
-                const ress = new Set(news.map(news=>news.keywords))
-                console.log([...ress])
             }
         )
     },[])

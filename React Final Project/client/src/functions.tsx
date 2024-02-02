@@ -1,6 +1,5 @@
 import * as constants from "./contants";
 import {toast} from "react-toastify";
-import { translationAPI} from "./contants";
 
 export function request(url: string, method?: string, body?: any, headers: any = {},isFileUpload = false) {
     return {
@@ -68,35 +67,35 @@ export function request(url: string, method?: string, body?: any, headers: any =
         }
     };
 }
-export async function translateText(textToTranslate:string){
-    try {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        const data = await response.json()
-        console.log(data)
-        return data.translation
-        //@ts-ignore
-        // return data.data.translations[0].translatedText;
-    }catch (err){
-        console.log(err)
-    }
-
-
-
-}
+// export async function translateText(textToTranslate:string){
+//     try {
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//         const data = await response.json()
+//         console.log(data)
+//         return data.translation
+//         //@ts-ignore
+//         // return data.data.translations[0].translatedText;
+//     }catch (err){
+//         console.log(err)
+//     }
+//
+//
+//
+// }
 
 export const functions:any = {
 

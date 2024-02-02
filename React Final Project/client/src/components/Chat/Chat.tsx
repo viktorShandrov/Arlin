@@ -1,7 +1,7 @@
 
 import styles from "./Chat.module.css"
 import useForm from "../../hooks/useForm";
-import {request, translateText} from "../../functions";
+import {request} from "../../functions";
 import {useEffect, useRef, useState} from "react";
 import userImage from "../../../public/user.jpg"
 import aiImage from "../../../public/AI.png"
@@ -37,14 +37,14 @@ export default function Chat(){
                 const duration = messageLength * typeSpeed // Convert to milliseconds
 
 
-                const translation = await translateText(res.message)
+                // const translation = await translateText(res.message)
                 // const translation = "Здравей! ``` Денят дойде и си отиде, И слънцето сега се сбогува. Но както настъпва, ние се срещаме в това царство на виртуални сладкиши. ```"
                 setTimeout(()=>{
                 // @ts-ignore
                     setMessages((oldMessages:any)=>{
                         const lastMessage = oldMessages[oldMessages.length-1]
                         console.log(lastMessage)
-                        return [...oldMessages.slice(0,-1), {...lastMessage,translation }]
+                        // return [...oldMessages.slice(0,-1), {...lastMessage,translation }]
                     })
                 },duration)
 

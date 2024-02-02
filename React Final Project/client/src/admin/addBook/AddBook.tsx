@@ -82,6 +82,7 @@ export default function AddBook() {
         formData.append('image', imageUpload);
 
 
+        // @ts-ignore
         request(`books/addImageToBook/${createdBook._id}`,"POST",formData,{},true).subscribe(
             ()=>{
                 toast.success("Image successfully attached")
