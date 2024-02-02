@@ -103,6 +103,83 @@ export default function LandingPage(){
             "__v": 0,
             "category":"POLITICS"
         },
+        {
+            "_id": {
+                "$oid": "65a97ab0bc9ea8ef50bf6880"
+            },
+            "source_id": "govconwire",
+            "keywords": [
+                "executive moves"
+            ],
+            "title": "Roger Wells Named Chief Operating Officer at Mercury Systems",
+            "description": "Roger Wells, formerly executive vice president and head of the microelectronics division at Mercury Systems (Nasdaq: MRCY), has been named chief operating officer at the Andover, Massachusetts-based defense technology supplier. His appointment is in line with the consolidation of Mercury Systems' two divisions into a single unified structure incorporating multiple business functions.",
+            "urlToImage": "https://www.govconwire.com/wp-content/uploads/2024/01/9db58f1e-2f19-45fc-95f9-983121d375a7.png",
+            "publishedAt": "2024-01-18 07:21:10",
+            "content": "ONLY AVAILABLE IN PAID PLANS",
+            "category": "top",
+            "__v": 0
+        },
+        {
+            "_id": {
+                "$oid": "65aa7c234f43e5c17cdabb8d"
+            },
+            "source_id": "cbssports",
+            "title": "New York Knicks vs. Washington Wizards: How to watch NBA online, TV channel, live stream info, start time",
+            "description": "How to watch Knicks vs. Wizards basketball game",
+            "urlToImage": "https://sportshub.cbsistatic.com/i/2022/01/19/bb699609-e09b-4b1b-a474-470473264bf4/generic-nba-basketball.jpg",
+            "publishedAt": "2024-01-19 01:40:37",
+            "content": "ONLY AVAILABLE IN PAID PLANS",
+            "category": "sports",
+            "__v": 0
+        },
+        {
+            "_id": {
+                "$oid": "65aa7c234f43e5c17cdabb8f"
+            },
+            "source_id": "si",
+            "keywords": [
+                "breaking"
+            ],
+            "title": "Richard Sherman Throws Support Behind Candidate for Chargers Coaching Vacancy",
+            "description": "The former NFL cornerback played under the coaching candidate while in college.",
+            "urlToImage": "https://www.si.com/.image/c_fit%2Ch_800%2Cw_1200/MjAzNzI3MDU0MDUzNTgyNzM4/richard-sherman.jpg",
+            "publishedAt": "2024-01-19 01:40:37",
+            "content": "ONLY AVAILABLE IN PAID PLANS",
+            "category": "sports",
+            "__v": 0
+        },
+        {
+            "_id": {
+                "$oid": "65aa7c234f43e5c17cdabb95"
+            },
+            "source_id": "abc30",
+            "keywords": [
+                "san luis obispo county,california,rape,search,murder,sexual assault,missing woman,missing person"
+            ],
+            "title": "Kristin Smart's family files lawsuit against Cal Poly San Luis Obispo",
+            "description": "The family of a murder victim Kristin Smart who vanished nearly three decades ago sued the school on Thursday, alleging it caused Kristin Smart's murder through negligence.",
+            "urlToImage": "https://cdn.abcotvs.com/dip/images/14338356_011824-kfsn-5p-KristinSmart-lawsuit-vid.jpg",
+            "publishedAt": "2024-01-19 01:40:14",
+            "content": "ONLY AVAILABLE IN PAID PLANS",
+            "category": "top",
+            "__v": 0
+        },
+        {
+            "_id": {
+                "$oid": "65aa7c234f43e5c17cdabb9b"
+            },
+            "source_id": "usmagazine",
+            "keywords": [
+                "shop with us"
+            ],
+            "title": "Don’t Torture Your Feet With Heels, Grab These Flats Instead – 28% Off",
+            "description": "Heels can look absolutely stunning with the right outfit. They’re absolutely gorgeous, and you can make a look complete with the right pair. But let’s not kid ourselves. They aren’t always the most comfortable shoes in the world. In fact, you don’t have to wear heels all the time to make a great outfit. Try […]",
+            "urlToImage": "https://www.usmagazine.com/wp-content/uploads/2024/01/gentle-souls-kenneth-cole-atlas-flat.png?w=1000&h=563&crop=1&quality=86&strip=all",
+            "publishedAt": "2024-01-19 01:39:30",
+            "content": "ONLY AVAILABLE IN PAID PLANS",
+            "category": "top",
+            "__v": 0
+        }
     ]
     return(
             <>
