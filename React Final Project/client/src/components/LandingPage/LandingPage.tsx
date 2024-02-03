@@ -222,7 +222,7 @@ export default function LandingPage(){
                         />
                         <section id={styles.freeChaptersWrapper} className={styles.freeChaptersWrapper}>
                             <h1 className={styles.freeMaterialsHeading}>Безплатни материали тази седмица</h1>
-                            <ScrollerContainer >
+                            <ScrollerContainer  scrollSpeed={600} >
                                 {freeChapters.length>0&&freeChapters.map((chapter:any)=><FreeChapter key={chapter.chapterId} chapter={chapter} />) }
                             </ScrollerContainer>
                         </section>

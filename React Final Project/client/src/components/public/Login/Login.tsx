@@ -35,7 +35,7 @@ export default function  Login(){
                     console.log(res)
                     dispatch(setUser(res))
                     localStorage.setItem("user",JSON.stringify(res))
-                    navigate("/main/read")
+                    navigate("/main/hero")
                     // navigate(-1)
 
                 }
