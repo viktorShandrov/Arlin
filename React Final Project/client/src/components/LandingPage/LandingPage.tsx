@@ -37,7 +37,8 @@ export default function LandingPage(){
         )
     }
     const handleScroll = () => {
-        const container = document.getElementById(styles.freeChaptersWrapper); // Replace with your actual container ID
+        const container = document.getElementById(styles.topNewsWrapper);
+        console.log(container)// Replace with your actual container ID
         if (container) {
             container.scrollIntoView({ behavior: 'smooth' });
         }
@@ -226,7 +227,7 @@ export default function LandingPage(){
                                 {freeChapters.length>0&&freeChapters.map((chapter:any)=><FreeChapter key={chapter.chapterId} chapter={chapter} />) }
                             </ScrollerContainer>
                         </section>
-                        <section id={styles.freeChaptersWrapper} className={styles.freeChaptersWrapper}>
+                        <section id={styles.topNewsWrapper} className={`${styles.freeChaptersWrapper} ${styles.topNewsWrapper}` }>
                             <h1 className={styles.topNewsHeading}>ТОП НОВИНИ ДНЕС</h1>
                             <ScrollerContainer scrollSpeed={600}>
                                 {news.length>0&&news.map((newsEl:any)=><News key={newsEl._id.$oid} newsElement={newsEl} />) }
