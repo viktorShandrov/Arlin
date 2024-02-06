@@ -8,6 +8,9 @@
 .container.wrightAnswerAnimation{
     opacity: 0;
 }
+.container.wrightAnswerAnimation [data-iscorrect="true"] .answerText{
+    background-color: #76f200;
+}
 .spinner{
     position: absolute;
     top: 50%;
