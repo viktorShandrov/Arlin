@@ -85,5 +85,14 @@ router.get("/translateText/:text",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/giveSentenceWhereWordCanBeUsed/:word",async (req,res)=>{
+    try{
+        const {word} = req.params
+        const sentence = await wordManager.giveSentence(word)
+        res.status(200).send({sentence})
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
 
 module.exports = router
