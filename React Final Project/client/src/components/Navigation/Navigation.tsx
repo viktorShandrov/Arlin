@@ -1,12 +1,15 @@
 
 import styles from "./Navigation.module.css"
 import {Link} from "react-router-dom";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 export default function Navigation(){
     const [currentSectionName,setCurrentSectionName] = useState("")
     const navigationWrapperRef = useRef(null)
+    useEffect(()=>{
+        setCurrentSectionName("Начало")
+    },[])
     const navigateHandler = (e:any)=>{
-        setCurrentSectionName(e.target.textContent)
+        setCurrentSectionName(e.target.textContent?e.target.textContent:"Начало")
         burgerMenuClickHandler()
     }
 

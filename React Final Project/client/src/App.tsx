@@ -1,7 +1,7 @@
 
 
 import styles from './App.module.css'
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 // import AdminPanel from "./admin/AdminPanel";
 import Main from "./components/Main/Main";
 import React, {createContext, useEffect, Suspense} from "react";
@@ -21,9 +21,11 @@ import NotFound from "./components/NotFound/NotFound";
 
 export const userContext=createContext({})
 function App() {
+    const navigation = useNavigate()
         const [user,setUser]= useLocalStorage("user",{})
     useEffect(()=>{
         console.log("initial load")
+        navigation("main/hero")
     },[])
 
   return (
