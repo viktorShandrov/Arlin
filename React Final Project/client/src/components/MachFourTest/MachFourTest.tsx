@@ -57,7 +57,7 @@ export default function MachFourTest(){
 
 
 
-    const handleTouchStart = (event) => {
+    const handleTouchStart = (event:any) => {
         const touch = event.touches[0];
         setIsDragging(true);
         const offsetX = touch.clientX - position.x;
@@ -65,7 +65,7 @@ export default function MachFourTest(){
         setOffset({ x: offsetX, y: offsetY });
     };
 
-    const handleTouchMove = (event) => {
+    const handleTouchMove = (event:any) => {
         if (!isDragging) return;
         const touch = event.touches[0];
         setPosition({
