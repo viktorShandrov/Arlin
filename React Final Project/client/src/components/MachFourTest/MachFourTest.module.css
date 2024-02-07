@@ -1,3 +1,12 @@
+.testWrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+}
+.answersWrapper{
+    width: 100%;
+}
 .questionsWrapper,
 .answersC{
     display: flex;
@@ -6,12 +15,17 @@
     padding: 100px 40px;
     overflow: visible !important;
     position: relative;
+    width: 100%;
 }
 
-.questionC,
-.answerC{
+.questionsWrapper{
+    /*flex-wrap: wrap;*/
+}
+
+.questionC{
     flex: 1;
     padding: 30px;
+    /*min-width: 200px;*/
     border-radius: 10px;
     background-color: #4C6A69;
     text-align: center;
@@ -22,6 +36,7 @@
     gap: 20px;
     padding-top: 20px;
     overflow: visible ;
+    user-select: none;
 }
 
 .answersWrapper{
@@ -38,7 +53,66 @@
 }
 
 
-.answerC{
-    padding: 10px;
-    /*scale: 1.2;*/
+.innerAnswerC{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #75A9AB;
+    border-radius: 10px;
+    position: relative;
+    user-select: none;
+}
+
+.innerAnswerC:hover{
+    background-color: #ff003a;
+    cursor: pointer;
+}
+
+
+
+.xmark{
+    position: absolute;
+    right: 15px;
+    padding: 5px;
+    border-radius: 100px;
+    border: solid white 1px;
+    top: 50%;
+    transform: translateY(-50%);
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+}
+
+@media(max-width: 1100px){
+    .questionsWrapper,
+    .answersC{
+        flex-direction: column;
+        width: 40%;
+    }
+    .answersC{
+    ;
+    }
+}
+@media(max-width: 1000px){
+    .questionsWrapper,
+    .answersC{
+        width: 60%;
+    }
+
+}
+@media(max-width: 650px){
+    .questionsWrapper,
+    .answersC{
+        width: 90%;
+    }
+
+}
+@media(max-width: 500px){
+    .questionsWrapper,
+    .answersC{
+        width: 100%;
+    }
+
 }

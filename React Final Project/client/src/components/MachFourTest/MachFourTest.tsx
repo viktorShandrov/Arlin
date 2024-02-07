@@ -1,116 +1,72 @@
 
 import styles from "./MachFourTest.module.css"
 import {useEffect, useRef, useState} from "react";
+import AnswerC from "./AnswerC/AnswerC";
 export default function MachFourTest(){
-    const dragOverElRef= useRef(null)
+    const dragOverElRef1= useRef(null)
+    const dragOverElRef2= useRef(null)
+    const dragOverElRef3 = useRef(null)
+    const dragOverElRef4 = useRef(null)
+    const dragOverElRefs = [dragOverElRef1,dragOverElRef2,dragOverElRef3,dragOverElRef4]
+    const answerElRef1 = useRef(null)
+    const answerElRef2 = useRef(null)
+    const answerElRef3 = useRef(null)
+    const answerElRef4 = useRef(null)
+    const answerElRefs = [answerElRef1,answerElRef2,answerElRef3,answerElRef4]
+    const [pairs,setPairs] = useState({
+        "work":null,
+        "plane":null,
+        "staff":null,
+        "book":null,
+    })
+    const [answers,setAnswers] = useState(["работа","самолет","персонал","книга"])
 
 
 
 
 
-    const [isDragging, setIsDragging] = useState(false);
-    const [position, setPosition] = useState({ x: 0, y: 200 });
-    const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-    const handleMouseDown = (event:any) => {
-        setIsDragging(true);
-        const offsetX = event.clientX - position.x;
-        const offsetY = event.clientY - position.y;
-        setOffset({ x: offsetX, y: offsetY });
-    };
 
-    const handleMouseMove = (event:any) => {
-        if (!isDragging) return;
-        setPosition({
-            x: event.clientX - offset.x,
-            y: event.clientY - offset.y
-        });
 
-        if (dragOverElRef.current) {
-            // @ts-ignore
-            const rect = dragOverElRef.current.getBoundingClientRect();
-            if (
-                event.clientX >= rect.left &&
-                event.clientX <= rect.right &&
-                event.clientY >= rect.top &&
-                event.clientY <= rect.bottom
-            ) {
-                // Perform your action here when the draggable element is over the specific element
-                console.log('Draggable element is over the specific element');
-                setPosition({x:0,y:0})
-                setIsDragging(false);
-            }
+
+
+
+
+    const removeAnswerClickHandler = (propName:any) =>{
+// @ts-ignore
+        const text = pairs[propName]
+    // @ts-ignore
+        const el = answerElRefs.find(el=>el.current!.textContent ===text)
+        // @ts-ignore
+        el.current!.style.opacity = 1
+        setPairs((old)=>{
+            return {...old,[propName]:null}
+        })
+        // @ts-ignore
+        pairs[propName] = null
+}
+
+
+    function shuffleArray(array:any) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
         }
-    };
+        return [...array];
+    }
 
-    const handleMouseUp = () => {
-        setIsDragging(false);
-    };
-
-
-
-
-
-
-
-
-
-
-
-    const handleTouchStart = (event:any) => {
-        const touch = event.touches[0];
-        setIsDragging(true);
-        const offsetX = touch.clientX - position.x;
-        const offsetY = touch.clientY - position.y;
-        setOffset({ x: offsetX, y: offsetY });
-    };
-
-    const handleTouchMove = (event:any) => {
-        if (!isDragging) return;
-        const touch = event.touches[0];
-        setPosition({
-            x: touch.clientX - offset.x,
-            y: touch.clientY - offset.y
-        });
-
-
-        if (dragOverElRef.current) {
-            // @ts-ignore
-            const rect = dragOverElRef.current.getBoundingClientRect();
-            if (
-                touch.clientX >= rect.left &&
-                touch.clientX <= rect.right &&
-                touch.clientY >= rect.top &&
-                touch.clientY <= rect.bottom
-            ) {
-                // Perform your action here when the draggable element is over the specific element
-                console.log('Draggable element is over the specific element');
-                setPosition({x:0,y:0})
-                setIsDragging(false);
-            }
-        }
-    };
-
-    const handleTouchEnd = () => {
-        setIsDragging(false);
-    };
-
-
-
-
-
-
-
-
-
-
+// Example usage:
 
 
 
 
 
     useEffect(()=>{
-
+        // setAnswers((old)=>{
+        //     old.splice(old.indexOf())
+        //     return
+        // })
+        setAnswers( shuffleArray(answers))
     },[])
 
 
@@ -119,78 +75,44 @@ export default function MachFourTest(){
         <div className={styles.testWrapper}>
             <div className={styles.questionsWrapper}>
                 <div className={styles.questionC}>
-                    <h6>work</h6>
-                    <div ref={dragOverElRef} className={styles.questionFreeSpace}>
-                        <div
-                            style={{
-                                position: 'relative',
-                                left: position.x,
-                                top: position.y,
-                                cursor: isDragging ? 'grabbing' : 'grab',
-                                userSelect: 'none',
-                                width: '100%',
-                                height: '100%',
-                                backgroundColor: 'lightblue',
-                                zIndex: 9999
 
-                            }}
-                            onMouseDown={handleMouseDown}
-                            onMouseMove={handleMouseMove}
-                            onMouseUp={handleMouseUp}
-                            onTouchStart={handleTouchStart}
-                            onTouchMove={handleTouchMove}
-                            onTouchEnd={handleTouchEnd}
-                            className={styles.answerC}
-                        >
-                            работя1
-                        </div>
+                    <h6>work</h6>
+                    <div ref={dragOverElRef1} className={styles.questionFreeSpace}>
+                        {pairs["work"]&&<div onClick={()=>removeAnswerClickHandler("work")} className={styles.innerAnswerC}>{pairs["work"]}<i className={`${styles.xmark} fa-solid fa-xmark`}></i></div>}
+
                     </div>
                 </div>
                 <div className={styles.questionC}>
-                    <h6>work</h6>
-                    <div className={styles.questionFreeSpace}></div>
+                    <h6>plane</h6>
+                    <div ref={dragOverElRef2} className={styles.questionFreeSpace}>
+                        {pairs["plane"]&&<div onClick={()=>removeAnswerClickHandler("plane")} className={styles.innerAnswerC}>{pairs["plane"]}<i className={`${styles.xmark} fa-solid fa-xmark`}></i></div>}
+                    </div>
                 </div>
                 <div className={styles.questionC}>
-                    <h6>work</h6>
-                    <div className={styles.questionFreeSpace}></div>
+                    <h6>staff</h6>
+                    <div ref={dragOverElRef3} className={styles.questionFreeSpace}>
+                        {pairs["staff"]&&<div onClick={()=>removeAnswerClickHandler("staff")} className={styles.innerAnswerC}>{pairs["staff"]}<i className={`${styles.xmark} fa-solid fa-xmark`}></i></div>}
+                    </div>
                 </div>
                 <div className={styles.questionC}>
-                    <h6>work</h6>
-                    <div className={styles.questionFreeSpace}></div>
+                    <h6>book</h6>
+                    <div ref={dragOverElRef4} className={styles.questionFreeSpace}>
+                        {pairs["book"]&&<div onClick={()=>removeAnswerClickHandler("book")} className={styles.innerAnswerC}>{pairs["book"]}<i className={`${styles.xmark} fa-solid fa-xmark`}></i></div>}
+                    </div>
                 </div>
             </div>
             <div className={styles.answersWrapper}>
-                <div className={styles.answersC}>
-                    {/*<div*/}
-                    {/*    style={{*/}
-                    {/*        position: 'relative',*/}
-                    {/*        left: position.x,*/}
-                    {/*        top: position.y,*/}
-                    {/*        cursor: isDragging ? 'grabbing' : 'grab',*/}
-                    {/*        userSelect: 'none',*/}
-                    {/*        width: '100px',*/}
-                    {/*        height: '100px',*/}
-                    {/*        backgroundColor: 'lightblue',*/}
-                    {/*        zIndex: 9999*/}
+                {answers.length>0&&<div className={styles.answersC}>
 
-                    {/*    }}*/}
-                    {/*    onMouseDown={handleMouseDown}*/}
-                    {/*    onMouseMove={handleMouseMove}*/}
-                    {/*    onMouseUp={handleMouseUp}*/}
-                    {/*    className={styles.answerC}*/}
-                    {/*>*/}
-                    {/*    работя1*/}
-                    {/*</div>*/}
-                    <div className={styles.answerC}>
-                        работя
-                    </div>
-                    <div className={styles.answerC}>
-                        работя
-                    </div>
-                    <div className={styles.answerC}>
-                        работя
-                    </div>
-                </div>
+
+                    <AnswerC reference={answerElRef1} setPairs={setPairs} text={answers[0]} dragOverElRefs={dragOverElRefs}/>
+                    <AnswerC reference={answerElRef2} setPairs={setPairs} text={answers[1]}  dragOverElRefs={dragOverElRefs}/>
+                    <AnswerC reference={answerElRef3} setPairs={setPairs} text={answers[2]}  dragOverElRefs={dragOverElRefs}/>
+                    <AnswerC reference={answerElRef4} setPairs={setPairs} text={answers[3]}  dragOverElRefs={dragOverElRefs}/>
+
+
+                </div>}
+
 
             </div>
         </div>
