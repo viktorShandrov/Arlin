@@ -79,7 +79,7 @@ export default function Navigation(){
                         <h6 className={styles.navItemLabel}>Непознати думи</h6>
                     </article>
                 </Link>
-                <Link onClick={navigateHandler} to={"/main/test/randomWords"}  className={styles.linkItem} >
+                <Link onClick={navigateHandler} to={"/main/test/matchFour"}  className={styles.linkItem} >
                     <article className={styles.linkC}>
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/test.png" alt=""/>
