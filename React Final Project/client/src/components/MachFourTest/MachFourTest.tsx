@@ -12,14 +12,14 @@ export default function MachFourTest(){
     const [position, setPosition] = useState({ x: 0, y: 200 });
     const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-    const handleMouseDown = (event) => {
+    const handleMouseDown = (event:any) => {
         setIsDragging(true);
         const offsetX = event.clientX - position.x;
         const offsetY = event.clientY - position.y;
         setOffset({ x: offsetX, y: offsetY });
     };
 
-    const handleMouseMove = (event) => {
+    const handleMouseMove = (event:any) => {
         if (!isDragging) return;
         setPosition({
             x: event.clientX - offset.x,
@@ -27,6 +27,7 @@ export default function MachFourTest(){
         });
 
         if (dragOverElRef.current) {
+            // @ts-ignore
             const rect = dragOverElRef.current.getBoundingClientRect();
             if (
                 event.clientX >= rect.left &&
