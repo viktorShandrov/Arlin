@@ -16,6 +16,7 @@ import LandingPage from "../LandingPage/LandingPage";
 import Navigation from "../Navigation/Navigation";
 import MyBooksList from "../MyBooksList/MyBooksList";
 import BookContent from "../BookContent/BookContent";
+import MachFourTest from "../MachFourTest/MachFourTest";
 export default function Main(){
     return(
         <>
@@ -24,6 +25,7 @@ export default function Main(){
                 <Routes>
                         <Route element={<AuthGuard/>}>
                             <Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>
+                            <Route path={"/test/matchFour"} element={<MachFourTest />}></Route>
                             <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
                             <Route path={"/AllBooks/"} element={<AllBooks />}></Route>
                             <Route path={"/read"} element={<MyBooksList />}></Route>

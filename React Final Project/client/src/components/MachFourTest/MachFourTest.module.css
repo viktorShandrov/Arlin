@@ -1,0 +1,44 @@
+.questionsWrapper,
+.answersC{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    padding: 100px 40px;
+    overflow: visible !important;
+    position: relative;
+}
+
+.questionC,
+.answerC{
+    flex: 1;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #4C6A69;
+    text-align: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 20px;
+    overflow: visible ;
+}
+
+.answersWrapper{
+    overflow: visible !important;
+}
+
+
+.questionFreeSpace{
+    height: 60px;
+    width: 90%;
+    background-color: #75A9AB;
+    border-radius: 10px;
+    overflow: visible !important;
+}
+
+
+.answerC{
+    padding: 10px;
+    /*scale: 1.2;*/
+}

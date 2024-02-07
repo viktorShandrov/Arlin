@@ -118,33 +118,7 @@
 }
 
 
-.testInfo{
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    /*justify-content: center;*/
-    color: #75A9AB;
-    font-size: 30px;
-    gap: 20px;
-}
-.testInfo>*{
-    flex: 1;
-}
 
-.number{
-    /*flex-grow: 1;*/
-    text-align: center;
-    font-size: 250%;
-    font-weight: bolder;
-    transform: translateY(-4px);
-
-}
-
-
-.testName{
-    flex-grow: 1.5;
-    margin: 0!important;
-}
 
 .quote{
     width: 40%;

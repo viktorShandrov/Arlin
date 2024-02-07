@@ -1,9 +1,10 @@
 
 import styles from "./Dashboard.module.css"
-import  { useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import {request} from "../../functions";
 import {useSelector} from "react-redux";
+import DashboardStat from "./DashboardStat/DashboardStat";
 export default function Dashboard(){
     const [userInfo,setUserInfo] = useState({
         randomWordsTests: undefined,
@@ -15,6 +16,7 @@ export default function Dashboard(){
         plan: "",
         exp: undefined
     })
+    // const passedTestNumberElementsRefs = useRef([])
     const {user} = useSelector((state:any)=>state.user)
 
     useEffect(()=>{
@@ -97,24 +99,9 @@ export default function Dashboard(){
                 <section className={styles.testsSectionWrapper}>
                     <h1 className={styles.heading}>Tests</h1>
                     <div className={styles.testsC}>
-                        <article className={styles.testInfo}>
-                            <span className={styles.number}>11{userInfo.randomWordsTests}</span>
-                            <p className={styles.testName}>тестa на произволни думи</p>
-                        </article>
-                        <article className={styles.testInfo}>
-                            <span className={styles.number}>{userInfo.wordsFromChapterTests}</span>
-                            <p className={styles.testName}>тестa на думи от текст</p>
-                        </article>
-                        <article className={styles.testInfo}>
-                            <span className={styles.number}>{userInfo.chapterPlotTests}</span>
-                            <p className={styles.testName}>теста за "Четене с разбиране"</p>
-                        </article>
-
-
-
-                        {/*<DashboardStat name={} value= />*/}
-                        {/*//         <DashboardStat name={""} value={userInfo.wordsFromChapterTests} />*/}
-                        {/*//         <DashboardStat name={'"'} value={userInfo.chapterPlotTests} />*/}
+                        <DashboardStat name={"тестa на произволни думи"} testValue={userInfo.randomWordsTests} />
+                        <DashboardStat name={"тестa на думи от текст"} testValue={userInfo.wordsFromChapterTests}  />
+                        <DashboardStat name={"теста за 'Четене с разбиране'"} testValue={userInfo.chapterPlotTests}  />
                     </div>
                 </section>
                 <section className={styles.motivationalQuoteWrapper}>
