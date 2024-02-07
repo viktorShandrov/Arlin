@@ -89,16 +89,30 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference}){
                 console.log('Draggable element is over the specific element');
                 setPosition({x:0,y:0})
 
-                const questionText = reference.current.parentElement.textContent
-                setPairs((old:any)=> {
-                    return{
-                        ...old,[questionText]:text
-                    }
+                for (const dragOverElRef of dragOverElRefs) {
+                    // @ts-ignore
+                    const rect = dragOverElRef.current.getBoundingClientRect();
+                    if (
+                        touch.clientX >= rect.left &&
+                        touch.clientX <= rect.right &&
+                        touch.clientY >= rect.top &&
+                        touch.clientY <= rect.bottom
+                    ) {
+                        // Perform your action here when the draggable element is over the specific element
+                        console.log('Draggable element is over the specific element');
+                        setPosition({x:0,y:0})
+                        const questionText = dragOverElRef.current.parentElement.textContent
+                        setPairs((old:any)=> {
+                            return{
+                                ...old,[questionText]:text
+                            }
 
-                })
-                // @ts-ignore
-                reference.current.style.opacity=0
-                setIsDragging(false);
+                        })
+                        // @ts-ignore
+                        reference.current.style.opacity=0
+                        setIsDragging(false);
+                    }
+                }
             }
     };
 
