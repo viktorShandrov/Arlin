@@ -39,9 +39,6 @@ export default function MachFourTest(){
                 console.log('Draggable element is over the specific element');
                 setPosition({x:0,y:0})
                 setIsDragging(false);
-                // dragOverElRef.current.style.scale = 1
-            }else{
-                // dragOverElRef.current.style.scale = 1.2
             }
         }
     };
@@ -49,6 +46,61 @@ export default function MachFourTest(){
     const handleMouseUp = () => {
         setIsDragging(false);
     };
+
+
+
+
+
+
+
+
+
+
+
+    const handleTouchStart = (event) => {
+        const touch = event.touches[0];
+        setIsDragging(true);
+        const offsetX = touch.clientX - position.x;
+        const offsetY = touch.clientY - position.y;
+        setOffset({ x: offsetX, y: offsetY });
+    };
+
+    const handleTouchMove = (event) => {
+        if (!isDragging) return;
+        const touch = event.touches[0];
+        setPosition({
+            x: touch.clientX - offset.x,
+            y: touch.clientY - offset.y
+        });
+
+
+        if (dragOverElRef.current) {
+            // @ts-ignore
+            const rect = dragOverElRef.current.getBoundingClientRect();
+            if (
+                event.clientX >= rect.left &&
+                event.clientX <= rect.right &&
+                event.clientY >= rect.top &&
+                event.clientY <= rect.bottom
+            ) {
+                // Perform your action here when the draggable element is over the specific element
+                console.log('Draggable element is over the specific element');
+                setPosition({x:0,y:0})
+                setIsDragging(false);
+            }
+        }
+    };
+
+    const handleTouchEnd = () => {
+        setIsDragging(false);
+    };
+
+
+
+
+
+
+
 
 
 
@@ -85,6 +137,9 @@ export default function MachFourTest(){
                             onMouseDown={handleMouseDown}
                             onMouseMove={handleMouseMove}
                             onMouseUp={handleMouseUp}
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
                             className={styles.answerC}
                         >
                             работя1
