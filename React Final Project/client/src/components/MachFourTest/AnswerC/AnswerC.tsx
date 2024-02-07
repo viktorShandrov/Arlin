@@ -88,6 +88,16 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference}){
                 // Perform your action here when the draggable element is over the specific element
                 console.log('Draggable element is over the specific element');
                 setPosition({x:0,y:0})
+
+                const questionText = reference.current.parentElement.textContent
+                setPairs((old:any)=> {
+                    return{
+                        ...old,[questionText]:text
+                    }
+
+                })
+                // @ts-ignore
+                reference.current.style.opacity=0
                 setIsDragging(false);
             }
     };
