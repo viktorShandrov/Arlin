@@ -78,10 +78,10 @@ export default function MachFourTest(){
             // @ts-ignore
             const rect = dragOverElRef.current.getBoundingClientRect();
             if (
-                event.clientX >= rect.left &&
-                event.clientX <= rect.right &&
-                event.clientY >= rect.top &&
-                event.clientY <= rect.bottom
+                touch.clientX >= rect.left &&
+                touch.clientX <= rect.right &&
+                touch.clientY >= rect.top &&
+                touch.clientY <= rect.bottom
             ) {
                 // Perform your action here when the draggable element is over the specific element
                 console.log('Draggable element is over the specific element');
