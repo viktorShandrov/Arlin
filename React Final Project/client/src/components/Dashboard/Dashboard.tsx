@@ -1,6 +1,6 @@
 
 import styles from "./Dashboard.module.css"
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import {request} from "../../functions";
 import {useSelector} from "react-redux";
