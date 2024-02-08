@@ -85,14 +85,56 @@
     align-items: center;
 }
 
+.answersMobileWrapper{
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /*height: 60%;*/
+    transition: 1s;
+    overflow: hidden;
+}
+.answersMobileC{
+    position: relative;
+    bottom: 0;
+    left: 0;
+    /*transform: translateY(-100%);*/
+    display: flex;
+    padding: 30px 0;
+    flex-direction: column;
+    background-color: #EFEFEF;
+    gap: 20px;
+    align-items: center;
+    width: 100%;
+    /*height: 60%;*/
+    overflow: visible;
+
+}
+
+.expandIcon{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
 @media(max-width: 1100px){
     .questionsWrapper,
     .answersC{
         flex-direction: column;
         width: 40%;
     }
-    .answersC{
-    ;
+    .questionsWrapper{
+        padding-bottom: 180px;
+    }
+    .answersWrapper{
+        display: none;
+    }
+    .answersMobileWrapper{
+        display: block;
+    }
+    .questionsWrapper{
+        padding-top: 10px;
     }
 }
 @media(max-width: 1000px){

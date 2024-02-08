@@ -2,7 +2,7 @@
 import styles from "./AnswerC.module.css"
 import { useState} from "react";
 // @ts-ignore
-export default function AnswerC({dragOverElRefs,text,setPairs,reference}){
+export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAnswersExpanded=null}){
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -66,6 +66,13 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference}){
         const offsetX = touch.clientX - position.x;
         const offsetY = touch.clientY - position.y;
         setOffset({ x: offsetX, y: offsetY });
+        if(setAreAnswersExpanded){
+            // @ts-ignore
+            setAreAnswersExpanded(false)
+        }
+        setTimeout(()=>{
+
+        },0)
     };
 
     const handleTouchMove = (event:any) => {
@@ -92,6 +99,7 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference}){
 
                     // @ts-ignore
                     const rect = dragOverElRef.current.getBoundingClientRect();
+                // reference.current.style.opacity="1 !important"
                     if (
                         touch.clientX >= rect.left &&
                         touch.clientX <= rect.right &&
@@ -118,6 +126,11 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference}){
 
     const handleTouchEnd = () => {
         setIsDragging(false);
+        if(setAreAnswersExpanded){
+            // @ts-ignore
+            setAreAnswersExpanded(true)
+        }
+
     };
     return(
         <div
@@ -127,8 +140,6 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference}){
                 top: position.y,
                 cursor: isDragging ? 'grabbing' : 'grab',
                 userSelect: 'none',
-                width: '100px',
-                height: '100px',
                 backgroundColor: 'lightblue',
                 zIndex: 9999
 

@@ -20,6 +20,7 @@ export default function MachFourTest(){
         "book":null,
     })
     const [answers,setAnswers] = useState(["работа","самолет","персонал","книга"])
+    const [areAnswersExpanded,setAreAnswersExpanded] = useState(true)
 
 
 
@@ -68,6 +69,9 @@ export default function MachFourTest(){
         // })
         setAnswers( shuffleArray(answers))
     },[])
+    const toggleAnswersExpandableCclickHandler=()=>{
+        setAreAnswersExpanded(!areAnswersExpanded)
+    }
 
 
     return(
@@ -115,6 +119,34 @@ export default function MachFourTest(){
 
 
             </div>
+            <section
+                style={{
+                    // height:areAnswersExpanded?"fit-content":"20%"
+                    opacity:areAnswersExpanded?1:0.5
+                }}
+                className={styles.answersMobileWrapper}
+                onClick={toggleAnswersExpandableCclickHandler}
+            >
+                <div
+                    className={styles.answersMobileC}
+                >
+                    {/*// @ts-ignore*/}
+                    <AnswerC reference={answerElRef1} setPairs={setPairs} text={answers[0]} dragOverElRefs={dragOverElRefs} setAreAnswersExpanded={setAreAnswersExpanded}/>
+                    {/*// @ts-ignore*/}
+                    <AnswerC reference={answerElRef2} setPairs={setPairs} text={answers[1]}  dragOverElRefs={dragOverElRefs} setAreAnswersExpanded={setAreAnswersExpanded}/>
+                    {/*// @ts-ignore*/}
+                    <AnswerC reference={answerElRef3} setPairs={setPairs} text={answers[2]}  dragOverElRefs={dragOverElRefs} setAreAnswersExpanded={setAreAnswersExpanded}/>
+                    {/*// @ts-ignore*/}
+                    <AnswerC reference={answerElRef4} setPairs={setPairs} text={answers[3]}  dragOverElRefs={dragOverElRefs} setAreAnswersExpanded={setAreAnswersExpanded}/>
+                    {/*{!areAnswersExpanded&&<div  className={styles.expandIcon}>*/}
+                    {/*    <i className="fa-solid fa-arrow-up"></i>*/}
+                    {/*</div>}*/}
+                    {/*{areAnswersExpanded&&<div  className={styles.expandIcon}>*/}
+                    {/*    <i className="fa-solid fa-arrow-down"></i>*/}
+                    {/*</div>}*/}
+                </div>
+
+            </section>
         </div>
     </>
     )

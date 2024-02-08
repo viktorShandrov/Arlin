@@ -1,6 +1,8 @@
 .answerC{
     padding: 10px;
     flex: 1;
+    width: 100px;
+    height: 100px;
     padding: 30px;
     border-radius: 10px;
     background-color: #4C6A69;
@@ -14,4 +16,11 @@
     overflow: visible ;
     justify-content: center;
     /*scale: 1.2;*/
+    /*opacity: 1 !important;*/
+}
+
+@media(max-width: 1100px){
+    .answerC{
+        width: 70%;
+    }
 }
