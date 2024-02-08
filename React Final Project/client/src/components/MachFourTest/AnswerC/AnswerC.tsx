@@ -76,7 +76,7 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference}){
             y: touch.clientY - offset.y
         });
 
-
+        for (const dragOverElRef of dragOverElRefs) {
             // @ts-ignore
             const rect = dragOverElRef.current.getBoundingClientRect();
             if (
@@ -89,7 +89,7 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference}){
                 console.log('Draggable element is over the specific element');
                 setPosition({x:0,y:0})
 
-                for (const dragOverElRef of dragOverElRefs) {
+
                     // @ts-ignore
                     const rect = dragOverElRef.current.getBoundingClientRect();
                     if (
