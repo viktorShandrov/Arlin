@@ -2,7 +2,7 @@
 import styles from "./AnswerC.module.css"
 import { useState} from "react";
 // @ts-ignore
-export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAnswersExpanded=null}){
+export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAnswersShadowed=null}){
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [offset, setOffset] = useState({ x: 0, y: 0 });
@@ -68,9 +68,9 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAn
         const offsetX = touch.clientX - position.x;
         const offsetY = touch.clientY - position.y;
         setOffset({ x: offsetX, y: offsetY });
-        if(setAreAnswersExpanded){
+        if(setAreAnswersShadowed){
             // @ts-ignore
-            setAreAnswersExpanded(false)
+            setAreAnswersShadowed(false)
         }
 
     };
@@ -100,6 +100,7 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAn
 
                     // @ts-ignore
                     const rect = dragOverElRef.current.getBoundingClientRect();
+
                     if (
                         touch.clientX >= rect.left &&
                         touch.clientX <= rect.right &&
@@ -118,7 +119,6 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAn
                         })
                         // @ts-ignore
                         reference.current.style.opacity=0
-                        console.log( reference.current.style.opacity)
                         setIsDragging(false);
                     }
                 }
@@ -127,9 +127,9 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAn
 
     const handleTouchEnd = () => {
         setIsDragging(false);
-        if(setAreAnswersExpanded){
+        if(setAreAnswersShadowed){
             // @ts-ignore
-            setAreAnswersExpanded(true)
+            setAreAnswersShadowed(true)
         }
 
     };
@@ -142,7 +142,7 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAn
                 cursor: isDragging ? 'grabbing' : 'grab',
                 userSelect: 'none',
                 backgroundColor: 'lightblue',
-                zIndex: 9999
+                zIndex: 9999,
 
             }}
             onMouseDown={handleMouseDown}

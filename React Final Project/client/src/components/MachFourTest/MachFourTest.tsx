@@ -25,6 +25,7 @@ export default function MachFourTest(){
         "book":null,
     })
     const [answers,setAnswers] = useState(["работа","самолет","персонал","книга"])
+    const [areAnswersShadowed,setAreAnswersShadowed] = useState(true)
     const [areAnswersExpanded,setAreAnswersExpanded] = useState(true)
 
 
@@ -83,6 +84,9 @@ export default function MachFourTest(){
         // })
         setAnswers( shuffleArray(answers))
     },[])
+    const toggleAnswersShadowingCclickHandler=()=>{
+        setAreAnswersShadowed(!areAnswersShadowed)
+    }
     const toggleAnswersExpandableCclickHandler=()=>{
         setAreAnswersExpanded(!areAnswersExpanded)
     }
@@ -136,28 +140,29 @@ export default function MachFourTest(){
             <section
                 style={{
                     // height:areAnswersExpanded?"fit-content":"20%"
-                    opacity:areAnswersExpanded?1:0.5
+                    opacity:areAnswersShadowed?1:0.3,
+                    height:areAnswersExpanded?"fit-content":"20%"
                 }}
                 className={styles.answersMobileWrapper}
-                onClick={toggleAnswersExpandableCclickHandler}
+                onClick={toggleAnswersShadowingCclickHandler}
             >
                 <div
                     className={styles.answersMobileC}
                 >
                     {/*// @ts-ignore*/}
-                    <AnswerC reference={mobileAnswerElRef1} setPairs={setPairs} text={answers[0]} dragOverElRefs={dragOverElRefs} setAreAnswersExpanded={setAreAnswersExpanded}/>
+                    <AnswerC reference={mobileAnswerElRef1} setPairs={setPairs} text={answers[0]} dragOverElRefs={dragOverElRefs} setAreAnswersShadowed={setAreAnswersShadowed}/>
                     {/*// @ts-ignore*/}
-                    <AnswerC reference={mobileAnswerElRef2} setPairs={setPairs} text={answers[1]}  dragOverElRefs={dragOverElRefs} setAreAnswersExpanded={setAreAnswersExpanded}/>
+                    <AnswerC reference={mobileAnswerElRef2} setPairs={setPairs} text={answers[1]}  dragOverElRefs={dragOverElRefs} setAreAnswersShadowed={setAreAnswersShadowed}/>
                     {/*// @ts-ignore*/}
-                    <AnswerC reference={mobileAnswerElRef3} setPairs={setPairs} text={answers[2]}  dragOverElRefs={dragOverElRefs} setAreAnswersExpanded={setAreAnswersExpanded}/>
+                    <AnswerC reference={mobileAnswerElRef3} setPairs={setPairs} text={answers[2]}  dragOverElRefs={dragOverElRefs} setAreAnswersShadowed={setAreAnswersShadowed}/>
                     {/*// @ts-ignore*/}
-                    <AnswerC reference={mobileAnswerElRef4} setPairs={setPairs} text={answers[3]}  dragOverElRefs={dragOverElRefs} setAreAnswersExpanded={setAreAnswersExpanded}/>
-                    {/*{!areAnswersExpanded&&<div  className={styles.expandIcon}>*/}
-                    {/*    <i className="fa-solid fa-arrow-up"></i>*/}
-                    {/*</div>}*/}
-                    {/*{areAnswersExpanded&&<div  className={styles.expandIcon}>*/}
-                    {/*    <i className="fa-solid fa-arrow-down"></i>*/}
-                    {/*</div>}*/}
+                    <AnswerC reference={mobileAnswerElRef4} setPairs={setPairs} text={answers[3]}  dragOverElRefs={dragOverElRefs} setAreAnswersShadowed={setAreAnswersShadowed}/>
+                    {!areAnswersExpanded&&<div onClick={toggleAnswersExpandableCclickHandler}  className={styles.expandIcon}>
+                        <i className="fa-solid fa-arrow-up"></i>
+                    </div>}
+                    {areAnswersExpanded&&<div onClick={toggleAnswersExpandableCclickHandler}  className={styles.expandIcon}>
+                        <i className="fa-solid fa-arrow-down"></i>
+                    </div>}
                 </div>
 
             </section>
