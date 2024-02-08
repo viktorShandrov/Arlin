@@ -18,6 +18,12 @@ export default function MachFourTest(){
     const mobileAnswerElRef3 = useRef(null)
     const mobileAnswerElRef4 = useRef(null)
     const mobileAnswerElRefs = [mobileAnswerElRef1,mobileAnswerElRef2,mobileAnswerElRef3,mobileAnswerElRef4]
+    const [rightAnswers,setRightAnswers] = useState({
+        "work":"работа",
+        "plane":"самолет",
+        "staff":"персонал",
+        "book":"книга",
+    })
     const [pairs,setPairs] = useState({
         "work":null,
         "plane":null,
@@ -25,6 +31,7 @@ export default function MachFourTest(){
         "book":null,
     })
     const [answers,setAnswers] = useState(["работа","самолет","персонал","книга"])
+    const [areAllRight,setAreAllRight] = useState(false)
     const [areAnswersShadowed,setAreAnswersShadowed] = useState(true)
     const [areAnswersExpanded,setAreAnswersExpanded] = useState(true)
 
@@ -42,16 +49,21 @@ export default function MachFourTest(){
     const removeAnswerClickHandler = (propName:any) =>{
 // @ts-ignore
         const text = pairs[propName]
+        console.log(mobileAnswerElRefs)
+        console.log(mobileAnswerElRefs.every(el=>el))
         const els =
             [
                 // @ts-ignore
-                answerElRefs.find(el=>el.current!.textContent ===text),
+                answerElRefs.every(el=>el.current)?answerElRefs.find(el=>el.current!.textContent ===text):null,
                 // @ts-ignore
-                mobileAnswerElRefs.find(el=>el.current!.textContent ===text)
+                mobileAnswerElRefs.every(el=>el.current)?mobileAnswerElRefs.find(el=>el.current!.textContent ===text):null
             ]
         for (const el of els) {
-            // @ts-ignore
-            el.current!.style.opacity = 1
+            if(el){
+                // @ts-ignore
+                el.current!.style.opacity = 1
+            }
+
 
         }
         // @ts-ignore
@@ -84,11 +96,34 @@ export default function MachFourTest(){
         // })
         setAnswers( shuffleArray(answers))
     },[])
-    const toggleAnswersShadowingCclickHandler=()=>{
-        setAreAnswersShadowed(!areAnswersShadowed)
+    const toggleAnswersShadowingCclickHandler=(e:any)=>{
+        if(!e.target.classList.contains("fa-solid")&&!e.target.classList.contains(styles.expandIcon)){
+            setAreAnswersShadowed(!areAnswersShadowed)
+        }
     }
     const toggleAnswersExpandableCclickHandler=()=>{
         setAreAnswersExpanded(!areAnswersExpanded)
+    }
+
+    const checkAnswersClickHandler = () =>{
+        let rightAnswersCount = 0
+        for (const [propName,propValue] of Object.entries(pairs)) {
+                const target =  dragOverElRefs.find((el:any)=>el.current.children[0].textContent===propValue)
+            // @ts-ignore
+            if(rightAnswers[propName]!==propValue){
+                // @ts-ignore
+                target.current.children[0].style.backgroundColor = "red"
+            }else{
+                // @ts-ignore
+                target.current.children[0].style.backgroundColor = "#00ff00"
+                ++rightAnswersCount
+            }
+        }
+        if(rightAnswersCount===4){
+            setAreAllRight(true)
+        }else {
+            setAreAllRight(false)
+        }
     }
 
 
@@ -137,7 +172,7 @@ export default function MachFourTest(){
 
 
             </div>
-            <section
+            {!Object.values(pairs).every((prop:any)=>prop)&&<section
                 style={{
                     // height:areAnswersExpanded?"fit-content":"20%"
                     opacity:areAnswersShadowed?1:0.3,
@@ -165,7 +200,18 @@ export default function MachFourTest(){
                     </div>}
                 </div>
 
-            </section>
+            </section>}
+
+
+            {
+                Object.values(pairs).every((prop:any)=>prop)&&
+                !areAllRight&&
+                <button onClick={checkAnswersClickHandler} className={styles.checkAnswersBtn}>Провери отговорите</button>
+            }
+            {
+                areAllRight&&
+                <button onClick={checkAnswersClickHandler} className={styles.continueBtn}>Продължи</button>
+            }
         </div>
     </>
     )

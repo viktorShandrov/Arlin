@@ -114,10 +114,39 @@
 
 .expandIcon{
     position: absolute;
-    right: 10px;
-    top: 10px;
+    right: 20px;
+    top: 20px;
+    border: solid 1px black;
+    padding: 20px;
+    border-radius: 100px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    z-index: 10000;
+    background-color: #EFEFEF;
 }
-
+.checkAnswersBtn,
+.continueBtn{
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-color: #A73701;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 30px;
+    font-weight: bolder;
+    border: none;
+    align-self: flex-start;
+    font-size: 25px;
+}
+.continueBtn{
+    background-color: #75A9AB;
+}
 @media(max-width: 1100px){
     .questionsWrapper,
     .answersC{
