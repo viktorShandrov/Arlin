@@ -27,7 +27,9 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAn
                     event.clientX >= rect.left &&
                     event.clientX <= rect.right &&
                     event.clientY >= rect.top &&
-                    event.clientY <= rect.bottom
+                    event.clientY <= rect.bottom&&
+                    dragOverElRef.current.getAttribute('data-isempty') === "false"
+
                 ) {
                     // Perform your action here when the draggable element is over the specific element
                     console.log('Draggable element is over the specific element');
@@ -70,9 +72,7 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAn
             // @ts-ignore
             setAreAnswersExpanded(false)
         }
-        setTimeout(()=>{
 
-        },0)
     };
 
     const handleTouchMove = (event:any) => {
@@ -90,7 +90,8 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAn
                 touch.clientX >= rect.left &&
                 touch.clientX <= rect.right &&
                 touch.clientY >= rect.top &&
-                touch.clientY <= rect.bottom
+                touch.clientY <= rect.bottom&&
+                dragOverElRef.current.getAttribute('data-isempty') === "false"
             ) {
                 // Perform your action here when the draggable element is over the specific element
                 console.log('Draggable element is over the specific element');
@@ -99,7 +100,6 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAn
 
                     // @ts-ignore
                     const rect = dragOverElRef.current.getBoundingClientRect();
-                // reference.current.style.opacity="1 !important"
                     if (
                         touch.clientX >= rect.left &&
                         touch.clientX <= rect.right &&
@@ -118,6 +118,7 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,setAreAn
                         })
                         // @ts-ignore
                         reference.current.style.opacity=0
+                        console.log( reference.current.style.opacity)
                         setIsDragging(false);
                     }
                 }
