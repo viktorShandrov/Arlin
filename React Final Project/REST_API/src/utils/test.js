@@ -22,6 +22,10 @@ const {createClient} = require('@supabase/supabase-js')
 exports.test=async ()=> {
 
     setTodayNews()
+    wordManager.fillDBwithWords()
+    setTimeout(()=>{
+
+    },0)
         // const supabase = createClient('https://pezdarqtckujdxnfyxoz.supabase.co', utils.supabaseAPIKey)
         //
         // async function uploadFile(file) {

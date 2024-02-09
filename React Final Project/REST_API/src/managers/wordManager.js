@@ -1,5 +1,6 @@
 
 
+
 const models = require("../models/allModels");
 const utils = require("../utils/utils");
 const { isOwnedByUser, isAdmin } = require("../managerUtils/managerUtil");
@@ -25,18 +26,21 @@ import('random-words')
                         if(testType === utils.testTypes.randomWords){
                             //12 words
                             let questions
-                            const unknownWords = await models.wordModel.find({
+                             questions = await models.wordModel.find({
                                 unknownFor:{
                                     $in:userId
                                 }
-                            })
+                            }).limit(12)
 
-                            //max 12
-                                questions = unknownWords.slice(0,12)
+
                             //fill with random words if necessary
-                                const randomWordsToFill = randomWords.generate(12-questions.length)
+                            let randomWordsToFill = []
+                            if(12-questions.length>0){
+                                randomWordsToFill = await allModels.wordModel.find({ word: { $nin: questions.map(el=>el.word) } }).limit(12-questions.length);
+                            }
 
-                                questions = [...questions,...randomWordsToFill]
+                            questions = [...questions,...randomWordsToFill]
+
 
 
                             return await makeTestOutOfWords(questions)
@@ -257,8 +261,16 @@ import('random-words')
                         const randomIndex = Math.floor(Math.random() * wordsArray.length);
                         return wordsArray[randomIndex];
                     }
-                    async function makeWrongAnswers(){
-                        return exports.translateWrongAnswers([randomWords.generate(),randomWords.generate(),randomWords.generate()])
+                    async function makeWrongAnswers(question){
+
+                        return (await allModels.wordModel.aggregate([
+                            { $match: { word: { $ne: question.word } } },
+                            { $sample: { size: 3 } }
+                        ])).map(question=>{
+                            return {answer:question.translatedText,isCorrect : false,}
+                        })
+                        // return (await allModels.wordModel.find({ word: { $ne: question.word } }).limit(3)).map(el=>el.translatedText);
+                        // return exports.translateWrongAnswers([randomWords.generate(),randomWords.generate(),randomWords.generate()])
                     }
 
 
@@ -266,18 +278,13 @@ import('random-words')
                         const container = []
                         for (const question of words) {
 
-                           const answers =await makeWrongAnswers()
-
-                            let rightAnswer
-                            if(question.translatedText){
-                                rightAnswer ={answer:question.translatedText,isCorrect : true,}
-                            }else{
-                                 rightAnswer =  {answer:await exports.translateWord(question),isCorrect : true}
-                            }
+                           const answers = await makeWrongAnswers(question)
+                             const rightAnswer ={answer:question.translatedText,isCorrect : true}
 
                             const randomNumber = Math.floor(Math.random() * 4);
                             //place it on random place
                             answers.splice(randomNumber,0,rightAnswer)
+
                             if(question.translatedText) {
                                 container.push(
                                     {
@@ -295,7 +302,7 @@ import('random-words')
                                 )
                             }
                         }
-                        console.log(container)
+                        // console.log(container)
                         return container
                     }
 
@@ -332,12 +339,25 @@ import('random-words')
             }
 
 
-
+//TODO : one test one request
         exports.translateWrongAnswers=async(words)=>{
                         const payload = words.join(", ")
                         const response = await((await fetch(translateAPI+payload)).json())
                         console.log(response.translation)
                         const answers = response.translation.split(", ")
+
+                        for(let i = 0;i<words.length;i++){
+                            if(! await allModels.wordModel.findOne({word:words[i]})){
+                                await allModels.wordModel.create(
+                                    {
+                                        unknownFor:[],
+                                        word:words[i],
+                                        translatedText:answers[i]
+                                    }
+                                )
+                            }
+
+                        }
                         return answers.map(answer=>{
                             return{
                                 answer,
@@ -346,6 +366,26 @@ import('random-words')
 
                         })
         }
+            exports.fillDBwithWords =async () =>{
+                const words = randomWords.generate(500)
+
+                const payload = words.join(", ")
+                const response = await((await fetch(translateAPI+payload)).json())
+                const translations = response.translation.split(", ")
+
+                for(let i = 0;i<words.length;i++){
+                    if(! await allModels.wordModel.findOne({word:words[i]})){
+                        await allModels.wordModel.create(
+                            {
+                                unknownFor:[],
+                                word:words[i],
+                                translatedText:translations[i]
+                            }
+                        )
+                    }
+                }
+
+            }
 
             exports.translateText=async(text)=>{
 
@@ -357,9 +397,12 @@ import('random-words')
 
 
 
+
 exports.getAllWords =async(userId)=>{
    return  models.wordModel.find({unknownFor:userId})
 }
+
+
 
 exports.deleteWord =async(wordId,userId)=>{
     await isOwnedByUser(userId,wordId,models.wordModel,"unknownBy")
