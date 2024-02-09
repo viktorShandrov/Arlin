@@ -52,15 +52,17 @@ import('random-words')
 
                             const filteredWords = splitedChapter.filter(word => !utils.commonWords.includes(word.toLowerCase()));
 
-                            const testWords = []
+                            const words = []
 
                             for (let i = 0; i < 12; i++) {
                                 //removes . : ; ,
                                 const trimmedStr = getRandomWord(filteredWords).replace(/^[,.\s:]+|[,\s:"']+$/g, "");
-                                testWords.push(trimmedStr)
+                                words.push(trimmedStr)
                             }
 
-                            return await makeTestOutOfWords(testWords)
+                            const testWords = await exports.translateMultipleWords(testWords)
+
+                            return await makeTestOutOfWords(words)
                         }if(testType === utils.testTypes.textQuestions){
                             // 3 questions from the text
                             let questions = [...await allModels.chapterQuestionsModel.find({chapterId})]
@@ -339,12 +341,10 @@ import('random-words')
             }
 
 
-//TODO : one test one request
-        exports.translateWrongAnswers=async(words)=>{
+        exports.translateMultipleWords=async(words)=>{
                         const payload = words.join(", ")
                         const response = await((await fetch(translateAPI+payload)).json())
-                        console.log(response.translation)
-                        const answers = response.translation.split(", ")
+                        const translations = response.translation.split(", ")
 
                         for(let i = 0;i<words.length;i++){
                             if(! await allModels.wordModel.findOne({word:words[i]})){
@@ -352,16 +352,16 @@ import('random-words')
                                     {
                                         unknownFor:[],
                                         word:words[i],
-                                        translatedText:answers[i]
+                                        translatedText:translations[i]
                                     }
                                 )
                             }
 
                         }
-                        return answers.map(answer=>{
+                        return translations.map((translation,index)=>{
                             return{
-                                answer,
-                                isCorrect:false
+                                word:words[index],
+                                translatedText:translation
                             }
 
                         })

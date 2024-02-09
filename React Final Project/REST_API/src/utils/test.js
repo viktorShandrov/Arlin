@@ -22,7 +22,7 @@ const {createClient} = require('@supabase/supabase-js')
 exports.test=async ()=> {
 
     setTodayNews()
-    wordManager.fillDBwithWords()
+    // wordManager.fillDBwithWords()
     setTimeout(()=>{
 
     },0)
