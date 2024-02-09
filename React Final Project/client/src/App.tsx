@@ -21,11 +21,11 @@ import NotFound from "./components/NotFound/NotFound";
 
 export const userContext=createContext({})
 function App() {
-    const navigation = useNavigate()
+    // const navigation = useNavigate()
         const [user,setUser]= useLocalStorage("user",{})
     useEffect(()=>{
         console.log("initial load")
-        navigation("main/hero")
+        // navigation("main/hero")
     },[])
 
   return (

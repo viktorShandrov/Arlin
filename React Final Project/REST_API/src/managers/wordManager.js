@@ -63,12 +63,15 @@ import('random-words')
                             const testWords = await exports.translateMultipleWords(testWords)
 
                             return await makeTestOutOfWords(words)
-                        }if(testType === utils.testTypes.textQuestions){
+                        }else if(testType === utils.testTypes.textQuestions){
                             // 3 questions from the text
                             let questions = [...await allModels.chapterQuestionsModel.find({chapterId})]
                             questions = refactorQuestionAnswers(questions)
                             return questions
-                    }
+                        }else if(testType === utils.testTypes.matchFour){
+                            //match 4 words
+                            return allModels.wordModel.aggregate([{ $sample: { size: 12 } }])
+                        }
                     function refactorQuestionAnswers(questions){
                         return questions.map(question=>{
 
