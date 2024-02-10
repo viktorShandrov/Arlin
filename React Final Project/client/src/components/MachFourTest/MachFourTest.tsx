@@ -3,6 +3,7 @@ import styles from "./MachFourTest.module.css"
 import {useEffect, useRef, useState} from "react";
 import AnswerC from "./AnswerC/AnswerC";
 import {request} from "../../functions";
+import TestResume from "../TestResume/TestResume";
 export default function MachFourTest(){
     const dragOverElRef1= useRef(null)
     const dragOverElRef2= useRef(null)
@@ -26,6 +27,7 @@ export default function MachFourTest(){
     const [currentTest,setCurrentTest] = useState([])
     const [wholeTest,setWholeTest] = useState([])
     const [areAllRight,setAreAllRight] = useState(false)
+    const [isTestDone,setIsTestDone] = useState(false)
     const [areAnswersShadowed,setAreAnswersShadowed] = useState(true)
     const [areAnswersExpanded,setAreAnswersExpanded] = useState(true)
     const [currentTestIndex,setCurrentTestIndex] = useState(-1)
@@ -92,6 +94,7 @@ export default function MachFourTest(){
          request("unknownWords/giveTest","POST",{testType:"matchFour"}).subscribe(
              (res:any)=>{
                     setWholeTest(res.test)
+                 console.log(res.test)
                     setCurrentTest(res.test.slice(0,4))
                     setCurrentTestIndex(0)
                     
@@ -184,19 +187,25 @@ export default function MachFourTest(){
         }
     }
     const continueBtnClickHandler = () =>{
-        testWrapperRef.current!.style.opacity = 0
-        setTimeout(()=>{
-            setCurrentTestIndex(old=>++old)
-            setCurrentTest(wholeTest.slice((currentTestIndex+1)*4,(currentTestIndex+1)*4+4))
-            testWrapperRef.current!.style.opacity = 1
-        },1000)
+        if(currentTestIndex===2){
+            setIsTestDone(true)
+        }else{
+            testWrapperRef.current!.style.opacity = 0
+            setTimeout(()=>{
+                setCurrentTestIndex(old=>++old)
+                setCurrentTest(wholeTest.slice((currentTestIndex+1)*4,(currentTestIndex+1)*4+4))
+                testWrapperRef.current!.style.opacity = 1
+            },1000)
+        }
+
     }
 
 
 
     return(
     <>
-        <div ref={testWrapperRef} className={styles.testWrapper}>
+        {isTestDone&&<TestResume questions={wholeTest.map(question=>question.word)} answers={wholeTest.map(question=>question.translatedText)} testType={"matchFour"} />}
+        {!isTestDone&& <div ref={testWrapperRef} className={styles.testWrapper}>
             <div className={styles.questionsWrapper}>
                 {currentTest.length>0&&
                     currentTest.map((question:any,index:number)=><div className={styles.questionC}>
@@ -282,7 +291,9 @@ export default function MachFourTest(){
                 areAllRight&&
                 <button onClick={continueBtnClickHandler} className={styles.continueBtn}>Продължи</button>
             }
-        </div>
+        </div>}
+
     </>
+
     )
 }

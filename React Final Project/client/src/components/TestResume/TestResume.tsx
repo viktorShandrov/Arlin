@@ -21,7 +21,7 @@ export default function TestResume({questions,answers,testType}){
                     return <div key={index} className={styles.row}>
                         <span>{question}</span>
                         <span>{"--->"}</span>
-                        <span>{answers[index].answer||answers[index].option}</span>
+                        <span>{answers[index].answer||answers[index].option||answers[index]}</span>
 
                     </div>
                 })}
