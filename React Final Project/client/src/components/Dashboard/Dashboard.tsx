@@ -50,29 +50,29 @@ export default function Dashboard(){
         <div className={styles.profileWrapper}>
             <div className={styles.profileC}>
                 <section className={styles.credentialsSectionWrapper}>
-                    <h1 className={styles.heading}>Credentials</h1>
+                    <h1 className={styles.heading}>Лични данни</h1>
                     <div className={styles.profileCredC}>
                         <div className={styles.credentialInfos}>
                             <article className={styles.credential}>
-                                <p className={styles.info}><span>Username:</span> {userInfo.username}</p>
-                                <button className={styles.changeBtn}>CHANGE</button>
+                                <p className={styles.info}><span>Потребителско име:</span> {userInfo.username}</p>
+                                <button className={styles.changeBtn}>ПРОМЕНИ</button>
                             </article>
                             <article className={styles.credential}>
-                                <p className={styles.info}><span>Email:</span> {userInfo.email}</p>
-                                <button className={styles.changeBtn}>CHANGE</button>
+                                <p className={styles.info}><span>Имейл:</span> {userInfo.email}</p>
+                                <button className={styles.changeBtn}>ПРОМЕНИ</button>
                             </article>
                             <article className={styles.credential}>
-                                <p className={styles.info}><span>Password:</span> ****************</p>
-                                <button className={styles.changeBtn}>CHANGE</button>
+                                <p className={styles.info}><span>Парола:</span> ****************</p>
+                                <button className={styles.changeBtn}>ПРОМЕНИ</button>
                             </article>
                             <article className={styles.credential}>
                                 <p className={styles.info}><span>Subscription plan:</span> {userInfo.plan||"none"}</p>
-                                <button className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>UPGRADE</button>
+                                <button className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>НАДГРАДИ</button>
                             </article>
                         </div>
                         <div className={styles.imageC}>
                             <img className={styles.userImage} src={userInfo.imageURL} alt=""/>
-                            <span>change avatar</span>
+                            <span>смени снимка</span>
                         </div>
                     </div>
                 </section>
@@ -97,7 +97,7 @@ export default function Dashboard(){
 
 
                 <section className={styles.testsSectionWrapper}>
-                    <h1 className={styles.heading}>Tests</h1>
+                    <h1 className={styles.heading}>Брой взети тестове</h1>
                     <div className={styles.testsC}>
                         <DashboardStat name={"тестa на произволни думи"} testValue={userInfo.randomWordsTests} />
                         <DashboardStat name={"тестa на думи от текст"} testValue={userInfo.wordsFromChapterTests}  />
@@ -113,8 +113,8 @@ export default function Dashboard(){
 
                 <section className={styles.callToAction}>
                     <div className={styles.callToActionBtsC}>
-                        <button className={`${styles.changeBtn}`}>DONATE</button>
-                        <button className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>UPGRADE</button>
+                        <button className={`${styles.changeBtn}`}>ДАРИ</button>
+                        <button className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>НАДГРАДИ</button>
                     </div>
 
                 </section>
