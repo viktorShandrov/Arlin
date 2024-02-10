@@ -41,7 +41,7 @@ export default function Story({chapter,changeChapterClickHandler}){
         let sentences:any =[]
         if(chapter){
 
-             sentences = chapter.currentChapter.text.split(".")
+             sentences = chapter.currentChapter.text.split(/(?<=[?!.])/)
         }
     const [areTestsHidden,setAreTestsHidden] = useState(true)
     const showBtns = ()=>{

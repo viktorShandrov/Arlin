@@ -10,6 +10,6 @@ export default function Sentence(props:any) {
 
     }
     return(
-        <span onClick={()=>onClickHandler()}  className={"sentence"} >{props.text+"."}</span>
+        <span onClick={()=>onClickHandler()}  className={"sentence"} >{props.text}</span>
     )
 }

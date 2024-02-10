@@ -20,20 +20,13 @@ const {setTodayNews} = require("../managers/newsManager");
 const {createClient} = require('@supabase/supabase-js')
 const mongoose = require("mongoose");
 const mongodb = require("mongodb");
+const {translateChapter} = require("../managers/chapterManager");
 
 exports.test=async ()=> {
 
     setTodayNews()
     // wordManager.fillDBwithWords()
-   async function translateChapter(){
-        const doc = await models.chapterModel.findById("65c6663aef5179493a74d27a")
 
-       await models.chapterModel.updateOne(
-           { _id: "65c6663aef5179493a74d27a" },
-           { $set: { translation: "111111111111111" } }
-       );
-
-    }
     setTimeout(()=>{
         // translateChapter()
 

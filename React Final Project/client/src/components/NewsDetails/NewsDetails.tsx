@@ -34,9 +34,9 @@ export default function NewsDetails(){
                 res.news.date = date
                     res.news.splitedText =""
                 for (let i = 0; i <3 ; i++) {
-                    res.news.splitedText+=res.news.content+". "
+                    res.news.splitedText+=res.news.content
                 }
-                res.news.splitedText = res.news.splitedText.split(". ")
+                res.news.splitedText = res.news.splitedText.split(/(?<=[?!.])/)
                 setNews(res.news)
                 setIsloading(false)
             }
