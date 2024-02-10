@@ -19,6 +19,7 @@ export default function MachFourTest(){
     const mobileAnswerElRef3 = useRef(null)
     const mobileAnswerElRef4 = useRef(null)
     const mobileAnswerElRefs = [mobileAnswerElRef1,mobileAnswerElRef2,mobileAnswerElRef3,mobileAnswerElRef4]
+    const testWrapperRef = useRef(null)
     const [rightAnswers,setRightAnswers] = useState({})
     const [pairs,setPairs] = useState({})
     const [answers,setAnswers] = useState([])
@@ -183,15 +184,19 @@ export default function MachFourTest(){
         }
     }
     const continueBtnClickHandler = () =>{
-        setCurrentTestIndex(old=>++old)
-        setCurrentTest(wholeTest.slice((currentTestIndex+1)*4,(currentTestIndex+1)*4+4))
+        testWrapperRef.current!.style.opacity = 0
+        setTimeout(()=>{
+            setCurrentTestIndex(old=>++old)
+            setCurrentTest(wholeTest.slice((currentTestIndex+1)*4,(currentTestIndex+1)*4+4))
+            testWrapperRef.current!.style.opacity = 1
+        },1000)
     }
 
 
 
     return(
     <>
-        <div className={styles.testWrapper}>
+        <div ref={testWrapperRef} className={styles.testWrapper}>
             <div className={styles.questionsWrapper}>
                 {currentTest.length>0&&
                     currentTest.map((question:any,index:number)=><div className={styles.questionC}>

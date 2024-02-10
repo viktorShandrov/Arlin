@@ -124,36 +124,7 @@
 }
 
 
-.testDoneContainer{
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    padding: 30px;
-    border-radius: 20px;
-}
-.rowsC{
-    display: flex;
-    flex-direction: column;
-}
-.row{
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-}
-.row:not(:first-child){
-    border-top: 1px grey solid;
 
-}
-.row>*{
-    text-wrap: normal;
-    flex: 1;
-}
-.proceedBtn{
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #76f200;
-    border-radius: 10px;
-}
 
 
 @media (max-width: 1200px){

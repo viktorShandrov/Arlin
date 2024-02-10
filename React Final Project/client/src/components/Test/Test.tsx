@@ -3,21 +3,21 @@ import styles from "./Test.module.css"
 import {useEffect, useRef, useState} from "react";
 import {request} from "../../functions";
 import Spinner from 'react-bootstrap/Spinner';
-import {useNavigate, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
+import TestResume from "../TestResume/TestResume";
 
 export default function Test(){
 
     const {testType,chapterId} = useParams()
     const [test,setTest] = useState([])
     const [isLoading,setIsLoading] = useState(true)
-    const [isTestDone,setIsTestDone] = useState(false)
+    const [isTestDone,setIsTestDone] = useState(true)
     const [question,setQuestion] = useState({
         answers:[{answer:"",isCorrect:false}],
         question:""
     })
     const answerRefs = useRef([])
     const containerRef = useRef(null)
-    const navigate = useNavigate()
 
     useEffect(() => {
         answerRefs.current = answerRefs.current.slice(0, question.answers.length);
@@ -60,20 +60,15 @@ export default function Test(){
     useEffect(()=>{
         request("unknownWords/giveTest","POST",{testType,chapterId}).subscribe(
             (res:any)=>{
-                console.log(res)
                 setTest(res.test)
+                console.log(res.test)
                 setQuestion(res.test[0])
                 setIsLoading(false)
             }
         )
     },[])
-    const proceedClickHandler = (testType:string)=>{
-        request("unknownWords/testCompleted","POST",{testType}).subscribe(
-            ()=>{
-                navigate("/main/read")
-            }
-        )
-    }
+
+
 
     return(
         <>
@@ -126,23 +121,33 @@ export default function Test(){
                 }
 
                 {isTestDone&&
-                    <div className={styles.testDoneContainer}>
-                        <h1>Какво научихме днес:</h1>
-                        <div className={styles.rowsC}>
-                            {test.map((question:any,index:number)=>{
-                                const rightAnswer = question.answers.find((el:any)=>el.isCorrect).answer||
-                                    question.answers.find((el:any)=>el.isCorrect).option
-                                return <div key={index} className={styles.row}>
-                                    <span>{question.question}</span>
-                                    <span>{"--->"}</span>
-                                    <span>{rightAnswer}</span>
 
-                                </div>
-                            })}
-                        </div>
-                        <button onClick={()=>proceedClickHandler(testType!)} className={styles.proceedBtn}>Продължи</button>
+                         <TestResume
+                             // @ts-ignore
+                             questions={test.map(question=>question.question)}
+                             // @ts-ignore
+                             answers={test.map(question=>question.answers.find((el:any)=>el.isCorrect))}
+                             testType={testType}
+                         />
 
-                    </div>
+
+                    // <div className={styles.testDoneContainer}>
+                    //     <h1>Какво научихме днес:</h1>
+                    //     <div className={styles.rowsC}>
+                    //         {test.map((question:any,index:number)=>{
+                    //             const rightAnswer = question.answers.find((el:any)=>el.isCorrect).answer||
+                    //                 question.answers.find((el:any)=>el.isCorrect).option
+                    //             return <div key={index} className={styles.row}>
+                    //                 <span>{question.question}</span>
+                    //                 <span>{"--->"}</span>
+                    //                 <span>{rightAnswer}</span>
+                    //
+                    //             </div>
+                    //         })}
+                    //     </div>
+                    //     <button onClick={()=>proceedClickHandler(testType!)} className={styles.proceedBtn}>Продължи</button>
+                    //
+                    // </div>
 
                 }
 

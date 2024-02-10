@@ -60,13 +60,15 @@ import('random-words')
                                 words.push(trimmedStr)
                             }
 
-                            const testWords = await exports.translateMultipleWords(testWords)
+                            const testWords = await exports.translateMultipleWords(words)
 
-                            return await makeTestOutOfWords(words)
+                            return await makeTestOutOfWords(testWords)
                         }else if(testType === utils.testTypes.textQuestions){
                             // 3 questions from the text
+
                             let questions = [...await allModels.chapterQuestionsModel.find({chapterId})]
                             questions = refactorQuestionAnswers(questions)
+
                             return questions
                         }else if(testType === utils.testTypes.matchFour){
                             //match 4 words
