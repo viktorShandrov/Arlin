@@ -23,9 +23,11 @@ export default function MachFourTest(){
     const [pairs,setPairs] = useState({})
     const [answers,setAnswers] = useState([])
     const [currentTest,setCurrentTest] = useState([])
+    const [wholeTest,setWholeTest] = useState([])
     const [areAllRight,setAreAllRight] = useState(false)
     const [areAnswersShadowed,setAreAnswersShadowed] = useState(true)
     const [areAnswersExpanded,setAreAnswersExpanded] = useState(true)
+    const [currentTestIndex,setCurrentTestIndex] = useState(-1)
 
 
 
@@ -88,31 +90,66 @@ export default function MachFourTest(){
         // })
          request("unknownWords/giveTest","POST",{testType:"matchFour"}).subscribe(
              (res:any)=>{
-
-                    const firstTest = res.test.slice(0,4)
-                    setCurrentTest(firstTest)
+                    setWholeTest(res.test)
+                    setCurrentTest(res.test.slice(0,4))
+                    setCurrentTestIndex(0)
                     
-                 const rightAnswers = {}
-                 for (const question of firstTest) {
-                     // @ts-ignore
-                     rightAnswers[question.word] = question.translatedText
-                 }
-                 // @ts-ignore
-                 setRightAnswers(rightAnswers)
 
-                 const pairs = {}
-                 for (const question of firstTest) {
-                     // @ts-ignore
-                     pairs[question.word] = null
-                 }
-
-                 setPairs(pairs)
-
-                 // @ts-ignore
-                 setAnswers(shuffleArray(firstTest.map((question:any)=>question.translatedText)))
              }
          )
     },[])
+
+
+
+
+
+
+    useEffect(()=>{
+
+        setAreAllRight(false)
+        if(currentTest.length===0) return
+        const rightAnswers = {}
+        const pairs = {}
+        for (const question of currentTest) {
+            // @ts-ignore
+            rightAnswers[question.word] = question.translatedText
+            // @ts-ignore
+            pairs[question.word] = null
+        }
+        // @ts-ignore
+        setRightAnswers(rightAnswers)
+
+
+        setPairs(pairs)
+
+        // @ts-ignore
+        const answers = shuffleArray(currentTest.map((question:any)=>question.translatedText))
+        console.log(answers)
+        setAnswers(answers)
+        if(currentTestIndex>0){
+            if(mobileAnswerElRefs.some(el=>el.current)){
+                for (const answerRef of mobileAnswerElRefs) {
+                    answerRef.current!.style.opacity = 1
+                }
+            }
+            if(answerElRefs.some(el=>el.current)){
+                for (const answerRef of answerElRefs) {
+                    answerRef.current!.style.opacity = 1
+                }
+            }
+
+        }
+
+
+    },[currentTest])
+
+
+
+
+
+
+
+
     const toggleAnswersShadowingCclickHandler=(e:any)=>{
         if(!e.target.classList.contains("fa-solid")&&!e.target.classList.contains(styles.expandIcon)){
             setAreAnswersShadowed(!areAnswersShadowed)
@@ -145,6 +182,11 @@ export default function MachFourTest(){
             setAreAllRight(false)
         }
     }
+    const continueBtnClickHandler = () =>{
+        setCurrentTestIndex(old=>++old)
+        setCurrentTest(wholeTest.slice((currentTestIndex+1)*4,(currentTestIndex+1)*4+4))
+    }
+
 
 
     return(
@@ -233,7 +275,7 @@ export default function MachFourTest(){
             }
             {
                 areAllRight&&
-                <button onClick={checkAnswersClickHandler} className={styles.continueBtn}>Продължи</button>
+                <button onClick={continueBtnClickHandler} className={styles.continueBtn}>Продължи</button>
             }
         </div>
     </>
