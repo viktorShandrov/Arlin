@@ -3,6 +3,8 @@ const {isOwnedByUser, isAdmin} = require("../managerUtils/managerUtil");
 const wordManager = require("./wordManager");
 const schedule = require('node-schedule');
 const {model} = require("mongoose");
+const fetch = require("isomorphic-fetch");
+const {translateAPI} = require("../utils/utils");
 
 
 exports.getChapter =async(chapterId,userId)=>{
@@ -135,5 +137,39 @@ async function changeBookFreeRotation(){
 exports.createChapterQuestion =async(chapterId,userId,rightAnswer,answers)=>{
    await isAdmin(null,userId)
 
+
+}
+
+
+
+exports.translateChapter=async()=>{
+    const doc = await models.chapterModel.findById("65c6663aef5179493a74d27a")
+    // const cleanedText = doc.text.replace(/['"\\]|[^a-zA-Z0-9_\-.,:;@&=+$#?/()%]+/g, '');
+    // const url = `${translateAPI}${encodeURIComponent(doc.text)}`;
+
+    const sentences = doc.text.split(/(?<=[?!.])/)
+    const wholeText = []
+    for (const sentence of sentences) {
+        // const data = await fetch(translateAPI,{
+        //     method:"POST",
+        //     body:sentence})
+        const data = await fetch(translateAPI+sentence)
+        const translation = await(data.json())
+        if(!translation){
+            throw new Error("problem with text translation")
+        }
+        wholeText.push(translation)
+    }
+    console.log(wholeText)
+
+
+
+    // console.log(translation)
+    // await models.chapterModel.updateOne(
+    //     { _id: doc._id },
+    //     { $set: { translation:translation.translation } }
+    // );
+    //
+    // console.log("translated")
 
 }
