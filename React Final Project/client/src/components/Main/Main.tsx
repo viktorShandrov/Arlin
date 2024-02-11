@@ -17,11 +17,13 @@ import Navigation from "../Navigation/Navigation";
 import MyBooksList from "../MyBooksList/MyBooksList";
 import BookContent from "../BookContent/BookContent";
 import MachFourTest from "../MachFourTest/MachFourTest";
+import LevelInfo from "../LevelInfo/LevelInfo";
 export default function Main(){
     return(
         <>
             <div className={styles.templateWrapper}>
                 <Navigation/>
+                <LevelInfo />
                 <Routes>
                         <Route element={<AuthGuard/>}>
                             <Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>

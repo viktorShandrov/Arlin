@@ -1,0 +1,60 @@
+.levelWrapper{
+    position: absolute ;
+    left: 50%;
+    top: -100%;
+    width: 70%;
+    padding:50px;
+    padding-bottom: 35px;
+    border: solid black;
+    border-bottom-right-radius: 23px;
+    border-bottom-left-radius: 23px;
+    transform: translateX(-50%);
+    background-color: white;
+    z-index: 99999999;
+    transition: 1000ms;
+}
+.levelBarC{
+    width: 100%;
+    background-color: grey;
+    border-radius: 100px;
+    height: 20px;
+
+}
+.levelBarProgress{
+    width: 0;
+    background-color: #75A9AB;
+    height: 100%;
+    transition: 2s ease-in-out;
+}
+
+.btnAndLevelInfo{
+    display: flex;
+    padding-top: 30px;
+    justify-content: space-between;
+}
+
+.levelInfo{
+    display: flex;
+    align-items: end;
+    gap: 10px;
+}
+.levelInfo p{
+    margin: 0;
+
+}
+
+.viewTrophyRoad{
+    background-color: white;
+    border: solid #A73701 2px;
+    border-radius: 100px;
+    padding: 10px 30px;
+    color: #A73701;
+}
+.xmark{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+.xmark:hover{
+    cursor: pointer;
+}

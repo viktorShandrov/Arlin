@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom";
 // @ts-ignore
 export default function FreeChapter({chapter}){
     const navigate = useNavigate()
-    console.log(chapter)
     return(
         <article className={styles.freeChapterC}>
             <p className={styles.freeLabel}>БЕЗПЛАТНО</p>

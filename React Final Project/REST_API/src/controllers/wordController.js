@@ -70,7 +70,7 @@ router.post("/testCompleted",isAuth,async (req,res)=>{
         const {_id} = req.user
         const {testType} = req.body
         await wordManager.markTestAsCompleted(_id,testType)
-        res.status(200).end()
+        res.status(200).json({expAdded:40})
     } catch (error) {
         res.status(400).json({message:error.message})
     }

@@ -18,6 +18,7 @@ import User from "./components/Users/Users";
 import useLocalStorage from "./hooks/useLocalStorage";
 import AuthGuard from "./guards/AuthGuard/AuthGuard";
 import NotFound from "./components/NotFound/NotFound";
+import XP from "./components/interceptors/XP";
 
 export const userContext=createContext({})
 function App() {
@@ -30,9 +31,9 @@ function App() {
 
   return (
       <>
-
           <ToastContainer position={toast.POSITION.TOP_RIGHT} />
           <Provider store={store}>
+                 <XP/>
               <div  className={styles.mainWrapper}>
                   <Routes>
 

@@ -39,10 +39,6 @@ export default function MyBooksList(){
                         bookName:book.name
                     }
                 }))
-                console.log(user.lastReading.bookId)
-                console.log(allBooks)
-                console.log(allBooks.includes(user.lastReading.bookId))
-                console.log(allBooks.find((book:any)=>book._id.toString() === user.lastReading.bookId.toString()))
                 setCurrentReading(allBooks.find((book:any)=>book._id.toString() === user.lastReading.bookId.toString()))
                 setIsLoading(false)
 

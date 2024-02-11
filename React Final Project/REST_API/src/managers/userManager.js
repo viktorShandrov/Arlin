@@ -35,7 +35,8 @@ exports.login = async (email,password)=>{
         email,
         userId:user._id,
         role:user.role,
-        lastReading:user.lastReading
+        lastReading:user.lastReading,
+        exp:user.exp
     }
 
 }

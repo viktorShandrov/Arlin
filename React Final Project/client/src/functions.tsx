@@ -1,16 +1,15 @@
 import * as constants from "./contants";
 import {toast} from "react-toastify";
-
 export function request(url: string, method?: string, body?: any, headers: any = {},isFileUpload = false) {
     return {
         subscribe(res: any, error?: any) {
+
             if (!headers.hasOwnProperty("Content-Type")&&!isFileUpload) {
                 headers["Content-Type"] = "application/json";
             }
 
             const abortController = new AbortController();
             const signal = abortController.signal;
-
 
             const promiseRequest = fetch(constants.REST_API + url, {
                 headers: {

@@ -46,8 +46,8 @@ export default function MachFourTest(){
     const removeAnswerClickHandler = (propName:any) =>{
 // @ts-ignore
         const text = pairs[propName]
-        console.log(mobileAnswerElRefs)
-        console.log(mobileAnswerElRefs.every(el=>el))
+        // console.log(mobileAnswerElRefs)
+        // console.log(mobileAnswerElRefs.every(el=>el))
         const els =
             [
                 // @ts-ignore
@@ -94,7 +94,7 @@ export default function MachFourTest(){
          request("unknownWords/giveTest","POST",{testType:"matchFour"}).subscribe(
              (res:any)=>{
                     setWholeTest(res.test)
-                 console.log(res.test)
+                 // console.log(res.test)
                     setCurrentTest(res.test.slice(0,4))
                     setCurrentTestIndex(0)
                     
@@ -128,7 +128,7 @@ export default function MachFourTest(){
 
         // @ts-ignore
         const answers = shuffleArray(currentTest.map((question:any)=>question.translatedText))
-        console.log(answers)
+        // console.log(answers)
         setAnswers(answers)
         if(currentTestIndex>0){
             if(mobileAnswerElRefs.some(el=>el.current)){
@@ -165,11 +165,11 @@ export default function MachFourTest(){
 
     const checkAnswersClickHandler = () =>{
         let rightAnswersCount = 0
-        console.log(pairs)
+        // console.log(pairs)
         for (const [propName,propValue] of Object.entries(pairs)) {
-            console.log(propName,propValue)
+            // console.log(propName,propValue)
                 const target =  dragOverElRefs.find((el:any)=>el.current.children[0].textContent===propValue)
-            console.log(target)
+            // console.log(target)
             // @ts-ignore
             if(rightAnswers[propName]!==propValue){
                 // @ts-ignore

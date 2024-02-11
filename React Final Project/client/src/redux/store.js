@@ -3,7 +3,7 @@ import userReducer from "./user.tsx";
 
 export const store = configureStore({
     reducer: {
-        user:userReducer
+        user:userReducer,
     },
 })
 

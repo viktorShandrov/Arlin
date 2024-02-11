@@ -16,6 +16,11 @@ export default function Dashboard(){
         plan: "",
         exp: undefined
     })
+    const [changedCredential,setChangedCredential] = useState({
+        field:"",
+        oldValue:"",
+        newValue:"",
+    })
     // const passedTestNumberElementsRefs = useRef([])
     const {user} = useSelector((state:any)=>state.user)
 
@@ -48,6 +53,11 @@ export default function Dashboard(){
         //     </ResponsiveContainer>
         // </div>
         <div className={styles.profileWrapper}>
+            {changedCredential.field&&<div className={styles.popupOverlay}>
+                <div className={styles.changeCredentialPopup}>
+
+                </div>
+            </div>}
             <div className={styles.profileC}>
                 <section className={styles.credentialsSectionWrapper}>
                     <h1 className={styles.heading}>Лични данни</h1>
