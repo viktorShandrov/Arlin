@@ -94,5 +94,14 @@ router.get("/giveSentenceWhereWordCanBeUsed/:word",async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.post("/createWordContainer",async (req,res)=>{
+    try{
+        const {colorCode, name} = req.body
+        const container = await wordManager.createWordContainer(req.user,colorCode,name)
+        res.status(200).end()
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
 
 module.exports = router

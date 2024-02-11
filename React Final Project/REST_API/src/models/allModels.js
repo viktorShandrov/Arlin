@@ -5,4 +5,5 @@ module.exports = {
     wordModel : require("./wordModel"),
     chapterQuestionsModel : require("./chapterQuestionsModel"),
     newsModel : require("./newsModel"),
+    wordsContainer : require("./wordContainerModel"),
 }

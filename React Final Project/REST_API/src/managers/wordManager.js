@@ -428,6 +428,17 @@ exports.giveSentence =async(word)=>{
     const data = await(await fetch("https://api.wordnik.com/v4/word.json/car/topExample?useCanonical=false&api_key=c23b746d074135dc9500c0a61300a3cb7647e53ec2b9b658e")).json()
 
 }
+exports.createWordContainer =async(user,colorCode,name)=>{
+    const container = await allModels.wordsContainer.create(
+        {
+            ownedBy:user._id,
+            words:[],
+            colorCode,
+            name
+        }
+    )
+
+}
 exports.createWords =async(words,userId)=>{
     for (const word of words) {
         const wordRecord = await allModels.wordModel.findOne({word})
