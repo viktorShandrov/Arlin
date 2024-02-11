@@ -23,11 +23,16 @@ useEffect(()=>{
         return originalFetch.apply(this, arguments)
             .then(async(response) => {
                 const clonedResponse = response.clone();
-                const responseData = await clonedResponse.json();
 
-                if(user.token&&responseData.expAdded){
-                    dispatch(setUser({...user,exp:Number(user.exp)+Number(responseData.expAdded)}))
+                const contentType = clonedResponse.headers.get('Content-Type');
+                if (contentType && contentType.includes('application/json')) {
+                    const responseData = await clonedResponse.json();
+
+                    if(user.token&&responseData.expAdded){
+                        dispatch(setUser({...user,exp:Number(user.exp)+Number(responseData.expAdded)}))
+                    }
                 }
+
                 return response;
             })
             .catch(error => {

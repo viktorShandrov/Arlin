@@ -88,6 +88,110 @@ stripe-buy-button{
 }
 
 
+
+
+
+
+
+
+.actionBtnsC,
+.createBtns{
+    width: 90%;
+    display: flex;
+    gap: 100px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    /* justify-content: space-between; */
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+.actionBtnsC>*,
+.createBtns>*{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #75A9AB;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 30px;
+    font-weight: bolder;
+    border: none;
+    align-self: flex-start;
+    font-size: 25px;
+    width: 100%;
+}
+
+
+.createWordGroupWrapper{
+    background-color: white;
+    border-radius: 20px;
+    padding: 50px;
+}
+.createWordGroupC{
+    text-align: center;
+    width:    80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+}
+
+
+
+.colorPickAndNameInput{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+.colorPicker{
+    border-radius: 5px;
+    height: 36px;
+    aspect-ratio: 1/1;
+    background-color: purple;
+
+}
+.colorPicker input{
+    outline: none;
+    border: none;
+    height: 100%;
+    padding: 0;
+}
+.colorPicker:hover {
+    cursor: pointer;
+}
+
+.nameInput{
+    width: 100%;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.createBtns{
+    margin: 0;
+    gap: 20px;
+    width: 100%;
+}
+.createBtns>*{
+    align-items: center;
+    padding: 5px 50px;
+}
+.createBtn:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.cancelBtn{
+    background-color: white;
+    color: #A73701;
+    border: #A73701 solid 2px;
+}
+
+
 @media (max-width: 1000px){
     .container{
         width: 70%;

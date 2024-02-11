@@ -3,10 +3,10 @@ const mongoose = require("mongoose")
 
 
 const schema = mongoose.Schema({
-    ownedBy:[{
+    ownedBy:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
-    }],
+    },
     words:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"UnknownWord"
