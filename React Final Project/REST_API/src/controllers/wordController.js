@@ -104,5 +104,13 @@ router.post("/createWordContainer",async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/getWordContainers",async (req,res)=>{
+    try{
+        const containers = await wordManager.getUserWordContainer(req.user)
+        res.status(200).json({containers})
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
 
 module.exports = router
