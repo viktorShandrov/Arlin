@@ -55,10 +55,10 @@
 }
 .word:hover{
     cursor: pointer;
-    background-color: #a6a600;
+    background-color: #a6a600 !important;
 }
 [data-isclicked="true"]{
-    background-color: #a6a600;
+    /*background-color: #a6a600;*/
 
 }
 .saveWords{
@@ -129,6 +129,11 @@
     display: flex;
     gap: 10px;
     color: white;
+    user-input: none;
+}
+.userWordContainerC:hover{
+    background-color: #4C6A69;
+    cursor: pointer;
 }
 .containerColor{
     width: 30px;
@@ -136,7 +141,9 @@
     border-radius: 5px;
 }
 
-.wordInfoWrapper .xmark{
+.plusSign{
+    display: flex;
+    align-items: center;
 }
 
 

@@ -17,7 +17,7 @@ exports.register = async(email,password,repeatedPassword)=>{
     }
 
     const newUser = await  userModel.create({email,password,repeatedPassword})
-    await wordManager.createWordContainer(newUser,"#ffffff","Неконкретизирани","systemGenerated")
+    await wordManager.createWordContainer(newUser,"#a6a600","Неконкретизирани","systemGenerated")
     return exports.login(email,password)
 
 }

@@ -63,7 +63,7 @@ export default function TranslationContainer() {
                 prevClickedWords.splice(prevClickedWords.indexOf(element),1)
             }else{
                 // @ts-ignore
-                prevClickedWords = [...prevClickedWords,{text,targetContainer:"Неконкретизирани"}];
+                prevClickedWords = [...prevClickedWords,{text,targetContainer:"Неконкретизирани",colorCode:"#a6a600"}];
             }
             const newClickedWords = [...prevClickedWords]
             // newClickedWords[index] = !newClickedWords[index];
@@ -123,6 +123,18 @@ export default function TranslationContainer() {
             fetchUserWordContainers()
         }
     }
+    const addWordToSpecificGroupClickHandler = (wordText:string,containerName:string,colorCode:any) =>{
+        const word = clickedWords.find((word:any)=>word.text===wordText)
+        const index = clickedWords.indexOf(word!)
+        // @ts-ignore
+        setClickedWords((previousWords:any)=>{
+            const updated = [...previousWords]
+            updated[index] = {...updated[index],targetContainer:containerName,colorCode}
+            console.log(updated)
+            return updated
+        })
+        closeWordInfoPopup()
+    }
 
     // @ts-ignore
     return (
@@ -138,6 +150,11 @@ export default function TranslationContainer() {
                         el = el.replace(/^[,."\s:]+|[,\s:]+$/g, "")
                         return (
                             <span
+                                style={
+                                    {
+                                            backgroundColor:clickedWords.find((word:any)=>word.text===el)?.colorCode
+                                    }
+                                }
                                 key={index}
                                 className={`${styles.word} `}
                                 data-isclicked={!!clickedWords.find((word:any)=>word.text===el)}
@@ -176,7 +193,7 @@ export default function TranslationContainer() {
                         <div className={styles.userWordContainersC}>
                             <h6 className={styles.groupsHeading}>групи от думи</h6>
                             {userWordContainers.map((container:any)=>{
-                               return <div className={styles.userWordContainerC}>
+                               return <div onClick={()=>addWordToSpecificGroupClickHandler(selectedWordInfo,container.name,container.colorCode)} className={styles.userWordContainerC}>
                                    <div
                                        style={{
                                            backgroundColor:container.colorCode
@@ -189,6 +206,10 @@ export default function TranslationContainer() {
                                    {container.name}
                                 </div>
                             })}
+                            <div className={styles.userWordContainerC}>
+                                <i className={`${styles.plusSign} fa-solid fa-plus`}></i>
+                                нова група
+                            </div>
                             {!userWordContainers.length&&<ComponentLoading/>}
                         </div>
 
