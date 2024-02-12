@@ -443,6 +443,9 @@ exports.createWordContainer =async(user,colorCode,name,type = "custom")=>{
     )
 
 }
+exports.getUserWordContainer = (user)=>{
+    return allModels.wordsContainer.find({ownedBy:user._id})
+}
 exports.createWords =async(words,userId)=>{
     // const wordsAndTranslations = await exports.translateMultipleWords(words)
 

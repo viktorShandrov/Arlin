@@ -4,11 +4,15 @@ import styles from "./TranslationContainer.module.css";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {request} from "../../functions";
 import ComponentLoading from "../ComponentLoading/ComponentLoading";
+import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
 
 export default function TranslationContainer() {
     const [translatedSentence, setTranslatedSentence] = useState("");
+    const [selectedWordInfo, setSelectedWordInfo] = useState("");
     const [clickedWords, setClickedWords] = useState([]);
+    const [userWordContainers, setUserWordContainers] = useState([]);
     const [isTranslationLoading, setIsTranslationLoading] = useState(false);
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
     const wordsContainerRef = useRef<HTMLParagraphElement>(null)
 
     let { textToTranslate } = useParams();
@@ -51,7 +55,8 @@ export default function TranslationContainer() {
         }
     }, [textToTranslate]);
 
-    const handleWordClick = (text: string) => {
+    const handleWordClick = (e:any,text: string) => {
+        if(e.target.classList.contains(styles.info)) return
         setClickedWords((prevClickedWords) => {
             const element = prevClickedWords.find((el:any)=>el.text===text)
             if(element){
@@ -101,6 +106,23 @@ export default function TranslationContainer() {
         const newUrl = newUrlArr.join("/")
         navigate(newUrl)
     }
+    const closeWordInfoPopup = ()=>{
+        setIsPopupVisible(false)
+    }
+    const fetchUserWordContainers = () =>{
+        request("unknownWords/getWordContainers","GET").subscribe(
+            (res:any)=>{
+                setUserWordContainers(res.containers)
+            }
+        )
+    }
+    const showWordInfoClickHandler = (word:string) =>{
+        setIsPopupVisible(true)
+        setSelectedWordInfo(word)
+        if(!userWordContainers.length){
+            fetchUserWordContainers()
+        }
+    }
 
     // @ts-ignore
     return (
@@ -119,10 +141,11 @@ export default function TranslationContainer() {
                                 key={index}
                                 className={`${styles.word} `}
                                 data-isclicked={!!clickedWords.find((word:any)=>word.text===el)}
-                                onClick={() => handleWordClick(el)}
+                                onClick={(e) => handleWordClick(e,el)}
                                 // ref={spanRef}
                             >
                           {el}
+                                {!!clickedWords.find((word:any)=>word.text===el)&&<i onClick={()=>showWordInfoClickHandler(el)} className={`${styles.info} fa-solid fa-info`}></i>}
                         </span>
                         );
                     })}
@@ -138,6 +161,42 @@ export default function TranslationContainer() {
                 <p className={styles.translation}>{isTranslationLoading&&<ComponentLoading/>}{translatedSentence}</p>
             </div>}
             <div onClick={()=>closeTextToTranslatePanel()} className={styles.overlay}></div>
+
+            {isPopupVisible&&<PopUpOverlay>
+                <div className={styles.wordInfoWrapper}>
+                    <i  onClick={()=>closeWordInfoPopup()} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
+                    <div className={styles.wordInfoC}>
+                        <div className={styles.infosC}>
+                            <div className={styles.infoC}>
+                                <p className={styles.infoTitle}>дума</p>
+                                <h5 className={styles.infoValue}>{selectedWordInfo}</h5>
+                            </div>
+
+                        </div>
+                        <div className={styles.userWordContainersC}>
+                            <h6 className={styles.groupsHeading}>групи от думи</h6>
+                            {userWordContainers.map((container:any)=>{
+                               return <div className={styles.userWordContainerC}>
+                                   <div
+                                       style={{
+                                           backgroundColor:container.colorCode
+                                        }
+                                       }
+                                       className={styles.containerColor}
+                                   >
+                                   </div>
+
+                                   {container.name}
+                                </div>
+                            })}
+                            {!userWordContainers.length&&<ComponentLoading/>}
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </PopUpOverlay>}
         </>
 
 
