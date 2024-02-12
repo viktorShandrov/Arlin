@@ -1,6 +1,7 @@
 const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const utils = require("../utils/utils");
+const wordManager = require("./wordManager");
 
 
 
@@ -15,7 +16,8 @@ exports.register = async(email,password,repeatedPassword)=>{
         throw new Error("Email already exists!")
     }
 
-    await  userModel.create({email,password,repeatedPassword})
+    const newUser = await  userModel.create({email,password,repeatedPassword})
+    await wordManager.createWordContainer(newUser,"#ffffff","Неконкретизирани","systemGenerated")
     return exports.login(email,password)
 
 }

@@ -51,10 +51,18 @@ export default function TranslationContainer() {
         }
     }, [textToTranslate]);
 
-    const handleWordClick = (index: number) => {
+    const handleWordClick = (text: string) => {
         setClickedWords((prevClickedWords) => {
-            const newClickedWords: any = [...prevClickedWords];
-            newClickedWords[index] = !newClickedWords[index];
+            const element = prevClickedWords.find((el:any)=>el.text===text)
+            if(element){
+                prevClickedWords.splice(prevClickedWords.indexOf(element),1)
+            }else{
+                // @ts-ignore
+                prevClickedWords = [...prevClickedWords,{text,targetContainer:"Неконкретизирани"}];
+            }
+            const newClickedWords = [...prevClickedWords]
+            // newClickedWords[index] = !newClickedWords[index];
+
             return newClickedWords;
         });
     };
@@ -69,14 +77,17 @@ export default function TranslationContainer() {
     // }, [clickedWords]);
 
     const saveWordsClickHandler = () => {
-        const words = [];
+        // const words = [];
         if(wordsContainerRef.current){
             // @ts-ignore
-            for (const elements of Array.from(wordsContainerRef.current!.children).filter(el=>el.getAttribute("data-isclicked"))) {
-                // @ts-ignore
-                words.push(elements.textContent);
-            }
-            request("unknownWords/create", "POST", { words }).subscribe(
+            // for (const elements of Array.from(wordsContainerRef.current!.children).filter(el=>el.getAttribute("data-isclicked"))) {
+            //     // @ts-ignore
+            //     words.push({
+            //         text:elements.textContent,
+            //         targetContainer:"Неконкретизирани"
+            //     });
+            // }
+            request("unknownWords/create", "POST", { words:clickedWords} ).subscribe(
                 () => {
                     console.log("success");
                 }
@@ -107,8 +118,8 @@ export default function TranslationContainer() {
                             <span
                                 key={index}
                                 className={`${styles.word} `}
-                                data-isclicked={clickedWords[index]}
-                                onClick={() => handleWordClick(index)}
+                                data-isclicked={!!clickedWords.find((word:any)=>word.text===el)}
+                                onClick={() => handleWordClick(el)}
                                 // ref={spanRef}
                             >
                           {el}

@@ -8,11 +8,23 @@ const schema = mongoose.Schema({
         ref:"User"
     },
     words:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"UnknownWord"
+        wordRef:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"UnknownWord"
+        },
+        isKnown:{
+            type:Boolean,
+            default: false
+        }
+
     }],
     colorCode:String,
     name:String,
+    type:{
+        type:String,
+        enum:['systemGenerated','custom'],
+        default:"custom"
+    }
 
 })
 

@@ -428,33 +428,47 @@ exports.giveSentence =async(word)=>{
     const data = await(await fetch("https://api.wordnik.com/v4/word.json/car/topExample?useCanonical=false&api_key=c23b746d074135dc9500c0a61300a3cb7647e53ec2b9b658e")).json()
 
 }
-exports.createWordContainer =async(user,colorCode,name)=>{
+exports.createWordContainer =async(user,colorCode,name,type = "custom")=>{
+    const existingContainer = await allModels.wordsContainer.findOne({ownedBy:user._id,name:name})
+    if(existingContainer) throw new Error("Група със същото име вече съществува")
+
     const container = await allModels.wordsContainer.create(
         {
             ownedBy:user._id,
             words:[],
             colorCode,
-            name
+            name,
+            type
         }
     )
 
 }
 exports.createWords =async(words,userId)=>{
-    for (const word of words) {
-        const wordRecord = await allModels.wordModel.findOne({word})
-        if(wordRecord){
-            wordRecord.unknownFor.push(userId)
-            await wordRecord.save()
-        }else{
+    // const wordsAndTranslations = await exports.translateMultipleWords(words)
 
-            await models.wordModel.create(
-                {
-                    unknownFor:[userId],
-                    word,
-                    translatedText:await exports.translateWord(word)
-                }
-            )
-        }
+    for (const word of words) {
+        const wordRecord = await allModels.wordModel.findOne({word:word.text})
+        let wordRef = wordRecord?._id
+        const targetContainer = await allModels.wordsContainer.findOne({ownedBy:userId,name:word.targetContainer}) || await allModels.wordsContainer.findOne({ownedBy:userId,type:"systemGenerated"})
+
+
+
+            if(!wordRef){
+                wordRef =  (await models.wordModel.create(
+                    {
+                        // unknownFor:[userId],
+                        word:word.text,
+                        translatedText:await exports.translateWord(word)
+                    }
+                ))._id
+            }
+            if(targetContainer.words.some((el)=>el.wordRef.equals(wordRef))) throw new Error("Думата вече в запазена")
+                targetContainer.words.push({
+                    wordRef,
+                })
+            await targetContainer.save()
+
+
 
 
     }

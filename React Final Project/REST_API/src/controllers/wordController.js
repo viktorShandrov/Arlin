@@ -10,6 +10,7 @@ router.post("/create",isAuth,async (req,res)=>{
        await wordManager.createWords(words,_id)
         res.status(200).end()
     } catch (error) {
+        console.log(error)
         res.status(400).json({message:error.message})
     }
 })
