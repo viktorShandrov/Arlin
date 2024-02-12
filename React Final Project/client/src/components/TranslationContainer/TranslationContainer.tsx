@@ -94,7 +94,7 @@ export default function TranslationContainer() {
             // }
             request("unknownWords/create", "POST", { words:clickedWords} ).subscribe(
                 () => {
-                    console.log("success");
+                    setClickedWords([])
                 }
             );
         }
