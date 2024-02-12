@@ -63,7 +63,7 @@ export default function TranslationContainer() {
                 prevClickedWords.splice(prevClickedWords.indexOf(element),1)
             }else{
                 // @ts-ignore
-                prevClickedWords = [...prevClickedWords,{text,targetContainer:"Неконкретизирани",colorCode:"#a6a600"}];
+                prevClickedWords = [...prevClickedWords,{text,targetContainer:"Неконкретизирани",colorCode:"#a6a600",isSaved:false}];
             }
             const newClickedWords = [...prevClickedWords]
             // newClickedWords[index] = !newClickedWords[index];
@@ -92,9 +92,11 @@ export default function TranslationContainer() {
             //         targetContainer:"Неконкретизирани"
             //     });
             // }
-            request("unknownWords/create", "POST", { words:clickedWords} ).subscribe(
+            request("unknownWords/create", "POST", { words:clickedWords.filter((word:any)=>!word.isSaved)} ).subscribe(
                 () => {
-                    setClickedWords([])
+                    setClickedWords((previous:any)=>{
+                        return [...previous.map((word:any)=>{return {...word,isSaved:true}})]
+                    })
                 }
             );
         }
@@ -105,6 +107,8 @@ export default function TranslationContainer() {
         newUrlArr.pop()
         const newUrl = newUrlArr.join("/")
         navigate(newUrl)
+        setClickedWords([])
+
     }
     const closeWordInfoPopup = ()=>{
         setIsPopupVisible(false)
@@ -130,7 +134,6 @@ export default function TranslationContainer() {
         setClickedWords((previousWords:any)=>{
             const updated = [...previousWords]
             updated[index] = {...updated[index],targetContainer:containerName,colorCode}
-            console.log(updated)
             return updated
         })
         closeWordInfoPopup()
@@ -167,7 +170,7 @@ export default function TranslationContainer() {
                         );
                     })}
                 </p>
-                {clickedWords.some((el) => el) && (
+                {clickedWords.some((el) => !el.isSaved) && (
                     <button onClick={saveWordsClickHandler} className={styles.saveWords}>
                         Запази думи
                     </button>
