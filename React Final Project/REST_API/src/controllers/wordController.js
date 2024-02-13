@@ -104,9 +104,10 @@ router.post("/createWordContainer",async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.get("/getWordContainers",async (req,res)=>{
+router.get("/getWordContainers/:withPopulatedWords?",async (req,res)=>{
     try{
-        const containers = await wordManager.getUserWordContainer(req.user)
+        const {withPopulatedWords} = req.params
+        const containers = await wordManager.getUserWordContainer(req.user,withPopulatedWords)
         res.status(200).json({containers})
     } catch (error) {
         res.status(400).json({message:error.message})

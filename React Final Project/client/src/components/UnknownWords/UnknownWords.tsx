@@ -7,27 +7,39 @@ import useForm from "../../hooks/useForm.tsx";
 import {toast} from "react-toastify";
 
 export default function UnknownWords(){
-    const [words,setWords] = useState([])
+    // const [words,setWords] = useState([])
+    const [userWordContainers, setUserWordContainers] = useState([]);
     const [isLoading,setIsLoading] = useState(true)
     const [isPopUpVisible,setIsPopUpVisible] = useState(false)
     const [createWordContainerForm,onChange] = useForm({containerName:"",colorCode:"#de2bff"})
     useEffect(()=>{
         setIsLoading(true)
-        request("unknownWords/all","GET").subscribe(
-            (res)=>{
-                setWords(res)
-                setIsLoading(false)
+        fetchUserWordContainers()
+        // request("unknownWords/all","GET").subscribe(
+        //     (res)=>{
+        //         setWords(res)
+        //         setIsLoading(false)
+        //
+        //     }
+        // )
+    },[])
 
+    const fetchUserWordContainers = () =>{
+        request("unknownWords/getWordContainers","GET").subscribe(
+            (res:any)=>{
+                console.log(res.containers)
+                setUserWordContainers(res.containers)
+                setIsLoading(false)
             }
         )
-    },[])
+    }
     const showPopUpClickHandler = ()=>{
         setIsPopUpVisible(true)
     }
     const createWordContainerClickHandler = () =>{
 
         request("unknownWords/createWordContainer","POST",{colorCode:createWordContainerForm.colorCode,name:createWordContainerForm.containerName}).subscribe(
-            (res)=>{
+            (res:any)=>{
                 toast.success("Успешно създадена група")
                 hidePopup()
             }
@@ -48,31 +60,66 @@ export default function UnknownWords(){
                 <div className={styles.container}>
                     <div className={styles.headingAndCountC}>
                         <h4 className={styles.heading}>Непознати думи</h4>
-                        <h5 className={styles.count}>{words.length>99?"99+":words.length}</h5>
                     </div>
 
                     <hr className={styles.hr}/>
                     <div className={styles.wordsWrapper}>
                         {isLoading&&<ComponentLoading />}
-                        <div className={styles.wordsContainer}>
-                            {words.length>0&&words.reverse().map((word,index)=>{
+                        <div className={styles.wordContainersC}>
+                            {userWordContainers.length&&userWordContainers.map((container:any)=><details className={styles.wordContainer}>
+                                <summary>
+                                    <div className={styles.firstInfo}>
+                                        <i className={`${styles.optionsBtn} fa-solid fa-gear`}></i>
+                                        <div
+                                            style={{
+                                                backgroundColor:container.colorCode
+                                            }
+                                            }
+                                            className={styles.containerColor}
+                                        >
 
-                                return <details className={styles.row} key={index}>
-                                    <summary className={styles.summary}>
-                                        {word.word}
+
+                                        </div>
+                                        <div className={styles.containerName}>
+                                            {container.name}
+                                        </div>
+                                    </div>
+
+
+                                    <div className={styles.countAndToggleBtn}>
+                                        <h5 className={styles.count}>{container.words.length>99?"99+":container.words.length}</h5>
                                         <i className="fa-solid fa-caret-down"></i>
-                                    </summary>
-                                    <h6 className={styles.translation}>{word.translatedText}</h6>
-                                </details>
+                                    </div>
+                                </summary>
+
+                                <div className={styles.wordsContainer}>
+                                    {container.words.length>0&&container.words.reverse().map((word:any,index:number)=>{
+
+                                        return <details className={styles.row} key={index}>
+                                            <summary className={styles.summary}>
+                                                {word.wordRef.word}
+                                                <i className="fa-solid fa-caret-down"></i>
+                                            </summary>
+                                            <h6 className={styles.translation}>{word.wordRef.translatedText}</h6>
+                                        </details>
 
 
-                            })}
+                                    })}
 
-                            {words.length==0&&
-                                <div className={styles.noWordsC}>Нямаш запазени непознати думи</div>
+                                    {container.words.length==0&&
+                                        <div className={styles.noWordsC}>Нямаш запазени непознати думи</div>
+                                    }
+
+                                </div>
+
+
+
+
+                            </details>)
                             }
-
                         </div>
+
+
 
                     </div>
 

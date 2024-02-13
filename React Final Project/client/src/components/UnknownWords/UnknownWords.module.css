@@ -45,15 +45,15 @@
     justify-content: space-evenly;
     overflow: visible
 }
-.headingAndCountC .count{
-    padding: 10px;
-    width: 50px;
+.countAndToggleBtn .count{
+    padding: 5px 20px;
+    width: 20px;
     border-radius: 10px;
     background-color: #383838;
     color: white;
     display: flex;
     justify-content: center;
-    font-size: 20px;
+    font-size: 20px !important;
     align-items: center;
     font-weight: bolder;
 }
@@ -155,6 +155,11 @@ stripe-buy-button{
     background-color: purple;
 
 }
+.containerColor{
+    width: 30px;
+    aspect-ratio: 1/1;
+    border-radius: 5px;
+}
 .colorPicker input{
     outline: none;
     border: none;
@@ -191,6 +196,39 @@ stripe-buy-button{
     border: #A73701 solid 2px;
 }
 
+
+.wordContainersC{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.wordContainer summary{
+    display: flex;
+    justify-content: space-between;
+}
+.firstInfo{
+    display: flex;
+    gap: 10px;
+}
+.optionsBtn{
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+}
+
+.containerName{
+    display: flex;
+    align-items: center;
+}
+
+.countAndToggleBtn{
+    display: flex;
+    gap:10px;
+}
+.countAndToggleBtn>*{
+    display: flex;
+    align-items: center;
+}
 
 @media (max-width: 1000px){
     .container{

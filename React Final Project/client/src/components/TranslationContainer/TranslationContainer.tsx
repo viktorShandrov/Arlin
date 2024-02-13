@@ -206,7 +206,8 @@ export default function TranslationContainer() {
                                    >
                                    </div>
 
-                                   {container.name}
+                                    {container.name}
+
                                 </div>
                             })}
                             <div className={styles.userWordContainerC}>
