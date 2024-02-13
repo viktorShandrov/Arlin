@@ -22,16 +22,26 @@ import('random-words')
 
                     exports.generateTest =async(userId,testType,chapterId)=>{
 
+                        function shuffleArray(array) {
+                            for (let i = array.length - 1; i > 0; i--) {
+                                const j = Math.floor(Math.random() * (i + 1));
+                                [array[i], array[j]] = [array[j], array[i]];
+                            }
+                            return array;
+                        }
+
+
 
                         if(testType === utils.testTypes.randomWords){
+                            const userWordsContainers = await allModels.wordsContainer.find({ownedBy:userId}).populate("words.wordRef")
                             //12 words
-                            let questions
-                             questions = await models.wordModel.find({
-                                unknownFor:{
-                                    $in:userId
-                                }
-                            }).limit(12)
+                            let questions = shuffleArray(userWordsContainers.flatMap((container) => container.words.map((wordRef)=>wordRef.wordRef))).slice(0,12);
 
+                            //  questions = await models.wordModel.find({
+                            //     unknownFor:{
+                            //         $in:userId
+                            //     }
+                            // }).limit(12)
 
                             //fill with random words if necessary
                             let randomWordsToFill = []
@@ -41,7 +51,7 @@ import('random-words')
 
                             questions = [...questions,...randomWordsToFill]
 
-
+                            console.log(questions)
 
                             return await makeTestOutOfWords(questions)
 
@@ -461,7 +471,7 @@ exports.createWords =async(words,userId)=>{
                     {
                         // unknownFor:[userId],
                         word:word.text,
-                        translatedText:await exports.translateWord(word)
+                        translatedText:await exports.translateWord(word.text)
                     }
                 ))._id
             }
