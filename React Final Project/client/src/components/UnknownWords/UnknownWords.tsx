@@ -25,7 +25,7 @@ export default function UnknownWords(){
     },[])
 
     const fetchUserWordContainers = () =>{
-        request("unknownWords/getWordContainers","GET").subscribe(
+        request("unknownWords/getWordContainers/true","GET").subscribe(
             (res:any)=>{
                 console.log(res.containers)
                 setUserWordContainers(res.containers)
