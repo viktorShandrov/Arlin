@@ -61,7 +61,6 @@ export default function Test(){
         request("unknownWords/giveTest","POST",{testType,chapterId}).subscribe(
             (res:any)=>{
                 setTest(res.test)
-                console.log(res.test)
                 setQuestion(res.test[0])
                 setIsLoading(false)
             }
@@ -128,6 +127,7 @@ export default function Test(){
                              // @ts-ignore
                              answers={test.map(question=>question.answers.find((el:any)=>el.isCorrect))}
                              testType={testType}
+                             wordsIds={test.map((question:any)=>question.wordId)}
                          />
 
 

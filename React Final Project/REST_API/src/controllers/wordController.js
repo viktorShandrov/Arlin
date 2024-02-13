@@ -69,8 +69,8 @@ router.post("/giveTest",isAuth,giveTestRoute)
 router.post("/testCompleted",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
-        const {testType} = req.body
-        await wordManager.markTestAsCompleted(_id,testType)
+        const {testType,wordsIds} = req.body
+        await wordManager.markTestAsCompleted(_id,testType,wordsIds)
         res.status(200).json({expAdded:40})
     } catch (error) {
         res.status(400).json({message:error.message})

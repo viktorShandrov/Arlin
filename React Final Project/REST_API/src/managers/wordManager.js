@@ -51,7 +51,6 @@ import('random-words')
 
                             questions = [...questions,...randomWordsToFill]
 
-                            console.log(questions)
 
                             return await makeTestOutOfWords(questions)
 
@@ -256,10 +255,11 @@ import('random-words')
                         "
                     `
 
-                    exports.markTestAsCompleted =async (userId,testType)=>{
+                    exports.markTestAsCompleted =async (userId,testType,wordsIds)=>{
                         const user = await models.userModel.findById(userId)
                         switch(testType){
                             case utils.testTypes.randomWords :
+                                await exports.makeThemKnown(wordsIds,userId)
                                 ++user.randomWordsTests
                                 user.knownWords+=12
                                 break;
@@ -296,28 +296,31 @@ import('random-words')
                         for (const question of words) {
 
                            const answers = await makeWrongAnswers(question)
-                             const rightAnswer ={answer:question.translatedText,isCorrect : true}
+                             const rightAnswer ={
+                               answer:question.translatedText,
+                                 isCorrect : true,
+                             }
 
                             const randomNumber = Math.floor(Math.random() * 4);
                             //place it on random place
                             answers.splice(randomNumber,0,rightAnswer)
 
-                            if(question.translatedText) {
                                 container.push(
                                     {
-                                        _id:question._id,
+                                        wordId:question._id,
                                         question:question.word,
                                         answers
                                     }
                                 )
-                            }else{
-                                container.push(
-                                    {
-                                        question,
-                                        answers
-                                    }
-                                )
-                            }
+                            // if(question.translatedText) {
+                            // }else{
+                            //     container.push(
+                            //         {
+                            //             question,
+                            //             answers
+                            //         }
+                            //     )
+                            // }
                         }
                         // console.log(container)
                         return container
@@ -424,14 +427,22 @@ exports.deleteWord =async(wordId,userId)=>{
    return models.bookModel.findByIdAndDelete(wordId)
 }
 exports.makeThemKnown =async(wordsIds,userId)=>{
-    for (const wordId of wordsIds) {
-        const word = await models.wordModel.findById(wordId)
-        const index = word.unknownFor.findIndex(id=>id.equals(userId))
-        if(index!==-1){
-            word.unknownFor.splice(index,1)
+    const wordContainers = await allModels.wordsContainer.find({ownedBy:userId})
+    for (const wordContainer of wordContainers) {
+       const targetWords = wordContainer.words.filter((word)=>wordsIds.some(wordId=>word.wordRef.equals(wordId)))
+        for (const targetWord of targetWords) {
+            targetWord.isKnown=true
         }
-        await word.save()
+            await wordContainer.save()
     }
+    // for (const wordId of wordsIds) {
+    //     const word = await models.wordModel.findById(wordId)
+    //     const index = word.unknownFor.findIndex(id=>id.equals(userId))
+    //     if(index!==-1){
+    //         word.unknownFor.splice(index,1)
+    //     }
+    //     await word.save()
+    // }
 }
 exports.giveSentence =async(word)=>{
 
