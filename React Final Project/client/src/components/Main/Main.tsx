@@ -18,6 +18,7 @@ import MyBooksList from "../MyBooksList/MyBooksList";
 import BookContent from "../BookContent/BookContent";
 import MachFourTest from "../MachFourTest/MachFourTest";
 import LevelInfo from "../LevelInfo/LevelInfo";
+import TestsList from "../TestsList/TestsList";
 export default function Main(){
     return(
         <>
@@ -28,6 +29,7 @@ export default function Main(){
                         <Route element={<AuthGuard/>}>
                             <Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>
                             <Route path={"/test/matchFour"} element={<MachFourTest />}></Route>
+                            <Route path={"/tests"} element={<TestsList />}></Route>
                             <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
                             <Route path={"/AllBooks/"} element={<AllBooks />}></Route>
                             <Route path={"/read"} element={<MyBooksList />}></Route>

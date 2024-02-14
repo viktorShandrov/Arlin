@@ -11,7 +11,7 @@ export default function Test(){
     const {testType,chapterId} = useParams()
     const [test,setTest] = useState([])
     const [isLoading,setIsLoading] = useState(true)
-    const [isTestDone,setIsTestDone] = useState(true)
+    const [isTestDone,setIsTestDone] = useState(false)
     const [question,setQuestion] = useState({
         answers:[{answer:"",isCorrect:false}],
         question:""

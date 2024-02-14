@@ -52,7 +52,7 @@ export default function Navigation(){
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/read.png" alt=""/>
                         </div>
-                        <h6 className={styles.navItemLabel}>Четене</h6>
+                        <h6 className={styles.navItemLabel}>Четене на книга</h6>
                     </article>
                 </Link>
                 <Link onClick={navigateHandler} to={"/main/AllBooks"} className={styles.linkItem} >
@@ -76,10 +76,10 @@ export default function Navigation(){
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/dictionary.png" alt=""/>
                         </div>
-                        <h6 className={styles.navItemLabel}>Непознати думи</h6>
+                        <h6 className={styles.navItemLabel}>Речник</h6>
                     </article>
                 </Link>
-                <Link onClick={navigateHandler} to={"/main/test/matchFour"}  className={styles.linkItem} >
+                <Link onClick={navigateHandler} to={"/main/tests"}  className={styles.linkItem} >
                     <article className={styles.linkC}>
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/test.png" alt=""/>
@@ -87,14 +87,14 @@ export default function Navigation(){
                         <h6 className={styles.navItemLabel}>Тестове</h6>
                     </article>
                 </Link>
-                <Link onClick={navigateHandler} to={"/main/dashboard"}  className={styles.linkItem} >
-                    <article className={styles.linkC}>
-                        <div className={styles.imageC}>
-                            <img src="/Navigation%20Icons/chat.png" alt=""/>
-                        </div>
-                        <h6 className={styles.navItemLabel}>Чат с изк. интелект</h6>
-                    </article>
-                </Link>
+                {/*<Link onClick={navigateHandler} to={"/main/dashboard"}  className={styles.linkItem} >*/}
+                {/*    <article className={styles.linkC}>*/}
+                {/*        <div className={styles.imageC}>*/}
+                {/*            <img src="/Navigation%20Icons/chat.png" alt=""/>*/}
+                {/*        </div>*/}
+                {/*        <h6 className={styles.navItemLabel}>Чат с изк. интелект</h6>*/}
+                {/*    </article>*/}
+                {/*</Link>*/}
                 <Link onClick={navigateHandler} to={"/main/dashboard"}  className={styles.linkItem} >
                     <article className={styles.linkC}>
                         <div className={styles.imageC}>
