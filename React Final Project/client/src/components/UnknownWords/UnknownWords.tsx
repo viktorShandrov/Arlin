@@ -11,8 +11,12 @@ export default function UnknownWords(){
     const [userWordContainers, setUserWordContainers] = useState([]);
     const [isLoading,setIsLoading] = useState(true)
     const [clickedWord,setClickedWord] = useState({
-        word:"",
-        translatedText:""
+        isKnown:false,
+        wordRef:{
+            word:"",
+            translatedText:""
+        }
+
     })
     const [isCreateGroupPopUpVisible,setIsCreateGroupPopUpVisible] = useState(false)
     const [isWordInfoPopUpVisible,setWordInfoPopUpVisible] = useState(false)
@@ -109,9 +113,9 @@ export default function UnknownWords(){
                                 </summary>
 
                                 <div className={styles.wordsContainer}>
-                                    {container.words.length>0&&container.words.map((word:any,index:number)=>{
+                                    {container.words.length>0&&container.words.sort((a, b) => (a.isKnown === b.isKnown) ? 0 : a.isKnown ? 1 : -1).map((word:any,index:number)=>{
 
-                                        return <div onClick={()=>wordInfoClickHandler(word.wordRef)} className={styles.row} key={index}>
+                                        return <div onClick={()=>wordInfoClickHandler(word)} data-isKnown={word.isKnown} className={styles.row} key={index}>
                                                 {word.wordRef.word}
                                             <i  className={`${styles.info} fa-solid fa-info`}></i>
 
@@ -181,11 +185,15 @@ export default function UnknownWords(){
                     <div className={styles.infosC}>
                         <div className={styles.infoC}>
                             <p className={styles.infoTitle}>дума</p>
-                            <h5 className={styles.infoValue}>{clickedWord.word}</h5>
+                            <h5 className={styles.infoValue}>{clickedWord.wordRef.word}</h5>
                         </div>
                         <div className={styles.infoC}>
                             <p className={styles.infoTitle}>превод</p>
-                            <h5 className={styles.infoValue}>{clickedWord.translatedText}</h5>
+                            <h5 className={styles.infoValue}>{clickedWord.wordRef.translatedText}</h5>
+                        </div>
+                        <div className={styles.infoC}>
+                            <p className={styles.infoTitle}>позната ли е</p>
+                            <h5 className={styles.infoValue}>{clickedWord.isKnown?"да":"не"}</h5>
                         </div>
 
                     </div>
