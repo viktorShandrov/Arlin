@@ -10,7 +10,12 @@ export default function UnknownWords(){
     // const [words,setWords] = useState([])
     const [userWordContainers, setUserWordContainers] = useState([]);
     const [isLoading,setIsLoading] = useState(true)
-    const [isPopUpVisible,setIsPopUpVisible] = useState(false)
+    const [clickedWord,setClickedWord] = useState({
+        word:"",
+        translatedText:""
+    })
+    const [isCreateGroupPopUpVisible,setIsCreateGroupPopUpVisible] = useState(false)
+    const [isWordInfoPopUpVisible,setWordInfoPopUpVisible] = useState(false)
     const [createWordContainerForm,onChange] = useForm({containerName:"",colorCode:"#de2bff"})
     useEffect(()=>{
         setIsLoading(true)
@@ -34,7 +39,7 @@ export default function UnknownWords(){
         )
     }
     const showPopUpClickHandler = ()=>{
-        setIsPopUpVisible(true)
+        setIsCreateGroupPopUpVisible(true)
     }
     const createWordContainerClickHandler = () =>{
 
@@ -49,9 +54,20 @@ export default function UnknownWords(){
         hidePopup()
     }
     const hidePopup = () =>{
-        setIsPopUpVisible(false)
+        setIsCreateGroupPopUpVisible(false)
         onChange({target:{name:"containerName",value:""}})
         onChange({target:{name:"colorCode",value:"#de2bff"}})
+    }
+    const hideWordInfoPopUp = () =>{
+        setWordInfoPopUpVisible(false)
+    }
+    const showWordInfoPopUp = () =>{
+        setWordInfoPopUpVisible(true)
+    }
+    const wordInfoClickHandler = (wordInfo:any) =>{
+        setClickedWord(wordInfo)
+        console.log(wordInfo)
+        showWordInfoPopUp()
     }
     // @ts-ignore
     return(
@@ -59,7 +75,7 @@ export default function UnknownWords(){
             <div className={styles.wrapper}>
                 <div className={styles.container}>
                     <div className={styles.headingAndCountC}>
-                        <h4 className={styles.heading}>Непознати думи</h4>
+                        <h4 className={styles.heading}>Групи от запзени непознати думи</h4>
                     </div>
 
                     <hr className={styles.hr}/>
@@ -93,15 +109,14 @@ export default function UnknownWords(){
                                 </summary>
 
                                 <div className={styles.wordsContainer}>
-                                    {container.words.length>0&&container.words.reverse().map((word:any,index:number)=>{
+                                    {container.words.length>0&&container.words.map((word:any,index:number)=>{
 
-                                        return <details className={styles.row} key={index}>
-                                            <summary className={styles.summary}>
+                                        return <div onClick={()=>wordInfoClickHandler(word.wordRef)} className={styles.row} key={index}>
                                                 {word.wordRef.word}
-                                                <i className="fa-solid fa-caret-down"></i>
-                                            </summary>
-                                            <h6 className={styles.translation}>{word.wordRef.translatedText}</h6>
-                                        </details>
+                                            <i  className={`${styles.info} fa-solid fa-info`}></i>
+
+                                            {/*<h6 className={styles.translation}>{word.wordRef.translatedText}</h6>*/}
+                                        </div>
 
 
                                     })}
@@ -136,7 +151,7 @@ export default function UnknownWords(){
                 {/*>*/}
                 {/*</stripe-buy-button>*/}
             </div>
-            {isPopUpVisible&&<PopUpOverlay>
+            {isCreateGroupPopUpVisible&&<PopUpOverlay>
                 <div className={styles.createWordGroupWrapper}>
                     <div className={styles.createWordGroupC}>
                         <h5>създаване на нова група за думи</h5>
@@ -159,6 +174,22 @@ export default function UnknownWords(){
 
 
 
+            </PopUpOverlay>}
+            {isWordInfoPopUpVisible&&<PopUpOverlay>
+                <div className={styles.wordInfoWrapper}>
+                    <i  onClick={()=>hideWordInfoPopUp()} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
+                    <div className={styles.infosC}>
+                        <div className={styles.infoC}>
+                            <p className={styles.infoTitle}>дума</p>
+                            <h5 className={styles.infoValue}>{clickedWord.word}</h5>
+                        </div>
+                        <div className={styles.infoC}>
+                            <p className={styles.infoTitle}>превод</p>
+                            <h5 className={styles.infoValue}>{clickedWord.translatedText}</h5>
+                        </div>
+
+                    </div>
+                </div>
             </PopUpOverlay>}
 
 
