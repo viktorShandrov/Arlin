@@ -130,6 +130,7 @@ stripe-buy-button{
     margin-bottom: 100px;
 }
 
+
 .actionBtnsC>*,
 .createBtns>*{
     flex: 1;
@@ -172,6 +173,11 @@ stripe-buy-button{
 }
 
 
+.createBtns,
+.createWordGroupC,
+.actionBtnsC{
+    overflow: visible !important;
+}
 
 .colorPickAndNameInput{
     display: flex;

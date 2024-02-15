@@ -14,7 +14,8 @@ export default function UnknownWords(){
         isKnown:false,
         wordRef:{
             word:"",
-            translatedText:""
+            translatedText:"",
+            examples:[]
         }
 
     })
@@ -86,7 +87,7 @@ export default function UnknownWords(){
                     <div className={styles.wordsWrapper}>
                         {isLoading&&<ComponentLoading />}
                         <div className={styles.wordContainersC}>
-                            {userWordContainers.length&&userWordContainers.map((container:any)=><details className={styles.wordContainer}>
+                            {userWordContainers.length>0&&userWordContainers.map((container:any)=><details className={styles.wordContainer}>
                                 <summary>
                                     <div className={styles.firstInfo}>
                                         <i className={`${styles.optionsBtn} fa-solid fa-gear`}></i>
@@ -187,7 +188,11 @@ export default function UnknownWords(){
                             <p className={styles.infoTitle}>позната ли е</p>
                             <h5 className={styles.infoValue}>{clickedWord.isKnown?"да":"не"}</h5>
                         </div>
-
+                        {clickedWord.wordRef.examples.length>0&&<div className={styles.infoC}>
+                            <p className={styles.infoTitle}>пример в изречение</p>
+                            <h5 className={styles.infoValue}>{clickedWord.wordRef.examples[0]}</h5>
+                            <button className={styles.showMoreExamples}>виж още примери в изречения</button>
+                        </div>}
                     </div>
                 </div>
             </PopUpOverlay>}
