@@ -60,7 +60,7 @@ export default function Navigation(){
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/books.png" alt=""/>
                         </div>
-                        <h6 className={styles.navItemLabel}>Kниги</h6>
+                        <h6 className={styles.navItemLabel}>Каталог книги</h6>
                     </article>
                 </Link>
                 <Link onClick={navigateHandler} to={"/main/news"} className={styles.linkItem} >
