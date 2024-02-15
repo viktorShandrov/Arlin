@@ -406,8 +406,7 @@ import('random-words')
             }
 
             exports.translateText=async(text)=>{
-
-                const response = await((await fetch(translateAPI+text)).json())
+                const response = await((await fetch(translateAPI+encodeURI(text))).json())
                 return response.translation
             }
             })
@@ -446,7 +445,7 @@ exports.makeThemKnown =async(wordsIds,userId)=>{
 }
 exports.giveSentence =async(word)=>{
 
-    const data = await(await fetch("https://api.wordnik.com/v4/word.json/car/topExample?useCanonical=false&api_key=c23b746d074135dc9500c0a61300a3cb7647e53ec2b9b658e")).json()
+    return await(await fetch(`https://api.wordnik.com/v4/word.json/${word}/topExample?useCanonical=false&api_key=c23b746d074135dc9500c0a61300a3cb7647e53ec2b9b658e`)).json()
 
 }
 exports.createWordContainer =async(user,colorCode,name,type = "custom")=>{

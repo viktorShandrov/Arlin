@@ -21,11 +21,14 @@ const {createClient} = require('@supabase/supabase-js')
 const mongoose = require("mongoose");
 const mongodb = require("mongodb");
 const {translateChapter} = require("../managers/chapterManager");
+const {wordModel} = require("../models/allModels");
+const {translateAPI} = require("./utils");
 
 exports.test=async ()=> {
 
     setTodayNews()
     // wordManager.fillDBwithWords()
+    console.log( )
 
     setTimeout(()=>{
         // translateChapter()
@@ -36,6 +39,56 @@ exports.test=async ()=> {
         // )
 
     },0)
+    async function putSentenceForWords(){
+        try {
+            const words = await models.wordModel.find({})
+            let normal = 0
+            let unnormal = 0
+            for (const word of words) {
+                // const sentenceWhereWordsIsPresent =  (await wordManager.giveSentence(word.word)).text
+                if(!word.examples.length){
+                    const payload = []
+                    const sentencesWhereWordsIsPresent = (await((await fetch(translateAPI+encodeURI(word.word))).json())).info.examples
+                    if(sentencesWhereWordsIsPresent.length){
+                        for (let  sentenceWhereWordsIsPresent of sentencesWhereWordsIsPresent) {
+                            sentenceWhereWordsIsPresent = sentenceWhereWordsIsPresent.replace(/<b>|<\/b>/g, '');
+                            const translation = await wordManager.translateText(sentenceWhereWordsIsPresent)
+                            payload.push(
+                                {
+                                    sentenceWhereWordsIsPresent,
+                                    translation
+                                }
+                            )
+                            normal++
+                            console.log(`${normal} th normal`)
+                        }
+                    }else{
+                        const  sentenceWhereWordsIsPresent = (await wordManager.giveSentence(word.word)).text
+                        const translation = await wordManager.translateText(sentenceWhereWordsIsPresent)
+                        payload.push(
+                            {
+                                sentenceWhereWordsIsPresent,
+                                translation
+                            }
+                        )
+                        unnormal++
+                        console.log(`${unnormal} th unnormal`)
+
+                    }
+                    word.examples = payload
+                    await word.save()
+                }
+
+
+
+            }
+        }catch (e){
+            putSentenceForWords()
+        }
+
+    }
+
+    putSentenceForWords()
 
 
         // const supabase = createClient('https://pezdarqtckujdxnfyxoz.supabase.co', utils.supabaseAPIKey)

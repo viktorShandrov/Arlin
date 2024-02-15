@@ -10,7 +10,7 @@
     border-bottom-left-radius: 23px;
     transform: translateX(-50%);
     background-color: white;
-    z-index: 99999999;
+    z-index: 999999999999999999999999999999999999999999999999999999999999999999999;
     transition: 1000ms;
 }
 .levelBarC{

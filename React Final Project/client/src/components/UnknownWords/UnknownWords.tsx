@@ -104,8 +104,6 @@ export default function UnknownWords(){
                                             {container.name}
                                         </div>
                                     </div>
-
-
                                     <div className={styles.countAndToggleBtn}>
                                         <h5 className={styles.count}>{container.words.length>99?"99+":container.words.length}</h5>
                                         <i className="fa-solid fa-caret-down"></i>
@@ -114,7 +112,6 @@ export default function UnknownWords(){
 
                                 <div className={styles.wordsContainer}>
                                     {container.words.length>0&&container.words.sort((a, b) => (a.isKnown === b.isKnown) ? 0 : a.isKnown ? 1 : -1).map((word:any,index:number)=>{
-
                                         return <div onClick={()=>wordInfoClickHandler(word)} data-isKnown={word.isKnown} className={styles.row} key={index}>
                                                 {word.wordRef.word}
                                             <i  className={`${styles.info} fa-solid fa-info`}></i>
@@ -130,24 +127,19 @@ export default function UnknownWords(){
                                     }
 
                                 </div>
-
-
-
-
                             </details>)
                             }
                         </div>
-
-
-
                     </div>
+                    <div className={styles.actionBtnsC}>
+                        <button onClick={showPopUpClickHandler} className={styles.createNewGroupBtn}>създай нова група</button>
+                        <button className={styles.saveNEwWordsBtn}>намери още думи</button>
+                    </div>
+
 
                 </div>
             </div>
-            <div className={styles.actionBtnsC}>
-                <button onClick={showPopUpClickHandler} className={styles.createNewGroupBtn}>създай нова група</button>
-                <button className={styles.saveNEwWordsBtn}>намери още думи</button>
-            </div>
+
             <div className={styles.buyBtnWrapper}>
                 {/*<stripe-buy-button*/}
                 {/*    buy-button-id="buy_btn_1OIWmyAPrNaPFyVRmw78cr1J"*/}
