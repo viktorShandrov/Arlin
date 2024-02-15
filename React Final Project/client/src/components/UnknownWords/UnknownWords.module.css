@@ -19,6 +19,7 @@
     margin:  10px 0;
     font-size: 27px;
     height: fit-content;
+    padding-bottom: 20px;
 }
 .noWordsC{
     text-align: center;
@@ -283,14 +284,19 @@ stripe-buy-button{
 
 
 
-.wordInfoWrapper{
+.wordInfoWrapper,
+.wordExamplesWrapper{
     padding:40px 30px;
     position: relative;
+    max-width: 50%;
     display: flex;
     flex-direction: column;
     border-radius: 20px;
     background-color: white;
     z-index: 999999999;
+}
+.wordExamplesWrapper{
+    max-height: 70%;
 }
 
 
@@ -306,6 +312,9 @@ stripe-buy-button{
     border-bottom: none;
 
 }
+.infoC.withBtn{
+    flex-direction: column;
+}
 .infoC>*{
     display: flex;
     align-items: end;
@@ -317,6 +326,28 @@ stripe-buy-button{
     margin: 0;
 }
 
+.example{
+ gap: 20px;
+    justify-content: space-between;
+}
+.example .infoValue{
+    text-align: right;
+
+}
+.showMoreExamples{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: #75A9AB;
+    color: white;
+    padding: 5px 40px;
+    border-radius: 30px;
+    font-weight: bolder;
+    border: none;
+    font-size: 25px;
+}
 .xmark{
     width: fit-content;
     position: absolute;
@@ -332,6 +363,44 @@ stripe-buy-button{
     color: white;
     cursor: pointer;
 }
+
+
+
+
+.heading{
+    text-align: center;
+}
+.heading>*{
+    margin: 0;
+}
+.wordExamplesCWrapper{
+    overflow-y: auto;
+}
+.wordExamplesC{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: white;
+    height: fit-content;
+}
+
+.wordExampleC{
+    background-color: #4C6A69;
+    border-radius: 10px;
+}
+.wordExampleC summary{
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #75A9AB;
+}
+.wordExampleC .translation{
+    padding: 5px 10px 10px 10px;
+}
+
+
+
+
+
 @media (max-width: 1000px){
     .container{
         width: 70%;

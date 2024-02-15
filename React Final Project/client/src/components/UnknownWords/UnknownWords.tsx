@@ -21,6 +21,7 @@ export default function UnknownWords(){
     })
     const [isCreateGroupPopUpVisible,setIsCreateGroupPopUpVisible] = useState(false)
     const [isWordInfoPopUpVisible,setWordInfoPopUpVisible] = useState(false)
+    const [isWordExamplesPopUpVisible,setIsWordExamplesPopUpVisible] = useState(false)
     const [createWordContainerForm,onChange] = useForm({containerName:"",colorCode:"#de2bff"})
     useEffect(()=>{
         setIsLoading(true)
@@ -188,14 +189,45 @@ export default function UnknownWords(){
                             <p className={styles.infoTitle}>позната ли е</p>
                             <h5 className={styles.infoValue}>{clickedWord.isKnown?"да":"не"}</h5>
                         </div>
-                        {clickedWord.wordRef.examples.length>0&&<div className={styles.infoC}>
-                            <p className={styles.infoTitle}>пример в изречение</p>
-                            <h5 className={styles.infoValue}>{clickedWord.wordRef.examples[0]}</h5>
-                            <button className={styles.showMoreExamples}>виж още примери в изречения</button>
+                        {clickedWord.wordRef.examples.length>0&&<div className={`${styles.infoC} ${styles.withBtn}`}>
+                            <div className={styles.example}>
+                                <p className={styles.infoTitle}>пример в изречение</p>
+                                <h5 className={styles.infoValue}>{clickedWord.wordRef.examples[0].sentenceWhereWordsIsPresent}</h5>
+                            </div>
+                            <button onClick={()=>setIsWordExamplesPopUpVisible(true)} className={styles.showMoreExamples}>виж още примери в изречения</button>
+
+
                         </div>}
                     </div>
                 </div>
             </PopUpOverlay>}
+
+            {isWordExamplesPopUpVisible&&<PopUpOverlay>
+                <div className={styles.wordExamplesWrapper}>
+                    <i  onClick={()=>setIsWordExamplesPopUpVisible(false)} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
+
+                    <div className={styles.heading}>
+                        <p>изречения включващи думата</p>
+                        <h4>{clickedWord.wordRef.word}</h4>
+                    </div>
+                    <div className={styles.wordExamplesCWrapper}>
+                        <div className={styles.wordExamplesC}>
+                            {clickedWord.wordRef.examples.map((example:any)=><details className={styles.wordExampleC}>
+                                <summary>{example.sentenceWhereWordsIsPresent}</summary>
+                                <div className={styles.translation}>
+                                    {example.translation}
+                                </div>
+
+                            </details>)}
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </PopUpOverlay> }
 
 
         </>
