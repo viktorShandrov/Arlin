@@ -4,6 +4,7 @@ import {useEffect, useRef, useState} from "react";
 import AnswerC from "./AnswerC/AnswerC";
 import {request} from "../../functions";
 import TestResume from "../TestResume/TestResume";
+import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
 export default function MachFourTest(){
     const dragOverElRef1= useRef(null)
     const dragOverElRef2= useRef(null)
@@ -28,9 +29,11 @@ export default function MachFourTest(){
     const [wholeTest,setWholeTest] = useState([])
     const [areAllRight,setAreAllRight] = useState(false)
     const [isTestDone,setIsTestDone] = useState(false)
-    const [areAnswersShadowed,setAreAnswersShadowed] = useState(true)
-    const [areAnswersExpanded,setAreAnswersExpanded] = useState(true)
+    const [isMobileDevice] = useState(()=>window.innerWidth<1100)
+    // const [areAnswersShadowed,setAreAnswersShadowed] = useState(true)
+    const [isAnswersPopupVisible,setIsAnswersPopupVisible] = useState(false)
     const [currentTestIndex,setCurrentTestIndex] = useState(-1)
+    const [mobileTargetContainer,setMobileTargetContainer] = useState("")
 
 
 
@@ -91,17 +94,28 @@ export default function MachFourTest(){
         //     old.splice(old.indexOf())
         //     return
         // })
-         request("unknownWords/giveTest","POST",{testType:"matchFour"}).subscribe(
+        request("unknownWords/giveTest","POST",{testType:"matchFour"}).subscribe(
              (res:any)=>{
                     setWholeTest(res.test)
                  // console.log(res.test)
                     setCurrentTest(res.test.slice(0,4))
                     setCurrentTestIndex(0)
-                    
+
 
              }
          )
     },[])
+    const mobileDragOverContainersVisualisation = () =>{
+        if(isMobileDevice){
+            for (const dragOverElRef of dragOverElRefs) {
+                const html = `Изберете дума <div class="${styles.growSpinner} spinner-grow" role="status"><span className="sr-only">Loading...</span></div>`;
+                dragOverElRef.current.innerHTML = html;
+
+
+            }
+        }
+
+    }
 
 
 
@@ -126,6 +140,7 @@ export default function MachFourTest(){
 
         setPairs(pairs)
 
+
         // @ts-ignore
         const answers = shuffleArray(currentTest.map((question:any)=>question.translatedText))
         // console.log(answers)
@@ -144,6 +159,7 @@ export default function MachFourTest(){
 
         }
 
+        mobileDragOverContainersVisualisation()
 
     },[currentTest])
 
@@ -199,6 +215,17 @@ export default function MachFourTest(){
         }
 
     }
+    const showAnswersPopup = (targetC:string) =>{
+        if(isMobileDevice){
+            setIsAnswersPopupVisible(true)
+            setMobileTargetContainer(targetC)
+        }
+    }
+    const hideAnswersPopup = () =>{
+
+            setIsAnswersPopupVisible(false)
+
+    }
 
 
 
@@ -207,35 +234,25 @@ export default function MachFourTest(){
         {isTestDone&&<TestResume questions={wholeTest.map(question=>question.word)} answers={wholeTest.map(question=>question.translatedText)} testType={"matchFour"} />}
         {!isTestDone&& <div ref={testWrapperRef} className={styles.testWrapper}>
             <div className={styles.questionsWrapper}>
+
                 {currentTest.length>0&&
                     currentTest.map((question:any,index:number)=><div className={styles.questionC}>
 
                         <h6>{question.word}</h6>
-                        <div data-isEmpty={!!pairs[question.word]} ref={dragOverElRefs[index]} className={styles.questionFreeSpace}>
-                            {pairs[question.word]&&<div onClick={()=>removeAnswerClickHandler(question.word)} className={styles.innerAnswerC}>{pairs[question.word]}<i className={`${styles.xmark} fa-solid fa-xmark`}></i></div>}
+                            {/*{!(pairs[question.word])?"Изберете дума":""}*/}
+                        <div data-isEmpty={!!pairs[question.word]} onClick={()=>showAnswersPopup(dragOverElRefs[index])} ref={dragOverElRefs[index]} className={styles.questionFreeSpace}>
+                            {pairs[question.word] && (
+                                <div onClick={() => removeAnswerClickHandler(question.word)} className={styles.innerAnswerC}>
+                                    {pairs[question.word]}
+                                    <i className={`${styles.xmark} fa-solid fa-xmark`}></i>
+                                </div>
+                            ) }
 
                         </div>
                     </div>)
                 }
 
-                {/*<div className={styles.questionC}>*/}
-                {/*    <h6>{currentTest.map((question:any)=>question.word)[1]}</h6>*/}
-                {/*    <div data-isEmpty={!!pairs[currentTest.map((question:any)=>question.word)[1]]} ref={dragOverElRef2} className={styles.questionFreeSpace}>*/}
-                {/*        {pairs[currentTest.map((question:any)=>question.word)[1]]&&<div onClick={()=>removeAnswerClickHandler("plane")} className={styles.innerAnswerC}>{pairs[currentTest.map((question:any)=>question.word)[1]]}<i className={`${styles.xmark} fa-solid fa-xmark`}></i></div>}*/}
-                {/*    </div>*/}
-                {/*</div>*/}
-                {/*<div className={styles.questionC}>*/}
-                {/*    <h6>{currentTest.map((question:any)=>question.word)[2]}</h6>*/}
-                {/*    <div data-isEmpty={!!pairs[currentTest.map((question:any)=>question.word)[2]]} ref={dragOverElRef3} className={styles.questionFreeSpace}>*/}
-                {/*        {pairs[currentTest.map((question:any)=>question.word)[2]]&&<div onClick={()=>removeAnswerClickHandler("staff")} className={styles.innerAnswerC}>{pairs[currentTest.map((question:any)=>question.word)[2]]}<i className={`${styles.xmark} fa-solid fa-xmark`}></i></div>}*/}
-                {/*    </div>*/}
-                {/*</div>*/}
-                {/*<div className={styles.questionC}>*/}
-                {/*    <h6>{currentTest.map((question:any)=>question.word)[3]}</h6>*/}
-                {/*    <div data-isEmpty={!!pairs[currentTest.map((question:any)=>question.word)[3]]} ref={dragOverElRef4} className={styles.questionFreeSpace}>*/}
-                {/*        {pairs[currentTest.map((question:any)=>question.word)[3]]&&<div onClick={()=>removeAnswerClickHandler("book")} className={styles.innerAnswerC}>{pairs[currentTest.map((question:any)=>question.word)[3]]}<i className={`${styles.xmark} fa-solid fa-xmark`}></i></div>}*/}
-                {/*    </div>*/}
-                {/*</div>*/}
+
             </div>
             <div className={styles.answersWrapper}>
                 {answers.length>0&&<div className={styles.answersC}>
@@ -251,35 +268,25 @@ export default function MachFourTest(){
 
 
             </div>
-            {!Object.values(pairs).every((prop:any)=>prop)&&<section
-                style={{
-                    // height:areAnswersExpanded?"fit-content":"20%"
-                    opacity:areAnswersShadowed?1:0.3,
-                    height:areAnswersExpanded?"fit-content":"20%"
-                }}
-                className={styles.answersMobileWrapper}
-                onClick={toggleAnswersShadowingCclickHandler}
-            >
-                <div
-                    className={styles.answersMobileC}
+            {!Object.values(pairs).every((prop:any)=>prop)&&isAnswersPopupVisible&&<PopUpOverlay>
+                <section
+                    className={styles.answersMobileWrapper}
                 >
-                    {/*// @ts-ignore*/}
-                    <AnswerC reference={mobileAnswerElRef1} setPairs={setPairs} text={answers[0]} dragOverElRefs={dragOverElRefs} setAreAnswersShadowed={setAreAnswersShadowed}/>
-                    {/*// @ts-ignore*/}
-                    <AnswerC reference={mobileAnswerElRef2} setPairs={setPairs} text={answers[1]}  dragOverElRefs={dragOverElRefs} setAreAnswersShadowed={setAreAnswersShadowed}/>
-                    {/*// @ts-ignore*/}
-                    <AnswerC reference={mobileAnswerElRef3} setPairs={setPairs} text={answers[2]}  dragOverElRefs={dragOverElRefs} setAreAnswersShadowed={setAreAnswersShadowed}/>
-                    {/*// @ts-ignore*/}
-                    <AnswerC reference={mobileAnswerElRef4} setPairs={setPairs} text={answers[3]}  dragOverElRefs={dragOverElRefs} setAreAnswersShadowed={setAreAnswersShadowed}/>
-                    {!areAnswersExpanded&&<div onClick={toggleAnswersExpandableCclickHandler}  className={styles.expandIcon}>
-                        <i className="fa-solid fa-arrow-up"></i>
-                    </div>}
-                    {areAnswersExpanded&&<div onClick={toggleAnswersExpandableCclickHandler}  className={styles.expandIcon}>
-                        <i className="fa-solid fa-arrow-down"></i>
-                    </div>}
-                </div>
+                    <div className={styles.answersMobileC}>
+                        {/*// @ts-ignore*/}
+                        <AnswerC reference={mobileAnswerElRef1} setPairs={setPairs} text={answers[0]} dragOverElRefs={dragOverElRefs} isMobile={true}  targetContainer={mobileTargetContainer} hidePopup={hideAnswersPopup}/>
+                        {/*// @ts-ignore*/}
+                        <AnswerC reference={mobileAnswerElRef2} setPairs={setPairs} text={answers[1]}  dragOverElRefs={dragOverElRefs} isMobile={true} targetContainer={mobileTargetContainer} hidePopup={hideAnswersPopup}/>
+                        {/*// @ts-ignore*/}
+                        <AnswerC reference={mobileAnswerElRef3} setPairs={setPairs} text={answers[2]}  dragOverElRefs={dragOverElRefs} isMobile={true} targetContainer={mobileTargetContainer} hidePopup={hideAnswersPopup}/>
+                        {/*// @ts-ignore*/}
+                        <AnswerC reference={mobileAnswerElRef4} setPairs={setPairs} text={answers[3]}  dragOverElRefs={dragOverElRefs} isMobile={true} targetContainer={mobileTargetContainer} hidePopup={hideAnswersPopup}/>
 
-            </section>}
+                    </div>
+                    <i onClick={hideAnswersPopup} className={`${styles.xmark} fa-solid fa-xmark`}></i>
+                </section>
+            </PopUpOverlay>
+                }
 
 
             {

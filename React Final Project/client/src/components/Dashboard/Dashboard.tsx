@@ -88,21 +88,21 @@ export default function Dashboard(){
                 </section>
 
 
-                <section className={styles.expWrapper}>
-                    <div className={styles.expC}>
-                        <div className={styles.fragment}></div>
-                        <div className={styles.fragment}></div>
-                        <div className={styles.fragment}></div>
-                        <div className={styles.fragment}></div>
-                        <div className={styles.fragment}></div>
-                        <div className={styles.fragment}></div>
-                        <div className={styles.fragment}></div>
-                        <div className={styles.fragment}></div>
-                        <div className={styles.fragment}></div>
-                        <div className={styles.fragment}></div>
-                    </div>
-                    <h6>{userInfo.exp} exp</h6>
-                </section>
+                {/*<section className={styles.expWrapper}>*/}
+                {/*    <div className={styles.expC}>*/}
+                {/*        <div className={styles.fragment}></div>*/}
+                {/*        <div className={styles.fragment}></div>*/}
+                {/*        <div className={styles.fragment}></div>*/}
+                {/*        <div className={styles.fragment}></div>*/}
+                {/*        <div className={styles.fragment}></div>*/}
+                {/*        <div className={styles.fragment}></div>*/}
+                {/*        <div className={styles.fragment}></div>*/}
+                {/*        <div className={styles.fragment}></div>*/}
+                {/*        <div className={styles.fragment}></div>*/}
+                {/*        <div className={styles.fragment}></div>*/}
+                {/*    </div>*/}
+                {/*    <h6>{userInfo.exp} exp</h6>*/}
+                {/*</section>*/}
 
 
 
