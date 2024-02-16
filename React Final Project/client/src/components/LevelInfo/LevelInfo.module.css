@@ -64,9 +64,9 @@
 
 .arrow {
     position: absolute;
-    top: 50%;
+    top: 10%;
     right: 0;
-    transform:rotate(-90deg) translate(750%, -250%) ;
+    transform:rotate(-90deg) translate(1450%, -250%) ;
     cursor: pointer;
     overflow: visible;
 }

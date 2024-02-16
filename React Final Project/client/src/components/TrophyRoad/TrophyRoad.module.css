@@ -1,0 +1,52 @@
+.trophyRoadWrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+
+
+}
+.trophyRoadC{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    padding: 100px 0;
+}
+.levelC{
+    padding: 30px;
+    background-color: #75A9AB;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+
+}
+.levelC[data-isuserlevel="true"]{
+    background-color: #A73701;
+    animation: userLevelAnim 3s;
+}
+.levelName{
+    user-select: none;
+}
+@keyframes userLevelAnim {
+    0%{
+        background-color: #75A9AB;
+    }
+    20%{
+        background-color: #A73701;
+    }
+    40%{
+        background-color: #75A9AB;
+    }
+    60%{
+        background-color: #A73701;
+    }
+    80%{
+        background-color: #75A9AB;
+    }
+    100%{
+        background-color: #A73701;
+    }
+
+}

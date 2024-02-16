@@ -2,11 +2,13 @@
 import styles from "./LevelInfo.module.css"
 import {useEffect, useRef, useState} from "react";
 import { useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 export default function LevelInfo(){
     const {user} = useSelector((state:any)=>state.user)
 
     const levelInfoWrapperRef=useRef(null)
     const [userCurrentLevel,setUserCurrentLevel] = useState(0)
+    const navigate = useNavigate()
 
     // const [exp,setExp] = useState(0)
 
@@ -38,6 +40,7 @@ export default function LevelInfo(){
             hidePopup()
         },5000)
     }
+
     // setTimeout(()=>{
     //     setExp(300)
     // },6000)
@@ -110,7 +113,7 @@ export default function LevelInfo(){
                 </div>
             </div>
             <div className={styles.btnAndLevelInfo}>
-                <button className={styles.viewTrophyRoad}>виж пътя на наградите</button>
+                <button onClick={()=>navigate("/main/trophyRoad")} className={styles.viewTrophyRoad}>виж пътя на наградите</button>
                 <div className={styles.levelInfo}>
                     <p>следващо ниво</p>
                     <h3>{userCurrentLevel+1}</h3>
