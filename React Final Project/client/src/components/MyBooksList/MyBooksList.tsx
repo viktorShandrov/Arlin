@@ -31,17 +31,17 @@ export default function MyBooksList(){
                 const {allBooks}=res
                 setReqBooks(allBooks)
                 setBooks(allBooks)
-                setCompletions(allBooks.map((book:any)=>{
+                setCompletions(allBooks.filter((book:any)=>book.ownedBy.includes(user.userId)).map((book:any)=>{
                     return {
                         bookId:book._id,
                         bookName:book.name
                     }
                 }))
                 setFilteredAutoCompletions(allBooks.map((book:any)=>{
-                    return {
-                        bookId:book._id,
-                        bookName:book.name
-                    }
+                        return {
+                            bookId:book._id,
+                            bookName:book.name
+                        }
                 }))
                 setCurrentReading(allBooks.find((book:any)=>book._id.toString() === user.lastReading.bookId.toString()))
                 setIsLoading(false)
@@ -78,15 +78,16 @@ export default function MyBooksList(){
         const target = e.currentTarget
         // target.parentElement.textContent = "d"
         // target.classList.add(styles.clicked)
-        setTimeout(()=>{
             navigate(`/main/read/${user.lastReading.bookId}/chapterId=${user.lastReading.chapterId}`)
-            // target.classList.remove(styles.clicked)
-        },1000)
+        // setTimeout(()=>{
+        //     // target.classList.remove(styles.clicked)
+        // },1000)
 
     }
 
 
 
+    // @ts-ignore
     // @ts-ignore
     return(
         <>
@@ -104,9 +105,9 @@ export default function MyBooksList(){
                         {/*        </div>*/}
                         {/*    </div>*/}
                         {/*    <div className={styles.myBooksWrapper}>*/}
-                        {/*        <div className={styles.searchBarC}>*/}
-                        {/*            <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>*/}
-                        {/*        </div>*/}
+                        {/*<div className={styles.searchBarC}>*/}
+                        {/*    <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>*/}
+                        {/*</div>*/}
                         {/*        <div className={styles.myBooksC}>*/}
 
                         {/*            <div className={styles.myBooksScrollerWrapper}>*/}
@@ -138,8 +139,14 @@ export default function MyBooksList(){
                         
 
                         <section className={styles.moreOfThisGenreWrapper}>
+
                             {books.filter((book:any)=>book.ownedBy.includes(user.userId)).length>0&&
-                                <BookSection books={books.filter((book:any)=>book.ownedBy.includes(user.userId))} sectionHeader={"Закупени книги"}/>
+                                <BookSection books={books.filter((book:any)=>book.ownedBy.includes(user.userId))} sectionHeader={"Закупени книги"}>
+                                    {/*@ts-ignore*/}
+                                    <div className={styles.searchBarC}>
+                                        <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
+                                    </div>
+                                </BookSection>
                             }
                         </section>
                         <section className={styles.moreOfThisGenreWrapper}>

@@ -76,12 +76,12 @@
 }
 
 .searchBarC{
-    /*transform-origin: top left; !* Set the transform origin to the center *!*/
     position: absolute;
-    width: 70%;
+    top: 65px;
     left: 50%;
-    margin-top: 20px;
+    width: 100%;
     transform: translateX(-50%);
+    margin-top: 20px;
     z-index: 999999;
 }
 
@@ -198,6 +198,9 @@
 
     .buttonFundament{
         width: 95%;
+    }
+    .searchBarC{
+        top: 120px;
     }
 }
 @media (max-width: 400px){

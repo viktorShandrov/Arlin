@@ -4,6 +4,7 @@
     border-bottom: solid 2px grey;
     display: flex;
     flex-direction: column;
+    position: relative;
 
 }
 .sectionHeader{
