@@ -33,7 +33,6 @@ function App() {
       <>
           <ToastContainer position={toast.POSITION.TOP_RIGHT} />
           <Provider store={store}>
-                 <XP/>
               <div  className={styles.mainWrapper}>
                   <Routes>
 
@@ -54,6 +53,7 @@ function App() {
 
                   </Routes>
               </div>
+                 <XP/>
           </Provider>
           <userContext.Provider value={{user,setUser}}>
           </userContext.Provider>

@@ -1,11 +1,11 @@
 
 
-
 const models = require("../models/allModels");
 const utils = require("../utils/utils");
 const { isOwnedByUser, isAdmin } = require("../managerUtils/managerUtil");
 const allModels = require("../models/allModels");
 const fetch = require('isomorphic-fetch');
+const {updateUserExp} =require("./userManager") ;
 // const fetch1 = await import("node-fetch")
 
 
@@ -269,7 +269,9 @@ import('random-words')
                             case utils.testTypes.textQuestions :
                                 ++user.chapterPlotTests
                                 break;
+
                         }
+                        await updateUserExp(40,user)
                         return user.save()
                     }
 

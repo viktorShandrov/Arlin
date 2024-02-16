@@ -2,6 +2,7 @@ const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const utils = require("../utils/utils");
 const wordManager = require("./wordManager");
+const {levelRewards} = require("../utils/utils");
 
 
 
@@ -49,5 +50,45 @@ exports.getUserInfo = async (_id)=>{
 
     return user.toObject()
 
+
+}
+
+
+exports.updateUserExp =async (plusExp,user) =>{
+    const newExp = user.exp + (plusExp*user.expMultiplier)
+    const levelWithOldExp = calculateLevel(user.exp)
+    // user.exp = newExp
+    await checkIfNewLevel(newExp,levelWithOldExp,user)
+    return user.save()
+}
+
+async function checkIfNewLevel(exp,levelWithOldExp,user){
+   const levelWithNewExp =  calculateLevel(exp)
+        const inventoryItemName = levelRewards[levelWithNewExp]
+    if(levelWithNewExp!==levelWithOldExp&&inventoryItemName){
+        if(user.inventory.hasOwnProperty(inventoryItemName)){
+            user.inventory[inventoryItemName]+=1
+        }else{
+            user.inventory[inventoryItemName] = 0
+        }
+        user.markModified('inventory');
+
+        return user.save()
+    }
+
+}
+
+function calculateLevel(exp) {
+    if(!exp) return 0
+    let expRequiredForPreviousLevel =0
+    let expRequiredForNextLevel = 100
+    let level = 0
+
+    while(!(exp>=expRequiredForPreviousLevel&&exp<=expRequiredForNextLevel)){
+        level++
+        expRequiredForPreviousLevel = expRequiredForNextLevel
+        expRequiredForNextLevel*=1.5
+    }
+    return level
 
 }

@@ -19,6 +19,7 @@ import BookContent from "../BookContent/BookContent";
 import MachFourTest from "../MachFourTest/MachFourTest";
 import LevelInfo from "../LevelInfo/LevelInfo";
 import TestsList from "../TestsList/TestsList";
+import TrophyRoad from "../TrophyRoad/TrophyRoad";
 export default function Main(){
     return(
         <>
@@ -39,6 +40,7 @@ export default function Main(){
                             <Route path={"/dashboard"} element={<Dashboard />}></Route>
                             <Route path={"/news/:id/*"} element={<NewsDetails />}></Route>
                             <Route path={"/chat"} element={<Chat />}></Route>
+                            <Route path={"/trophyRoad"} element={<TrophyRoad />}></Route>
                         </Route>
                         <Route path={"/hero"} element={<LandingPage />}></Route>
                         <Route path={"/news/:id/"} element={<NewsDetails />}></Route>

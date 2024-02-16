@@ -27,7 +27,8 @@ useEffect(()=>{
                 const contentType = clonedResponse.headers.get('Content-Type');
                 if (contentType && contentType.includes('application/json')) {
                     const responseData = await clonedResponse.json();
-
+                    console.log("user,user",user)
+                    console.log(responseData.expAdded)
                     if(user.token&&responseData.expAdded){
                         dispatch(setUser({...user,exp:Number(user.exp)+Number(responseData.expAdded)}))
                     }
@@ -39,7 +40,7 @@ useEffect(()=>{
                 throw error;
             });
     }
-},[])
+},[user])
 
 
 return null

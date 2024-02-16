@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
+const {inventoryItems} = require("../utils/utils");
 
 
 
@@ -48,7 +49,16 @@ const schema = mongoose.Schema({
         default: false,
     },
     exp:Number,
+    expMultiplier:{
+        type:Number,
+        default: 1
+    },
     imageURL:String,
+    inventory:{
+        type: Object,
+        default: {}
+    },
+
 
 })
 

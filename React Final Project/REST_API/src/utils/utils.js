@@ -217,3 +217,16 @@ exports.commonWords = [
     "yourself",
     "yourselves",
 ];
+
+
+exports.inventoryItems = ["freeBook","chest","expMultiplier"]
+
+
+exports.levelRewards={
+    "5":"expMultiplier",
+    "20":"freeBook",
+    "30":"expMultiplier",
+    "40":"chest",
+    "50":"chest",
+    "60":"freeBook",
+}
