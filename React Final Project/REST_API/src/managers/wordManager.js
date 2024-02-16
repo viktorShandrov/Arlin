@@ -327,35 +327,8 @@ import('random-words')
                     }
 
             exports.translateWord=async(word)=>{
-
-
-
-
                 const response = await((await fetch(translateAPI+word)).json())
                 return response.translation
-
-
-                // const requestOptions = {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify({
-                //         q: word,
-                //         source: 'en',
-                //         target: 'bg',
-                //         format: 'text',
-                //     }),
-                // };
-
-                // const response = await fetch.default(`https://translation.googleapis.com/language/translate/v2?key=${utils.GoogleTranslateAPI_KEY}`, requestOptions);
-
-                // if (!response.ok) {
-                //     throw new Error(`HTTP error! Status: ${response.status}`);
-                // }
-
-                // const data = await response.json();
-                // return  data.data.translations[0].translatedText;
             }
 
 
@@ -470,36 +443,64 @@ exports.createWords =async(words,userId)=>{
     // const wordsAndTranslations = await exports.translateMultipleWords(words)
 
     for (const word of words) {
-        const wordRecord = await allModels.wordModel.findOne({word:word.text})
-        let wordRef = wordRecord?._id
+        let wordRecord = await allModels.wordModel.findOne({word:word.text})
         const targetContainer = await allModels.wordsContainer.findOne({ownedBy:userId,name:word.targetContainer}) || await allModels.wordsContainer.findOne({ownedBy:userId,type:"systemGenerated"})
 
 
 
-            if(!wordRef){
-                wordRef =  (await models.wordModel.create(
+            if(!wordRecord){
+                const wordWholeInfo =await getWordWholeInfo(word.text)
+                wordRecord =  (await models.wordModel.create(
                     {
                         // unknownFor:[userId],
                         word:word.text,
-                        translatedText:await exports.translateWord(word.text)
+                        translatedText:wordWholeInfo.translation
                     }
-                ))._id
+                ))
+                createWordExamples(wordWholeInfo.info.examples,wordRecord)
+
+            }else {
+                if(wordRecord.examples.length===0){
+                    createWordExamples([],wordRecord)
+                }
+
             }
-            if(targetContainer.words.some((el)=>el.wordRef.equals(wordRef))) throw new Error("Думата вече в запазена")
+            if(targetContainer.words.some((el)=>el.wordRef.equals(wordRecord._id))) throw new Error("Думата вече в запазена")
+
                 targetContainer.words.push({
-                    wordRef,
+                    wordRef:wordRecord._id,
                 })
             await targetContainer.save()
-
-
-
-
     }
-
-
-
-
-
-
+}
+ async function getWordWholeInfo(word){
+   return (await fetch(translateAPI+encodeURI(word))).json()
 }
 
+async function createWordExamples(sentenceExamples,wordRecord){
+    const payload = []
+    if(sentenceExamples.length>0){
+        for (let  sentenceWhereWordsIsPresent of sentenceExamples) {
+            sentenceWhereWordsIsPresent = sentenceWhereWordsIsPresent.replace(/<b>|<\/b>/g, '');
+            const translation = await exports.translateText(sentenceWhereWordsIsPresent)
+            payload.push(
+                {
+                    sentenceWhereWordsIsPresent,
+                    translation
+                }
+            )
+        }
+    }else{
+        const  sentenceWhereWordsIsPresent = (await exports.giveSentence(wordRecord.word)).text
+        const translation = await exports.translateText(sentenceWhereWordsIsPresent)
+        payload.push(
+            {
+                sentenceWhereWordsIsPresent,
+                translation
+            }
+        )
+
+    }
+    wordRecord.examples = payload
+    await wordRecord.save()
+}
