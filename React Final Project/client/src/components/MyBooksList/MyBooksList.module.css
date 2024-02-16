@@ -1,9 +1,11 @@
 .myBooksListWrapperWrapper{
     overflow-y: auto;
+    display: flex;
+    justify-content: center;
 }
 .myBooksListWrapper{
     width: 80%;
-    height: 90%;
+    height: fit-content;
     margin: 50px auto 0 auto;
     background-color: #4C6A69;
     border-radius: 20px;
@@ -19,6 +21,7 @@
     margin-top: 50px;
     color: white;
     margin-bottom: 20px !important;
+    word-break: break-word;
 
 }
 .myBooksListC{
@@ -110,6 +113,50 @@
     transition: 2s;
     z-index: 9999;
 }
+
+.continueReadingBtnWrapper{
+    display: flex;
+    justify-content: center;
+    margin-top: 95px;
+}
+.buttonFundament{
+    width: 60%;
+    background-color: #7E0030;
+    padding: 5px;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+.btnCover{
+    width: 0;
+    height: 100%;
+    background-color: orange;
+    transition: 1s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+
+
+}
+.continueHeading{
+    position: relative;
+    z-index: 1;
+    transition: 1s;
+}
+.btnCore{
+    padding: 20px;
+    background-color: white;
+    position: relative;
+
+}
+.buttonFundament:hover {
+    cursor: pointer;
+}
+.buttonFundament:hover .btnCover{
+    width: 100%;
+}
+
+
 @media (max-width: 1400px){
     .readBookAndMyBooksWrapper{
         flex-direction: column;
@@ -122,9 +169,7 @@
         height: 700px;
     }
 
-    .myBooksListWrapper{
-        height: fit-content;
-    }
+
     .heading{
         margin-bottom: 0px !important;
     }
@@ -136,9 +181,33 @@
         justify-content: center;
     }
 }
+@media (max-width: 700px){
+    .myBooksListWrapper{
+        width: 95%;
+    }
+    .buttonFundament{
+        width: 80%;
+    }
+}
 @media (max-width: 600px){
     .readBookWrapper{
         transform: scale(0.7) ;
     }
+}
+@media (max-width: 450px){
+
+    .buttonFundament{
+        width: 95%;
+    }
+}
+@media (max-width: 400px){
+    .myBooksListWrapper{
+        padding:8px;
+    }
+    .myBooksListC{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
 
 }

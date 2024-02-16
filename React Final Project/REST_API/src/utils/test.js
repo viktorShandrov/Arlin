@@ -88,7 +88,7 @@ exports.test=async ()=> {
 
     }
 
-    putSentenceForWords()
+    // putSentenceForWords()
 
 
         // const supabase = createClient('https://pezdarqtckujdxnfyxoz.supabase.co', utils.supabaseAPIKey)

@@ -20,7 +20,11 @@ export default function MyBooksList(){
     const [completions,setCompletions] = useState([])
     const [filteredAutoCompletions,setFilteredAutoCompletions] = useState([])
     const [searchParams,setSearchParams] = useState("")
-    const [currentReading,setCurrentReading] = useState({genre:""})
+    const [currentReading,setCurrentReading] = useState({
+        genre:"",
+        author:"",
+
+    })
     const fetchAllBooks = ()=>{
         request("books/all").subscribe(
             (res:any)=>{
@@ -73,10 +77,10 @@ export default function MyBooksList(){
     const continueReadingHandler=(e:any)=>{
         const target = e.currentTarget
         // target.parentElement.textContent = "d"
-        target.classList.add(styles.clicked)
+        // target.classList.add(styles.clicked)
         setTimeout(()=>{
             navigate(`/main/read/${user.lastReading.bookId}/chapterId=${user.lastReading.chapterId}`)
-            target.classList.remove(styles.clicked)
+            // target.classList.remove(styles.clicked)
         },1000)
 
     }
@@ -91,38 +95,64 @@ export default function MyBooksList(){
                 <section className={styles.myBooksListWrapper}>
                     <div className={styles.myBooksListC}>
                         <h1 className={styles.heading}>Моята библиотека</h1>
-                        <div className={styles.readBookAndMyBooksWrapper}>
-                            <div className={styles.readBookWrapper}>
-                                <div onClick={continueReadingHandler} className={styles.readBookC}>
-                                    {currentReading&&
-                                        <ContinueBookElement book={currentReading}/>
-                                    }
-                                </div>
-                            </div>
-                            <div className={styles.myBooksWrapper}>
-                                <div className={styles.searchBarC}>
-                                    <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
-                                </div>
-                                <div className={styles.myBooksC}>
+                        {/*<div className={styles.readBookAndMyBooksWrapper}>*/}
+                        {/*    <div className={styles.readBookWrapper}>*/}
+                        {/*        <div onClick={continueReadingHandler} className={styles.readBookC}>*/}
+                        {/*            {currentReading&&*/}
+                        {/*                <ContinueBookElement book={currentReading}/>*/}
+                        {/*            }*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*    <div className={styles.myBooksWrapper}>*/}
+                        {/*        <div className={styles.searchBarC}>*/}
+                        {/*            <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>*/}
+                        {/*        </div>*/}
+                        {/*        <div className={styles.myBooksC}>*/}
 
-                                    <div className={styles.myBooksScrollerWrapper}>
-                                        <div className={styles.myBooksScrollerC}>
+                        {/*            <div className={styles.myBooksScrollerWrapper}>*/}
+                        {/*                <div className={styles.myBooksScrollerC}>*/}
 
-                                            {books.length>0&&books.map((book:any)=><Link to={`/main/read/${book._id}/chapterId=${book.chapters[0]}`} key={book._id} className={styles.bookC}>
-                                                <BookElement book ={book} />
-                                            </Link>)}
-                                        </div>
+                        {/*                    {books.length>0&&books.map((book:any)=><Link to={`/main/read/${book._id}/chapterId=${book.chapters[0]}`} key={book._id} className={styles.bookC}>*/}
+                        {/*                        <BookElement book ={book} />*/}
+                        {/*                    </Link>)}*/}
+                        {/*                </div>*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        <div className={styles.continueReadingBtnWrapper}>
+                            <div onClick={continueReadingHandler} className={styles.buttonFundament}>
+                                <div className={styles.btnCore}>
+                                   <h6 className={styles.continueHeading}>{currentReading.name}</h6>
+                                   <h4 className={styles.continueHeading}>продължете четенето</h4>
+                                    <div className={styles.btnCover}>
+
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
+
+
+                            </div>
+
+                        </div>
+                        
+
+                        <section className={styles.moreOfThisGenreWrapper}>
+                            {books.filter((book:any)=>book.ownedBy.includes(user.userId)).length>0&&
+                                <BookSection books={books.filter((book:any)=>book.ownedBy.includes(user.userId))} sectionHeader={"Закупени книги"}/>
+                            }
+                        </section>
+                        <section className={styles.moreOfThisGenreWrapper}>
+                            {books.filter((book:any)=>book.genre === currentReading.genre).length>0&&
+                                <BookSection books={books.filter((book:any)=>book.genre === currentReading.genre)} sectionHeader={"Може да харесате"}/>
+                            }
+                        </section>
+                        <section className={styles.moreOfThisGenreWrapper}>
+                            {books.filter((book:any)=>book.author === currentReading.author).length>0&&
+                                <BookSection books={books.filter((book:any)=>book.author === currentReading.author)} sectionHeader={`Още книги от ${currentReading.author}`}/>
+                            }
+                        </section>
                     </div>
-                </section>
-                <section className={styles.moreOfThisGenreWrapper}>
-                    {currentReading&&
-                        <BookSection books={books.filter((book:any)=>book.genre === currentReading.genre)} sectionHeader={"Може да харесате"}/>
-                    }
                 </section>
             </div>
 

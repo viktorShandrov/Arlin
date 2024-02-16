@@ -81,7 +81,7 @@ export default function UnknownWords(){
             <div className={styles.wrapper}>
                 <div className={styles.container}>
                     <div className={styles.headingAndCountC}>
-                        <h4 className={styles.heading}>Групи от запзени непознати думи</h4>
+                        <h4 className={styles.heading}>Групи от запазени непознати думи</h4>
                     </div>
 
                     <hr className={styles.hr}/>

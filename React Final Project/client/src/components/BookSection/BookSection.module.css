@@ -2,13 +2,15 @@
     margin-top: 95px;
     padding-bottom: 45px;
     border-bottom: solid 2px grey;
+    display: flex;
+    flex-direction: column;
 
 }
 .sectionHeader{
-    margin-bottom: 40px;
-    /*color: grey;*/
-    font-weight: bolder;
     text-align: center;
+    margin-top: 50px;
+    color: white;
+    margin-bottom: 20px !important;
 }
 
 .booksC{
@@ -39,4 +41,16 @@
 .bookC img{
     width: 100%;
 }
+
+.showMoreBtn{
+
+    width: fit-content;
+    align-self: center;
+    margin-top: 50px;
+    background-color: #A73701;
+    border-radius: 20px;
+    padding: 15px 40px;
+    color: white;
+}
+
 
