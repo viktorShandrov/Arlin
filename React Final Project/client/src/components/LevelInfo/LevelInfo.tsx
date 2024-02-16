@@ -101,6 +101,12 @@ export default function LevelInfo(){
                     }}
                     className={styles.levelBarProgress}>
 
+                    <div className={styles.arrow}>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
                 </div>
             </div>
             <div className={styles.btnAndLevelInfo}>
