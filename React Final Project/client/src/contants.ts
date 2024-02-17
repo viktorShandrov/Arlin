@@ -8,3 +8,10 @@ export const translationAPI = "https://arlin-translate-lingva.vercel.app/api/v1/
 // export const translationAPI = "https://libretranslate-delta.vercel.app/translate"
 // export const translationAPI = "http://localhost:5000/translate"
 export const googleClientSecret = "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"
+
+
+export const rewardNames={
+    "expMultiplier":"множител на опит",
+    "chest":"съндък",
+    "freeBook":"безплатна книга",
+}

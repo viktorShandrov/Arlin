@@ -90,6 +90,60 @@
     animation-delay: -0.4s;
 }
 
+
+.rewardWrapper{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    background-color: white;
+    text-align: center;
+    color: #959595;
+}
+.rewardName{
+    color: black;
+    margin-bottom: 20px!important;
+}
+
+.rewardPicC{
+    width: 40%;
+    aspect-ratio: 1/1;
+    border: solid black 1px;
+    border-radius: 10px;
+    margin: 20px auto;
+}
+.rewardPicC img{
+    width: 100%;
+    height: 100%;
+}
+.btnsC{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.btnsC>*{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #75A9AB;
+    color: white;
+    padding: 8px 40px;
+    border-radius: 30px;
+    font-weight: bolder;
+    border: none;
+    font-size: 25px;
+    width: 100%;
+}
+.btnsC>*:nth-child(2){
+    border: #a73701 solid 1px;
+    color: #a73701;
+    background-color: white;
+    font-weight: normal;
+}
+
+
+
 @keyframes animate {
     0% {
         opacity: 0;

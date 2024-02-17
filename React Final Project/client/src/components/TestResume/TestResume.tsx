@@ -8,7 +8,7 @@ export default function TestResume({questions,answers,testType,wordsIds=null}){
     const navigate = useNavigate()
     const proceedClickHandler = (testType:string)=>{
         request("unknownWords/testCompleted","POST",{testType,wordsIds}).subscribe(
-            ()=>{
+            (res:any)=>{
                 navigate("/main/read")
             }
         )

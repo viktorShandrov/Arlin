@@ -39,7 +39,8 @@ exports.login = async (email,password)=>{
         userId:user._id,
         role:user.role,
         lastReading:user.lastReading,
-        exp:user.exp
+        exp:user.exp,
+        inventory:user.inventory,
     }
 
 }
@@ -54,15 +55,16 @@ exports.getUserInfo = async (_id)=>{
 }
 
 
-exports.updateUserExp =async (plusExp,user) =>{
+exports.updateUserExp =async (plusExp,user,res) =>{
     const newExp = user.exp + (plusExp*user.expMultiplier)
     const levelWithOldExp = calculateLevel(user.exp)
+    res.body ={...res.body,expAdded:plusExp}
     // user.exp = newExp
-    await checkIfNewLevel(newExp,levelWithOldExp,user)
+    await checkIfNewLevel(newExp,levelWithOldExp,user,res)
     return user.save()
 }
 
-async function checkIfNewLevel(exp,levelWithOldExp,user){
+async function checkIfNewLevel(exp,levelWithOldExp,user,res){
    const levelWithNewExp =  calculateLevel(exp)
         const inventoryItemName = levelRewards[levelWithNewExp]
     if(levelWithNewExp!==levelWithOldExp&&inventoryItemName){
@@ -72,7 +74,7 @@ async function checkIfNewLevel(exp,levelWithOldExp,user){
             user.inventory[inventoryItemName] = 0
         }
         user.markModified('inventory');
-
+        res.body = {...res.body,itemAdded:inventoryItemName}
         return user.save()
     }
 

@@ -255,7 +255,7 @@ import('random-words')
                         "
                     `
 
-                    exports.markTestAsCompleted =async (userId,testType,wordsIds)=>{
+                    exports.markTestAsCompleted =async (userId,testType,wordsIds,res)=>{
                         const user = await models.userModel.findById(userId)
                         switch(testType){
                             case utils.testTypes.randomWords :
@@ -271,7 +271,7 @@ import('random-words')
                                 break;
 
                         }
-                        await updateUserExp(40,user)
+                        await updateUserExp(40,user,res)
                         return user.save()
                     }
 

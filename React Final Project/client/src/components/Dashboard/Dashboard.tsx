@@ -30,6 +30,13 @@ export default function Dashboard(){
                 setUserInfo(res)
             }
         )
+        const hash = window.location.hash;
+        if (hash.slice(hash.lastIndexOf("#")) === "#inventory") {
+            const inventoryElement = document.getElementById("inventory");
+            if (inventoryElement) {
+                inventoryElement.scrollIntoView({ behavior: "smooth" });
+            }
+        }
     },[])
 
 
@@ -103,7 +110,25 @@ export default function Dashboard(){
                 {/*    </div>*/}
                 {/*    <h6>{userInfo.exp} exp</h6>*/}
                 {/*</section>*/}
+                <section id={"inventory"} className={styles.inventoryWrapper}>
+                    <h1 className={styles.heading}>Инвентар</h1>
+                    <div className={styles.inventoryC}>
+                        {Object.entries(user.inventory).length>0&&Object.entries(user.inventory).map(([key,value])=><div className={styles.inventoryItem}>
+                                <div className={styles.imageC}>
+                                    <img src={`/public/rewardImages/${key}.png`} alt=""/>
+                                    <div className={styles.count}>
+                                        {value}
+                                    </div>
 
+                                </div>
+                            <button className={styles.useBtn}>използвай</button>
+
+                        </div>
+                        )}
+
+                    </div>
+
+                </section>
 
 
                 <section className={styles.testsSectionWrapper}>

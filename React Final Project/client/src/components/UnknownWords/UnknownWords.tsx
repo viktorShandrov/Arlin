@@ -194,7 +194,7 @@ export default function UnknownWords(){
                                 <p className={styles.infoTitle}>пример в изречение</p>
                                 <h5 className={styles.infoValue}>{clickedWord.wordRef.examples[0].sentenceWhereWordsIsPresent}</h5>
                             </div>
-                            <button onClick={()=>setIsWordExamplesPopUpVisible(true)} className={styles.showMoreExamples}>виж още примери в изречения</button>
+                            {clickedWord.wordRef.examples.length>1&&<button onClick={()=>setIsWordExamplesPopUpVisible(true)} className={styles.showMoreExamples}>виж още примери в изречения</button>}
 
 
                         </div>}

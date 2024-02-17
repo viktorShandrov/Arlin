@@ -38,7 +38,6 @@ export default function LandingPage(){
     }
     const handleScroll = () => {
         const container = document.getElementById(styles.topNewsWrapper);
-        console.log(container)// Replace with your actual container ID
         if (container) {
             container.scrollIntoView({ behavior: 'smooth' });
         }
