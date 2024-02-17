@@ -49,12 +49,17 @@ export default function Dashboard(){
                 inventoryElement.scrollIntoView({ behavior: "smooth" });
             }
         }
-    },[])
+    },[user])
     const useExpMultiplier = ()=>{
         request("users/useExpMultiplier","GET").subscribe(
             ()=>{
                 toast.success("Успешно активирахте множител на опит")
-                dispatch(setUser({...user,expMultiplier:1.5}))
+                dispatch(setUser(
+                    {...user,
+                            inventory:{...user.inventory,
+                            expMultiplier:user.inventory.expMultiplier-1
+                            },
+                        expMultiplier:1.5}))
             }
         )
     }
