@@ -51,9 +51,10 @@ export default function Dashboard(){
         }
     },[])
     const useExpMultiplier = ()=>{
-        request("user/useExpMultiplier","GET").subscribe(
+        request("users/useExpMultiplier","GET").subscribe(
             ()=>{
                 toast.success("Успешно активирахте множител на опит")
+                dispatch(setUser({...user,expMultiplier:1.5}))
             }
         )
     }

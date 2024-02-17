@@ -46,5 +46,18 @@ router.get("/userInfo/:userId?",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/useExpMultiplier",isAuth,async (req,res)=>{
+    try {
+
+        let {_id} = req.user
+
+        await userManager.setExpMultiplier(_id,1.5)
+
+        res.status(200).end()
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
 
 module.exports = router

@@ -50,8 +50,16 @@ exports.getUserInfo = async (_id)=>{
     delete user.password
 
     return user.toObject()
+}
+exports.setExpMultiplier = async (_id,expMultiplier)=>{
+    const user = await userModel.findById(_id);
 
-
+    if(user.inventory.expMultiplier<=0) throw new Error("Нямате налични умножители на опит")
+    if(user.expMultiplier>1) throw new Error("Вече имате активиран множител на опит")
+    user.expMultiplier = expMultiplier
+    user.inventory.expMultiplier-=1
+    user.markModified('inventory');
+    return user.save()
 }
 
 
