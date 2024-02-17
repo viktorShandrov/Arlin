@@ -104,6 +104,14 @@
     color: black;
     margin-bottom: 20px!important;
 }
+.expMultiplier{
+    text-align: end;
+    padding-bottom: 10px;
+}
+.expMultiplier .value{
+    font-weight: bolder;
+    font-size: 20px;
+}
 
 .rewardPicC{
     width: 40%;

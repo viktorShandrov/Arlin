@@ -117,6 +117,10 @@ export default function LevelInfo(){
         <>
             <div ref={levelInfoWrapperRef} className={styles.levelWrapper}>
                 <i onClick={hidePopup}      className={`fa-solid fa-xmark ${styles.xmark}`}></i>
+                {user.expMultiplier>1&&<div className={styles.expMultiplier}>
+                    множител на опит <span className={styles.value}>x{user.expMultiplier}</span>
+                </div>}
+
                 <div className={styles.levelBarC}>
                     <div
                         style={{

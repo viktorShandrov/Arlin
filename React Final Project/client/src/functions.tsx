@@ -49,7 +49,9 @@ export function request(url: string, method?: string, body?: any, headers: any =
                     }
                 })
                 .then(data=>{
-                    res(data)
+                    if(data){
+                        res(data)
+                    }
                 })
                 .catch((err: any) => {
                     console.error('Fetch Error:', err);
