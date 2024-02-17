@@ -30,10 +30,13 @@ router.post("/login",async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.get("/userInfo/:userId",isAuth,async (req,res)=>{
+router.get("/userInfo/:userId?",isAuth,async (req,res)=>{
     try {
 
-        const {userId} = req.params
+        let {userId} = req.params
+        if(!userId){
+            userId = req.user._id
+        }
 
         const userInfo = await userManager.getUserInfo(userId)
 

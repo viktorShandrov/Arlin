@@ -15,18 +15,17 @@ const AdminPanel = React.lazy(()=>import("./admin/AdminPanel"))
 import 'react-toastify/dist/ReactToastify.css';
 import {ToastContainer ,toast} from "react-toastify";
 import User from "./components/Users/Users";
-import useLocalStorage from "./hooks/useLocalStorage";
 import AuthGuard from "./guards/AuthGuard/AuthGuard";
 import NotFound from "./components/NotFound/NotFound";
 import XP from "./components/interceptors/XP";
 
 export const userContext=createContext({})
 function App() {
-    // const navigation = useNavigate()
-        const [user,setUser]= useLocalStorage("user",{})
+
     useEffect(()=>{
         console.log("initial load")
         // navigation("main/hero")
+
     },[])
 
   return (
@@ -55,8 +54,7 @@ function App() {
               </div>
                  <XP/>
           </Provider>
-          <userContext.Provider value={{user,setUser}}>
-          </userContext.Provider>
+
 
 
 

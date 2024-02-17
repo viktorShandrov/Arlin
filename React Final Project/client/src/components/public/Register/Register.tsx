@@ -32,7 +32,7 @@ export default function  Register(){
                 // localStorage.setItem("user",JSON.stringify(res))
                 if(res){
                     dispatch(setUser(res))
-                    localStorage.setItem("user",JSON.stringify(res))
+                    localStorage.setItem("token",res.token)
                     // navigate("/main")
                     navigate(-1)
                 }

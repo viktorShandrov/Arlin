@@ -24,7 +24,7 @@ export default function LevelInfo(){
     },[])
     useEffect(()=>{
         showPopup()
-        saveExpToLocalStorage()
+        // saveExpToLocalStorage()
     },[user.exp])
     useEffect(()=>{
         setUserInventory((old)=>{

@@ -36,12 +36,7 @@ export default  function Read(){
                 if(!res){
                     navigate("/main/read")
                 }
-                const previousUserData = JSON.parse(localStorage.getItem("user")!)
 
-                localStorage.setItem("user",JSON.stringify({...previousUserData,lastReading:{
-                        bookId,
-                        chapterId
-                    }}))
                 dispatch(setUser({...user,lastReading:{
                         bookId,
                         chapterId

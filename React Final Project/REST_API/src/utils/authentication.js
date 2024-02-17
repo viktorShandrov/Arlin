@@ -10,8 +10,6 @@ exports.auth= async(req,res,next)=>{
     }catch (error) {
         res.status(403).json({message:"Invalid token"})
     }
-
-
 }
 exports.isAuth= async(req,res,next)=>{
 

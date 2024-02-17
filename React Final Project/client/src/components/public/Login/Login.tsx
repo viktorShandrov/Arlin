@@ -32,9 +32,8 @@ export default function  Login(){
         request("users/login","POST",formValues).subscribe(
             (res:any)=>{
                 if(res){
-                    console.log("login",res)
                     dispatch(setUser(res))
-                    localStorage.setItem("user",JSON.stringify(res))
+                    localStorage.setItem("token",res.token)
                     navigate("/main/hero")
                     // navigate(-1)
 

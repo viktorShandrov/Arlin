@@ -3,8 +3,9 @@ import styles from "./Dashboard.module.css"
 import {useEffect, useState} from 'react';
 
 import {request} from "../../functions";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import DashboardStat from "./DashboardStat/DashboardStat";
+import {setUser} from "../../redux/user";
 export default function Dashboard(){
     const [userInfo,setUserInfo] = useState({
         randomWordsTests: undefined,
@@ -14,7 +15,8 @@ export default function Dashboard(){
         email: undefined,
         imageURL: undefined,
         plan: "",
-        exp: undefined
+        exp: undefined,
+        inventory: {},
     })
     const [changedCredential,setChangedCredential] = useState({
         field:"",
@@ -23,13 +25,20 @@ export default function Dashboard(){
     })
     // const passedTestNumberElementsRefs = useRef([])
     const {user} = useSelector((state:any)=>state.user)
+                const dispatch = useDispatch()
 
     useEffect(()=>{
-        request(`users/userInfo/${user.userId}`).subscribe(
-            (res:any)=>{
-                setUserInfo(res)
-            }
-        )
+        // request(`users/userInfo/${user.userId}`).subscribe(
+        //     (res:any)=>{
+        //         console.log(user)
+        //         console.log("res",res)
+        //         dispatch(setUser({...res,
+        //             token:user.token,
+        //             userId:user._id
+        //         }))
+        //         setUserInfo(res)
+        //     }
+        // )
         const hash = window.location.hash;
         if (hash.slice(hash.lastIndexOf("#")) === "#inventory") {
             const inventoryElement = document.getElementById("inventory");
@@ -113,7 +122,7 @@ export default function Dashboard(){
                 <section id={"inventory"} className={styles.inventoryWrapper}>
                     <h1 className={styles.heading}>Инвентар</h1>
                     <div className={styles.inventoryC}>
-                        {Object.entries(user.inventory).length>0&&Object.entries(user.inventory).map(([key,value])=><div className={styles.inventoryItem}>
+                        {Object.entries(userInfo.inventory).length>0&&Object.entries(userInfo.inventory).map(([key,value])=><div className={styles.inventoryItem}>
                                 <div className={styles.imageC}>
                                     <img src={`/public/rewardImages/${key}.png`} alt=""/>
                                     <div className={styles.count}>

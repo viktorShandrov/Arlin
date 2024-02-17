@@ -14,7 +14,7 @@ export function request(url: string, method?: string, body?: any, headers: any =
             const promiseRequest = fetch(constants.REST_API + url, {
                 headers: {
                     ...headers,
-                    Authorization: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!).token : null
+                    Authorization: localStorage.getItem("token") ? localStorage.getItem("token") : null
                 },
                 body: headers["Content-Type"] === "application/json"?JSON.stringify(body):body,
                 method,
