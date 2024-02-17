@@ -5,6 +5,7 @@ import { useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
 import {rewardNames} from "../../contants";
+import {calculateLevel} from "../../functions";
 export default function LevelInfo(){
     const {user} = useSelector((state:any)=>state.user)
 
@@ -19,7 +20,7 @@ export default function LevelInfo(){
 
     useEffect(()=>{
         setTimeout(()=>{
-            calculateLevel(user.exp)
+            setUserCurrentLevel(calculateLevel(user.exp))
         },0)
     },[])
     useEffect(()=>{
@@ -50,10 +51,10 @@ export default function LevelInfo(){
 
 
 
-    const saveExpToLocalStorage = ()=>{
-        const oldLocalStorage = JSON.parse(localStorage.getItem("user")!)
-        localStorage.setItem("user",JSON.stringify({...oldLocalStorage,exp:user.exp}))
-    }
+    // const saveExpToLocalStorage = ()=>{
+    //     const oldLocalStorage = JSON.parse(localStorage.getItem("user")!)
+    //     localStorage.setItem("user",JSON.stringify({...oldLocalStorage,exp:user.exp}))
+    // }
 
 
     const hidePopup = ()=>{
@@ -66,6 +67,10 @@ export default function LevelInfo(){
         setTimeout(()=>{
             hidePopup()
         },5000)
+    }
+    const navigateToTrophyRoad = ()=>{
+        navigate("/main/trophyRoad")
+        hidePopup()
     }
 
     // setTimeout(()=>{
@@ -99,20 +104,7 @@ export default function LevelInfo(){
 
 
 
-    function calculateLevel(exp:number) {
-        if(!exp) return 0
-        let expRequiredForPreviousLevel =0
-        let expRequiredForNextLevel = 100
-        let level = 0
 
-        while(!(exp>=expRequiredForPreviousLevel&&exp<=expRequiredForNextLevel)){
-            level++
-            expRequiredForPreviousLevel = expRequiredForNextLevel
-            expRequiredForNextLevel*=1.5
-        }
-
-        setUserCurrentLevel(level)
-    }
 
 
 
@@ -141,7 +133,7 @@ export default function LevelInfo(){
                     </div>
                 </div>
                 <div className={styles.btnAndLevelInfo}>
-                    <button onClick={()=>navigate("/main/trophyRoad")} className={styles.viewTrophyRoad}>виж пътя на наградите</button>
+                    <button onClick={navigateToTrophyRoad} className={styles.viewTrophyRoad}>виж пътя на наградите</button>
                     <div className={styles.levelInfo}>
                         <p>следващо ниво</p>
                         <h3>{userCurrentLevel+1}</h3>

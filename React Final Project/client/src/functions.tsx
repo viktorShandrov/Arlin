@@ -66,6 +66,20 @@ export function request(url: string, method?: string, body?: any, headers: any =
         }
     };
 }
+export function calculateLevel(exp:number) {
+    if(!exp) return 0
+    let expRequiredForPreviousLevel =0
+    let expRequiredForNextLevel = 100
+    let level = 0
+
+    while(!(exp>=expRequiredForPreviousLevel&&exp<=expRequiredForNextLevel)){
+        level++
+        expRequiredForPreviousLevel = expRequiredForNextLevel
+        expRequiredForNextLevel*=1.5
+    }
+
+    return Number(level)
+}
 // export async function translateText(textToTranslate:string){
 //     try {
 //

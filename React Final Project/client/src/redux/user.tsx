@@ -24,7 +24,7 @@ export const counterSlice = createSlice({
 async function getDataFromServer(){
     const token = localStorage.getItem("token")
     const userData = await(await fetch(`${REST_API}users/userInfo`,{headers:{Authorization:token}})).json()
-    return userData
+    return {...userData,token:localStorage.getItem("token")}
 }
 
 // Action creators are generated for each case reducer function

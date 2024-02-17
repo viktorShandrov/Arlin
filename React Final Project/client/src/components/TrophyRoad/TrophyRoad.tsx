@@ -1,31 +1,16 @@
 
 import styles from "./TrophyRoad.module.css"
 import {useEffect} from "react";
+import {levelRewards} from "../../contants";
+import {calculateLevel} from "../../functions";
+import {useSelector} from "react-redux";
 export default function TrophyRoad(){
-    const rewardLevels = [
-        {
-            level:10
-        },{
-            level:20
-        },{
-            level:30
-        },{
-            level:40
-        },{
-            level:50
-        },{
-            level:60
-        },{
-            level:70
-        },{
-            level:80
-        },{
-            level:90
-        },{
-            level:100
-        }
-    ]
-    const currentUserLevel = 31
+    const {user} = useSelector((state:any)=>state.user)
+
+    const rewardLevels = Object.entries(levelRewards).map(([level,rewardName])=> {
+        return {level:Number(level),rewardName}
+    })
+    const currentUserLevel = calculateLevel(user.exp)
     for (let i =0;i<rewardLevels.length;i++){
         const previousLevel = rewardLevels[i-1]?.level
 
@@ -56,6 +41,8 @@ export default function TrophyRoad(){
                     {rewardLevels.map((level:any)=><div data-isuserlevel={level.isUserLevel} className={styles.levelC}>
                             <h5 className={styles.levelName}>Ниво {level.level}</h5>
                             {level.isUserLevel&&<h5>текущо ниво</h5>}
+                            {!level.isUserLevel&&<img src={`/public/rewardImages/${level.rewardName}.png`} alt=""/>}
+
                         </div>
                     )}
                 </div>

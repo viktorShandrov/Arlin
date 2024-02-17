@@ -15,3 +15,26 @@ export const rewardNames={
     "chest":"съндък",
     "freeBook":"безплатна книга",
 }
+
+export const levelRewards = {
+    "5": "expMultiplier",
+    "10": "expMultiplier",
+    "15": "freeBook",
+    "20": "chest",
+    "25": "expMultiplier",
+    "30": "expMultiplier",
+    "35": "chest",
+    "40": "expMultiplier",
+    "45": "expMultiplier",
+    "50": "chest",
+    "55": "chest",
+    "60": "freeBook",
+    "65": "expMultiplier",
+    "70": "chest",
+    "75": "chest",
+    "80": "freeBook",
+    "85": "freeBook",
+    "90": "freeBook",
+    "95": "expMultiplier",
+    "100": "chest"
+};

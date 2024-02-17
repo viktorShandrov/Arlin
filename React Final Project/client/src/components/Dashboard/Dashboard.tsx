@@ -6,6 +6,8 @@ import {request} from "../../functions";
 import {useDispatch, useSelector} from "react-redux";
 import DashboardStat from "./DashboardStat/DashboardStat";
 import {setUser} from "../../redux/user";
+import {toast} from "react-toastify";
+import {rewardNames} from "../../contants";
 export default function Dashboard(){
     const [userInfo,setUserInfo] = useState({
         randomWordsTests: undefined,
@@ -39,6 +41,7 @@ export default function Dashboard(){
         //         setUserInfo(res)
         //     }
         // )
+        setUserInfo(user)
         const hash = window.location.hash;
         if (hash.slice(hash.lastIndexOf("#")) === "#inventory") {
             const inventoryElement = document.getElementById("inventory");
@@ -47,6 +50,19 @@ export default function Dashboard(){
             }
         }
     },[])
+    const useExpMultiplier = ()=>{
+        request("user/useExpMultiplier","GET").subscribe(
+            ()=>{
+                toast.success("Успешно активирахте множител на опит")
+            }
+        )
+    }
+    const openChest = ()=>{
+
+    }
+    const unlockBookForFree = ()=>{
+
+    }
 
 
     return(
@@ -96,7 +112,7 @@ export default function Dashboard(){
                                 <button className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>НАДГРАДИ</button>
                             </article>
                         </div>
-                        <div className={styles.imageC}>
+                        <div className={styles.userImageC}>
                             <img className={styles.userImage} src={userInfo.imageURL} alt=""/>
                             <span>смени снимка</span>
                         </div>
@@ -119,6 +135,14 @@ export default function Dashboard(){
                 {/*    </div>*/}
                 {/*    <h6>{userInfo.exp} exp</h6>*/}
                 {/*</section>*/}
+                <section className={styles.testsSectionWrapper}>
+                    <h1 className={styles.heading}>Брой взети тестове</h1>
+                    <div className={styles.testsC}>
+                        <DashboardStat name={"тестa на произволни думи"} testValue={userInfo.randomWordsTests} />
+                        <DashboardStat name={"тестa на думи от текст"} testValue={userInfo.wordsFromChapterTests}  />
+                        <DashboardStat name={"теста за 'Четене с разбиране'"} testValue={userInfo.chapterPlotTests}  />
+                    </div>
+                </section>
                 <section id={"inventory"} className={styles.inventoryWrapper}>
                     <h1 className={styles.heading}>Инвентар</h1>
                     <div className={styles.inventoryC}>
@@ -130,7 +154,11 @@ export default function Dashboard(){
                                     </div>
 
                                 </div>
-                            <button className={styles.useBtn}>използвай</button>
+                                <h6>{rewardNames[key]}</h6>
+                                {key==="expMultiplier"&&<button onClick={useExpMultiplier} className={styles.useBtn}>използвай</button>}
+                                {key==="freeBook"&&<button onClick={unlockBookForFree} className={styles.useBtn}>отключи книга</button>}
+                                {key==="chest"&&<button onClick={openChest} className={styles.useBtn}>отвори</button>}
+
 
                         </div>
                         )}
@@ -140,14 +168,6 @@ export default function Dashboard(){
                 </section>
 
 
-                <section className={styles.testsSectionWrapper}>
-                    <h1 className={styles.heading}>Брой взети тестове</h1>
-                    <div className={styles.testsC}>
-                        <DashboardStat name={"тестa на произволни думи"} testValue={userInfo.randomWordsTests} />
-                        <DashboardStat name={"тестa на думи от текст"} testValue={userInfo.wordsFromChapterTests}  />
-                        <DashboardStat name={"теста за 'Четене с разбиране'"} testValue={userInfo.chapterPlotTests}  />
-                    </div>
-                </section>
                 <section className={styles.motivationalQuoteWrapper}>
                     <h1 className={styles.quote}>
                         Keep going! Arlin is with you

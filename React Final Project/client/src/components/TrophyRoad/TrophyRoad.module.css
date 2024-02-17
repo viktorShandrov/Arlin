@@ -15,16 +15,25 @@
     padding: 100px 0;
 }
 .levelC{
-    padding: 30px;
+    padding: 10px 30px;
     background-color: #75A9AB;
     color: white;
     display: flex;
     justify-content: space-between;
+    height: 100px;
+    align-items: center;
 
 }
 .levelC[data-isuserlevel="true"]{
     background-color: #A73701;
     animation: userLevelAnim 3s;
+}
+.levelC img{
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 10px;
+    border: solid black 2px;
+    padding: 5px;
 }
 .levelName{
     user-select: none;
