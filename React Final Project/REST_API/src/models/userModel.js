@@ -64,6 +64,7 @@ const schema = mongoose.Schema({
         type: Object,
         default: {}
     },
+    advancements:[]
 
 
 })

@@ -73,10 +73,7 @@ useEffect(()=>{
             });
     }
 },[user])
-    useEffect(() => {
-        // Effect code here
-        console.log("user updated")
-    }, []);
+
 
 
 return null

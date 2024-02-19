@@ -19,6 +19,9 @@ export default function Dashboard(){
         plan: "",
         exp: undefined,
         inventory: {},
+        advancements: undefined,
+        other: undefined
+
     })
     const [changedCredential,setChangedCredential] = useState({
         field:"",
@@ -32,6 +35,7 @@ export default function Dashboard(){
 
     useEffect(()=>{
         setUserInfo(user)
+        console.log(user)
         const hash = window.location.hash;
         if (hash.slice(hash.lastIndexOf("#")) === "#inventory") {
             const inventoryElement = document.getElementById("inventory");
@@ -177,6 +181,17 @@ export default function Dashboard(){
                         <DashboardStat name={"тестa на произволни думи"} testValue={userInfo.randomWordsTests} />
                         <DashboardStat name={"тестa на думи от текст"} testValue={userInfo.wordsFromChapterTests}  />
                         <DashboardStat name={"теста за 'Четене с разбиране'"} testValue={userInfo.chapterPlotTests}  />
+                    </div>
+                </section>
+                <section className={styles.badgeSectionWrapper}>
+                    <h1 className={styles.heading}>Постижения</h1>
+                    <div className={styles.advancementsC}>
+                        {userInfo.other&&userInfo.other.advancementsInfo.filter((adv:any)=>userInfo.advancements.includes(adv.id)).length>0&&userInfo.other.advancementsInfo.filter((adv:any)=>userInfo.advancements.includes(adv.id)).map((adv:any)=>{
+                            return <div className={styles.advancementC}>
+                                {adv.name}
+                            </div>
+                        })}
+
                     </div>
                 </section>
                 <section id={"inventory"} className={styles.inventoryWrapper}>

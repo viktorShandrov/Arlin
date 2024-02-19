@@ -5,7 +5,7 @@ const utils = require("../utils/utils");
 const { isOwnedByUser, isAdmin } = require("../managerUtils/managerUtil");
 const allModels = require("../models/allModels");
 const fetch = require('isomorphic-fetch');
-const {updateUserExp} =require("./userManager") ;
+const userManager =require("./userManager") ;
 // const fetch1 = await import("node-fetch")
 
 
@@ -271,7 +271,7 @@ import('random-words')
                                 break;
 
                         }
-                        await updateUserExp(40,user,res)
+                        await userManager.updateUserExp(40,user,res)
                         return user.save()
                     }
 

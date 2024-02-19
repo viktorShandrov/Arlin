@@ -2,7 +2,6 @@ const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const utils = require("../utils/utils");
 const wordManager = require("./wordManager");
-const {levelRewards} = require("../utils/utils");
 
 
 
@@ -47,11 +46,16 @@ exports.login = async (email,password)=>{
 exports.getUserInfo = async (_id)=>{
     const user = await userModel.findById(_id);
 
+    await checkIfAdvancements(user)
+
     await checkIfExpMultiplierExpires(user)
 
     delete user.password
 
-    return user.toObject()
+    return {...user.toObject(),other:{
+            advancementsInfo: utils.advancements,
+            levelRewards: utils.levelRewards,
+        }}
 }
 async function checkIfExpMultiplierExpires(user){
     const currentTime = new Date()
@@ -64,6 +68,17 @@ async function checkIfExpMultiplierExpires(user){
         user.markModified('expMultiplier');
         return user.save()
     }
+}
+async function checkIfAdvancements(user){
+    const userAdvancements = user.advancements
+    const advancementsThatUserDoesntHas = utils.advancements.filter(adv=>!userAdvancements.includes(adv.id))
+    for (const advancements of advancementsThatUserDoesntHas) {
+        if(await advancements.requirement(user)){
+            user.advancements.push(advancements.id)
+        }
+    }
+    user.markModified("advancements")
+    return user.save()
 }
 exports.useExpMultiplier = async (_id,expMultiplier)=>{
     const user = await userModel.findById(_id);
@@ -87,7 +102,7 @@ exports.useExpMultiplier = async (_id,expMultiplier)=>{
 
 exports.updateUserExp =async (plusExp,user,res) =>{
     const newExp = user.exp + (plusExp*user.expMultiplier.value)
-    const levelWithOldExp = calculateLevel(user.exp)
+    const levelWithOldExp = exports.calculateLevel(user.exp)
     res.body ={...res.body,expAdded:plusExp}
     user.exp = newExp
     await checkIfNewLevel(newExp,levelWithOldExp,user,res)
@@ -95,8 +110,8 @@ exports.updateUserExp =async (plusExp,user,res) =>{
 }
 
 async function checkIfNewLevel(exp,levelWithOldExp,user,res){
-    const levelWithNewExp =  calculateLevel(exp)
-    const inventoryItemName = levelRewards[levelWithNewExp]
+    const levelWithNewExp =  exports.calculateLevel(exp)
+    const inventoryItemName = utils.levelRewards[levelWithNewExp]
     if(levelWithNewExp!==levelWithOldExp&&inventoryItemName){
         if(user.inventory.hasOwnProperty(inventoryItemName)){
             user.inventory[inventoryItemName]+=1
@@ -110,7 +125,7 @@ async function checkIfNewLevel(exp,levelWithOldExp,user,res){
 
 }
 
-function calculateLevel(exp) {
+exports.calculateLevel=(exp) => {
     if(!exp) return 0
     let expRequiredForPreviousLevel =0
     let expRequiredForNextLevel = 100

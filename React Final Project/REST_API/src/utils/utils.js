@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken")
 const util = require('util');
 const path = require("path");
+const userManager = require("../managers/userManager");
+const {wordsContainer} = require("../models/allModels");
 exports.sign = util.promisify(jwt.sign)
 exports.verify = util.promisify(jwt.verify)
 
@@ -244,3 +246,22 @@ exports.levelRewards = {
     "95": "expMultiplier",
     "100": "chest"
 };
+exports.advancements = [
+    {
+        id:1,
+        name:"Достигни ниво 5",
+        requirement:async (user)=>{
+            const userLevel = userManager.calculateLevel(user.exp)
+            return userLevel>=5
+        }
+    },
+    {
+        id:2,
+        name:"Запази 50 непознати нови думи",
+        requirement:async (user)=>{
+            const containers = await wordsContainer.find({ownedBy:user._id})
+            const userUnknownWordsCount = containers.map(cont=>cont.words.length).reduce((acc,curr)=>acc+curr,0)
+            return userUnknownWordsCount>=50
+        }
+    },
+]
