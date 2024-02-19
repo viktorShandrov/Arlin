@@ -28,14 +28,18 @@ export default function LevelInfo(){
         // saveExpToLocalStorage()
     },[user.exp])
     useEffect(()=>{
-        setUserInventory((old)=>{
-            if(!old) return user.inventory
-            for (const [key,value] of Object.entries(user.inventory)) {
-                if(value!==old[key]){
-                    showRewardPopup(key)
+        console.log(user.inventory)
+            setUserInventory((old)=>{
+                if(!old) return user.inventory
+                for (const [key,value] of Object.entries(user.inventory)) {
+                    // console.log("old",old[key])
+                    // console.log("new",value)
+                    if(value>old[key]){
+                        showRewardPopup(key)
+                    }
                 }
-            }
-        })
+            })
+
     },[user.inventory])
     const showRewardPopup = (key:any) =>{
         setReward(key)
@@ -117,8 +121,8 @@ export default function LevelInfo(){
         <>
             <div ref={levelInfoWrapperRef} className={styles.levelWrapper}>
                 <i onClick={hidePopup}      className={`fa-solid fa-xmark ${styles.xmark}`}></i>
-                {user.expMultiplier>1&&<div className={styles.expMultiplier}>
-                    множител на опит <span className={styles.value}>x{user.expMultiplier}</span>
+                {user.expMultiplier.value>1&&<div className={styles.expMultiplier}>
+                    множител на опит <span className={styles.value}>x{user.expMultiplier.value}</span>
                 </div>}
 
                 <div className={styles.levelBarC}>

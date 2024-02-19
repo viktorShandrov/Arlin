@@ -1,11 +1,11 @@
 import {useDispatch, useSelector} from "react-redux";
 import {setUser} from "../../redux/user";
-import {useEffect} from "react";
-import {lightGreen} from "@mui/material/colors";
+import {useEffect, useRef, useState} from "react";
 
 export default function XP(){
     const {user} = useSelector((state:any)=>state.user)
     const dispatch = useDispatch();
+    const originalFetch = useRef(window.fetch);
     // setTimeout(()=>{
     //     console.log(user.exp);
     // },0)
@@ -13,7 +13,6 @@ export default function XP(){
 
 
 useEffect(()=>{
-    const originalFetch = window.fetch;
 
     // Override the fetch function with a custom implementation
     // @ts-ignore
@@ -21,8 +20,9 @@ useEffect(()=>{
         // Log the request
 
         // Call the original fetch function
-        return originalFetch.apply(this, arguments)
+        return originalFetch.current.apply(this, arguments)
             .then(async(response) => {
+
                 const clonedResponse = response.clone();
 
                 const contentType = clonedResponse.headers.get('Content-Type');
@@ -32,12 +32,38 @@ useEffect(()=>{
                     // console.log("responseData.itemAdded:", responseData.itemAdded);
                     // console.log("user.token:", user.token);
 
-                    if(user.token&&responseData.expAdded){
-                        dispatch(setUser({...user,exp:Number(user.exp)+Number(responseData.expAdded)}))
+
+
+                    // Calculate the new user state outside of the action creator
+                    if(responseData.itemAdded||responseData.expAdded){
+                        console.log(responseData.itemAdded)
+                        console.log(responseData.expAdded)
+                        const exp = Number(user.exp) + (Number(responseData.expAdded)||0);
+                        console.log(exp)
+                        const newInventory = responseData.itemAdded? {
+                            ...user.inventory,
+                            [responseData.itemAdded]: (user.inventory[responseData.itemAdded] || 0) + 1
+                        }:user.inventory;
+                        dispatch(setUser({...user, exp, inventory: newInventory }));
                     }
-                    if(user.token&&responseData.itemAdded){
-                        dispatch(setUser({...user,inventory:{...user.inventory,[responseData.itemAdded]:user.inventory[responseData.itemAdded]+1}}))
-                    }
+
+
+// Dispatch a plain object action with the calculated values
+
+
+                    // if(user.token&&responseData.expAdded){
+                    //     const exp = Number(user.exp)+Number(responseData.expAdded)
+                    //     if(responseData.itemAdded){
+                    //         const newUser = {...user,exp,inventory:{...user.inventory,[responseData.itemAdded]:user.inventory[responseData.itemAdded]+1}}
+                    //         console.log("newUser1",newUser)
+                    //
+                    //         dispatch(setUser(newUser))
+                    //     }else{
+                    //         const newUser = {...user,exp}
+                    //         console.log("newUser2",newUser)
+                    //         dispatch(setUser(newUser))
+                    //     }
+                    // }
                 }
 
                 return response;
@@ -47,6 +73,10 @@ useEffect(()=>{
             });
     }
 },[user])
+    useEffect(() => {
+        // Effect code here
+        console.log("user updated")
+    }, []);
 
 
 return null

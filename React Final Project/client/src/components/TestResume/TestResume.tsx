@@ -4,7 +4,6 @@ import {request} from "../../functions";
 import {useNavigate} from "react-router-dom";
 // @ts-ignore
 export default function TestResume({questions,answers,testType,wordsIds=null}){
-    console.log(wordsIds)
     const navigate = useNavigate()
     const proceedClickHandler = (testType:string)=>{
         request("unknownWords/testCompleted","POST",{testType,wordsIds}).subscribe(

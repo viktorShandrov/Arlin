@@ -50,8 +50,14 @@ const schema = mongoose.Schema({
     },
     exp:Number,
     expMultiplier:{
-        type:Number,
-        default: 1
+        value:{
+            type:Number,
+            default: 1
+        },
+        dueTo:{
+            type:Date,
+            default: undefined
+        }
     },
     imageURL:String,
     inventory:{

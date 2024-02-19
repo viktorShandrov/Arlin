@@ -47,16 +47,38 @@ exports.login = async (email,password)=>{
 exports.getUserInfo = async (_id)=>{
     const user = await userModel.findById(_id);
 
+    await checkIfExpMultiplierExpires(user)
+
     delete user.password
 
     return user.toObject()
 }
-exports.setExpMultiplier = async (_id,expMultiplier)=>{
+async function checkIfExpMultiplierExpires(user){
+    const currentTime = new Date()
+
+    if( user.expMultiplier&&
+        user.expMultiplier.value>1&&
+        user.expMultiplier.dueTo<currentTime
+    ){
+        user.expMultiplier.value = 1
+        user.markModified('expMultiplier');
+        return user.save()
+    }
+}
+exports.useExpMultiplier = async (_id,expMultiplier)=>{
     const user = await userModel.findById(_id);
 
     if(user.inventory.expMultiplier<=0) throw new Error("Нямате налични умножители на опит")
-    if(user.expMultiplier>1) throw new Error("Вече имате активиран множител на опит")
-    user.expMultiplier = expMultiplier
+    if(user.expMultiplier.value>1) throw new Error("Вече имате активиран множител на опит")
+
+    const expirationTime = new Date();
+    expirationTime.setMinutes(expirationTime.getMinutes() + 30); // Set expiration time to 20 minutes from now
+
+    user.expMultiplier = {
+        value:expMultiplier,
+        dueTo:expirationTime
+    }
+
     user.inventory.expMultiplier-=1
     user.markModified('inventory');
     return user.save()
@@ -64,17 +86,17 @@ exports.setExpMultiplier = async (_id,expMultiplier)=>{
 
 
 exports.updateUserExp =async (plusExp,user,res) =>{
-    const newExp = user.exp + (plusExp*user.expMultiplier)
+    const newExp = user.exp + (plusExp*user.expMultiplier.value)
     const levelWithOldExp = calculateLevel(user.exp)
     res.body ={...res.body,expAdded:plusExp}
-    // user.exp = newExp
+    user.exp = newExp
     await checkIfNewLevel(newExp,levelWithOldExp,user,res)
     return user.save()
 }
 
 async function checkIfNewLevel(exp,levelWithOldExp,user,res){
-   const levelWithNewExp =  calculateLevel(exp)
-        const inventoryItemName = levelRewards[levelWithNewExp]
+    const levelWithNewExp =  calculateLevel(exp)
+    const inventoryItemName = levelRewards[levelWithNewExp]
     if(levelWithNewExp!==levelWithOldExp&&inventoryItemName){
         if(user.inventory.hasOwnProperty(inventoryItemName)){
             user.inventory[inventoryItemName]+=1

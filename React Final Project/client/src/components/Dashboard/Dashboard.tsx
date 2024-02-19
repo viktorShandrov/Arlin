@@ -25,22 +25,12 @@ export default function Dashboard(){
         oldValue:"",
         newValue:"",
     })
+    const [expDueToCountDown,setExpDueToCountDown] = useState("")
     // const passedTestNumberElementsRefs = useRef([])
     const {user} = useSelector((state:any)=>state.user)
-                const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
     useEffect(()=>{
-        // request(`users/userInfo/${user.userId}`).subscribe(
-        //     (res:any)=>{
-        //         console.log(user)
-        //         console.log("res",res)
-        //         dispatch(setUser({...res,
-        //             token:user.token,
-        //             userId:user._id
-        //         }))
-        //         setUserInfo(res)
-        //     }
-        // )
         setUserInfo(user)
         const hash = window.location.hash;
         if (hash.slice(hash.lastIndexOf("#")) === "#inventory") {
@@ -49,17 +39,57 @@ export default function Dashboard(){
                 inventoryElement.scrollIntoView({ behavior: "smooth" });
             }
         }
+        const timerInterval = setInterval(()=>updateCountdown(timerInterval), 1000);
+
     },[user])
+
+    function updateCountdown(timerInterval:any) {
+        if(!user.expMultiplier.dueTo)  return clearInterval(timerInterval);
+
+        // Get the current time
+        const currentTime = new Date();
+
+        // Convert the dueTo string to a Date object
+        const expirationTime = new Date(user.expMultiplier.dueTo);
+
+        // Calculate the remaining time
+        const remainingTime = expirationTime - currentTime;
+
+        // Check if the expiration time (dueTo) is in the future
+        if (remainingTime > 0) {
+            // Convert remaining time to minutes and seconds
+            const minutes = Math.floor(remainingTime / (1000 * 60));
+            const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+            setExpDueToCountDown(`00:${minutes<10?`0${minutes}`:minutes}:${seconds<10?`0${seconds}`:seconds}`)
+
+        } else {
+            console.log("The expMultiplier has expired.");
+            setExpDueToCountDown("")
+            clearInterval(timerInterval); // Stop the timer
+        }
+    }
+
+
     const useExpMultiplier = ()=>{
         request("users/useExpMultiplier","GET").subscribe(
             ()=>{
                 toast.success("Успешно активирахте множител на опит")
+                const expirationTime = new Date();
+                expirationTime.setMinutes(expirationTime.getMinutes() + 30);
+
                 dispatch(setUser(
                     {...user,
                             inventory:{...user.inventory,
                             expMultiplier:user.inventory.expMultiplier-1
                             },
-                        expMultiplier:1.5}))
+                        expMultiplier:{
+                            value:1.5,
+                            dueTo:expirationTime
+                        }}))
+                setTimeout(()=>{
+                    const timerInterval = setInterval(()=>updateCountdown(timerInterval), 1000);
+                },0)
+
             }
         )
     }
@@ -161,9 +191,9 @@ export default function Dashboard(){
 
                                 </div>
                                 <h6>{rewardNames[key]}</h6>
-                                {key==="expMultiplier"&&<button onClick={useExpMultiplier} className={styles.useBtn}>използвай</button>}
-                                {key==="freeBook"&&<button onClick={unlockBookForFree} className={styles.useBtn}>отключи книга</button>}
-                                {key==="chest"&&<button onClick={openChest} className={styles.useBtn}>отвори</button>}
+                                {key==="expMultiplier"&&value>0&&<button disabled={expDueToCountDown} onClick={useExpMultiplier} className={styles.useBtn}>{expDueToCountDown||'използвай'}</button>}
+                                {key==="freeBook"&&value>0&&<button onClick={unlockBookForFree} className={styles.useBtn}>отключи книга</button>}
+                                {key==="chest"&&value>0&&<button onClick={openChest} className={styles.useBtn}>отвори</button>}
 
 
                         </div>

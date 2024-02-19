@@ -51,7 +51,7 @@ router.get("/useExpMultiplier",isAuth,async (req,res)=>{
 
         let {_id} = req.user
 
-        await userManager.setExpMultiplier(_id,1.5)
+        await userManager.useExpMultiplier(_id,1.5)
 
         res.status(200).end()
     } catch (error) {
