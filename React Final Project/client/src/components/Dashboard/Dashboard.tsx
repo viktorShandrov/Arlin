@@ -29,13 +29,16 @@ export default function Dashboard(){
         newValue:"",
     })
     const [expDueToCountDown,setExpDueToCountDown] = useState("")
+    const [advancements,setAdvancements] = useState([])
+    const [showedAdvancements,setShowedAdvancements] = useState([])
     // const passedTestNumberElementsRefs = useRef([])
     const {user} = useSelector((state:any)=>state.user)
     const dispatch = useDispatch()
 
     useEffect(()=>{
         setUserInfo(user)
-        console.log(user)
+        setAdvancements(setAdvancementsForUser(user))
+        setShowedAdvancements(setAdvancementsForUser(user).splice(0,1))
         const hash = window.location.hash;
         if (hash.slice(hash.lastIndexOf("#")) === "#inventory") {
             const inventoryElement = document.getElementById("inventory");
@@ -46,6 +49,14 @@ export default function Dashboard(){
         const timerInterval = setInterval(()=>updateCountdown(timerInterval), 1000);
 
     },[user])
+    function setAdvancementsForUser(user:any){
+        return [...user.other.advancementsInfo.filter((adv:any)=>user.advancements.includes(adv.id)),
+            ...user.other.advancementsInfo.filter((adv:any)=>!user.advancements.includes(adv.id)).map((adv:any)=>{return {...adv,isLocked:true}})]
+
+    }
+    function showAllAdvancements(){
+        setShowedAdvancements(advancements)
+    }
 
     function updateCountdown(timerInterval:any) {
         if(!user.expMultiplier.dueTo)  return clearInterval(timerInterval);
@@ -186,11 +197,22 @@ export default function Dashboard(){
                 <section className={styles.badgeSectionWrapper}>
                     <h1 className={styles.heading}>Постижения</h1>
                     <div className={styles.advancementsC}>
-                        {userInfo.other&&userInfo.other.advancementsInfo.filter((adv:any)=>userInfo.advancements.includes(adv.id)).length>0&&userInfo.other.advancementsInfo.filter((adv:any)=>userInfo.advancements.includes(adv.id)).map((adv:any)=>{
+
+                        {showedAdvancements.length>0&&showedAdvancements.map((adv:any)=>{
                             return <div className={styles.advancementC}>
-                                {adv.name}
+                                <div className={styles.advImageCLocked}>
+                                    <img src={`/public/advancementsIcons/${adv.type}.png`} alt=""/>
+                                    {adv.isLocked&&<div className={styles.lockC}>
+                                        <i className={`${styles.lock} fa-solid fa-lock`}></i>
+                                    </div>}
+                                </div>
+                                <div className={styles.advName}>
+                                    <h5>{adv.name}</h5>
+                                </div>
                             </div>
                         })}
+
+                        {showedAdvancements.length<advancements.length&&<button className={styles.showAllBtn} onClick={showAllAdvancements}>покажи всички</button> }
 
                     </div>
                 </section>

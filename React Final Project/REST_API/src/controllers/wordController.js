@@ -78,12 +78,13 @@ router.post("/testCompleted",isAuth,async (req,res)=>{
     }
 })
 
-router.get("/translateText/:text",isAuth,async (req,res)=>{
+router.post("/translateText",isAuth,async (req,res)=>{
     try{
-        const {text} = req.params
+        const {text} = req.body
         const translation = await wordManager.translateText(text)
         res.status(200).send({translation})
     } catch (error) {
+        console.log(error)
         res.status(400).json({message:error.message})
     }
 })

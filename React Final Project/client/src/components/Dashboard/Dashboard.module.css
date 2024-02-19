@@ -1,6 +1,10 @@
 .profileWrapper{
     overflow-y: auto !important;
 }
+.profileWrapper section{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
 
 .profileC{
     display: flex;
@@ -221,12 +225,65 @@
 }
 .advancementsC{
     width: 50%;
-    background-color: #859D7A;
-    padding: 20px;
+    background-color: #4c6a69;
+    padding: 60px;
     border-radius: 20px;
-    min-height: 500px;
+    /*min-height: 500px;*/
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.advancementC{
+    display: flex;
+    align-items: center;
+    color: white;
 
 }
+.advancementC .advImageC,
+.advancementC .advImageCLocked{
+    width: 120px;
+    aspect-ratio: 1/1;
+    background-color: #75A9AB;
+    padding: 20px;
+    border-radius: 100px;
+    border: white solid 2px;
+}
+.advancementC  img{
+    width: 100%;
+    height: 100%;
+}
+
+.advName{
+    padding-left: 30px;
+}
+.advImageCLocked{
+    position: relative;
+}
+.lockC{
+
+    position: absolute;
+    font-size: 40px;
+    top: 0;
+    left: 0;
+    color: #dcdcdc;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.55);
+
+}
+
+.showAllBtn{
+    padding: 10px 40px;
+    background-color: #75A9AB;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    margin-top: 30px;
+}
+
 
 
 @media (max-width: 1500px){

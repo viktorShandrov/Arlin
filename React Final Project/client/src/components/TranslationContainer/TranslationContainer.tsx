@@ -29,7 +29,7 @@ export default function TranslationContainer() {
             }
 
             setIsTranslationLoading(true)
-            request("unknownWords/translateText/"+textToTranslate).subscribe(
+            request("unknownWords/translateText","POST",{text:textToTranslate}).subscribe(
                 (res:any)=>{
                     setTranslatedSentence(res.translation)
                     setIsTranslationLoading(false)

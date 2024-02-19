@@ -253,7 +253,8 @@ exports.advancements = [
         requirement:async (user)=>{
             const userLevel = userManager.calculateLevel(user.exp)
             return userLevel>=5
-        }
+        },
+        type:"level"
     },
     {
         id:2,
@@ -262,6 +263,7 @@ exports.advancements = [
             const containers = await wordsContainer.find({ownedBy:user._id})
             const userUnknownWordsCount = containers.map(cont=>cont.words.length).reduce((acc,curr)=>acc+curr,0)
             return userUnknownWordsCount>=50
-        }
+        },
+        type:"words"
     },
 ]

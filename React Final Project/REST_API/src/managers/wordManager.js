@@ -381,7 +381,7 @@ import('random-words')
             }
 
             exports.translateText=async(text)=>{
-                const response = await((await fetch(translateAPI+encodeURI(text))).json())
+                const response = await((await fetch(translateAPI+"car",{method:"POST",body:text})).json())
                 return response.translation
             }
             })
