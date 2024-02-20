@@ -406,8 +406,23 @@ stripe-buy-button{
         width: 70%;
     }
 }
+@media (max-width: 800px){
+    .wordInfoWrapper{
+        max-width: 70%;
+    }
+}
+@media (max-width: 600px){
+    .wordInfoWrapper{
+        max-width: 90%;
+    }
+}
 @media (max-width: 500px){
     .container{
         width: 95%;
+    }
+}
+@media (max-width: 450px){
+    .wordInfoWrapper{
+        padding: 10px;
     }
 }
