@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
 import {rewardNames} from "../../contants";
 import {calculateLevel} from "../../functions";
+import Popup from "../Popup/Popup";
 export default function LevelInfo(){
     const {user} = useSelector((state:any)=>state.user)
 
@@ -69,7 +70,7 @@ export default function LevelInfo(){
         // @ts-ignore
         levelInfoWrapperRef.current.style.top="0"
         setTimeout(()=>{
-            hidePopup()
+            // hidePopup()
         },5000)
     }
     const navigateToTrophyRoad = ()=>{
@@ -149,8 +150,9 @@ export default function LevelInfo(){
                 </div>
 
             </div>
-            {isRewardPopupVisible&&<PopUpOverlay>
-                <div className={styles.rewardWrapper}>
+            {isRewardPopupVisible&&<Popup hidePopup={hideRewardPopup} styleSelector={styles.popupWrapper}>
+
+            <div className={styles.rewardWrapper}>
                     <div className={styles.rewardC}>
                         <h3>Честито</h3>
                         <h4>спечелихте награда</h4>
@@ -168,7 +170,7 @@ export default function LevelInfo(){
 
                 </div>
 
-            </PopUpOverlay>}
+            </Popup>}
         </>
 
     )

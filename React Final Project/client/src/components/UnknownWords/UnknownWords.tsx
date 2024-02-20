@@ -5,6 +5,7 @@ import ComponentLoading from "../ComponentLoading/ComponentLoading.tsx";
 import PopUpOverlay from "../PopUpOverlay/PopUpOverlay.tsx";
 import useForm from "../../hooks/useForm.tsx";
 import {toast} from "react-toastify";
+import Popup from "../Popup/Popup";
 
 export default function UnknownWords(){
     // const [words,setWords] = useState([])
@@ -149,62 +150,63 @@ export default function UnknownWords(){
                 {/*>*/}
                 {/*</stripe-buy-button>*/}
             </div>
-            {isCreateGroupPopUpVisible&&<PopUpOverlay>
-                <div className={styles.createWordGroupWrapper}>
-                    <div className={styles.createWordGroupC}>
-                        <h5>създаване на нова група за думи</h5>
-                        <div className={styles.colorPickAndNameInput}>
-                            <div className={styles.colorPicker}>
-                                <input value={createWordContainerForm.colorCode} onChange={onChange} name={"colorCode"} type="color"/>
-                            </div>
-                            <input value={createWordContainerForm.containerName} onChange={onChange} name={"containerName"} className={styles.nameInput} type="text" placeholder={"Име на нова група"}/>
+            {isCreateGroupPopUpVisible&&
+                <Popup hidePopup={hidePopup} styleSelector={styles.popupWrapper}>
+                    <div className={styles.createWordGroupWrapper}>
+                        <div className={styles.createWordGroupC}>
+                            <h5>създаване на нова група за думи</h5>
+                            <div className={styles.colorPickAndNameInput}>
+                                <div className={styles.colorPicker}>
+                                    <input value={createWordContainerForm.colorCode} onChange={onChange} name={"colorCode"} type="color"/>
+                                </div>
+                                <input value={createWordContainerForm.containerName} onChange={onChange} name={"containerName"} className={styles.nameInput} type="text" placeholder={"Име на нова група"}/>
 
-                        </div>
-                        <div className={styles.createBtns}>
-                            <button disabled={!createWordContainerForm.containerName} onClick={createWordContainerClickHandler} className={styles.createBtn}>създай</button>
-                            <button onClick={cancelWordContainerClickHandler} className={styles.cancelBtn}>отказ</button>
+                            </div>
+                            <div className={styles.createBtns}>
+                                <button disabled={!createWordContainerForm.containerName} onClick={createWordContainerClickHandler} className={styles.createBtn}>създай</button>
+                                <button onClick={cancelWordContainerClickHandler} className={styles.cancelBtn}>отказ</button>
+                            </div>
+
                         </div>
 
                     </div>
-
-                </div>
-
+                </Popup>
 
 
+}
+            {isWordInfoPopUpVisible&&
+                    <Popup hidePopup={hideWordInfoPopUp} styleSelector={styles.popupWrapper}>
+                        <div className={styles.wordInfoWrapper}>
+                            <div className={styles.infosC}>
+                                <div className={styles.infoC}>
+                                    <p className={styles.infoTitle}>дума</p>
+                                    <h5 className={styles.infoValue}>{clickedWord.wordRef.word}</h5>
+                                </div>
+                                <div className={styles.infoC}>
+                                    <p className={styles.infoTitle}>превод</p>
+                                    <h5 className={styles.infoValue}>{clickedWord.wordRef.translatedText}</h5>
+                                </div>
+                                <div className={styles.infoC}>
+                                    <p className={styles.infoTitle}>позната ли е</p>
+                                    <h5 className={styles.infoValue}>{clickedWord.isKnown?"да":"не"}</h5>
+                                </div>
+                                {clickedWord.wordRef.examples.length>0&&<div className={`${styles.infoC} ${styles.withBtn}`}>
+                                    <div className={styles.example}>
+                                        <p className={styles.infoTitle}>пример в изречение</p>
+                                        <h5 className={styles.infoValue}>{clickedWord.wordRef.examples[0].sentenceWhereWordsIsPresent}</h5>
+                                    </div>
+                                    {clickedWord.wordRef.examples.length>1&&<button onClick={()=>setIsWordExamplesPopUpVisible(true)} className={styles.showMoreExamples}>виж още примери в изречения</button>}
 
-            </PopUpOverlay>}
-            {isWordInfoPopUpVisible&&<PopUpOverlay>
-                <div className={styles.wordInfoWrapper}>
-                    <i  onClick={()=>hideWordInfoPopUp()} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
-                    <div className={styles.infosC}>
-                        <div className={styles.infoC}>
-                            <p className={styles.infoTitle}>дума</p>
-                            <h5 className={styles.infoValue}>{clickedWord.wordRef.word}</h5>
-                        </div>
-                        <div className={styles.infoC}>
-                            <p className={styles.infoTitle}>превод</p>
-                            <h5 className={styles.infoValue}>{clickedWord.wordRef.translatedText}</h5>
-                        </div>
-                        <div className={styles.infoC}>
-                            <p className={styles.infoTitle}>позната ли е</p>
-                            <h5 className={styles.infoValue}>{clickedWord.isKnown?"да":"не"}</h5>
-                        </div>
-                        {clickedWord.wordRef.examples.length>0&&<div className={`${styles.infoC} ${styles.withBtn}`}>
-                            <div className={styles.example}>
-                                <p className={styles.infoTitle}>пример в изречение</p>
-                                <h5 className={styles.infoValue}>{clickedWord.wordRef.examples[0].sentenceWhereWordsIsPresent}</h5>
+
+                                </div>}
                             </div>
-                            {clickedWord.wordRef.examples.length>1&&<button onClick={()=>setIsWordExamplesPopUpVisible(true)} className={styles.showMoreExamples}>виж още примери в изречения</button>}
+                        </div>
+                    </Popup>
 
+                }
 
-                        </div>}
-                    </div>
-                </div>
-            </PopUpOverlay>}
-
-            {isWordExamplesPopUpVisible&&<PopUpOverlay>
+            {isWordExamplesPopUpVisible&&<Popup hidePopup={()=>setIsWordExamplesPopUpVisible(false)} styleSelector={styles.popupWrapper}>
                 <div className={styles.wordExamplesWrapper}>
-                    <i  onClick={()=>setIsWordExamplesPopUpVisible(false)} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
 
                     <div className={styles.heading}>
                         <p>изречения включващи думата</p>
@@ -227,7 +229,7 @@ export default function UnknownWords(){
 
                 </div>
 
-            </PopUpOverlay> }
+            </Popup> }
 
 
         </>

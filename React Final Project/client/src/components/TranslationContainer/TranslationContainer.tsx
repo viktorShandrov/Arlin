@@ -5,6 +5,7 @@ import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {request} from "../../functions";
 import ComponentLoading from "../ComponentLoading/ComponentLoading";
 import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
+import Popup from "../Popup/Popup";
 
 export default function TranslationContainer() {
     const [translatedSentence, setTranslatedSentence] = useState("");
@@ -186,9 +187,8 @@ export default function TranslationContainer() {
             </div>}
             <div onClick={()=>closeTextToTranslatePanel()} className={styles.overlay}></div>
 
-            {isPopupVisible&&<PopUpOverlay>
+            {isPopupVisible&&<Popup hidePopup={closeWordInfoPopup} styleSelector={styles.popupWrapper}>
                 <div className={styles.wordInfoWrapper}>
-                    <i  onClick={()=>closeWordInfoPopup()} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
                     <div className={styles.wordInfoC}>
                         <div className={styles.infosC}>
                             <div className={styles.infoC}>
@@ -225,7 +225,7 @@ export default function TranslationContainer() {
                     </div>
                 </div>
 
-            </PopUpOverlay>}
+            </Popup>}
         </>
 
 

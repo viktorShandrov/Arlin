@@ -88,13 +88,16 @@
     display: flex;
     align-items: center;
 }
+.popupWrapper{
+    width: 40%;
+}
 
 .answersMobileWrapper{
     display: none;
     position: relative;
     /*bottom: 0;*/
     /*left: 0;*/
-    width: 40%;
+
     /*height: 60%;*/
     transition: 1s;
     overflow: visible;
@@ -111,7 +114,7 @@
     display: flex;
     padding: 30px 0;
     flex-direction: column;
-    background-color: #EFEFEF;
+    /*background-color: #EFEFEF;*/
     gap: 20px;
     align-items: center;
     width: 100%;
@@ -187,6 +190,12 @@
     }
 
 }
+@media(max-width: 800px){
+    .popupWrapper{
+        width: 80%;
+    }
+
+}
 @media(max-width: 650px){
     .questionsWrapper,
     .answersC{
@@ -198,6 +207,9 @@
     .questionsWrapper,
     .answersC{
         width: 100%;
+    }
+    .popupWrapper{
+        width: 95%;
     }
 
 }

@@ -49,7 +49,7 @@ export default function TestsList(){
                 <Link to={"/main/test/matchFour"}>
                     <div className={styles.testC}>
                         <div className={styles.titleAndDescription}>
-                            <h4 className={styles.testTitle}>Връжи 4 с 4</h4>
+                            <h4 className={styles.testTitle}>Вържи 4 с 4</h4>
                             <p className={styles.testDescription}>
                                 системата избира четири думи и техният правилен отговор. Задачата е да свържете всяка дума с нейния правилен превод
                             </p>

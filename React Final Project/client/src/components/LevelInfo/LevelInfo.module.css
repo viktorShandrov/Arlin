@@ -66,15 +66,15 @@
     position: absolute;
     top: 10%;
     right: 0;
-    transform:rotate(-90deg) translate(1450%, -250%) ;
+    transform:rotate(-90deg) translateX(-5px) translateY(-40px) /* translate(1450%, -250%)*/ ;
     cursor: pointer;
     overflow: visible;
 }
 
 .arrow span {
     display: block;
-    width: 1.5vw;
-    height: 1.5vw;
+    width: 13px;
+    height: 13px;
     border-bottom: 5px solid white;
     border-right: 5px solid white;
     transform: rotate(45deg);
@@ -90,9 +90,11 @@
     animation-delay: -0.4s;
 }
 
-
+.popupWrapper{
+    padding: 30px !important;
+}
 .rewardWrapper{
-    padding: 30px;
+
     display: flex;
     flex-direction: column;
     border-radius: 20px;
@@ -148,6 +150,28 @@
     color: #a73701;
     background-color: white;
     font-weight: normal;
+}
+
+
+@media (max-width: 800px){
+    .levelWrapper{
+        width: 90%;
+    }
+}
+@media (max-width: 600px){
+    .levelWrapper{
+        width: 100%;
+    }
+}
+@media (max-width: 500px){
+    .btnAndLevelInfo{
+        flex-direction: column-reverse;
+        padding: 0;
+        gap: 10px;
+    }
+    .levelInfo{
+        justify-content: center;
+    }
 }
 
 

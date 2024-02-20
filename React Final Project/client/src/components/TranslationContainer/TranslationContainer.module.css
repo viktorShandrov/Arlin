@@ -97,7 +97,7 @@
 }
 
 
-.wordInfoWrapper{
+.popupWrapper{
     position: absolute;
     padding: 30px;
     display: flex;

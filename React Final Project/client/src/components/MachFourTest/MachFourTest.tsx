@@ -5,6 +5,7 @@ import AnswerC from "./AnswerC/AnswerC";
 import {request} from "../../functions";
 import TestResume from "../TestResume/TestResume";
 import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
+import Popup from "../Popup/Popup";
 export default function MachFourTest(){
     const dragOverElRef1= useRef(null)
     const dragOverElRef2= useRef(null)
@@ -268,7 +269,7 @@ export default function MachFourTest(){
 
 
             </div>
-            {!Object.values(pairs).every((prop:any)=>prop)&&isAnswersPopupVisible&&<PopUpOverlay>
+            {!Object.values(pairs).every((prop:any)=>prop)&&isAnswersPopupVisible&&<Popup hidePopup={hideAnswersPopup} styleSelector={styles.popupWrapper}>
                 <section
                     className={styles.answersMobileWrapper}
                 >
@@ -283,9 +284,8 @@ export default function MachFourTest(){
                         <AnswerC reference={mobileAnswerElRef4} setPairs={setPairs} text={answers[3]}  dragOverElRefs={dragOverElRefs} isMobile={true} targetContainer={mobileTargetContainer} hidePopup={hideAnswersPopup}/>
 
                     </div>
-                    <i onClick={hideAnswersPopup} className={`${styles.xmark} fa-solid fa-xmark`}></i>
                 </section>
-            </PopUpOverlay>
+            </Popup>
                 }
 
 

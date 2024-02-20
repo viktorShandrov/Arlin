@@ -162,7 +162,7 @@ stripe-buy-button{
 .createWordGroupWrapper{
     background-color: white;
     border-radius: 20px;
-    padding: 50px;
+    /*padding: 50px;*/
 }
 .createWordGroupC{
     text-align: center;
@@ -287,16 +287,11 @@ stripe-buy-button{
 
 .wordInfoWrapper,
 .wordExamplesWrapper{
-    padding:40px 30px;
-    position: relative;
-    max-width: 50%;
     display: flex;
     flex-direction: column;
-    border-radius: 20px;
     background-color: white;
-    z-index: 999999999;
 }
-.wordExamplesWrapper{
+.popupWrapper{
     max-height: 70%;
 }
 
@@ -349,21 +344,7 @@ stripe-buy-button{
     border: none;
     font-size: 25px;
 }
-.xmark{
-    width: fit-content;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    padding: 10px;
-    border-radius: 100px;
-    transition: 0.3s;
-    align-self: flex-end;
-}
-.xmark:hover{
-    background-color: black;
-    color: white;
-    cursor: pointer;
-}
+
 
 
 
@@ -410,14 +391,12 @@ stripe-buy-button{
     }
 }
 @media (max-width: 800px){
-    .wordInfoWrapper,
-    .wordExamplesWrapper{
+    .popupWrapper{
         max-width: 70%;
     }
 }
 @media (max-width: 600px){
-    .wordInfoWrapper,
-    .wordExamplesWrapper{
+    .popupWrapper{
         max-width: 90%;
     }
 }
@@ -430,15 +409,14 @@ stripe-buy-button{
     }
 }
 @media (max-width: 450px){
-    .wordInfoWrapper,
-    .wordExamplesWrapper{
-        padding-left: 10px;
-        padding-right: 10px;
-        padding-bottom: 10px;
+    .popupWrapper{
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        padding-bottom: 10px !important;
     }
 }
 @media (max-width: 400px){
-    .createWordGroupWrapper{
-        padding:20px;
+     .popupWrapper{
+        padding:20px !important;
     }
 }
