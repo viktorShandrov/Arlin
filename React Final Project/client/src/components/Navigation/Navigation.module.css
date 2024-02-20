@@ -23,6 +23,7 @@
     width: 100%;
     justify-content: center;
     transition: 0.4s;
+
 }
 .burgerMenuIcon{
     position: absolute;
@@ -43,9 +44,11 @@
 }
 .currentSectionLabelChar{
     text-align: center;
-    margin: 0;
+    margin: 0 !important;
     font-weight: bolder;
     color: white;
+    font-size: clamp(10px,5vw,37px) !important;
+    line-height: 34px;
     /*margin: 0;*/
     /*height: 200px;*/
     /*writing-mode: vertical-lr; !* vertical right-to-left *!*/

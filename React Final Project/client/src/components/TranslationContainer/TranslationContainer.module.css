@@ -14,17 +14,20 @@
     opacity: 0.3;
 }
 .container{
-    display: flex;
-    flex-direction: column;
     padding: 20px;
     width: 300px;
-    max-height: 80%;
+    max-height: 100%;
     overflow-y: scroll;
     border: solid 1px black;
     height: fit-content;
     border-radius: 20px;
     background-color: #EBEBEB;
 
+}
+.elements{
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
 }
 .heading{
     margin-bottom: 20px!important;
@@ -79,6 +82,9 @@
 }
 .xmark{
     width: fit-content;
+    position: absolute;
+    right: 20px;
+    top: 20px;
     padding: 10px;
     border-radius: 100px;
     transition: 0.3s;
@@ -156,8 +162,15 @@
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 999;
+        max-height: 80%;
     }
     .visible + .overlay{
         display: block;
+    }
+}
+
+@media (max-width:800px){
+    .container{
+        margin-top: 40px;
     }
 }

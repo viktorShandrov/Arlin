@@ -144,41 +144,45 @@ export default function TranslationContainer() {
         <>
             {textToTranslate&&<div className={ `${styles.container} ${textToTranslate?styles.visible:null}` }>
                 <i  onClick={()=>closeTextToTranslatePanel()} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
-                <h6 className={styles.heading}>Избери думите, които са ти непознати:</h6>
-                <p className={styles.textForTranslate} ref={wordsContainerRef}>
-                    {textToTranslate?.split(" ").map((el, index) => {
-                        if(!el){
-                            return null
-                        }
-                        el = el.replace(/^[,."\s:]+|[,\s:]+$/g, "")
-                        return (
-                            <span
-                                style={
-                                    {
+                <div className={styles.elements}>
+                    <h6 className={styles.heading}>Избери думите, които са ти непознати:</h6>
+                    <p className={styles.textForTranslate} ref={wordsContainerRef}>
+                        {textToTranslate?.split(" ").map((el, index) => {
+                            if(!el){
+                                return null
+                            }
+                            el = el.replace(/^[,."\s:]+|[,\s:]+$/g, "")
+                            return (
+                                <span
+                                    style={
+                                        {
                                             backgroundColor:clickedWords.find((word:any)=>word.text===el)?.colorCode
+                                        }
                                     }
-                                }
-                                key={index}
-                                className={`${styles.word} `}
-                                data-isclicked={!!clickedWords.find((word:any)=>word.text===el)}
-                                onClick={(e) => handleWordClick(e,el)}
-                                // ref={spanRef}
-                            >
+                                    key={index}
+                                    className={`${styles.word} `}
+                                    data-isclicked={!!clickedWords.find((word:any)=>word.text===el)}
+                                    onClick={(e) => handleWordClick(e,el)}
+                                    // ref={spanRef}
+                                >
                           {el}
-                                {!!clickedWords.find((word:any)=>word.text===el)&&<i onClick={()=>showWordInfoClickHandler(el)} className={`${styles.info} fa-solid fa-info`}></i>}
+                                    {!!clickedWords.find((word:any)=>word.text===el)&&<i onClick={()=>showWordInfoClickHandler(el)} className={`${styles.info} fa-solid fa-info`}></i>}
                         </span>
-                        );
-                    })}
-                </p>
-                {clickedWords.some((el) => !el.isSaved) && (
-                    <button onClick={saveWordsClickHandler} className={styles.saveWords}>
-                        Запази думи
-                    </button>
-                )}
+                            );
+                        })}
+                    </p>
+                    {clickedWords.some((el) => !el.isSaved) && (
+                        <button onClick={saveWordsClickHandler} className={styles.saveWords}>
+                            Запази думи
+                        </button>
+                    )}
 
-                <hr />
-                <h6 className={styles.heading}>Превод:</h6>
-                <p className={styles.translation}>{isTranslationLoading&&<ComponentLoading/>}{translatedSentence}</p>
+                    <hr />
+                    <h6 className={styles.heading}>Превод:</h6>
+                    <p className={styles.translation}>{isTranslationLoading&&<ComponentLoading/>}{translatedSentence}</p>
+                </div>
+
+
             </div>}
             <div onClick={()=>closeTextToTranslatePanel()} className={styles.overlay}></div>
 
@@ -194,7 +198,7 @@ export default function TranslationContainer() {
 
                         </div>
                         <div className={styles.userWordContainersC}>
-                            <h6 className={styles.groupsHeading}>групи от думи</h6>
+                            <h6 className={styles.groupsHeading}>ваши създадени групи от думи</h6>
                             {userWordContainers.map((container:any)=>{
                                return <div onClick={()=>addWordToSpecificGroupClickHandler(selectedWordInfo,container.name,container.colorCode)} className={styles.userWordContainerC}>
                                    <div
