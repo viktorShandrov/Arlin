@@ -70,7 +70,7 @@ export default function LevelInfo(){
         // @ts-ignore
         levelInfoWrapperRef.current.style.top="0"
         setTimeout(()=>{
-            // hidePopup()
+            hidePopup()
         },5000)
     }
     const navigateToTrophyRoad = ()=>{
