@@ -1,6 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {setUser} from "../../redux/user";
 import {useEffect, useRef, useState} from "react";
+import {toast} from "react-toastify";
 
 export default function XP(){
     const {user} = useSelector((state:any)=>state.user)
@@ -36,15 +37,17 @@ useEffect(()=>{
 
                     // Calculate the new user state outside of the action creator
                     if(responseData.itemAdded||responseData.expAdded){
-                        console.log(responseData.itemAdded)
-                        console.log(responseData.expAdded)
                         const exp = Number(user.exp) + (Number(responseData.expAdded)||0);
-                        console.log(exp)
                         const newInventory = responseData.itemAdded? {
                             ...user.inventory,
                             [responseData.itemAdded]: (user.inventory[responseData.itemAdded] || 0) + 1
                         }:user.inventory;
                         dispatch(setUser({...user, exp, inventory: newInventory }));
+                    }
+                    if(responseData.info){
+                        for (const info of responseData.info) {
+                            toast.info(info)
+                        }
                     }
 
 

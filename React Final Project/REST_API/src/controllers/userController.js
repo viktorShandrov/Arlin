@@ -38,9 +38,9 @@ router.get("/userInfo/:userId?",isAuth,async (req,res)=>{
             userId = req.user._id
         }
 
-        const userInfo = await userManager.getUserInfo(userId)
+        await userManager.getUserInfo(userId,res)
 
-        res.status(201).json(userInfo)
+        res.status(201).json(res.body)
     } catch (error) {
         console.log(error)
         res.status(400).json({message:error.message})

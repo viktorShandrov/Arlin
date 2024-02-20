@@ -9,7 +9,6 @@ const userManager =require("./userManager") ;
 // const fetch1 = await import("node-fetch")
 
 
-const {translateAPI} = require("../utils/utils");
 
 import('random-words')
     .then(async (randomWordsModule )=>{
@@ -271,7 +270,7 @@ import('random-words')
                                 break;
 
                         }
-                        await userManager.updateUserExp(40,user,res)
+                        await userManager.updateUserExp(utils.defaultExp,user,res)
                         return user.save()
                     }
 
@@ -329,14 +328,14 @@ import('random-words')
                     }
 
             exports.translateWord=async(word)=>{
-                const response = await((await fetch(translateAPI+word)).json())
+                const response = await((await fetch(utils.translateAPI+word)).json())
                 return response.translation
             }
 
 
         exports.translateMultipleWords=async(words)=>{
                         const payload = words.join(", ")
-                        const response = await((await fetch(translateAPI+payload)).json())
+                        const response = await((await fetch(utils.translateAPI+payload)).json())
                         const translations = response.translation.split(", ")
 
                         for(let i = 0;i<words.length;i++){
@@ -363,7 +362,7 @@ import('random-words')
                 const words = randomWords.generate(500)
 
                 const payload = words.join(", ")
-                const response = await((await fetch(translateAPI+payload)).json())
+                const response = await((await fetch(utils.translateAPI+payload)).json())
                 const translations = response.translation.split(", ")
 
                 for(let i = 0;i<words.length;i++){
@@ -381,7 +380,7 @@ import('random-words')
             }
 
             exports.translateText=async(text)=>{
-                const response = await((await fetch(translateAPI+"car",{method:"POST",body:text})).json())
+                const response = await((await fetch(utils.translateAPI+encodeURI(text))).json())
                 return response.translation
             }
             })
@@ -443,10 +442,11 @@ exports.getUserWordContainer = (user,withPopulatedWords)=>{
 }
 exports.createWords =async(words,userId)=>{
     // const wordsAndTranslations = await exports.translateMultipleWords(words)
+    const info = []
 
     for (const word of words) {
         let wordRecord = await allModels.wordModel.findOne({word:word.text})
-        const targetContainer = await allModels.wordsContainer.findOne({ownedBy:userId,name:word.targetContainer}) || await allModels.wordsContainer.findOne({ownedBy:userId,type:"systemGenerated"})
+        const targetContainer = await allModels.wordsContainer.findOne({ownedBy:userId,name:word.targetContainer}).populate("words.wordRef") || await allModels.wordsContainer.findOne({ownedBy:userId,type:"systemGenerated"}).populate("words.wordRef")
 
 
 
@@ -467,16 +467,25 @@ exports.createWords =async(words,userId)=>{
                 }
 
             }
-            if(targetContainer.words.some((el)=>el.wordRef.equals(wordRecord._id))) throw new Error("Думата вече в запазена")
-
+            const alreadySaved = targetContainer.words.filter((el)=>el.wordRef.equals(wordRecord._id))
+            if(alreadySaved.length>0){
+                for (const word of alreadySaved) {
+                    info.push(`"${word.wordRef.word}" вече е запазена`)
+                }
+            }else{
                 targetContainer.words.push({
                     wordRef:wordRecord._id,
                 })
-            await targetContainer.save()
+                await targetContainer.save()
+            }
+
+
+
     }
+    return info
 }
  async function getWordWholeInfo(word){
-   return (await fetch(translateAPI+encodeURI(word))).json()
+   return (await fetch(utils.translateAPI+encodeURI(word))).json()
 }
 
 async function createWordExamples(sentenceExamples,wordRecord){

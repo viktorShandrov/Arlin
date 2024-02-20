@@ -43,16 +43,16 @@ exports.login = async (email,password)=>{
     }
 
 }
-exports.getUserInfo = async (_id)=>{
+exports.getUserInfo = async (_id,res)=>{
     const user = await userModel.findById(_id);
 
-    await checkIfAdvancements(user)
+    await checkIfAdvancements(user,res)
 
     await checkIfExpMultiplierExpires(user)
 
     delete user.password
 
-    return {...user.toObject(),other:{
+    res.body = {...res.body,...user.toObject(),other:{
             advancementsInfo: utils.advancements,
             levelRewards: utils.levelRewards,
         }}
@@ -69,12 +69,13 @@ async function checkIfExpMultiplierExpires(user){
         return user.save()
     }
 }
-async function checkIfAdvancements(user){
+async function checkIfAdvancements(user,res){
     const userAdvancements = user.advancements
     const advancementsThatUserDoesntHas = utils.advancements.filter(adv=>!userAdvancements.includes(adv.id))
     for (const advancements of advancementsThatUserDoesntHas) {
         if(await advancements.requirement(user)){
             user.advancements.push(advancements.id)
+            await exports.updateUserExp(utils.defaultExp,user,res)
         }
     }
     user.markModified("advancements")

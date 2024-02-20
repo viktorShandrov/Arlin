@@ -219,7 +219,7 @@ exports.commonWords = [
     "yourself",
     "yourselves",
 ];
-
+exports.defaultExp = 40
 
 exports.inventoryItems = ["freeBook","chest","expMultiplier"]
 

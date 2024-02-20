@@ -38,7 +38,7 @@ export default function Dashboard(){
     useEffect(()=>{
         setUserInfo(user)
         setAdvancements(setAdvancementsForUser(user))
-        setShowedAdvancements(setAdvancementsForUser(user).splice(0,1))
+        setShowedAdvancements(setAdvancementsForUser(user).splice(0,2))
         const hash = window.location.hash;
         if (hash.slice(hash.lastIndexOf("#")) === "#inventory") {
             const inventoryElement = document.getElementById("inventory");
@@ -243,7 +243,7 @@ export default function Dashboard(){
 
                 <section className={styles.motivationalQuoteWrapper}>
                     <h1 className={styles.quote}>
-                        Keep going! Arlin is with you
+                        Продължавай напред! Арлин е с теб
                     </h1>
                 </section>
 

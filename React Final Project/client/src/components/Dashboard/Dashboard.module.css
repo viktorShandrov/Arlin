@@ -123,13 +123,16 @@
 }
 
 
-
+.motivationalQuoteWrapper{
+    display: flex;
+    justify-content: center;
+}
 
 .quote{
-    width: 40%;
-    font-size: 100px !important;
+    /*width: 40%;*/
+    font-size: clamp(25px,10vw,100px) !important;
     color: #7E0030;
-    margin: 90px auto!important;
+    margin: 90px clamp(10px,10vw,150px)!important;
     text-align: center;
     font-weight: bolder ;
 }
@@ -242,6 +245,8 @@
 .advancementC .advImageC,
 .advancementC .advImageCLocked{
     width: 120px;
+    flex: 0 0 auto; /* This prevents the child from growing or shrinking */
+
     aspect-ratio: 1/1;
     background-color: #75A9AB;
     padding: 20px;
@@ -254,7 +259,8 @@
 }
 
 .advName{
-    padding-left: 30px;
+    padding-left: clamp(10px,2vw,30px);
+    word-break: break-word;
 }
 .advImageCLocked{
     position: relative;
@@ -291,6 +297,7 @@
         font-size: 30px;
     }
 }
+
 @media (max-width: 980px){
     .testsC{
         gap: 60px;
@@ -304,7 +311,8 @@
         transform: translateY(0);
 
     }
-    .inventoryWrapper{
+    .inventoryWrapper,
+    .advancementsC{
         width: 80%;
     }
 }
@@ -331,8 +339,12 @@
     .credential{
         flex-direction: column;
     }
-    .inventoryWrapper{
-        width: 95%;
+    .inventoryWrapper,
+    .advancementsC{
+        width: 90%;
+    }
+    .advancementsC{
+     padding: 30px;
     }
 }
 
@@ -340,6 +352,11 @@
 @media (max-width: 500px){
     .callToActionBtsC{
         flex-direction: column;
+    }
+}
+@media (max-width: 380px){
+    .advancementsC{
+        padding: 15px;
     }
 }
 

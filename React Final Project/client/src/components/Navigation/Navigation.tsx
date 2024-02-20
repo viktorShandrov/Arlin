@@ -87,6 +87,14 @@ export default function Navigation(){
                         <h6 className={styles.navItemLabel}>Тестове</h6>
                     </article>
                 </Link>
+                {/*<Link onClick={navigateHandler} to={"/main/tests"}  className={styles.linkItem} >*/}
+                {/*    <article className={styles.linkC}>*/}
+                {/*        <div className={styles.imageC}>*/}
+                {/*            <img src="/nav%20icons%20new/test.png" alt=""/>*/}
+                {/*        </div>*/}
+                {/*        <h6 className={styles.navItemLabel}>Нива</h6>*/}
+                {/*    </article>*/}
+                {/*</Link>*/}
                 {/*<Link onClick={navigateHandler} to={"/main/dashboard"}  className={styles.linkItem} >*/}
                 {/*    <article className={styles.linkC}>*/}
                 {/*        <div className={styles.imageC}>*/}
