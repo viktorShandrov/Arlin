@@ -7,6 +7,7 @@ import Loading from "../Spinner/Loading";
 // import BookElement from "./BookElement/BookElement";
 import SearchBar from "../SearchBar/SearchBar";
 import BookSection from "../BookSection/BookSection";
+import Popup from "../Popup/Popup";
 export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
@@ -15,6 +16,7 @@ export default function AllBooks(){
     const [filteredAutoCompletions,setFilteredAutoCompletions] = useState([])
     const [isFilterPanelShown,setIsFilterPanelShown] = useState(false)
     const [isOwnedFilter,setIsOwnedFilter] = useState(false)
+    const [isFreeBookModePopupVisible,setIsFreeBookModePopupVisible] = useState(false)
     const [searchParams,setSearchParams] = useState("")
     const [filterData,setFilterData] = useState({
         authors:[],
@@ -27,6 +29,15 @@ export default function AllBooks(){
         genre:[],
     })
     const {user} = useSelector((selector:any)=>selector.user)
+    useEffect(()=>{
+        getAll()
+        getFilteringData()
+        const isFreeBookMode = window.location.href.slice(window.location.href.lastIndexOf("/")+1)==="freeBookMode"
+        setIsFreeBookModePopupVisible(isFreeBookMode)
+    },[])
+    useEffect(()=>{
+        changeAutoCompletions()
+    },[searchParams])
     useEffect(()=>{
         filterByFilters()
     },[appliedFilters])
@@ -160,19 +171,31 @@ export default function AllBooks(){
         setFilteredAutoCompletions(data)
     }
 
-    useEffect(()=>{
-        getAll()
-        getFilteringData()
 
-    },[])
-    useEffect(()=>{
-        changeAutoCompletions()
-    },[searchParams])
     // @ts-ignore
     return(
             <>
                 {isLoading&&<Loading />}
             <div className={styles.wrapper}>
+
+                {isFreeBookModePopupVisible&&<Popup hidePopup={()=>setIsFreeBookModePopupVisible(false)} styleSelector={styles.popupWrapper}>
+                    <div className={styles.infoContainer}>
+                        <i className={`${styles.info} fa-solid fa-info`}></i>
+                        <div className={styles.infoTextAmdBtns}>
+                            <h5 className={styles.infoText}>следващата книга, която изберете ще можете да вземете безплатно</h5>
+                            <div className={styles.btns}>
+                                <button>продължи</button>
+                                <button>деактивиране</button>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+
+                </Popup> }
 
 
                 <div className={styles.searchBarCWrapper}>
