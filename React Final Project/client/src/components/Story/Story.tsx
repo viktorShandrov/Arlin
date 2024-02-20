@@ -3,9 +3,10 @@ import { useState} from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import styles from "./Story.module.css"
 import { useSelector} from "react-redux";
+import ComponentLoading from "../ComponentLoading/ComponentLoading";
 // import {setUser} from "../../redux/user";
 // @ts-ignore
-export default function Story({chapter,changeChapterClickHandler}){
+export default function Story({chapter,changeChapterClickHandler,isLoading}){
 
     const urlLocation = useLocation()
     const navigate = useNavigate();
@@ -53,6 +54,7 @@ export default function Story({chapter,changeChapterClickHandler}){
         <div className={styles.storyWrapper}>
             <div className={styles.story}>
                 <div className={styles.textContainer}>
+                    {isLoading&&<ComponentLoading/>}
                     {chapter&&sentences.map((sentence:string,index:number)=>
                         <div  key={index} onClick={()=>handleNavigation(sentence)}>
                             <Sentence   text={sentence} />

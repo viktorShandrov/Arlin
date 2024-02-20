@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 {/*// @ts-ignore*/}
 export default function News({newsElement,isTop=false}){
 
-
     return(
             <>
                 <Link className={styles.link} to={`/main/news/${newsElement._id}`}>

@@ -23,6 +23,7 @@ export default  function Read(){
         _id:"",
         hasChapterPlotTest: false
     })
+    const [isLoading,setIsLoading] = useState(false)
 
 
     useEffect(()=>{
@@ -31,6 +32,7 @@ export default  function Read(){
 
 
     const getChapter=(chapterId:string)=>{
+        setIsLoading(true)
         request(`chapters/${chapterId}`).subscribe(
             (res:any)=>{
                 if(!res){
@@ -42,6 +44,7 @@ export default  function Read(){
                         chapterId
                     }}))
                 setChapter(res)
+                setIsLoading(false)
             }
         )
     }
@@ -65,7 +68,7 @@ export default  function Read(){
                         {/*</Routes>*/}
                 </div>
                 <div className={styles.storyC}>
-                    <Story chapter={chapter} changeChapterClickHandler={changeChapterClickHandler}  />
+                    <Story chapter={chapter} isLoading={isLoading} changeChapterClickHandler={changeChapterClickHandler}  />
                     {/*<Routes>*/}
                     {/*    <Route path={"/:bookId/:chapterId/:textToTranslate?"} element={}/>*/}
                     {/*</Routes>*/}

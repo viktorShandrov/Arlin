@@ -25,6 +25,14 @@ router.get("/paginated/:startIndex",async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/topNews",async (req,res)=>{
+    try{
+        const news = await newsManager.getTopNews()
+        res.status(200).json(news)
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
 router.get("/:id",async (req,res)=>{
     try{
         const {id} = req.params

@@ -32,6 +32,7 @@
     overflow-y: scroll;
     position: relative;
     width: 100%;
+    border-radius:10px ;
 
 }
 .wordsContainer{
@@ -367,14 +368,16 @@ stripe-buy-button{
 
 
 
-.heading{
+.wordExamplesWrapper .heading{
     text-align: center;
+    flex: 0 0 auto;
 }
 .heading>*{
     margin: 0;
 }
 .wordExamplesCWrapper{
     overflow-y: auto;
+    padding-right: 20px;
 }
 .wordExamplesC{
     display: flex;
@@ -407,12 +410,14 @@ stripe-buy-button{
     }
 }
 @media (max-width: 800px){
-    .wordInfoWrapper{
+    .wordInfoWrapper,
+    .wordExamplesWrapper{
         max-width: 70%;
     }
 }
 @media (max-width: 600px){
-    .wordInfoWrapper{
+    .wordInfoWrapper,
+    .wordExamplesWrapper{
         max-width: 90%;
     }
 }
@@ -420,9 +425,20 @@ stripe-buy-button{
     .container{
         width: 95%;
     }
+    .createBtns{
+        flex-direction: column;
+    }
 }
 @media (max-width: 450px){
-    .wordInfoWrapper{
-        padding: 10px;
+    .wordInfoWrapper,
+    .wordExamplesWrapper{
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+    }
+}
+@media (max-width: 400px){
+    .createWordGroupWrapper{
+        padding:20px;
     }
 }

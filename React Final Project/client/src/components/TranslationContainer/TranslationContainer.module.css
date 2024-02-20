@@ -18,6 +18,8 @@
     flex-direction: column;
     padding: 20px;
     width: 300px;
+    max-height: 80%;
+    overflow-y: scroll;
     border: solid 1px black;
     height: fit-content;
     border-radius: 20px;

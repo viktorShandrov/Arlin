@@ -38,6 +38,9 @@ exports.getPaginated=async(start)=>{
 exports.get=async(id)=>{
     return  models.newsModel.findById(id)
 }
+exports.getTopNews=async(id)=>{
+    return  models.newsModel.find({}).sort({ publishedAt: -1 }).limit(10)
+}
 
 
 
