@@ -223,6 +223,11 @@
         justify-content: center;
     }
 }
+@media (max-width: 1000px){
+ .buttonFundament{
+     width: 75%;
+ }
+}
 @media (max-width: 750px){
     .noContentInThisSectionWrapper{
         width: 80%;

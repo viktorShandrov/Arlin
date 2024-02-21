@@ -1,21 +1,28 @@
 .testDoneContainer{
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: #4C6A69;
     padding: 30px;
     border-radius: 20px;
+    color: white;
+    text-align: center;
 }
 .rowsC{
     display: flex;
     flex-direction: column;
+    background-color: #75A9AB;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 30px;
 }
 .row{
     text-align: center;
     display: flex;
     justify-content: space-between;
+    color: white;
 }
 .row:not(:first-child){
-    border-top: 1px grey solid;
+    border-top: 1px #4C6A69 solid;
 
 }
 .row>*{
@@ -27,4 +34,13 @@
     padding: 10px 20px;
     background-color: #76f200;
     border-radius: 10px;
+    border: none;
+    color: white;
+}
+
+@media (max-width: 450px){
+    .testDoneContainer{
+        padding: 10px;
+        padding-bottom: 20px;
+    }
 }

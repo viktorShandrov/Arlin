@@ -1,12 +1,13 @@
 
 import styles from "./LevelInfo.module.css"
 import {useEffect, useRef, useState} from "react";
-import { useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
 import {rewardNames} from "../../contants";
 import {calculateLevel} from "../../functions";
 import Popup from "../Popup/Popup";
+import {setUser} from "../../redux/user";
 export default function LevelInfo(){
     const {user} = useSelector((state:any)=>state.user)
 
@@ -16,7 +17,9 @@ export default function LevelInfo(){
     const [reward,setReward] = useState("")
     const [userInventory,setUserInventory] = useState(null)
     const [userAdvancementsAchieved,setUserAdvancementsAchieved] = useState(null)
+    const [advancementAchievedInfo,setAdvancementAchievedInfo] = useState(null)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     // const [exp,setExp] = useState(0)
 
@@ -43,14 +46,16 @@ export default function LevelInfo(){
             })
     },[user.inventory])
     useEffect(()=>{
-        setUserAdvancementsAchieved((old)=>{
-            if(!old) return user.advancementsAchieved
+        if(user.advancementsAchieved){
+            const advancementInfo = user.other.advancementsInfo.find((el:any)=>el.id===user.advancementsAchieved[0])
+            setAdvancementAchievedInfo(advancementInfo)
+        }
 
 
-
-            return user.advancementsAchieved
-        })
     },[user.advancementsAchieved])
+    const closeAdvancementPopup=()=>{
+        dispatch(setUser({...user,advancementsAchieved:user.advancementsAchieved.slice(1)}))
+    }
     const showRewardPopup = (key:any) =>{
         setReward(key)
         setIsRewardPopupVisible(true)
@@ -175,6 +180,25 @@ export default function LevelInfo(){
                         </div>
 
 
+                    </div>
+
+                </div>
+
+            </Popup>}
+
+            {advancementAchievedInfo&&<Popup hidePopup={closeAdvancementPopup} styleSelector={styles.popupWrapper}>
+
+                <div className={styles.rewardWrapper}>
+                    <div className={styles.rewardC}>
+                        <h3>Честито</h3>
+                        <h4>отключихте постижение</h4>
+                        <div className={styles.rewardPicC}>
+                            <img src={`/public/advancementsIcons/${advancementAchievedInfo.type}.png`} alt=""/>
+                        </div>
+                        <h3 className={styles.rewardName}>"{advancementAchievedInfo.name}"</h3>
+                        <div className={styles.btnsC}>
+                            <button onClick={closeAdvancementPopup}>супер</button>
+                        </div>
                     </div>
 
                 </div>
