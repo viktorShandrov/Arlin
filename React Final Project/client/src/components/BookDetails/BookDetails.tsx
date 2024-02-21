@@ -156,7 +156,7 @@ export default function  BookDetails(){
                         </article>
                         <article className={styles.resumeAndBtns}>
                             <p className={styles.resume}>
-                                <h5>Резюме на книгата:</h5>
+                                <h5 className={styles.resumeHeading}>Резюме на книгата:</h5>
                                 {book.resume}
                             </p>
 

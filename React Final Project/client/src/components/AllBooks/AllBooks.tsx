@@ -58,7 +58,7 @@ export default function AllBooks(){
 
             let data = reqBooks
             if(isOwnedFilter){
-                data = data.filter((el:any)=>el.ownedBy.includes(user.userId))
+                data = data.filter((el:any)=>el.isBookOwnedByUser)
             }
 
             const filtered = data.filter(el=>{
@@ -226,18 +226,21 @@ export default function AllBooks(){
                                 {/*})}*/}
 
 
-                    {books.some((book:any)=>book.ownedBy.includes(user.userId))&&
-                        <BookSection books={books.filter((book:any)=>book.ownedBy.includes(user.userId))} sectionHeader={"Мои книги"}/>
+                    {books.some((book:any)=>book.isBookOwnedByUser)&&
+                        <BookSection books={books.filter((book:any)=>book.isBookOwnedByUser)} sectionHeader={"Мои книги"}/>
                     }
 
-                    {books.some((book:any)=>book.isRecommended&&!book.ownedBy.includes(user.userId))&&
-                        <BookSection books={books.filter((book:any)=>book.isRecommended&&!book.ownedBy.includes(user.userId))} sectionHeader={"Препоръчани"}/>
+                    {books.some((book:any)=>book.isRecommended&&!book.isBookOwnedByUser)&&
+                        <BookSection books={books.filter((book:any)=>book.isRecommended&&!book.isBookOwnedByUser)} sectionHeader={"Препоръчани"}/>
                     }
 
-                    {books.some((book:any)=>book.wishedBy?.includes(user.userId)&&!book.ownedBy.includes(user.userId))&&
-                        <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(user.userId)&&!book.ownedBy.includes(user.userId))} sectionHeader={"В списъка с желания"}/>
+                    {books.some((book:any)=>book.wishedBy?.includes(user.userId)&&!book.isBookOwnedByUser)&&
+                        <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(user.userId)&&!book.isBookOwnedByUser)} sectionHeader={"В списъка с желания"}/>
                     }
-                    <BookSection books={books} sectionHeader={"Всички книги"}/>
+                    {books.some((book:any)=>!book.isBookOwnedByUser)&&
+                        <BookSection books={books.filter((book:any)=>!book.isBookOwnedByUser)} sectionHeader={"Всички, които нямате"}/>
+                    }
+                    <BookSection books={books} sectionHeader={"Абсолютно всички книги"}/>
 
 
 

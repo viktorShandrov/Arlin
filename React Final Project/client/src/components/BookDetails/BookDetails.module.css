@@ -143,6 +143,9 @@
     margin-bottom: 20px;
     color: white;
 }
+.resumeHeading{
+    padding-bottom: 20px;
+}
 .btns{
     display: flex;
     flex-direction: row;
@@ -150,6 +153,9 @@
     align-items: end;
     font-size: 30px;
     gap: 20px;
+}
+.btns>*{
+    width: 100%;
 }
 .bookImageAndResume .btn,
 .bookImageAndResume .readBtn{
@@ -509,11 +515,16 @@ justify-content: flex-end
         width: 100%;
     }
     .bookImageAndResume{
-        flex-direction: column;
+        /*flex-direction: column;*/
         height: fit-content;
         align-items: center;
+        padding: 20px;
 
         /*max-height: 1700px;*/
+    }
+    .resumeAndBtns{
+        flex: 1;
+        height: 100%;
     }
     .bookImageAndResume .image{
         width: 35%;
@@ -535,11 +546,41 @@ justify-content: flex-end
         max-width: 100%;
         width: 100%;
     }
-}
-@media (max-width:600px) {
+    .btns{
+        flex-direction: column;
+    }
+
     .bookDetailsWrapper{
         --sectionsWidth: 90%
     }
+}
+@media (max-width: 800px){
+    .freeChaptersBtnAndReadBtnC{
+        flex-direction: column;
+
+        /*width: 90%;*/
+    }
+    .bookImageAndResume{
+        flex-direction: column;
+        padding: 60px;
+        text-align: center;
+    }
+
+    .bookNameAndRating{
+        /*transform: translateX(30px);*/
+        /*width: 90%;*/
+
+    }
+    .bookImageWrapper{
+        max-width: 100%;
+    }
+
+    .bookImageAndResume .image{
+        width: 100%;
+    }
+}
+@media (max-width:600px) {
+
 
 }
 
@@ -574,7 +615,7 @@ justify-content: flex-end
 
     }
     .resume{
-        width: 90%;
+        /*width: 90%;*/
     }
     .bookImageC{
         width: 80%;
@@ -584,7 +625,7 @@ justify-content: flex-end
         align-items: center;
     }
     .btns .btn:last-child{
-        width: 80%;
+        /*width: 80%;*/
     }
     .bookImageAndResume{
         /*width: 95%;*/
@@ -594,28 +635,6 @@ justify-content: flex-end
 
 
 
-}
-@media (max-width: 800px){
-    .freeChaptersBtnAndReadBtnC{
-        flex-direction: column;
-        /*width: 90%;*/
-    }
-    .bookDetailsTable{
-        /*width: 90%;*/
-    }
-
-    .bookNameAndRating{
-        /*transform: translateX(30px);*/
-        /*width: 90%;*/
-
-    }
-    .bookImageWrapper{
-        max-width: 100%;
-    }
-
-    .bookImageAndResume .image{
-        width: 100%;
-    }
 }
 /*.wrapper{*/
 /*    height: 100%;*/

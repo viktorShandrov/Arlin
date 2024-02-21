@@ -44,10 +44,12 @@ router.get("/getDataForFilters",isAuth,async (req,res)=>{
 })
 router.get("/all",async (req,res)=>{
     try{
-        const allBooks = await bookManager.getAllBooks()
+        const {_id} = req.user
+        const allBooks = await bookManager.getAllBooks(_id)
 
         res.status(200).json({allBooks})
     } catch (error) {
+        console.log(error)
         res.status(400).json({message:error.message})
     }
 })

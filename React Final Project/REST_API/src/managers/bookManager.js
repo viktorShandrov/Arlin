@@ -18,7 +18,9 @@ exports.getBook =async(bookId,userId)=>{
     if(user.role!=="admin"){
         await isOwnedByUser(userId,bookId,models.bookModel,"ownedBy")
     }
-   return  models.bookModel.findById(bookId)
+    const book = (await models.bookModel.findById(bookId)).toObject()
+    delete book.ownedBy
+   return  book
 
 }
 exports.getBookDetails =async(bookId,userId)=>{
@@ -26,16 +28,19 @@ exports.getBookDetails =async(bookId,userId)=>{
     try{
          book = await models.bookModel.findById(bookId)
     }catch (error){
-        throw new Error("No such book")
+        throw new Error("Няма такава книга")
     }
     book = book.toObject()
 
     delete book.chapters
 
+
     book.isBookOwnedByUser = isBookOwnedByUser(book,userId)
     book.similarBooks = await getSimilarBooks(book)
     book.similarBooks.splice(book.similarBooks.findIndex((currBook=>book._id===currBook._id)),1)
-   return book
+
+    delete book.ownedBy
+    return book
 
 }
 exports.getBookForFree = async(userId,bookId)=>{
@@ -67,8 +72,16 @@ function isBookOwnedByUser(book,userId){
 
 
 
-exports.getAllBooks =async()=>{
-   return  models.bookModel.find()
+exports.getAllBooks =async(userId)=>{
+    const books =await models.bookModel.find()
+    const payload =[]
+    for (let book of books) {
+        book = book.toObject()
+        book.isBookOwnedByUser = isBookOwnedByUser(book,userId)
+        delete book.ownedBy
+        payload.push(book)
+    }
+   return  payload
 
 }
 exports.editBook =async(bookId,bookData,userId)=>{
