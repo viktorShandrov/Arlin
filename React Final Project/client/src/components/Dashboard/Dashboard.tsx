@@ -8,6 +8,7 @@ import DashboardStat from "./DashboardStat/DashboardStat";
 import {setUser} from "../../redux/user";
 import {toast} from "react-toastify";
 import {rewardNames} from "../../contants";
+import {useNavigate} from "react-router-dom";
 export default function Dashboard(){
     const [userInfo,setUserInfo] = useState({
         randomWordsTests: undefined,
@@ -34,6 +35,7 @@ export default function Dashboard(){
     // const passedTestNumberElementsRefs = useRef([])
     const {user} = useSelector((state:any)=>state.user)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(()=>{
         setUserInfo(user)
@@ -112,7 +114,7 @@ export default function Dashboard(){
 
     }
     const unlockBookForFree = ()=>{
-
+        navigate("/main/AllBooks/freeBookMode")
     }
 
 

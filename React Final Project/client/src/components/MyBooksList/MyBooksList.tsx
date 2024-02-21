@@ -141,7 +141,7 @@ export default function MyBooksList(){
                         <section className={styles.moreOfThisGenreWrapper}>
 
                             {books.filter((book:any)=>book.ownedBy.includes(user.userId)).length>0&&
-                                <BookSection books={books.filter((book:any)=>book.ownedBy.includes(user.userId))} sectionHeader={"Закупени книги"}>
+                                <BookSection books={books.filter((book:any)=>book.ownedBy.includes(user.userId))} sectionHeader={"Закупени книги"} headerColor={"white"}>
                                     {/*@ts-ignore*/}
                                     <div className={styles.searchBarC}>
                                         <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
@@ -150,13 +150,18 @@ export default function MyBooksList(){
                             }
                         </section>
                         <section className={styles.moreOfThisGenreWrapper}>
-                            {books.filter((book:any)=>book.genre === currentReading.genre).length>0&&
-                                <BookSection books={books.filter((book:any)=>book.genre === currentReading.genre)} sectionHeader={"Може да харесате"}/>
+                            {books.filter((book:any)=>book.genre === currentReading.genre&&!book.ownedBy.includes(user.userId)).length>0&&
+                                <BookSection books={books.filter((book:any)=>book.genre === currentReading.genre&&!book.ownedBy.includes(user.userId))} sectionHeader={"Може да харесате"} headerColor={"white"}/>
                             }
                         </section>
                         <section className={styles.moreOfThisGenreWrapper}>
-                            {books.filter((book:any)=>book.author === currentReading.author).length>0&&
-                                <BookSection books={books.filter((book:any)=>book.author === currentReading.author)} sectionHeader={`Още книги от ${currentReading.author}`}/>
+                            {books.filter((book:any)=>book.author === currentReading.author&&!book.ownedBy.includes(user.userId)).length>0&&
+                                <BookSection books={books.filter((book:any)=>book.author === currentReading.author&&!book.ownedBy.includes(user.userId))} sectionHeader={`Още книги от ${currentReading.author}`} headerColor={"white"}/>
+                            }
+                        </section>
+                        <section className={styles.moreOfThisGenreWrapper}>
+                            {books.filter((book:any)=>!book.ownedBy.includes(user.userId)).length>0&&
+                                <BookSection books={books.filter((book:any)=>!book.ownedBy.includes(user.userId))} sectionHeader={`Може да закупите`} headerColor={"white"}/>
                             }
                         </section>
                     </div>

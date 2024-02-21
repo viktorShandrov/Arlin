@@ -95,5 +95,15 @@ router.get("/:id/delete",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/:id/getForFree",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const bookId = req.params.id
+         await bookManager.getBookForFree(_id,bookId)
+        res.status(200).end()
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
 
 module.exports = router

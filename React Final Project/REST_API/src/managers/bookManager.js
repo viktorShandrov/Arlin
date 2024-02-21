@@ -34,8 +34,19 @@ exports.getBookDetails =async(bookId,userId)=>{
 
     book.isBookOwnedByUser = isBookOwnedByUser(book,userId)
     book.similarBooks = await getSimilarBooks(book)
+    book.similarBooks.splice(book.similarBooks.findIndex((currBook=>book._id===currBook._id)),1)
    return book
 
+}
+exports.getBookForFree = async(userId,bookId)=>{
+    const user = await models.userModel.findById(userId)
+    if(!user.inventory.freeBook) throw new Error("Нямате достатъчно безплатни книги в инвентара")
+
+    await exports.bookIsPurchased(userId,bookId)
+
+    user.inventory.freeBook--
+    user.markModified("inventory")
+    return user.save()
 }
 
 

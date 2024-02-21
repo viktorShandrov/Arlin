@@ -5,13 +5,14 @@ import {request} from "../../functions";
 // import BuyBtn from "../BuyBtn/BuyBtn";
 // import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import Loading from "../Spinner/Loading";
 import BookElement from "../AllBooks/BookElement/BookElement";
 import AddtionalInfo from "../AddtionalInfo/AddtionalInfo";
 import additional from "../AddtionalInfo/AddtionalInfo.module.css";
 import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
+import {setUser} from "../../redux/user";
 
 export default function  BookDetails(){
     // @ts-ignore
@@ -23,12 +24,14 @@ export default function  BookDetails(){
     const wrapper = useRef(0)
     // @ts-ignore
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     // const {user} = useContext(userContext)
     // @ts-ignore
     const {user}:any = useSelector((selector:any)=>selector.user)
     const [isDialogShown,setIsDialogShown] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
+    const [isFreeBookMode,setIsFreeBookMode] = useState(false)
     const [book,setBook] = useState({
         name:"",
         resume:"",
@@ -52,8 +55,10 @@ export default function  BookDetails(){
                     const dateString = res.book.releaseDate;
                     const date = new Date(dateString);
                     const year = date.getFullYear();
+                    console.log(res.book.similarBooks)
                     setBook({...res.book,year})
                     setIsLoading(false)
+                    setIsFreeBookMode(window.location.href.includes("freeBookMode"))
                     },
             )
     }
@@ -61,7 +66,17 @@ export default function  BookDetails(){
     const deleteBook = ()=>{
         request(`books/${book._id}/delete`,"GET").subscribe(
             ()=>{
-                toast.success("Successfully deleted")
+                toast.success("Успешно изтрита")
+            }
+        )
+    }
+    const getBookForFree = () =>{
+        request(`books/${book._id}/getForFree`,"GET").subscribe(
+            ()=>{
+                toast.success("Книгата успешно е добавена в профила Ви")
+                setBook({...book,isBookOwnedByUser: true})
+                navigate("/main/AllBooks/"+book._id)
+                dispatch(setUser({...user,inventory:{...user.inventory,freeBook: user.inventory.freeBook-1}}))
             }
         )
     }
@@ -141,12 +156,20 @@ export default function  BookDetails(){
                         </article>
                         <article className={styles.resumeAndBtns}>
                             <p className={styles.resume}>
+                                <h5>Резюме на книгата:</h5>
                                 {book.resume}
                             </p>
-                            <div className={styles.btns}>
+
+                            {book&&book.isBookOwnedByUser&&<div className={styles.btns}>
+                                <button className={styles.readBtn}>прочети</button>
+                            </div>}
+
+                            {book&&!book.isBookOwnedByUser&&<div className={styles.btns}>
                                 <button className={styles.btn}>надникни</button>
-                                <button className={styles.btn}>КУПИ</button>
-                            </div>
+                                {!isFreeBookMode&&<button className={styles.btn}>КУПИ</button>}
+                                {isFreeBookMode&&<button onClick={getBookForFree} className={styles.btn}>ВЗEМИ БЕЗПЛАТНО</button>}
+                            </div>}
+
                         </article>
                     </section>
 
@@ -177,7 +200,7 @@ export default function  BookDetails(){
                     {/*</section>*/}
                     <section className={styles.bookDetailsTableWrapper}>
                         <div className={styles.bookDetailsTable}>
-                            <section onClick={setAuthorDetails} className={styles.row}>
+                            <section  className={styles.row}>
                                 <div className={styles.cell}>
                                     <h4 className={styles.tableHeading}>
                                         Автор
@@ -191,17 +214,17 @@ export default function  BookDetails(){
                                 </div>
 
                             </section>
-                            <section ref={authorDetails} className={styles.row}>
-                                <div className={styles.cell}>
-                                    <img src="/viktior.jpg.jpg" alt=""/>
-                                </div>
-                                <div className={styles.cell}>
-                                    <p className={`${styles.tableHeading} ${styles.authorDesc}`}>
-                                        Sir Edward Victor Appleton GBE KCB FRS[1] (6 September 1892 – 21 April 1965) was an English physicist,[4][5] Nobel Prize winner (1947) and pioneer in radiophysics. He studied, and was also employed as a lab technician, at Bradford College from 1909 to 1911.
-                                    </p>
-                                </div>
+                            {/*<section ref={authorDetails} className={styles.row}>*/}
+                            {/*    <div className={styles.cell}>*/}
+                            {/*        <img src="/viktior.jpg.jpg" alt=""/>*/}
+                            {/*    </div>*/}
+                            {/*    <div className={styles.cell}>*/}
+                            {/*        <p className={`${styles.tableHeading} ${styles.authorDesc}`}>*/}
+                            {/*            Sir Edward Victor Appleton GBE KCB FRS[1] (6 September 1892 – 21 April 1965) was an English physicist,[4][5] Nobel Prize winner (1947) and pioneer in radiophysics. He studied, and was also employed as a lab technician, at Bradford College from 1909 to 1911.*/}
+                            {/*        </p>*/}
+                            {/*    </div>*/}
 
-                            </section>
+                            {/*</section>*/}
                             <section className={styles.row}>
                                 <div className={styles.cell}>
                                     <h4 className={styles.tableHeading}>
@@ -290,21 +313,18 @@ export default function  BookDetails(){
                         </div>
                     </section>
 
-                    <section  className={styles.moreBooksWrapper}>
+                    {book.similarBooks.length>0&&<section  className={styles.moreBooksWrapper}>
                         <h1 className={styles.moreOfThisGenre}>Още от този жанр</h1>
                         <ScrollerContainer>
-                            {book.similarBooks.length>0&&book.similarBooks.map((book:any)=>
+                            {book.similarBooks.map((book:any)=>
                                 <Link to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
                                     <BookElement book={book}  />
                                 </Link>
-                                ) }{book.similarBooks.length>0&&book.similarBooks.map((book:any)=>
-                                <Link to={`/main/AllBooks/${book._id}`} key={book._id} className={styles.bookC}>
-                                    <BookElement book={book}  />
-                                </Link>
-                                ) }
+                            ) }
                         </ScrollerContainer>
 
-                    </section>
+                    </section>}
+
 
                     <section className={styles.helpfulInformationWrapper}>
                         <AddtionalInfo

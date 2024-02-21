@@ -24,7 +24,7 @@
 .bookWrapper{
     height: 100%;
     flex: 1;
-    /*overflow-y: auto;*/
+    overflow-y: auto;
 }
 
 .searchBarCWrapper{

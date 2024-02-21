@@ -151,7 +151,8 @@
     font-size: 30px;
     gap: 20px;
 }
-.bookImageAndResume .btn{
+.bookImageAndResume .btn,
+.bookImageAndResume .readBtn{
     flex: 1;
     padding: 30px;
     border-radius: 5px;
@@ -161,6 +162,7 @@
     color: #859D7A;
     font-size: 24px;
     border: solid #859D7A 2px;
+    height: 100%;
 }
 .bookImageAndResume .btn:first-child{
     /*height: 100% !important;*/

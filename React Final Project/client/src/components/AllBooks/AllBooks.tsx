@@ -8,6 +8,7 @@ import Loading from "../Spinner/Loading";
 import SearchBar from "../SearchBar/SearchBar";
 import BookSection from "../BookSection/BookSection";
 import Popup from "../Popup/Popup";
+import {useNavigate} from "react-router-dom";
 export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
@@ -29,6 +30,7 @@ export default function AllBooks(){
         genre:[],
     })
     const {user} = useSelector((selector:any)=>selector.user)
+    const navigate = useNavigate()
     useEffect(()=>{
         getAll()
         getFilteringData()
@@ -170,6 +172,10 @@ export default function AllBooks(){
         console.log(data)
         setFilteredAutoCompletions(data)
     }
+    const deactivateFreeBookMode = () =>{
+        setIsFreeBookModePopupVisible(false)
+        navigate("/main/AllBooks")
+    }
 
 
     // @ts-ignore
@@ -184,8 +190,8 @@ export default function AllBooks(){
                         <div className={styles.infoTextAmdBtns}>
                             <h5 className={styles.infoText}>следващата книга, която изберете ще можете да вземете безплатно</h5>
                             <div className={styles.btns}>
-                                <button>продължи</button>
-                                <button>деактивиране</button>
+                                <button onClick={()=>setIsFreeBookModePopupVisible(false)}>продължи</button>
+                                <button onClick={deactivateFreeBookMode}>деактивиране</button>
                             </div>
 
 
@@ -224,12 +230,12 @@ export default function AllBooks(){
                         <BookSection books={books.filter((book:any)=>book.ownedBy.includes(user.userId))} sectionHeader={"Мои книги"}/>
                     }
 
-                    {books.some((book:any)=>book.isRecommended)&&
-                        <BookSection books={books.filter((book:any)=>book.isRecommended)} sectionHeader={"Препоръчани"}/>
+                    {books.some((book:any)=>book.isRecommended&&!book.ownedBy.includes(user.userId))&&
+                        <BookSection books={books.filter((book:any)=>book.isRecommended&&!book.ownedBy.includes(user.userId))} sectionHeader={"Препоръчани"}/>
                     }
 
-                    {books.some((book:any)=>book.wishedBy?.includes(user.userId))&&
-                        <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(user.userId))} sectionHeader={"В списъка с желания"}/>
+                    {books.some((book:any)=>book.wishedBy?.includes(user.userId)&&!book.ownedBy.includes(user.userId))&&
+                        <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(user.userId)&&!book.ownedBy.includes(user.userId))} sectionHeader={"В списъка с желания"}/>
                     }
                     <BookSection books={books} sectionHeader={"Всички книги"}/>
 
