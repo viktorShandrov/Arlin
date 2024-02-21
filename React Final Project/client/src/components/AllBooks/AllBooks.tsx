@@ -178,6 +178,7 @@ export default function AllBooks(){
     }
 
 
+
     // @ts-ignore
     return(
             <>
@@ -227,21 +228,42 @@ export default function AllBooks(){
                                 {/*    }*/}
                                 {/*})}*/}
 
+                    {/*books.filter((book:any)=>book.isBookOwnedByUser)*/}
+                        <BookSection books={[]} sectionHeader={"Мои книги"}>
+                            <div className={styles.noContentInThisSectionWrapper}>
+                                <div className={styles.noContentInThisSectionC}>
+                                    <h5>Няма съдържание за тази секция</h5>
+                                    <div className={styles.noContentBtns}>
+                                        <button className={`${styles.noContentBtn} ${styles.subscribeBtn}`}>абонирай се</button>
+                                        <button className={`${styles.noContentBtn} ${styles.buyBookBtn}`}>купи книга</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </BookSection>
 
-                    {books.some((book:any)=>book.isBookOwnedByUser)&&
-                        <BookSection books={books.filter((book:any)=>book.isBookOwnedByUser)} sectionHeader={"Мои книги"}/>
-                    }
+                        <BookSection books={books.filter((book:any)=>book.isRecommended&&!book.isBookOwnedByUser)} sectionHeader={"Препоръчани"}>
+                            <div className={styles.noContentInThisSectionWrapper}>
+                                <div className={styles.noContentInThisSectionC}>
+                                    <h5>Няма съдържание за тази секция</h5>
+                                </div>
+                            </div>
+                        </BookSection>
 
-                    {books.some((book:any)=>book.isRecommended&&!book.isBookOwnedByUser)&&
-                        <BookSection books={books.filter((book:any)=>book.isRecommended&&!book.isBookOwnedByUser)} sectionHeader={"Препоръчани"}/>
-                    }
+                        <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(user.userId)&&!book.isBookOwnedByUser)} sectionHeader={"В списъка с желания"}>
+                            <div className={styles.noContentInThisSectionWrapper}>
+                                <div className={styles.noContentInThisSectionC}>
+                                    <h5>Няма съдържание за тази секция</h5>
+                                </div>
+                            </div>
+                        </BookSection>
+                        <BookSection books={books.filter((book:any)=>!book.isBookOwnedByUser)} sectionHeader={"Всички книги, които нямате"}>
+                            <div className={styles.noContentInThisSectionWrapper}>
+                                <div className={styles.noContentInThisSectionC}>
+                                    <h5>Имате всички книги</h5>
+                                </div>
+                            </div>
+                        </BookSection>
 
-                    {books.some((book:any)=>book.wishedBy?.includes(user.userId)&&!book.isBookOwnedByUser)&&
-                        <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(user.userId)&&!book.isBookOwnedByUser)} sectionHeader={"В списъка с желания"}/>
-                    }
-                    {books.some((book:any)=>!book.isBookOwnedByUser)&&
-                        <BookSection books={books.filter((book:any)=>!book.isBookOwnedByUser)} sectionHeader={"Всички, които нямате"}/>
-                    }
                     <BookSection books={books} sectionHeader={"Абсолютно всички книги"}/>
 
 

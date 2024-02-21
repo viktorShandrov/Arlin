@@ -140,29 +140,50 @@ export default function MyBooksList(){
 
                         <section className={styles.moreOfThisGenreWrapper}>
 
-                            {books.filter((book:any)=>book.isBookOwnedByUser).length>0&&
-                                <BookSection books={books.filter((book:any)=>book.isBookOwnedByUser)} sectionHeader={"Закупени книги"} headerColor={"white"}>
+                                <BookSection books={books.filter((book:any)=>book.isBookOwnedByUser)} isSearchChild={true} sectionHeader={"Закупени книги"} headerColor={"white"}>
                                     {/*@ts-ignore*/}
-                                    <div className={styles.searchBarC}>
-                                        <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
+                                    <>
+                                        {books.filter((book:any)=>book.isBookOwnedByUser).length>0&&<div className={styles.searchBarC}>
+                                            <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
+                                        </div>}
+                                        {books.filter((book:any)=>book.isBookOwnedByUser).length===0&&<div className={styles.noContentInThisSection}>
+                                            <h3>no content</h3>
+                                        </div>}
+                                    </>
+
+
+                                </BookSection>
+
+                        </section>
+                        <section className={styles.moreOfThisGenreWrapper}>
+                                <BookSection books={books.filter((book:any)=>book.genre === currentReading.genre&&!book.isBookOwnedByUser)} sectionHeader={"Може да харесате"} headerColor={"white"}>
+                                    <div className={styles.noContentInThisSectionWrapper}>
+                                        <div className={styles.noContentInThisSectionC}>
+                                            <h5>Няма съдържание за тази секция</h5>
+                                        </div>
                                     </div>
                                 </BookSection>
-                            }
+
                         </section>
                         <section className={styles.moreOfThisGenreWrapper}>
-                            {books.filter((book:any)=>book.genre === currentReading.genre&&!book.isBookOwnedByUser).length>0&&
-                                <BookSection books={books.filter((book:any)=>book.genre === currentReading.genre&&!book.isBookOwnedByUser)} sectionHeader={"Може да харесате"} headerColor={"white"}/>
-                            }
+
+                                <BookSection books={books.filter((book:any)=>book.author === currentReading.author&&!book.isBookOwnedByUser)} sectionHeader={`Още книги от ${currentReading.author}`} headerColor={"white"}>
+                                    <div className={styles.noContentInThisSectionWrapper}>
+                                        <div className={styles.noContentInThisSectionC}>
+                                            <h5>Няма съдържание за тази секция</h5>
+                                        </div>
+                                    </div>
+                                </BookSection>
+
                         </section>
                         <section className={styles.moreOfThisGenreWrapper}>
-                            {books.filter((book:any)=>book.author === currentReading.author&&!book.isBookOwnedByUser).length>0&&
-                                <BookSection books={books.filter((book:any)=>book.author === currentReading.author&&!book.isBookOwnedByUser)} sectionHeader={`Още книги от ${currentReading.author}`} headerColor={"white"}/>
-                            }
-                        </section>
-                        <section className={styles.moreOfThisGenreWrapper}>
-                            {books.filter((book:any)=>!book.isBookOwnedByUser).length>0&&
-                                <BookSection books={books.filter((book:any)=>!book.isBookOwnedByUser)} sectionHeader={`Може да закупите`} headerColor={"white"}/>
-                            }
+                                <BookSection books={books.filter((book:any)=>!book.isBookOwnedByUser)} sectionHeader={`Може да закупите`} headerColor={"white"}>
+                                    <div className={styles.noContentInThisSectionWrapper}>
+                                        <div className={styles.noContentInThisSectionC}>
+                                            <h5>Имате всички книги</h5>
+                                        </div>
+                                    </div>
+                                </BookSection>
                         </section>
                     </div>
                 </section>
