@@ -46,7 +46,7 @@ exports.login = async (email,password)=>{
 exports.getUserInfo = async (_id,res)=>{
     const user = await userModel.findById(_id);
 
-    await checkIfAdvancements(user,res)
+    await exports.checkIfAdvancements(user,res)
 
     await checkIfExpMultiplierExpires(user)
 
@@ -65,20 +65,35 @@ async function checkIfExpMultiplierExpires(user){
         user.expMultiplier.dueTo<currentTime
     ){
         user.expMultiplier.value = 1
-        user.markModified('expMultiplier');
+        if (user.isModified("expMultiplier")) {
+            user.markModified("expMultiplier");
+        }
+
         return user.save()
     }
 }
-async function checkIfAdvancements(user,res){
+exports.checkIfAdvancements = async (user,res)=>{
+
+
     const userAdvancements = user.advancements
     const advancementsThatUserDoesntHas = utils.advancements.filter(adv=>!userAdvancements.includes(adv.id))
+    if(!res.body) res.body={}
     for (const advancements of advancementsThatUserDoesntHas) {
         if(await advancements.requirement(user)){
             user.advancements.push(advancements.id)
+            if(res.body.hasOwnProperty("advancementsAchieved")){
+                res.body.advancementsAchieved.push(advancements.id)
+            }else{
+                res.body.advancementsAchieved =[advancements.id]
+            }
             await exports.updateUserExp(utils.defaultExp,user,res)
         }
     }
-    user.markModified("advancements")
+
+    if (user.isModified("advancements")) {
+        user.markModified("advancements");
+    }
+
     return user.save()
 }
 exports.useExpMultiplier = async (_id,expMultiplier)=>{
@@ -96,7 +111,10 @@ exports.useExpMultiplier = async (_id,expMultiplier)=>{
     }
 
     user.inventory.expMultiplier-=1
-    user.markModified('inventory');
+    if (user.isModified("inventory")) {
+        user.markModified("inventory");
+    }
+
     return user.save()
 }
 
@@ -107,6 +125,7 @@ exports.updateUserExp =async (plusExp,user,res) =>{
     res.body ={...res.body,expAdded:plusExp}
     user.exp = newExp
     await checkIfNewLevel(newExp,levelWithOldExp,user,res)
+    await exports.checkIfAdvancements(user,res)
     return user.save()
 }
 
@@ -119,7 +138,10 @@ async function checkIfNewLevel(exp,levelWithOldExp,user,res){
         }else{
             user.inventory[inventoryItemName] = 0
         }
-        user.markModified('inventory');
+
+        if (user.isModified("inventory")) {
+            user.markModified("inventory");
+        }
         res.body = {...res.body,itemAdded:inventoryItemName}
         return user.save()
     }

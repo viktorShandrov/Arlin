@@ -482,6 +482,7 @@ exports.createWords =async(words,userId)=>{
 
 
     }
+    await userManager.checkIfAdvancements(user,res)
     return info
 }
  async function getWordWholeInfo(word){

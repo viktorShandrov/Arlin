@@ -15,6 +15,7 @@ export default function XP(){
 
 useEffect(()=>{
 
+
     // Override the fetch function with a custom implementation
     // @ts-ignore
     window.fetch = function(url, options) {
@@ -26,23 +27,26 @@ useEffect(()=>{
 
                 const clonedResponse = response.clone();
 
+
                 const contentType = clonedResponse.headers.get('Content-Type');
                 if (contentType && contentType.includes('application/json')) {
                     const responseData = await clonedResponse.json();
 
                     // console.log("responseData.itemAdded:", responseData.itemAdded);
                     // console.log("user.token:", user.token);
+                    let userPayload = {...user}
 
-
-
+                    if(responseData.advancementsAchieved){
+                        userPayload = {...userPayload,advancementsAchieved:responseData.advancementsAchieved}
+                    }
                     // Calculate the new user state outside of the action creator
                     if(responseData.itemAdded||responseData.expAdded){
-                        const exp = Number(user.exp) + (Number(responseData.expAdded)||0);
+                        const exp = Number(userPayload.exp) + (Number(responseData.expAdded)||0);
                         const newInventory = responseData.itemAdded? {
-                            ...user.inventory,
-                            [responseData.itemAdded]: (user.inventory[responseData.itemAdded] || 0) + 1
-                        }:user.inventory;
-                        dispatch(setUser({...user, exp, inventory: newInventory }));
+                            ...userPayload.inventory,
+                            [responseData.itemAdded]: (userPayload.inventory[responseData.itemAdded] || 0) + 1
+                        }:userPayload.inventory;
+                        userPayload = {...userPayload, exp, inventory: newInventory }
                     }
                     if(responseData.info){
                         for (const info of responseData.info) {
@@ -50,6 +54,7 @@ useEffect(()=>{
                         }
                     }
 
+                    dispatch(setUser(userPayload));
 
 // Dispatch a plain object action with the calculated values
 

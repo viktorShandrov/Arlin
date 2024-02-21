@@ -50,7 +50,12 @@ exports.getBookForFree = async(userId,bookId)=>{
     await exports.bookIsPurchased(userId,bookId)
 
     user.inventory.freeBook--
-    user.markModified("inventory")
+
+    if (user.isModified("inventory")) {
+        user.markModified("inventory")
+    }
+
+
     return user.save()
 }
 

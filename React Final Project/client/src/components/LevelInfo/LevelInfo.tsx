@@ -15,6 +15,7 @@ export default function LevelInfo(){
     const [isRewardPopupVisible,setIsRewardPopupVisible] = useState(false)
     const [reward,setReward] = useState("")
     const [userInventory,setUserInventory] = useState(null)
+    const [userAdvancementsAchieved,setUserAdvancementsAchieved] = useState(null)
     const navigate = useNavigate()
 
     // const [exp,setExp] = useState(0)
@@ -29,7 +30,6 @@ export default function LevelInfo(){
         // saveExpToLocalStorage()
     },[user.exp])
     useEffect(()=>{
-        console.log(user.inventory)
             setUserInventory((old)=>{
                 if(!old) return user.inventory
                 for (const [key,value] of Object.entries(user.inventory)) {
@@ -39,9 +39,18 @@ export default function LevelInfo(){
                         showRewardPopup(key)
                     }
                 }
+                return user.inventory
             })
-
     },[user.inventory])
+    useEffect(()=>{
+        setUserAdvancementsAchieved((old)=>{
+            if(!old) return user.advancementsAchieved
+
+
+
+            return user.advancementsAchieved
+        })
+    },[user.advancementsAchieved])
     const showRewardPopup = (key:any) =>{
         setReward(key)
         setIsRewardPopupVisible(true)
