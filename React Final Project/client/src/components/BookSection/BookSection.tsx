@@ -17,7 +17,7 @@ export default function BookSection({books,sectionHeader,children=null,headerCol
                     </Link>
                 })}
             </div>
-            {books.length>5&&<button className={styles.showMoreBtn} onClick={()=>setIsShowMoreClicked(true)}>покажи още</button>}
+            {books.length>5&&!isShowMoreClicked&&<button className={styles.showMoreBtn} onClick={()=>setIsShowMoreClicked(true)}>покажи още</button>}
 
         </section>
     )

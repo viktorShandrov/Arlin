@@ -197,16 +197,18 @@ export default function AllBooks(){
 
                         </div>
                     </div>
-
-
-
-
                 </Popup> }
 
-
-                <div className={styles.searchBarCWrapper}>
-                    <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
+                <div className={styles.searchAndFilterNavWrapper}>
+                    <div onClick={()=>setIsFilterPanelShown(true)} className={styles.filterIcon}>
+                        <i className="fa-solid fa-filter"></i>
+                    </div>
+                    <div className={styles.searchBarCWrapper}>
+                        <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
+                    </div>
                 </div>
+
+
 
 
 
@@ -247,9 +249,7 @@ export default function AllBooks(){
 
                 </div>
 
-                <div onClick={()=>setIsFilterPanelShown(true)} className={styles.filterIcon}>
-                    <i className="fa-solid fa-filter"></i>
-                </div>
+
 
                 {isFilterPanelShown&&<div className={styles.filterMenu}>
                     <i  onClick={()=>setIsFilterPanelShown(false)} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
