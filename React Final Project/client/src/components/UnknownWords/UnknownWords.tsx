@@ -117,7 +117,12 @@ export default function UnknownWords(){
                                     {container.words.length>0&&container.words.sort((a, b) => (a.isKnown === b.isKnown) ? 0 : a.isKnown ? 1 : -1).map((word:any,index:number)=>{
                                         return <div onClick={()=>wordInfoClickHandler(word)} data-isKnown={word.isKnown} className={styles.row} key={index}>
                                                 {word.wordRef.word}
-                                            <i  className={`${styles.info} fa-solid fa-info`}></i>
+                                            <div className={styles.isKnownAndInfo}>
+                                                {word.isKnown&&<h6 className={styles.wordIsKnown}>научена</h6>}
+                                                <i  className={`${styles.info} fa-solid fa-info`}></i>
+                                            </div>
+
+
 
                                             {/*<h6 className={styles.translation}>{word.wordRef.translatedText}</h6>*/}
                                         </div>

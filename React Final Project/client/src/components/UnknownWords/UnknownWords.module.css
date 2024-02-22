@@ -29,7 +29,7 @@
 }
 .wordsWrapper {
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     position: relative;
     width: 100%;
     border-radius:10px ;
@@ -77,6 +77,15 @@
 }
 .row[data-isknown="true"]{
     background-color: lawngreen;
+}
+.isKnownAndInfo{
+    display: flex;
+    gap: 5px;
+}
+.wordIsKnown{
+    font-size: 12px !important;
+    display: flex;
+    align-items: center;
 }
 .info{
     display: flex;
