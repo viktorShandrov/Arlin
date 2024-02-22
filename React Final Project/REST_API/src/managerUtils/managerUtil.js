@@ -12,6 +12,6 @@ exports.isAdmin = async(user,userId)=>{
          user = await userModel.findById(userId)
     }
     if(user.role!=="admin"){
-        throw new Error("You are not admin.")
+        throw new Error("Само администратор може да направи това.")
     }
 }

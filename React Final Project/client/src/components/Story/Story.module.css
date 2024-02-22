@@ -201,6 +201,25 @@
 .storyWrapper *::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+.ratePopupWrapper{
+    align-items: center;
+}
+.startsC{
+    margin: 10px 0;
+}
+.rateText{
+    min-height: 120px;
+    max-height: 170px;
+}
+.sendRateBtn{
+    border-radius: 10px;
+    padding: 10px 40px;
+    color: white;
+    background-color: #75A9AB;
+    border: none;
+    margin-top: 20px;
+    width: 100%;
+}
 @media (max-width: 1200px){
     .testsWrapper{
         display: flex;

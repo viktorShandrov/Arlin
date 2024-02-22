@@ -74,7 +74,7 @@ export default  function Read(){
                         {/*</Routes>*/}
                 </div>
                 <div className={styles.storyC}>
-                    <Story chapter={chapter} isLoading={isLoading} isRateBtnVisible={isRateBtnVisible}  changeChapterClickHandler={changeChapterClickHandler}  />
+                    <Story chapter={chapter} bookId={bookId} isLoading={isLoading} isRateBtnVisible={isRateBtnVisible}  changeChapterClickHandler={changeChapterClickHandler}  />
                     {/*<Routes>*/}
                     {/*    <Route path={"/:bookId/:chapterId/:textToTranslate?"} element={}/>*/}
                     {/*</Routes>*/}

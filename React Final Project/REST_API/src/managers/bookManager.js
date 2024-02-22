@@ -58,6 +58,24 @@ exports.getBookForFree = async(userId,bookId)=>{
 
     return user.save()
 }
+exports.writeReview = async (bookId,userId,stars,text)=>{
+    const book = await models.bookModel.findById(bookId)
+    const user = await models.userModel.findById(userId)
+
+    if(!isBookOwnedByUser(book,userId)&&user.role!=="admin") throw new Error("Не притежавате книгата")
+
+    if(!book.hasOwnProperty("reviews")) book.reviews = []
+
+    if(book.reviews.some((review)=>review.writtenBy.equals(userId))) throw new Error("Вече сте оценили книгата")
+
+    book.reviews.push({
+        stars,
+        text,
+        writtenBy:userId
+    })
+
+    return book.save()
+}
 
 
 async function getSimilarBooks(book){

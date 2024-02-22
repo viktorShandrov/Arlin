@@ -4,17 +4,30 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import styles from "./Story.module.css"
 import { useSelector} from "react-redux";
 import ComponentLoading from "../ComponentLoading/ComponentLoading";
+import Popup from "../Popup/Popup";
+import Rating from "@mui/material/Rating";
+import useForm from "../../hooks/useForm";
+import {request} from "../../functions";
+import {toast} from "react-toastify";
 // import {setUser} from "../../redux/user";
 // @ts-ignore
-export default function Story({chapter,changeChapterClickHandler,isLoading,isRateBtnVisible}){
+export default function Story({chapter,changeChapterClickHandler,isLoading,isRateBtnVisible,bookId}){
 
     const urlLocation = useLocation()
     const navigate = useNavigate();
 // @ts-ignore
     const {user} = useSelector((state:any)=>state.user)
 
+    const [isRatePopUpVisible,setIsRatePopUpVisible] = useState(false)
+    const [formValue,onChange] = useForm({rateText:"",bookUserRating:0})
 
 
+    const showRatePopUp = ()=>{
+        setIsRatePopUpVisible(true)
+    }
+    const hideRatePopUp = ()=>{
+        setIsRatePopUpVisible(false)
+    }
 
 
 
@@ -48,6 +61,19 @@ export default function Story({chapter,changeChapterClickHandler,isLoading,isRat
     const showBtns = ()=>{
         setAreTestsHidden(!areTestsHidden)
     }
+        const saveReviewForBook = () =>{
+            if(!formValue.bookUserRating) return
+            request(`books/${bookId}/writeReview`,"POST",
+                {
+                        stars:formValue.bookUserRating,
+                        text:formValue.rateText,
+                }
+                ).subscribe(
+                    ()=>{
+                            toast.success("Успешно оценихте книгата")
+                    }
+                )
+        }
 
 
     return(
@@ -67,7 +93,7 @@ export default function Story({chapter,changeChapterClickHandler,isLoading,isRat
                     <div className={styles.btns}>
                         <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={` ${styles.btn}`} ><span className={styles.btnName}>предишна глава</span> <i className={`fa-solid fa-caret-left ${styles.btnIcon}`}></i> </button>
                         <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={`    ${styles.btn}`} ><span className={styles.btnName}>следваща глава</span><i className={`fa-solid fa-caret-right ${styles.btnIcon}`}></i>  </button>
-                        {isRateBtnVisible&&<button className={`${styles.btn} ${styles.rateBtn}`}><span className={styles.btnName}>оцени книгата</span> <i className={`fa-solid fa-star ${styles.btnIcon}`}></i></button>}
+                        {isRateBtnVisible&&<button onClick={showRatePopUp} className={`${styles.btn} ${styles.rateBtn}`}><span className={styles.btnName}>оцени книгата</span> <i className={`fa-solid fa-star ${styles.btnIcon}`}></i></button>}
                         <p></p>
                     </div>
                         <div className={styles.testsWrapper}>
@@ -105,6 +131,14 @@ export default function Story({chapter,changeChapterClickHandler,isLoading,isRat
                 {/*</div>}*/}
 
             </div>
+            {isRatePopUpVisible&&<Popup hidePopup={hideRatePopUp} styleSelector={styles.ratePopupWrapper}>
+                <h5>Оценете книгата</h5>
+                <div className={styles.startsC}>
+                    <Rating value={formValue.bookUserRating} name={"bookUserRating"} onChange={onChange} />
+                </div>
+                <textarea onChange={onChange} name="rateText" className={styles.rateText} placeholder={"Споделете впечатленията си тук"}/>
+                <button onClick={saveReviewForBook} defaultValue={0} disabled={!formValue.bookUserRating} className={styles.sendRateBtn}>Запази оценка</button>
+            </Popup> }
         </div>
 
 

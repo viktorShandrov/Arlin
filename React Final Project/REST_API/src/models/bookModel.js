@@ -29,7 +29,20 @@ const schema = mongoose.Schema({
     isRecommended:{
         type:Boolean,
         default:false
-    }
+    },
+    reviews:[
+        {
+            stars:Number,
+            text:{
+                type:String,
+                default:""
+            },
+            writtenBy:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"User"
+            }
+        }
+    ]
 })
 
 
