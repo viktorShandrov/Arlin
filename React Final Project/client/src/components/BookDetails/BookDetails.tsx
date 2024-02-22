@@ -40,6 +40,7 @@ export default function  BookDetails(){
         author:"",
         length:"",
         isBookOwnedByUser:false,
+        isWishedByUser:false,
         _id:"",
         image: "",
         ownedBy:[],
@@ -123,6 +124,13 @@ export default function  BookDetails(){
             }
         })
     }
+    const wishBtnClickHandler = () =>{
+        request(`books/${book._id}/addOrRemoveFromWishlist`,"GET").subscribe(
+            (res:any)=>{
+                setBook({...book,isWishedByUser: res.isWishedByUser})
+            }
+        )
+    }
 
 
 
@@ -156,6 +164,16 @@ export default function  BookDetails(){
                                 {/*<button onClick={()=>navigate(`/admin/addBook/${book._id}`)}  className={styles.adminBtn}>Редактирай</button>*/}
                                 {/*<button onClick={toggleDeleteDialog} className={styles.adminBtn}>Изтрий</button>*/}
                             </div>
+                            <div
+                                onClick={wishBtnClickHandler}
+                                className={styles.wishBtnIcon}
+                                style={{
+                                    color: book.isWishedByUser?"red":"black"
+                                }}
+                            >
+                                <i className="fa-solid fa-heart"></i>
+                            </div>
+
                         </article>
                         <article className={styles.resumeAndBtns}>
                             <p className={styles.resume}>
@@ -176,31 +194,7 @@ export default function  BookDetails(){
                         </article>
                     </section>
 
-                    {/*<section className={styles.resumeAndBookImage}>*/}
-                    {/*    <div className={styles.resumeWrapper}>*/}
-                    {/*        <div className={styles.resume}>*/}
-                    {/*            <p>{book.resume}</p>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*    <div className={styles.bookImageWrapper}>*/}
-                    {/*        <div className={styles.bookImageC}>*/}
-                    {/*            <div className={styles.image}>*/}
-                    {/*                <img src={book.image||"../../../public/chapter.jpg"} alt=""/>*/}
-                    {/*            </div>*/}
-                    {/*            <div className={styles.btns}>*/}
-                    {/*                <button onClick={()=>navigate(`/admin/addBook/${book._id}`)} className={`${styles.btn} ${styles.editBtn}`}>*/}
-                    {/*                        Редактирай*/}
-                    {/*                </button>*/}
-                    {/*                <button onClick={toggleDeleteDialog} className={`${styles.btn} ${styles.deleteBtn}`}>*/}
-                    {/*                    Изтрий*/}
-                    {/*                </button>*/}
-                    {/*                <button className={`${styles.btn} ${styles.buyBtn}`}>*/}
-                    {/*                    Купи*/}
-                    {/*                </button>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</section>*/}
+
                     <section className={styles.bookDetailsTableWrapper}>
                         <div className={styles.bookDetailsTable}>
                             <section  className={styles.row}>

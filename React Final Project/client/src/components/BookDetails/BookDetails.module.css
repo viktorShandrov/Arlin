@@ -127,7 +127,20 @@
 .adminBtn:last-child{
     background-color: #ff0d0d;
 }
-
+.wishBtnIcon{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 100px;
+    background-color: white;
+    border: solid black 4px;
+    aspect-ratio: 1/1;
+}
+.wishBtnIcon:hover{
+    cursor: pointer;
+}
 
 
 

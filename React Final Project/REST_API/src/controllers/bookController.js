@@ -108,5 +108,15 @@ router.post("/:id/writeReview",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/:id/addOrRemoveFromWishlist",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const bookId = req.params.id
+        const isWishedByUser = await bookManager.addOrRemoveFromWishlist(bookId,_id)
+        res.status(200).json({isWishedByUser})
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
 
 module.exports = router

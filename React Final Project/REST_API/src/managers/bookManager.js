@@ -48,8 +48,10 @@ exports.getBookDetails =async(bookId,userId)=>{
         }
     }
 
+    book.isWishedByUser = book.wishedBy.some(id=>id.equals(userId))
 
     delete book.ownedBy
+    delete book.wishedBy
 
     return book
 
@@ -90,6 +92,20 @@ exports.writeReview = async (bookId,userId,stars,text)=>{
     return book.save()
 }
 
+exports.addOrRemoveFromWishlist =async (bookId,userId) =>{
+    const book = await models.bookModel.findById(bookId)
+    let isWishedByUser
+    if(book.wishedBy.includes(userId)){
+        const index = book.wishedBy.indexOf(userId)
+        book.wishedBy.splice(index,1)
+        isWishedByUser = false
+    }else{
+        book.wishedBy.push(userId)
+        isWishedByUser = true
+    }
+    await book.save()
+    return isWishedByUser
+}
 
 async function getSimilarBooks(book){
     const genre = book.genre
