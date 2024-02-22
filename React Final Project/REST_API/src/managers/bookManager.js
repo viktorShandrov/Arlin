@@ -73,7 +73,7 @@ exports.writeReview = async (bookId,userId,stars,text)=>{
         text,
         writtenBy:userId
     })
-    book.rating+=stars
+    book.rating = Math.ceil(book.rating+stars/book.reviews.length)
 
     return book.save()
 }
