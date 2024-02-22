@@ -26,7 +26,7 @@ exports.getBook =async(bookId,userId)=>{
 exports.getBookDetails =async(bookId,userId)=>{
     let book
     try{
-         book = await models.bookModel.findById(bookId)
+         book = await models.bookModel.findById(bookId).populate("reviews.writtenBy")
     }catch (error){
         throw new Error("Няма такава книга")
     }
@@ -39,7 +39,18 @@ exports.getBookDetails =async(bookId,userId)=>{
     book.similarBooks = await getSimilarBooks(book)
     book.similarBooks.splice(book.similarBooks.findIndex((currBook=>book._id===currBook._id)),1)
 
+    if (book.reviews){
+        for (const review of book.reviews) {
+            review.writtenBy = {
+                imageURL:review.writtenBy.imageURL,
+                username:review.writtenBy.username
+            }
+        }
+    }
+
+
     delete book.ownedBy
+
     return book
 
 }

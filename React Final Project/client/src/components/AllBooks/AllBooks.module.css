@@ -32,6 +32,7 @@
     background-color: white;
     z-index: 99;
     padding: 20px 0;
+    border-bottom: solid #4C6A69 2px;
 }
 .searchBarCWrapper{
     /*transform-origin: top left; !* Set the transform origin to the center *!*/

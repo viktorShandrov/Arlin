@@ -408,39 +408,86 @@ justify-content: flex-end
     gap: 20px
 }
 
+/*.feedback{*/
+/*    padding: 30px;*/
+/*    border-radius: 20px;*/
+/*    background-color: #75A9AB;*/
+/*}*/
+
+/*.pictureAndName,*/
+/*.picAndNameC{*/
+/*    display: flex;*/
+/*}*/
+/*.pictureAndName{*/
+/*    justify-content: space-between;*/
+/*    !*align-items: center;*!*/
+/*}*/
+/*.picture{*/
+/*    width: 80px;*/
+/*    border-radius: 1000px;*/
+/*    aspect-ratio: 1/1;*/
+/*}*/
+/*.picture img{*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*}*/
+
+/*.userName{*/
+/*    padding-left: 20px;*/
+/*    display: flex;*/
+/*    align-items: end;*/
+/*    color: white;*/
+/*    font-weight: lighter;*/
+/*}*/
+
+
+
+/*.message{*/
+/*    margin: 0;*/
+/*    padding-top: 10px;*/
+/*    font-weight: bolder !important;*/
+/*    color: white;*/
+/*}*/
 .feedback{
-    padding: 30px;
+    background-color: #859D7A;
     border-radius: 20px;
-    background-color: #75A9AB;
-}
-
-.pictureAndName{
     display: flex;
-
-}
-.picture{
-    width: 80px;
-    border-radius: 1000px;
-    aspect-ratio: 1/1;
-}
-.picture img{
-    width: 100%;
-}
-
-.userName{
-    padding-left: 20px;
-    display: flex;
-    align-items: center;
-}
-
-
-
-.message{
-    margin: 0;
-    padding-top: 10px;
-    font-weight: bolder;
     color: white;
+
 }
+
+.userInfo{
+    background-color: #4C6A69;
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    flex: 0 0 auto;
+}
+.feedBackInfo{
+    padding: 20px;
+
+}
+
+
+.pictureC{
+    width: 70px;
+    aspect-ratio: 1/1;
+    border-radius: 100px;
+}
+.pictureC img{
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+
+
+
 
 .showMoreBtn{
     width: fit-content;
@@ -579,8 +626,22 @@ justify-content: flex-end
         width: 100%;
     }
 }
-@media (max-width:600px) {
+@media (max-width:700px) {
+    .feedback{
+        flex-direction: column;
+        align-items: center
+    }
+    .userInfo{
+        width: 100%
+    }
 
+
+}
+@media (max-width:600px) {
+    .picAndNameC{
+        flex-direction: column;
+        align-items: center;
+    }
 
 }
 

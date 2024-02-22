@@ -13,6 +13,7 @@ import AddtionalInfo from "../AddtionalInfo/AddtionalInfo";
 import additional from "../AddtionalInfo/AddtionalInfo.module.css";
 import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
 import {setUser} from "../../redux/user";
+import Rating from "@mui/material/Rating";
 
 export default function  BookDetails(){
     // @ts-ignore
@@ -41,6 +42,7 @@ export default function  BookDetails(){
         _id:"",
         image: "",
         ownedBy:[],
+        reviews:[],
         rating:"",
         year:"",
         genre:"",
@@ -55,7 +57,6 @@ export default function  BookDetails(){
                     const dateString = res.book.releaseDate;
                     const date = new Date(dateString);
                     const year = date.getFullYear();
-                    console.log(res.book.similarBooks)
                     setBook({...res.book,year})
                     setIsLoading(false)
                     setIsFreeBookMode(window.location.href.includes("freeBookMode"))
@@ -286,28 +287,47 @@ export default function  BookDetails(){
                         <div className={styles.feedbackC}>
                             <h2 className={styles.feedbackCHeading}>Мнения от потребители</h2>
                             <div className={styles.feedbacksC}>
-                                <article className={styles.feedback}>
-                                    <div className={styles.pictureAndName}>
-                                        <div className={styles.picture}>
-                                            <img src="/user.jpg" alt=""/>
-                                        </div>
-                                        <h2 className={styles.userName}>Надя Иванова</h2>
-                                    </div>
-                                    <p className={styles.message}>
-                                        Много хубава и интересна книга. Не ми допадат само началото и средата, но останалото със сигурност е супер. Браво на автора!
-                                    </p>
-                                </article>
-                                <article className={styles.feedback}>
-                                    <div className={styles.pictureAndName}>
-                                        <div className={styles.picture}>
-                                            <img src="/user.jpg" alt=""/>
-                                        </div>
-                                        <h2 className={styles.userName}>Иван Спасибов</h2>
-                                    </div>
-                                    <p className={styles.message}>
-                                        Фен съм на такъв тип книги и следя автора от доста дълго време. Не съм особено впечатлен от тази му творба. В средата изобщо не се разбира кой от къде идва. Също трябваше и да се промени подхода на Сюзън при опита й за преврат.
-                                    </p>
-                                </article>
+                                {book.reviews.length>0&&book.reviews.map((review:any)=>
+                                    // <article className={styles.feedback}>
+                                    //     <div className={styles.pictureAndName}>
+                                    //         <div className={styles.picAndNameC}>
+                                    //             <div className={styles.picture}>
+                                    //                 <img src={review.writtenBy.imageURL} alt=""/>
+                                    //             </div>
+                                    //             <h5 className={styles.userName}>{review.writtenBy.username}</h5>
+                                    //         </div>
+                                    //
+                                    //
+                                    //         <Rating name="read-only" value={review.stars} readOnly />
+                                    //     </div>
+                                    //     <p className={styles.message}>
+                                    //         {review.text}
+                                    //     </p>
+                                    // </article>
+                                        <article className={styles.feedback}>
+                                            <div className={styles.userInfo}>
+                                                <div className={styles.pictureC}>
+                                                    <img src={review.writtenBy.imageURL} alt="Снимка на потребител"/>
+                                                </div>
+                                                <h5 className={styles.userName}>{review.writtenBy.username}</h5>
+                                                <Rating name="read-only" value={review.stars} readOnly />
+                                            </div>
+                                            <div className={styles.feedBackInfo}>
+                                                <p className={styles.message}>
+                                                    {review.text}
+                                                </p>
+                                            </div>
+
+
+
+
+                                        </article>
+
+
+
+                                )}
+
+
                                 <button className={`${styles.showMoreBtn} ${styles.btn}`}>Покажи повече</button>
                             </div>
                         </div>
