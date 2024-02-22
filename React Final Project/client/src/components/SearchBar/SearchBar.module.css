@@ -34,6 +34,7 @@
     overflow-y: auto;
     transition: 0.7s;
     height: 0;
+    border-radius: 20px;
 }
 .autoCompletionC{
     display: flex;
@@ -47,13 +48,13 @@
 
 .autoCompletion{
     width: 100%;
-    background-color: pink;
+    background-color: #A73701;
     height: fit-content;
 }
 .completion{
     width: 100%;
     display: block;
-    color: black;
+    color: white;
     text-decoration: none;
     padding: 10px;
     white-space: nowrap;

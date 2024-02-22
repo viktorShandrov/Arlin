@@ -23,25 +23,37 @@
 .story>*{
     flex-grow:1 ;
 }
+.btnsC{
+    position: relative;
+    display: flex;
+    z-index: 1;
+    padding: 10px 0;
+    overflow: visible;
+
+}
 .btns{
     display: flex;
+    width: 100%;
+
     justify-content: space-evenly;
-    position: relative;
+    /*position: relative;*/
     z-index: 1;
     max-height: 100px;
-    overflow: visible;
+    /*overflow-y: visible;*/
+    height: 100%;
 
 
 }
 
 
 .btns .btn{
-    padding:15px 40px;
+    padding:10px 30px;
     display: flex;
     align-items: center;
     color: white;
     border: none;
     border-radius: 100px;
+
 }
 
 .btns .btn:first-child{
@@ -53,6 +65,12 @@
 .btns .btn:disabled{
     opacity: 0.3;
     cursor: not-allowed;
+}
+
+.btns .btn.rateBtn{
+    background-color: white;
+    border: #4C6A69 solid 2px ;
+    color: #4C6A69;
 }
 
 
@@ -78,7 +96,7 @@
     align-self: start;
     /*margin-top: 50px;*/
     position: absolute;
-    bottom: 0;
+    /*bottom: 0;*/
     right: 0;
     z-index: 999999;
     font-size: 14px;
@@ -193,9 +211,14 @@
     .btnIcon{
         display: block;
     }
-    .btns{
+    .btnsC{
         height: 140px;
+    }
+    .btns{
+
         align-items: center;
+        width: fit-content;
+        gap: 20px;
     }
     .btns .btn:not(.testsWrapper .btn){
         padding: clamp(30px,6vw,50px)  ;

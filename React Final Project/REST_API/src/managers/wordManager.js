@@ -440,7 +440,7 @@ exports.createWordContainer =async(user,colorCode,name,type = "custom")=>{
 exports.getUserWordContainer = (user,withPopulatedWords)=>{
     return withPopulatedWords?allModels.wordsContainer.find({ownedBy:user._id}).populate("words.wordRef"):allModels.wordsContainer.find({ownedBy:user._id})
 }
-exports.createWords =async(words,userId)=>{
+exports.createWords =async(words,userId,res)=>{
     // const wordsAndTranslations = await exports.translateMultipleWords(words)
     const info = []
 
@@ -482,6 +482,7 @@ exports.createWords =async(words,userId)=>{
 
 
     }
+    const user = await allModels.userModel.findById(userId)
     await userManager.checkIfAdvancements(user,res)
     return info
 }

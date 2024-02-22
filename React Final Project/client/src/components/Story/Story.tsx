@@ -6,7 +6,7 @@ import { useSelector} from "react-redux";
 import ComponentLoading from "../ComponentLoading/ComponentLoading";
 // import {setUser} from "../../redux/user";
 // @ts-ignore
-export default function Story({chapter,changeChapterClickHandler,isLoading}){
+export default function Story({chapter,changeChapterClickHandler,isLoading,isRateBtnVisible}){
 
     const urlLocation = useLocation()
     const navigate = useNavigate();
@@ -63,26 +63,31 @@ export default function Story({chapter,changeChapterClickHandler,isLoading}){
                     {!chapter&&
                     <h1>Problem with getting chapter</h1>}
                 </div>
-                <div className={styles.btns}>
-                    <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={` ${styles.btn}`} ><span className={styles.btnName}>предишна глава</span> <i className={`fa-solid fa-caret-left ${styles.btnIcon}`}></i> </button>
-                    <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={`    ${styles.btn}`} ><span className={styles.btnName}>следваща глава</span><i className={`fa-solid fa-caret-right ${styles.btnIcon}`}></i>  </button>
-                    <p></p>
-                    <div className={styles.testsWrapper}>
-                        {!areTestsHidden&&
-                            <>
-                                <Link to={`/main/test/textWords/${chapter.currentChapter._id}`}>
-                                    <button className={`${styles.btn} ${styles.textWordsTest}`}>тест на думи от текста</button>
-                                </Link>
-                                <Link to={`/main/test/textQuestions/${chapter.currentChapter._id}`}>
-                                    <button disabled={!chapter.hasChapterPlotTest} className={`${styles.btn} ${styles.textTest}`}>тест на разбраното от текста</button>
-                                </Link>
-                            </>
-                        }
-                        <button onClick={showBtns} className={`${styles.btn} ${styles.testIcon}`}>
-                            <img src="/nav%20icons%20new/test.png" alt=""/>
-                        </button>
+                <div className={styles.btnsC}>
+                    <div className={styles.btns}>
+                        <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={` ${styles.btn}`} ><span className={styles.btnName}>предишна глава</span> <i className={`fa-solid fa-caret-left ${styles.btnIcon}`}></i> </button>
+                        <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={`    ${styles.btn}`} ><span className={styles.btnName}>следваща глава</span><i className={`fa-solid fa-caret-right ${styles.btnIcon}`}></i>  </button>
+                        {isRateBtnVisible&&<button className={`${styles.btn} ${styles.rateBtn}`}><span className={styles.btnName}>оцени книгата</span> <i className={`fa-solid fa-star ${styles.btnIcon}`}></i></button>}
+                        <p></p>
                     </div>
+                        <div className={styles.testsWrapper}>
+                            {!areTestsHidden&&
+                                <>
+                                    <Link to={`/main/test/textWords/${chapter.currentChapter._id}`}>
+                                        <button className={`${styles.btn} ${styles.textWordsTest}`}>тест на думи от текста</button>
+                                    </Link>
+                                    <Link to={`/main/test/textQuestions/${chapter.currentChapter._id}`}>
+                                        <button disabled={!chapter.hasChapterPlotTest} className={`${styles.btn} ${styles.textTest}`}>тест на разбраното от текста</button>
+                                    </Link>
+                                </>
+                            }
+                            <button onClick={showBtns} className={`${styles.btn} ${styles.testIcon}`}>
+                                <img src="/nav%20icons%20new/test.png" alt=""/>
+                            </button>
+                        </div>
                 </div>
+
+
 
                 {/*{chapter&&<div className={styles.btns}>*/}
                 {/*    <div className={`${styles.testBtns}`}>*/}

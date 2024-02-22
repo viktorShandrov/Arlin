@@ -24,6 +24,7 @@ export default  function Read(){
         hasChapterPlotTest: false
     })
     const [isLoading,setIsLoading] = useState(false)
+    const [isRateBtnVisible,setIsRateBtnVisible] = useState(false)
 
 
     useEffect(()=>{
@@ -43,6 +44,11 @@ export default  function Read(){
                         bookId,
                         chapterId
                     }}))
+                const isAtLeastOneThird = (index, length) => index >= Math.floor(length / 3);
+
+                setIsRateBtnVisible(isAtLeastOneThird(res.chapterIndex,res.bookLength))
+
+
                 setChapter(res)
                 setIsLoading(false)
             }
@@ -68,7 +74,7 @@ export default  function Read(){
                         {/*</Routes>*/}
                 </div>
                 <div className={styles.storyC}>
-                    <Story chapter={chapter} isLoading={isLoading} changeChapterClickHandler={changeChapterClickHandler}  />
+                    <Story chapter={chapter} isLoading={isLoading} isRateBtnVisible={isRateBtnVisible}  changeChapterClickHandler={changeChapterClickHandler}  />
                     {/*<Routes>*/}
                     {/*    <Route path={"/:bookId/:chapterId/:textToTranslate?"} element={}/>*/}
                     {/*</Routes>*/}

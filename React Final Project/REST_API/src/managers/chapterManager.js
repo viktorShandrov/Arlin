@@ -28,6 +28,8 @@ exports.getChapter =async(chapterId,userId)=>{
         currentChapter:chapter,
         previousChapterId:prev,
         nextChapterId:next,
+        chapterIndex:currentChapterIndex+1,
+        bookLength:book.chapters.length,
         hasChapterPlotTest:await hasChapterPlotTest(chapter._id)
     }
 
