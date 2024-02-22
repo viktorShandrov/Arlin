@@ -64,7 +64,7 @@ exports.writeReview = async (bookId,userId,stars,text)=>{
 
     if(!isBookOwnedByUser(book,userId)&&user.role!=="admin") throw new Error("Не притежавате книгата")
 
-    if(!book.hasOwnProperty("reviews")) book.reviews = []
+    if(!book.toObject().hasOwnProperty("reviews")) book.reviews = []
 
     if(book.reviews.some((review)=>review.writtenBy.equals(userId))) throw new Error("Вече сте оценили книгата")
 
@@ -73,6 +73,7 @@ exports.writeReview = async (bookId,userId,stars,text)=>{
         text,
         writtenBy:userId
     })
+    book.rating+=stars
 
     return book.save()
 }

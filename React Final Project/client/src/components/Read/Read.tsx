@@ -48,7 +48,7 @@ export default  function Read(){
 
                 setIsRateBtnVisible(isAtLeastOneThird(res.chapterIndex,res.bookLength))
 
-
+                console.log(res)
                 setChapter(res)
                 setIsLoading(false)
             }

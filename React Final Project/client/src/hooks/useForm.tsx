@@ -11,8 +11,12 @@ export default function useForm(initialValue:any){
             }
         })
     }
+    const resetForm = () =>{
+        setFormValues(initialValue)
+    }
     return[
         formValues,
-        onFormChange
+        onFormChange,
+        resetForm
     ]
 }

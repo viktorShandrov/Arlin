@@ -140,7 +140,7 @@ export default function MyBooksList(){
 
                         <section className={styles.moreOfThisGenreWrapper}>
 
-                                <BookSection books={books.filter((book:any)=>book.isBookOwnedByUser)} isSearchChild={true} sectionHeader={"Закупени книги"} headerColor={"white"}>
+                                <BookSection areOwnedByUser={true} books={books.filter((book:any)=>book.isBookOwnedByUser)} isSearchChild={true} sectionHeader={"Закупени книги"} headerColor={"white"}>
                                     {/*@ts-ignore*/}
                                     <>
                                         {books.filter((book:any)=>book.isBookOwnedByUser).length>0&&<div className={styles.searchBarC}>
