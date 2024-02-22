@@ -73,7 +73,8 @@ exports.writeReview = async (bookId,userId,stars,text)=>{
         text,
         writtenBy:userId
     })
-    book.rating = Math.ceil(book.rating+stars/book.reviews.length)
+    const rationPoints = book.reviews.map(review=>review.stars).reduce((acc,curr)=>acc+=curr,0)
+    book.rating = Math.ceil(rationPoints/book.reviews.length)
 
     return book.save()
 }
