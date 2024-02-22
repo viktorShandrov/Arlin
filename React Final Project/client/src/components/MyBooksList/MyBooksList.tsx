@@ -140,14 +140,16 @@ export default function MyBooksList(){
 
                         <section className={styles.moreOfThisGenreWrapper}>
 
-                                <BookSection areOwnedByUser={true} books={books.filter((book:any)=>book.isBookOwnedByUser)} isSearchChild={true} sectionHeader={"Закупени книги"} headerColor={"white"}>
+                                <BookSection areOwnedByUser={true} books={books.filter((book:any)=>book.isBookOwnedByUser)} isSearchChild={true} sectionHeader={"Мои книги"} headerColor={"white"}>
                                     {/*@ts-ignore*/}
                                     <>
                                         {books.filter((book:any)=>book.isBookOwnedByUser).length>0&&<div className={styles.searchBarC}>
                                             <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
                                         </div>}
-                                        {books.filter((book:any)=>book.isBookOwnedByUser).length===0&&<div className={styles.noContentInThisSection}>
-                                            <h3>no content</h3>
+                                        {books.filter((book:any)=>book.isBookOwnedByUser).length===0&&<div className={styles.noContentInThisSectionWrapper}>
+                                            <div className={styles.noContentInThisSectionC}>
+                                                <h5>Няма съдържание за тази секция</h5>
+                                            </div>
                                         </div>}
                                     </>
 

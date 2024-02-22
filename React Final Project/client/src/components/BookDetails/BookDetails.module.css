@@ -395,7 +395,7 @@ justify-content: flex-end
 
     text-align: center;
     font-weight: bolder;
-    margin-bottom: 40px;
+    margin-bottom: 40px !important;
     /*font-family: "Shantell Sans", serif;*/
 
 }
@@ -466,6 +466,10 @@ justify-content: flex-end
     padding: 20px;
     flex: 0 0 auto;
 }
+
+.noText{
+    flex: 1;
+}
 .feedBackInfo{
     padding: 20px;
 
@@ -532,6 +536,53 @@ justify-content: flex-end
     display: flex;
     justify-content: center;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+.noContentInThisSectionWrapper{
+    background-color: #7E0030;
+    padding: 10px;
+    border-radius: 20px;
+    width: 60%;
+    margin: 0 auto;
+    max-width: 650px;
+}
+.noContentInThisSectionC{
+    background-color: #a73701;
+    border-radius: 15px;
+    padding: 30px;
+    color: white;
+    text-align: center;
+}
+
+.noContentBtn{
+    padding: 10px 40px;
+    background-color: #7E0030 ;
+    border-radius: 10px;
+    border: solid 2.5px white;
+    color: white;
+    font-size: 25px;
+    font-weight: bolder;
+}
+.noContentBtns{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+
+
+
 
 
 
@@ -626,6 +677,11 @@ justify-content: flex-end
         width: 100%;
     }
 }
+@media (max-width: 750px){
+    .noContentInThisSectionWrapper{
+        width: 80%;
+    }
+}
 @media (max-width:700px) {
     .feedback{
         flex-direction: column;
@@ -644,6 +700,7 @@ justify-content: flex-end
     }
 
 }
+
 
 @media (max-width:500px){
     .moreBooksWrapper{
@@ -694,135 +751,11 @@ justify-content: flex-end
     }
 
 
+@media (max-width: 400px){
+    .noContentInThisSectionWrapper{
+        width: 95%;
+    }
+}
 
 
 }
-/*.wrapper{*/
-/*    height: 100%;*/
-/*}*/
-/*.container{*/
-/*    display: flex;*/
-/*    padding: 50px;*/
-/*    border-radius: 10px;*/
-/*    height: 100%;*/
-/*    justify-content: space-around;*/
-/*    gap: 200px;*/
-/*    background-color: #c8c8c8;*/
-
-
-/*}*/
-/*.container>*{*/
-/*    flex: 1;*/
-/*}*/
-/*.overlay{*/
-/*    position: fixed;*/
-/*    width: 100vw;*/
-/*    height: 100vh;*/
-/*    background-color: rgba(98, 98, 98, 0.7);*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*}*/
-/*.dialog{*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    background-color: white;*/
-/*    border: solid 1px black;*/
-/*    padding-top: 20px;*/
-/*}*/
-/*.imageAndBtns{*/
-/*    !*padding: 0 150px;*!*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    flex-direction: column;*/
-/*}*/
-/*.imageAndBtns img{*/
-/*    width: 100%;*/
-/*    max-width: 400px;*/
-/*    border-radius: 10px;*/
-/*}*/
-
-/*.detailsAndBtns{*/
-/*    height: 100%;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*}*/
-/*.leftAndRightC{*/
-/*    display: flex;*/
-/*}*/
-/*.leftAndRightC h2{*/
-/*    text-overflow: ellipsis;*/
-/*    font-size: 20px;*/
-/*    font-weight: normal;*/
-/*}*/
-/*.left h2{*/
-/*    text-align: right;*/
-/*}*/
-/*.right h2{*/
-/*    text-align: left;*/
-/*}*/
-/*.left>*,*/
-/*.right>*{*/
-/*    flex: 1;*/
-/*}*/
-/*.leftAndRightC>*{*/
-/*    height: 100%;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    flex: 1;*/
-/*}*/
-/*.details{*/
-/*    border-radius: 20px;*/
-
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    flex: 1;*/
-/*}*/
-
-/*.bookName,*/
-/*.chaptersCount{*/
-/*    background-color: #6D6D6D;*/
-/*    padding: 10px;*/
-/*    text-align: center;*/
-/*    margin: 0;*/
-/*}*/
-/*.left .chaptersCount{*/
-/*    font-size: 18px;*/
-/*}*/
-/*.resume{*/
-/*    flex-grow: 1;*/
-/*    overflow-y: auto;*/
-/*    max-height: 500px;*/
-/*    padding: 10px;*/
-/*    background-color: white;*/
-/*    margin: 0;*/
-
-/*}*/
-/*.btns{*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    gap: 10px;*/
-/*    margin-top: 20px;*/
-
-/*}*/
-/*.btns>*{*/
-/*    border-radius: 10px;*/
-/*    border: none;*/
-/*    padding: 10px 45px  ;*/
-/*    font-weight: bold;*/
-/*    color: #000000;*/
-/*    background-color: white;*/
-/*    text-align: center;*/
-/*    text-decoration: none;*/
-/*}*/
-
-/*.buyBtn{*/
-/*    background-color: #05FF00;*/
-/*}*/
-/*.editBtn{*/
-/*    background-color: #fcff20;*/
-/*}*/
-/*.deleteBtn{*/
-/*    background-color: #ff0d0d;*/
-/*}*/

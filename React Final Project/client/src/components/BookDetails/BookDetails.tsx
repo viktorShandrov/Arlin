@@ -33,6 +33,7 @@ export default function  BookDetails(){
     const [isDialogShown,setIsDialogShown] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
     const [isFreeBookMode,setIsFreeBookMode] = useState(false)
+    const [reviewsLimit,setReviewsLimit] = useState(2)
     const [book,setBook] = useState({
         name:"",
         resume:"",
@@ -103,6 +104,7 @@ export default function  BookDetails(){
 
     useEffect(()=>{
         getBook()
+        setReviewsLimit(2)
         scrollToTopSmooth()
         additionalInfoAnimationTrigger()
     },[id])
@@ -286,49 +288,30 @@ export default function  BookDetails(){
                     <section className={styles.feedbackWrapper}>
                         <div className={styles.feedbackC}>
                             <h2 className={styles.feedbackCHeading}>Мнения от потребители</h2>
+                            {book.reviews.length===0&&<div className={styles.noContentInThisSectionWrapper}>
+                                <div className={styles.noContentInThisSectionC}>
+                                    <h5>Няма съдържание за тази секция</h5>
+                                </div>
+                            </div>}
+
                             <div className={styles.feedbacksC}>
-                                {book.reviews.length>0&&book.reviews.map((review:any)=>
-                                    // <article className={styles.feedback}>
-                                    //     <div className={styles.pictureAndName}>
-                                    //         <div className={styles.picAndNameC}>
-                                    //             <div className={styles.picture}>
-                                    //                 <img src={review.writtenBy.imageURL} alt=""/>
-                                    //             </div>
-                                    //             <h5 className={styles.userName}>{review.writtenBy.username}</h5>
-                                    //         </div>
-                                    //
-                                    //
-                                    //         <Rating name="read-only" value={review.stars} readOnly />
-                                    //     </div>
-                                    //     <p className={styles.message}>
-                                    //         {review.text}
-                                    //     </p>
-                                    // </article>
+                                {book.reviews.length>0&&book.reviews.slice(0,reviewsLimit).map((review:any)=>
                                         <article className={styles.feedback}>
-                                            <div className={styles.userInfo}>
+                                            <div className={`${styles.userInfo} ${!review.text?styles.noText:null}`}>
                                                 <div className={styles.pictureC}>
                                                     <img src={review.writtenBy.imageURL} alt="Снимка на потребител"/>
                                                 </div>
                                                 <h5 className={styles.userName}>{review.writtenBy.username}</h5>
                                                 <Rating name="read-only" value={review.stars} readOnly />
                                             </div>
-                                            <div className={styles.feedBackInfo}>
+                                            {review.text&&<div className={styles.feedBackInfo}>
                                                 <p className={styles.message}>
                                                     {review.text}
                                                 </p>
-                                            </div>
-
-
-
-
+                                            </div>}
                                         </article>
-
-
-
                                 )}
-
-
-                                <button className={`${styles.showMoreBtn} ${styles.btn}`}>Покажи повече</button>
+                                {book.reviews.length>reviewsLimit&&<button onClick={()=>setReviewsLimit(book.reviews.length+1)} className={`${styles.showMoreBtn} ${styles.btn}`}>Покажи повече</button>}
                             </div>
                         </div>
                     </section>
