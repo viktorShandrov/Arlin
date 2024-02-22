@@ -6,6 +6,8 @@
     border-radius: 20px;
     color: white;
     text-align: center;
+    height: fit-content;
+    margin: auto 0;
 }
 .rowsC{
     display: flex;

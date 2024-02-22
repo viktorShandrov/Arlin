@@ -22,7 +22,7 @@ export function request(url: string, method?: string, body?: any, headers: any =
                 credentials: "include"
             });
             toast.promise(promiseRequest, {
-                pending: 'Sending server request',
+                pending: 'Достъпване на сървъра',
                 // success: 'Successful server request 👌',
                 // error: 'Unsuccessful server request 🤯'
             });

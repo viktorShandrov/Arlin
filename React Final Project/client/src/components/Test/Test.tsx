@@ -90,9 +90,12 @@ export default function Test(){
                             <>
 
                                 <div className={styles.heading}>
-                                    <div className={styles.testOutput}>{question.question}</div>
-                                    <i onClick={textToSpeechClickHandler} className="fa-solid fa-volume-high"></i>
-                                    <div className={styles.page}>{`${test.findIndex(el=>el==question)+1}/${test.length}`}</div>
+                                    <div className={styles.questionAndHear}>
+                                        <div className={styles.testOutput}>{question.question}</div>
+                                        <i onClick={textToSpeechClickHandler} className="fa-solid fa-volume-high"></i>
+                                    </div>
+
+                                    <div className={styles.page}>{`Въпрос № ${test.findIndex(el=>el==question)+1}/${test.length}`}</div>
                                 </div>
                                 <div className={styles.answersWrapper}>
                                     <div className={styles.answersC}>
