@@ -441,7 +441,9 @@ exports.createWordContainer =async(user,colorCode,name,type = "custom")=>{
 
 }
 exports.getUserWordContainer = (user,withPopulatedWords)=>{
-    return withPopulatedWords?allModels.wordsContainer.find({ownedBy:user._id}).populate("words.wordRef"):allModels.wordsContainer.find({ownedBy:user._id})
+    return withPopulatedWords?
+        allModels.wordsContainer.find({ownedBy:user._id}).populate("words.wordRef"):
+        allModels.wordsContainer.find({ownedBy:user._id})
 }
 exports.createWords =async(words,userId,res)=>{
     // const wordsAndTranslations = await exports.translateMultipleWords(words)
@@ -454,15 +456,15 @@ exports.createWords =async(words,userId,res)=>{
 
 
             if(!wordRecord){
-                const wordWholeInfo =await getWordWholeInfo(word.text)
                 wordRecord =  (await models.wordModel.create(
                     {
                         // unknownFor:[userId],
                         word:word.text,
-                        translatedText:wordWholeInfo.translation
+                        translatedText:"няма превод"
                     }
                 ))
-                createWordExamples(wordWholeInfo.info.examples,wordRecord)
+
+                saveWordFullInfo(word,wordRecord)
 
             }else {
                 if(wordRecord.examples.length===0){
@@ -491,6 +493,12 @@ exports.createWords =async(words,userId,res)=>{
 }
  async function getWordWholeInfo(word){
    return (await fetch(utils.translateAPI+encodeURI(word))).json()
+}
+async function saveWordFullInfo(word,wordRecord){
+    const wordWholeInfo = await getWordWholeInfo(word.text)
+    wordRecord.translatedText = wordWholeInfo.translation
+    await createWordExamples(wordWholeInfo.info.examples,wordRecord)
+    wordRecord.save()
 }
 
 async function createWordExamples(sentenceExamples,wordRecord){
