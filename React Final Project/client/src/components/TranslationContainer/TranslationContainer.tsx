@@ -6,6 +6,7 @@ import {request} from "../../functions";
 import ComponentLoading from "../ComponentLoading/ComponentLoading";
 import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
 import Popup from "../Popup/Popup";
+import CreateWordContainer from "../CreateWordContainer/CreateWordContainer";
 
 export default function TranslationContainer() {
     const [translatedSentence, setTranslatedSentence] = useState("");
@@ -14,6 +15,7 @@ export default function TranslationContainer() {
     const [userWordContainers, setUserWordContainers] = useState([]);
     const [isTranslationLoading, setIsTranslationLoading] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [isCreateWordContainerPopupVisible, setIsCreateWordContainerPopupVisible] = useState(false);
     const wordsContainerRef = useRef<HTMLParagraphElement>(null)
 
     let { textToTranslate } = useParams();
@@ -214,7 +216,7 @@ export default function TranslationContainer() {
 
                                 </div>
                             })}
-                            <div className={styles.userWordContainerC}>
+                            <div onClick={()=>setIsCreateWordContainerPopupVisible(true)} className={styles.userWordContainerC}>
                                 <i className={`${styles.plusSign} fa-solid fa-plus`}></i>
                                 нова група
                             </div>
@@ -226,6 +228,7 @@ export default function TranslationContainer() {
                 </div>
 
             </Popup>}
+            {isCreateWordContainerPopupVisible&&<CreateWordContainer setUserWordContainers={setUserWordContainers} setIsCreateGroupPopUpVisible={setIsCreateWordContainerPopupVisible}/>}
         </>
 
 

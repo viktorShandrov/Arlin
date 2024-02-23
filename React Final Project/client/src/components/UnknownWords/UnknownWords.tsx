@@ -6,6 +6,7 @@ import PopUpOverlay from "../PopUpOverlay/PopUpOverlay.tsx";
 import useForm from "../../hooks/useForm.tsx";
 import {toast} from "react-toastify";
 import Popup from "../Popup/Popup";
+import CreateWordContainer from "../CreateWordContainer/CreateWordContainer";
 
 export default function UnknownWords(){
     // const [words,setWords] = useState([])
@@ -23,7 +24,6 @@ export default function UnknownWords(){
     const [isCreateGroupPopUpVisible,setIsCreateGroupPopUpVisible] = useState(false)
     const [isWordInfoPopUpVisible,setWordInfoPopUpVisible] = useState(false)
     const [isWordExamplesPopUpVisible,setIsWordExamplesPopUpVisible] = useState(false)
-    const [createWordContainerForm,onChange] = useForm({containerName:"",colorCode:"#de2bff"})
     useEffect(()=>{
         setIsLoading(true)
         fetchUserWordContainers()
@@ -39,7 +39,6 @@ export default function UnknownWords(){
     const fetchUserWordContainers = () =>{
         request("unknownWords/getWordContainers/true","GET").subscribe(
             (res:any)=>{
-                console.log(res.containers)
                 setUserWordContainers(res.containers)
                 setIsLoading(false)
             }
@@ -48,23 +47,7 @@ export default function UnknownWords(){
     const showPopUpClickHandler = ()=>{
         setIsCreateGroupPopUpVisible(true)
     }
-    const createWordContainerClickHandler = () =>{
 
-        request("unknownWords/createWordContainer","POST",{colorCode:createWordContainerForm.colorCode,name:createWordContainerForm.containerName}).subscribe(
-            (res:any)=>{
-                toast.success("Успешно създадена група")
-                hidePopup()
-            }
-        )
-    }
-    const cancelWordContainerClickHandler = () =>{
-        hidePopup()
-    }
-    const hidePopup = () =>{
-        setIsCreateGroupPopUpVisible(false)
-        onChange({target:{name:"containerName",value:""}})
-        onChange({target:{name:"colorCode",value:"#de2bff"}})
-    }
     const hideWordInfoPopUp = () =>{
         setWordInfoPopUpVisible(false)
     }
@@ -115,6 +98,7 @@ export default function UnknownWords(){
 
                                 <div className={styles.wordsContainer}>
                                     {container.words.length>0&&container.words.sort((a, b) => (a.isKnown === b.isKnown) ? 0 : a.isKnown ? 1 : -1).map((word:any,index:number)=>{
+
                                         return <div onClick={()=>wordInfoClickHandler(word)} data-isKnown={word.isKnown} className={styles.row} key={index}>
                                                 {word.wordRef.word}
                                             <div className={styles.isKnownAndInfo}>
@@ -155,27 +139,8 @@ export default function UnknownWords(){
                 {/*>*/}
                 {/*</stripe-buy-button>*/}
             </div>
-            {isCreateGroupPopUpVisible&&
-                <Popup hidePopup={hidePopup} styleSelector={styles.popupWrapper}>
-                    <div className={styles.createWordGroupWrapper}>
-                        <div className={styles.createWordGroupC}>
-                            <h5>създаване на нова група за думи</h5>
-                            <div className={styles.colorPickAndNameInput}>
-                                <div className={styles.colorPicker}>
-                                    <input value={createWordContainerForm.colorCode} onChange={onChange} name={"colorCode"} type="color"/>
-                                </div>
-                                <input value={createWordContainerForm.containerName} onChange={onChange} name={"containerName"} className={styles.nameInput} type="text" placeholder={"Име на нова група"}/>
+            {isCreateGroupPopUpVisible&& <CreateWordContainer setUserWordContainers={setUserWordContainers} setIsCreateGroupPopUpVisible={setIsCreateGroupPopUpVisible}/>
 
-                            </div>
-                            <div className={styles.createBtns}>
-                                <button disabled={!createWordContainerForm.containerName} onClick={createWordContainerClickHandler} className={styles.createBtn}>създай</button>
-                                <button onClick={cancelWordContainerClickHandler} className={styles.cancelBtn}>отказ</button>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </Popup>
 
 
 }
