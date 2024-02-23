@@ -45,6 +45,10 @@ exports.getBookDetails =async(bookId,userId)=>{
                 imageURL:review.writtenBy.imageURL,
                 username:review.writtenBy.username
             }
+            if(review.likedBy){
+                review.isLikedByUser = review.likedBy.some((id)=>id.equals(userId))
+                delete review.likedBy
+            }
         }
     }
 
@@ -105,6 +109,26 @@ exports.addOrRemoveFromWishlist =async (bookId,userId) =>{
     }
     await book.save()
     return isWishedByUser
+}
+exports.likeOrDislikeFeedback =async (bookId,reviewId,userId) =>{
+    const book = await models.bookModel.findById(bookId)
+    const review = book.reviews.find((review)=>review._id.equals(reviewId))
+
+    let isLikedByUser
+
+    if(!review.likedBy) review.likedBy = []
+
+    if(review.likedBy.includes(userId)){
+        const index = review.likedBy.indexOf(userId)
+        review.likedBy.splice(index,1)
+        isLikedByUser = false
+    }else{
+        review.likedBy.push(userId)
+        isLikedByUser = true
+    }
+    await book.save()
+
+    return isLikedByUser
 }
 
 async function getSimilarBooks(book){

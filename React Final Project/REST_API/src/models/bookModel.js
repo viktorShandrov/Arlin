@@ -40,7 +40,14 @@ const schema = mongoose.Schema({
             writtenBy:{
                 type:mongoose.Schema.Types.ObjectId,
                 ref:"User"
-            }
+            },
+            likedBy:[
+                {
+                    type:mongoose.Schema.Types.ObjectId,
+                    ref:"User",
+                    default:[]
+                }
+            ]
         }
     ]
 })

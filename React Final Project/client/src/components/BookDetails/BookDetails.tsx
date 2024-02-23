@@ -131,6 +131,16 @@ export default function  BookDetails(){
             }
         )
     }
+    const likeReviewBtnClickHandler = (reviewId) =>{
+        request(`books/${book._id}/${reviewId}/likeOrDislikeFeedback`,"GET").subscribe(
+            (res:any)=>{
+                const reviewIndex = book.reviews.findIndex((review:any)=>review._id===reviewId)
+                const updatedReviews = [...book.reviews]
+                updatedReviews[reviewIndex] = {...updatedReviews[reviewIndex],isLikedByUser:res.isLikedByUser}
+                setBook({...book,reviews: updatedReviews})
+            }
+        )
+    }
 
 
 
@@ -303,6 +313,16 @@ export default function  BookDetails(){
                                                     {review.text}
                                                 </p>
                                             </div>}
+                                            <div
+                                                onClick={()=>likeReviewBtnClickHandler(review._id)}
+                                                className={`${styles.likeBtnIcon}`}
+                                                style={{
+                                                    color: review.isLikedByUser?"#008eff":"black",
+                                                    // border:`solid 4px ${review.isLikedByUser?"#008eff":"black"}` ,
+                                                }}
+                                            >
+                                                <i className="fa-solid fa-thumbs-up"></i>
+                                            </div>
                                         </article>
                                 )}
                                 {book.reviews.length>reviewsLimit&&<button onClick={()=>setReviewsLimit(book.reviews.length+1)} className={`${styles.showMoreBtn} ${styles.btn}`}>Покажи повече</button>}

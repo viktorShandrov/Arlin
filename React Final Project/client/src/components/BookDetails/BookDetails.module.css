@@ -127,10 +127,10 @@
 .adminBtn:last-child{
     background-color: #ff0d0d;
 }
-.wishBtnIcon{
+.wishBtnIcon,
+.likeBtnIcon{
     position: absolute;
     top: 10px;
-    left: 10px;
     padding: 10px;
     font-size: 20px;
     border-radius: 100px;
@@ -138,12 +138,21 @@
     border: solid black 4px;
     aspect-ratio: 1/1;
 }
-.wishBtnIcon:hover{
+.wishBtnIcon{
+    left: 10px;
+}
+.likeBtnIcon{
+    right: 10px;
+    width: 47px;
+}
+.wishBtnIcon:hover,
+.likeBtnIcon:hover{
     cursor: pointer;
 }
 
-
-
+.likeBtnIcon i{
+    transform: translateY(-2px);
+}
 .resumeAndBtns{
     height: 100%;
     display: flex;
@@ -466,6 +475,7 @@ justify-content: flex-end
     border-radius: 20px;
     display: flex;
     color: white;
+    position: relative;
 
 }
 
@@ -485,6 +495,7 @@ justify-content: flex-end
 }
 .feedBackInfo{
     padding: 20px;
+    padding-right: 70px;
 
 }
 
@@ -702,6 +713,9 @@ justify-content: flex-end
     }
     .userInfo{
         width: 100%
+    }
+    .feedBackInfo{
+        padding: 20px;
     }
 
 

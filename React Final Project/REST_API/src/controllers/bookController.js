@@ -118,5 +118,17 @@ router.get("/:id/addOrRemoveFromWishlist",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/:bookId/:reviewId/likeOrDislikeFeedback",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const reviewId = req.params.reviewId
+        const bookId = req.params.bookId
+        const isLikedByUser = await bookManager.likeOrDislikeFeedback(bookId,reviewId,_id)
+        res.status(200).json({isLikedByUser})
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
 
 module.exports = router
