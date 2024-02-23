@@ -17,7 +17,6 @@ exports.getChapter =async(chapterId,userId)=>{
     const currentChapterIndex = book.chapters.findIndex(el=>el.equals(chapterId))
     const user = await models.userModel.findById(userId)
 
-    console.log(currentChapterIndex)
 
     const chapter = await models.chapterModel.findById(chapterId)
     if(!chapter.isFree&&user.role!=="admin"&&![0,1].includes(currentChapterIndex)){

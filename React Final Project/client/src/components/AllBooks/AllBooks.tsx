@@ -275,8 +275,8 @@ export default function AllBooks(){
 
                 {isFilterPanelShown&&<div className={styles.filterMenu}>
                     <i  onClick={()=>setIsFilterPanelShown(false)} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
-                    <input onChange={ownedFilterClickHandler}  type={"checkbox"} />
-                    <label>Купена</label>
+                    {/*<input onChange={ownedFilterClickHandler}  type={"checkbox"} />*/}
+                    {/*<label>Купена</label>*/}
                     <details className={styles.detailsC} data-filter={"author"}>
                         <summary>Автор</summary>
                         {filterData.authors&&filterData.authors.length>0&&filterData.authors.map((el,index)=>{
