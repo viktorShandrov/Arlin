@@ -6,7 +6,11 @@ export default function Popup({children,hidePopup,styleSelector}){
         <PopUpOverlay>
             <div className={`${styles.popup} ${styleSelector}`}>
                 <i  onClick={()=>hidePopup()} className={`fa-solid fa-xmark ${styles.xmark}`}></i>
-                {children}
+                <div className={styles.popUpElements}>
+                    {children}
+                </div>
+
+
             </div>
 
         </PopUpOverlay>
