@@ -44,11 +44,14 @@ export default  function Read(){
                         bookId,
                         chapterId
                     }}))
-                const isAtLeastOneThird = (index, length) => index >= Math.floor(length / 3);
+                const isAtLeastOneThird = (index:number, length:number) => {
+                    //the index starts with 1
+                    if([1,2].includes(index)) return false
+                    return index >= Math.floor(length / 3)
+                } ;
 
                 setIsRateBtnVisible(isAtLeastOneThird(res.chapterIndex,res.bookLength))
 
-                console.log(res)
                 setChapter(res)
                 setIsLoading(false)
             }

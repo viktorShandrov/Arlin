@@ -4,7 +4,7 @@ exports.isOwnedByUser = async(userId,itemId,model,fieldName)=>{
     const item = await model.findById(itemId)
 
     if(!item[fieldName].includes(userId)){
-        throw new Error("You do not own this item.")
+        throw new Error("Не притежавате това нещо.")
     }
 }
 exports.isAdmin = async(user,userId)=>{

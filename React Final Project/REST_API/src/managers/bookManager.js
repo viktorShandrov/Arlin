@@ -32,6 +32,10 @@ exports.getBookDetails =async(bookId,userId)=>{
     }
     book = book.toObject()
 
+    if(book.chapters&&book.chapters.length>0){
+        book.firstChapter = book.chapters[0]
+    }
+
     delete book.chapters
 
 

@@ -50,8 +50,16 @@ export default function  BookDetails(){
         genre:"",
         difficulty:"",
         similarBooks:[],
+        firstChapter: undefined
+
     })
 
+    useEffect(()=>{
+        getBook()
+        setReviewsLimit(2)
+        scrollToTopSmooth()
+        additionalInfoAnimationTrigger()
+    },[id])
 
     const getBook = ()=>{
             request(`books/${id}/details`,"GET").subscribe(
@@ -92,23 +100,17 @@ export default function  BookDetails(){
         // @ts-ignore
         wrapper.current.scrollTop = 0;
     }
-    const setAuthorDetails = ()=>{
-        // @ts-ignore
-        if(authorDetails.current.classList.contains(styles.closed)){
-            // @ts-ignore
-            authorDetails.current.classList.remove(styles.closed)
-        }else{
-            // @ts-ignore
-            authorDetails.current.classList.add(styles.closed)
-        }
-    }
+    // const setAuthorDetails = ()=>{
+    //     // @ts-ignore
+    //     if(authorDetails.current.classList.contains(styles.closed)){
+    //         // @ts-ignore
+    //         authorDetails.current.classList.remove(styles.closed)
+    //     }else{
+    //         // @ts-ignore
+    //         authorDetails.current.classList.add(styles.closed)
+    //     }
+    // }
 
-    useEffect(()=>{
-        getBook()
-        setReviewsLimit(2)
-        scrollToTopSmooth()
-        additionalInfoAnimationTrigger()
-    },[id])
     function additionalInfoAnimationTrigger(){
         // @ts-ignore
         wrapper.current.addEventListener("scroll",()=>{
@@ -140,6 +142,10 @@ export default function  BookDetails(){
                 setBook({...book,reviews: updatedReviews})
             }
         )
+    }
+    const readBtnClickHandler = ()=>{
+        navigate(`/main/read/${book._id}/chapterId=${book.firstChapter}`)
+
     }
 
 
@@ -192,11 +198,11 @@ export default function  BookDetails(){
                             </p>
 
                             {book&&book.isBookOwnedByUser&&<div className={styles.btns}>
-                                <button className={styles.readBtn}>прочети</button>
+                                <button onClick={readBtnClickHandler} className={styles.readBtn}>прочети</button>
                             </div>}
 
                             {book&&!book.isBookOwnedByUser&&<div className={styles.btns}>
-                                <button className={styles.btn}>надникни</button>
+                                <button onClick={readBtnClickHandler} className={styles.btn}>надникни</button>
                                 {!isFreeBookMode&&<button className={styles.btn}>КУПИ</button>}
                                 {isFreeBookMode&&<button onClick={getBookForFree} className={styles.btn}>ВЗEМИ БЕЗПЛАТНО</button>}
                             </div>}
