@@ -268,6 +268,9 @@ import('random-words')
                             case utils.testTypes.textQuestions :
                                 ++user.chapterPlotTests
                                 break;
+                                case utils.testTypes.matchFour :
+                                ++user.matchFourTests
+                                break;
 
                         }
                         await userManager.updateUserExp(utils.defaultExp,user,res)

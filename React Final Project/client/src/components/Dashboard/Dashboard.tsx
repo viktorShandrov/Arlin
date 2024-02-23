@@ -21,7 +21,8 @@ export default function Dashboard(){
         exp: undefined,
         inventory: {},
         advancements: undefined,
-        other: undefined
+        other: undefined,
+        matchFourTests: undefined
 
     })
     const [changedCredential,setChangedCredential] = useState({
@@ -194,6 +195,7 @@ export default function Dashboard(){
                         <DashboardStat name={"тестa на произволни думи"} testValue={userInfo.randomWordsTests} />
                         <DashboardStat name={"тестa на думи от текст"} testValue={userInfo.wordsFromChapterTests}  />
                         <DashboardStat name={"теста за 'Четене с разбиране'"} testValue={userInfo.chapterPlotTests}  />
+                        <DashboardStat name={"теста за свързване на 4 с 4 думи"} testValue={userInfo.matchFourTests}  />
                     </div>
                 </section>
                 <section className={styles.badgeSectionWrapper}>

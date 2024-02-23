@@ -29,6 +29,10 @@ const schema = mongoose.Schema({
         type:Number,
         default: 0
     },
+    matchFourTests: {
+        type:Number,
+        default: 0
+    },
     knownWords: {
         type:Number,
         default: 0

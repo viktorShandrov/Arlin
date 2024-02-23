@@ -2,13 +2,15 @@
 import styles from "./TestResume.module.css"
 import {request} from "../../functions";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 // @ts-ignore
 export default function TestResume({questions,answers,testType,wordsIds=null}){
     const navigate = useNavigate()
     const proceedClickHandler = (testType:string)=>{
         request("unknownWords/testCompleted","POST",{testType,wordsIds}).subscribe(
-            (res:any)=>{
+            ()=>{
                 navigate("/main/read")
+                toast.success("Браво за успеха!")
             }
         )
     }
