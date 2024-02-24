@@ -279,8 +279,9 @@ exports.plansInfo =[
             "3 съндъка с награди",
             "1000 опит",
         ] ,
+        type:"basic",
         price:4.99,
-        priceId:"price_1OnR4GAPrNaPFyVROSAWjzI2"
+        priceId:"price_1OnRkwAPrNaPFyVRqc1HU3qJ"
     },
     {
         name:"Ентусиазиран абонамент",
@@ -290,8 +291,9 @@ exports.plansInfo =[
             "5 съндъка с награди",
             "2500 опит",
         ] ,
+        type:"enthusiastic",
         price:7.99,
-        priceId:"price_1OnJkoAPrNaPFyVRPUQvvQRv"
+        priceId:"price_1OnRjEAPrNaPFyVRN66a10fW"
     },
     {
         name:"Професионален абонамент",
@@ -301,8 +303,9 @@ exports.plansInfo =[
             "10 съндъка с награди",
             "3000 опит",
         ] ,
+        type:"professional",
         price:8.99,
-        priceId:"price_1OnR4xAPrNaPFyVR9Hbhq5TF"
+        priceId:"price_1OnRkQAPrNaPFyVRXBhdXZtG"
     },
 
 

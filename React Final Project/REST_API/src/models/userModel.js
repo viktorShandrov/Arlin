@@ -19,7 +19,7 @@ const schema = mongoose.Schema({
     },
     plan:{
         type:String,
-        enum:["none","ultimate"],
+        enum:["none","basic","enthusiastic","professional"],
         default:"none"
     },
     planSubscriptionDate:{

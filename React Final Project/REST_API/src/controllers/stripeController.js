@@ -31,9 +31,10 @@ router.post('/create-subscription-checkout-session',isAuth, async (req, res) => 
     try {
         const {_id} = req.user
 
-        const {stripeSubscriptionPriceId} = req.body
+        const {stripeSubscriptionPriceId,subscriptionType} = req.body
+        console.log(subscriptionType)
 
-        const session = await stripeManager.createSubscription(_id,stripeSubscriptionPriceId)
+        const session = await stripeManager.createSubscription(_id,stripeSubscriptionPriceId,subscriptionType)
 
 
         res.status(200).json({ id: session.id });
@@ -54,14 +55,15 @@ router.post("/stripeWebhook",async (req,res)=>{
     try {
         const {type} = req.body
 
-        const {bookId,userId} = req.body.data.object.metadata
-
+        const {bookId,userId,subscriptionType} = req.body.data.object.metadata
+        console.log("data,",req.body.data.object.metadata)
+        console.log("planType,",subscriptionType)
 
         switch (type) {
             case 'checkout.session.completed':
                 if(req.body.data.object.mode==="subscription"){
-                    await userManager.userSubscribedEventHandler(userId)
-                }else{
+                    await userManager.userSubscribedEventHandler(userId,subscriptionType)
+                }else if(req.body.data.object.mode==="payment"){
                     await bookManager.bookIsPurchased(userId,bookId)
                 }
 
@@ -78,8 +80,8 @@ router.post("/stripeWebhook",async (req,res)=>{
                 break;
             case 'invoice.payment_succeeded':
                 if(req.body.data.object.mode==="subscription"){
-                    await userManager.userSubscribedEventHandler(userId)
-                }else{
+                    await userManager.userSubscribedEventHandler(userId,subscriptionType)
+                }else if(req.body.data.object.mode==="payment"){
                     await bookManager.bookIsPurchased(userId,bookId)
                 }
                 break;

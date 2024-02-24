@@ -15,9 +15,9 @@ export default function PlansCatalog(){
     },[])
 
 
-    const subscribeBtnClickHandler = (stripeSubscriptionPriceId) =>{
+    const subscribeBtnClickHandler = (stripeSubscriptionPriceId,subscriptionType) =>{
         setIsLoading(true)
-        request("stripe/create-subscription-checkout-session",'POST',{stripeSubscriptionPriceId}).subscribe(
+        request("stripe/create-subscription-checkout-session",'POST',{stripeSubscriptionPriceId,subscriptionType}).subscribe(
             async (res:any)=>{
                 const stripe = await loadStripe('pk_test_51OEwwSAPrNaPFyVRyPTVcpxfNfy2RJiSVgl3frnwPgKe2tQZhlOVVz5PCvVN8nqoEyT2HwarufbQcoQzNy1giqkg00bLGKyRr4');
                 stripe.redirectToCheckout({ sessionId: res.id })
@@ -34,6 +34,11 @@ export default function PlansCatalog(){
             }
         )
     }
+    const images =[
+        "../../../public/rewardImages/freeBook.png",
+        "../../../public/rewardImages/expMultiplier.png",
+        "../../../public/rewardImages/chest.png",
+    ]
 
 
 
@@ -42,10 +47,10 @@ export default function PlansCatalog(){
             {isLoading&&<Loading/>}
             <div className={styles.plansWrapper}>
                 <div className={styles.plansC}>
-                    {plans.length>0&&plans.map((plan:any)=><article className={styles.planWrapper}>
+                    {plans.length>0&&plans.map((plan:any,index:number)=><article className={styles.planWrapper}>
                         <div className={styles.headingC}>
                             <div className={styles.imageC}>
-                                <img src="../../../public/rewardImages/freeBook.png" alt=""/>
+                                <img src={images[index]} alt=""/>
                             </div>
                         </div>
                         <div className={styles.infoWrapper}>
@@ -68,7 +73,7 @@ export default function PlansCatalog(){
                                             <h6 className={styles.perMonthLabel}>на месец</h6>
                                         </div>
                                     </div>
-                                    <button onClick={()=>subscribeBtnClickHandler(plan.priceId)} className={styles.buyBtn}>АБОНИРАЙ СЕ</button>
+                                    <button onClick={()=>subscribeBtnClickHandler(plan.priceId,plan.type)} className={styles.buyBtn}>АБОНИРАЙ СЕ</button>
                                 </section>
                             </div>
                         </div>

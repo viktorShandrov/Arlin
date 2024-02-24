@@ -164,10 +164,11 @@ exports.calculateLevel=(exp) => {
 
 }
 
-exports.userSubscribedEventHandler = async (userId)=>{
+exports.userSubscribedEventHandler = async (userId,planType)=>{
     const user = await userModel.findById(userId)
-    user.plan = "ultimate"
-    user.planSubscriptionDate = new Date()
+    user.plan = planType
+    const currentDate = new Date();
+    user.planSubscriptionDate  = currentDate.toDateString();
     return user.save()
 }
 exports.userUnsubscribedEventHandler = async (userId)=>{

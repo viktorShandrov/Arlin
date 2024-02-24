@@ -13,7 +13,7 @@ exports.createBookStripeProduct = async (book)=>{
 }
 
 
-exports.createStripeProduct=async(name,priceInCents,image=null,interval=null)=>{
+exports.createStripeProduct=async(name,priceInCents,image=null,interval=null,subscriptionType=null)=>{
 
 
     const product = await stripe.products.create({
@@ -36,11 +36,16 @@ exports.createStripeProduct=async(name,priceInCents,image=null,interval=null)=>{
 
     const price = await stripe.prices.create(priceData);
 
-    await stripe.products.update(product.id, {
+    const productData ={
         metadata: {
             priceId: price.id,
         },
-    });
+    }
+    if(subscriptionType){
+        productData.metadata.subscriptionType = subscriptionType
+    }
+
+    await stripe.products.update(product.id, productData);
     return {
         product,
         priceId:price.id
@@ -93,7 +98,7 @@ exports.createSession = async (bookId,userId)=>{
 }
 
 
-exports.createSubscription=async(userId,stripeSubscriptionPriceId)=> {
+exports.createSubscription=async(userId,stripeSubscriptionPriceId,subscriptionType)=> {
 
         // Create a customer
         const customers = await stripe.customers.list();
@@ -118,7 +123,9 @@ exports.createSubscription=async(userId,stripeSubscriptionPriceId)=> {
             }],
             mode: 'subscription',
             metadata: {
-               userId
+               userId,
+                subscriptionType
+
             },
             success_url: `${utils.FEdomains[0]}/#/main/AllBooks`,
             cancel_url: `${utils.FEdomains[0]}/#/main/AllBooks`,
