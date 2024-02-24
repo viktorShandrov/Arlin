@@ -11,6 +11,7 @@ const {
     uploadBytes,
     getDownloadURL,
 } = require("firebase/storage") ;
+const {createBookStripeProduct} = require("./stripeManager");
 
 
 exports.getBook =async(bookId,userId)=>{
@@ -231,7 +232,7 @@ exports.getFilteringData =async(userId)=>{
 }
 exports.createBook =async(bookData,userId)=>{
    await isAdmin(null,userId)
-    return await models.bookModel.create(
+    const book =  await models.bookModel.create(
        {
            ...bookData,
            ownedBy:[],
@@ -240,5 +241,6 @@ exports.createBook =async(bookData,userId)=>{
        }
        )
 
-
+    await createBookStripeProduct(book)
+    return book
 }

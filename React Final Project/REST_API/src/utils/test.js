@@ -23,12 +23,14 @@ const mongodb = require("mongodb");
 const {translateChapter} = require("../managers/chapterManager");
 const {wordModel} = require("../models/allModels");
 const {translateAPI} = require("./utils");
+const stripe = require('stripe')(utils.stripeSecretKey);
 
 exports.test=async ()=> {
 
     setTodayNews()
     // wordManager.fillDBwithWords()
     console.log( )
+    // createStripeProducts()
 
     setTimeout(()=>{
         // translateChapter()
@@ -87,6 +89,17 @@ exports.test=async ()=> {
         }
 
     }
+
+    async function createStripeProductsFromExistingBooks(){
+        const books = await models.bookModel.find({})
+        for(const book of books) {
+            const product = await createBookStripeProduct()
+            book.stripeProductId = product.id
+            await book.save()
+
+        }
+    }
+
 
     // putSentenceForWords()
 

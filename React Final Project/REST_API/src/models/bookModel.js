@@ -16,11 +16,13 @@ const schema = mongoose.Schema({
         ref:"User"
     }],
     name:String,
+    price:Number,
     length: Number,
     image:String,
     author:String,
     resume:String,
     genre:String,
+    stripeProductId:String,
     releaseDate:Date,
     rating:{
         type:Number,
