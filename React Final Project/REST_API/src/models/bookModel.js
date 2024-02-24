@@ -16,7 +16,7 @@ const schema = mongoose.Schema({
         ref:"User"
     }],
     name:String,
-    price:Number,
+    priceInCents:Number,
     length: Number,
     image:String,
     author:String,

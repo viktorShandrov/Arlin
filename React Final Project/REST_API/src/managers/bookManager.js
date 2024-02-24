@@ -243,6 +243,6 @@ exports.createBook =async(bookData,userId)=>{
        }
        )
 
-    await createBookStripeProduct(book)
+    await createBookStripeProduct(book,bookData.priceInCents)
     return book
 }

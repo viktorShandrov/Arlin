@@ -15,6 +15,7 @@ export default function AddBook() {
         resume: "",
         releaseDate: "",
         genre: "",
+        priceInCents:0
     })
 
     const [createdBook,setCreatedBook] = useState(null)
@@ -134,6 +135,8 @@ export default function AddBook() {
                         <textarea name={"resume"} placeholder={"Book resume"} value={formValues.resume}
                                   onChange={formValueChangeHandler}/>
                         <input name={"genre"} placeholder={"Book genre"} value={formValues.genre}
+                               onChange={formValueChangeHandler}/>
+                        <input type={"number"} name={"priceInCents"} placeholder={"priceInCents"} value={formValues.priceInCents}
                                onChange={formValueChangeHandler}/>
                         <input type={"date"} name={"releaseDate"} placeholder={"Book releaseDate"}
                                value={formValues.releaseDate} onChange={formValueChangeHandler}/>

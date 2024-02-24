@@ -13,7 +13,6 @@ router.post("/create",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
         const {bookData} = req.body
-        console.log(bookData)
        const book =  await bookManager.createBook(bookData,_id)
         res.status(200).json(book)
     } catch (error) {

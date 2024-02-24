@@ -4,7 +4,7 @@ const stripe = require('stripe')(utils.stripeSecretKey);
 
 
 
-exports.createBookStripeProduct = async (book)=>{
+exports.createBookStripeProduct = async (book,priceInCents)=>{
     const product = await stripe.products.create({
         name: book.name,
         type: 'service',
@@ -14,7 +14,7 @@ exports.createBookStripeProduct = async (book)=>{
 
     const price = await stripe.prices.create({
         product: product.id,
-        unit_amount: 699, // Amount in cents
+        unit_amount: priceInCents, // Amount in cents
         currency: 'bgn',
         // No recurring field for one-time purchase
     });

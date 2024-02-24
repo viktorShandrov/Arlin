@@ -95,7 +95,7 @@ exports.test=async ()=> {
 
         for(const book of books) {
             await stripeManager.deleteProduct(book.stripeProductId)
-            const {product,priceId} = await stripeManager.createBookStripeProduct(book)
+            const {product,priceId} = await stripeManager.createBookStripeProduct(book,book.priceInCents)
             book.stripeProductId = product.id
             book.stripePriceId = priceId
             await book.save()
