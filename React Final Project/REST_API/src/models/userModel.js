@@ -22,6 +22,10 @@ const schema = mongoose.Schema({
         enum:["none","ultimate"],
         default:"none"
     },
+    planSubscriptionDate:{
+        type:String,
+        default:""
+    },
     randomWordsTests: {
         type:Number,
         default: 0
