@@ -175,3 +175,4 @@ exports.userUnsubscribedEventHandler = async (userId)=>{
     user.plan = "none"
     return user.save()
 }
+

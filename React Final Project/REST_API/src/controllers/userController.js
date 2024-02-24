@@ -1,6 +1,7 @@
 const {isAuth} = require("../utils/authentication");
 const chapterManager = require("../managers/chapterManager");
 const userManager = require("../managers/userManager");
+const utils = require("../utils/utils");
 const router = require("express").Router()
 
 //CRUD
@@ -54,6 +55,14 @@ router.get("/useExpMultiplier",isAuth,async (req,res)=>{
         await userManager.useExpMultiplier(_id,1.5)
 
         res.status(200).end()
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
+router.get("/getSubscriptionPlansInfo",async (req,res)=>{
+    try {
+        res.status(200).json({plans:utils.plansInfo})
     } catch (error) {
         console.log(error)
         res.status(400).json({message:error.message})

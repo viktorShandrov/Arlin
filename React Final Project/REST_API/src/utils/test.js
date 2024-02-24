@@ -31,7 +31,7 @@ exports.test=async ()=> {
     setTodayNews()
     // wordManager.fillDBwithWords()
 
-    // await createStripeProduct("Абонамент",799,null,"month")
+    // await createStripeProduct("Абонамент",899,null,"month")
 
     // await createStripeProductsFromExistingBooks()
 

@@ -267,3 +267,43 @@ exports.advancements = [
         type:"words"
     },
 ]
+
+
+
+exports.plansInfo =[
+    {
+        name:"Обикновен абонамент",
+        benefits:[
+            "Достъп до всяка книга",
+            "4 множителя на опит",
+            "3 съндъка с награди",
+            "1000 опит",
+        ] ,
+        price:4.99,
+        priceId:"price_1OnR4GAPrNaPFyVROSAWjzI2"
+    },
+    {
+        name:"Ентусиазиран абонамент",
+        benefits:[
+            "Достъп до всяка книга",
+            "9 множителя на опит",
+            "5 съндъка с награди",
+            "2500 опит",
+        ] ,
+        price:7.99,
+        priceId:"price_1OnJkoAPrNaPFyVRPUQvvQRv"
+    },
+    {
+        name:"Професионален абонамент",
+        benefits:[
+            "Достъп до всяка книга",
+            "14 множителя на опит",
+            "10 съндъка с награди",
+            "3000 опит",
+        ] ,
+        price:8.99,
+        priceId:"price_1OnR4xAPrNaPFyVR9Hbhq5TF"
+    },
+
+
+]

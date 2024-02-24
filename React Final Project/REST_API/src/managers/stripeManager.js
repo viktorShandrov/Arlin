@@ -93,7 +93,7 @@ exports.createSession = async (bookId,userId)=>{
 }
 
 
-exports.createSubscription=async(userId)=> {
+exports.createSubscription=async(userId,stripeSubscriptionPriceId)=> {
 
         // Create a customer
         const customers = await stripe.customers.list();
@@ -113,7 +113,7 @@ exports.createSubscription=async(userId)=> {
             customer: customer.id,
             payment_method_types: ['card'],
             line_items: [{
-                price: "price_1OnJkoAPrNaPFyVRPUQvvQRv",
+                price: stripeSubscriptionPriceId,
                 quantity: 1,
             }],
             mode: 'subscription',
