@@ -19,10 +19,10 @@ exports.secret = "kjsdhgLKJGHDLKJGHkljhlkjhh43iu4h8osioduhfis"
 exports.supabaseAPIKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlemRhcnF0Y2t1amR4bmZ5eG96Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDMwODMxMjYsImV4cCI6MjAxODY1OTEyNn0.yF9fPsBpio--MgH-QpbqHfyFp3z3UO-1MZgWVkoF_WU"
 exports.dropboxAccessToken = "sl.BreX7v7ZN5INnqzES9rbGC-bHLUD52tUEYt8JojoqxvHL4shqYvbRi6-6R0zzc3es1bZ1rGgAcXNdfVJagv1PInfzuM6MhL0gxtUvySq9Gq6ZVCIP-6MR_nt-6Xc-InqZnP5PSNrdLwR"
 exports.FEdomains = [
-    "http://127.0.0.1:5173",
     "http://localhost:5173",
-    "http://127.0.0.1:4173",
     "https://theconfederacy.site",
+    "http://127.0.0.1:5173",
+    "http://127.0.0.1:4173",
 ]
 exports.testTypes ={
     randomWords:"randomWords",

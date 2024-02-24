@@ -17,7 +17,6 @@ import Rating from "@mui/material/Rating";
 
 export default function  BookDetails(){
     // @ts-ignore
-    const stripePromise = loadStripe('pk_test_51OEwwSAPrNaPFyVRyPTVcpxfNfy2RJiSVgl3frnwPgKe2tQZhlOVVz5PCvVN8nqoEyT2HwarufbQcoQzNy1giqkg00bLGKyRr4');
 
     const {id} = useParams()
     const additionalInfos = useRef([])
@@ -143,10 +142,19 @@ export default function  BookDetails(){
             }
         )
     }
+    const buyBook = () =>{
+        request(`stripe/create-checkout-session`,"POST",{bookId:book._id}).subscribe(
+            async (res:any)=>{
+                const stripe = await loadStripe('pk_test_51OEwwSAPrNaPFyVRyPTVcpxfNfy2RJiSVgl3frnwPgKe2tQZhlOVVz5PCvVN8nqoEyT2HwarufbQcoQzNy1giqkg00bLGKyRr4');
+                stripe.redirectToCheckout({ sessionId: res.id })
+            }
+        )
+    }
     const readBtnClickHandler = ()=>{
         navigate(`/main/read/${book._id}/chapterId=${book.firstChapter}`)
 
     }
+
 
 
 
@@ -203,7 +211,7 @@ export default function  BookDetails(){
 
                             {book&&!book.isBookOwnedByUser&&<div className={styles.btns}>
                                 <button onClick={readBtnClickHandler} className={styles.btn}>надникни</button>
-                                {!isFreeBookMode&&<button className={styles.btn}>КУПИ</button>}
+                                {!isFreeBookMode&&<button onClick={buyBook} className={styles.btn}>КУПИ</button>}
                                 {isFreeBookMode&&<button onClick={getBookForFree} className={styles.btn}>ВЗEМИ БЕЗПЛАТНО</button>}
                             </div>}
 

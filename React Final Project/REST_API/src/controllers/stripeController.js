@@ -4,6 +4,7 @@ const utils = require("../utils/utils")
 const bodyParser = require("body-parser");
 const bookManager = require("../managers/bookManager");
 const {isAuth} = require("../utils/authentication");
+const stripeManager = require("../managers/stripeManager");
 
 const stripe = require('stripe')(utils.stripeSecretKey);
 
@@ -15,29 +16,10 @@ router.post('/create-checkout-session',isAuth, async (req, res) => {
         const {_id} = req.user
         const {bookId} = req.body
 
-        const session = await stripe.checkout.sessions.create({
-            mode: 'payment',
-            payment_method_types: ['card'],
-            line_items: [
-                {
-                    price: "price_1OEx4LAPrNaPFyVRASMt7kdw",
-                    // For metered billing, do not pass quantity
-                    quantity: 1,
-                },
-            ],
-                    metadata: {
-                        bookId,
-                        userId:_id
-                    },
-            // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
-            // the actual Session ID is returned in the query parameter when your customer
-            // is redirected to the success page.
-            success_url: `${utils.FEdomains[0]}/main/read`,
-            cancel_url: `${utils.FEdomains[0]}/main/read`,
-        });
+        const session = await stripeManager.createSession(bookId,_id)
 
 
-        res.json({ id: session.id });
+        res.status(200).json({ id: session.id });
 
     }catch (error) {
         console.log(error);
@@ -54,9 +36,9 @@ router.post('/create-checkout-session',isAuth, async (req, res) => {
 router.post("/stripeWebhook",async (req,res)=>{
     try {
         const {type} = req.body
+        console.log(type)
         if(type==="checkout.session.completed"){
             const {bookId,userId} = req.body.data.object.metadata
-            console.log(bookId,userId)
             await bookManager.bookIsPurchased(userId,bookId)
         }
 

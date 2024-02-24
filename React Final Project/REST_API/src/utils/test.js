@@ -21,16 +21,16 @@ const {createClient} = require('@supabase/supabase-js')
 const mongoose = require("mongoose");
 const mongodb = require("mongodb");
 const {translateChapter} = require("../managers/chapterManager");
+const stripeManager = require("../managers/stripeManager");
 const {wordModel} = require("../models/allModels");
 const {translateAPI} = require("./utils");
-const stripe = require('stripe')(utils.stripeSecretKey);
 
 exports.test=async ()=> {
 
     setTodayNews()
     // wordManager.fillDBwithWords()
-    console.log( )
-    // createStripeProducts()
+
+    // await createStripeProductsFromExistingBooks()
 
     setTimeout(()=>{
         // translateChapter()
@@ -91,10 +91,13 @@ exports.test=async ()=> {
     }
 
     async function createStripeProductsFromExistingBooks(){
-        const books = await models.bookModel.find({})
+        const books = (await models.bookModel.find())
+
         for(const book of books) {
-            const product = await createBookStripeProduct()
+            await stripeManager.deleteProduct(book.stripeProductId)
+            const {product,priceId} = await stripeManager.createBookStripeProduct(book)
             book.stripeProductId = product.id
+            book.stripePriceId = priceId
             await book.save()
 
         }

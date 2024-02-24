@@ -23,6 +23,7 @@ const schema = mongoose.Schema({
     resume:String,
     genre:String,
     stripeProductId:String,
+    stripePriceId:String,
     releaseDate:Date,
     rating:{
         type:Number,

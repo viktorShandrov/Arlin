@@ -175,7 +175,7 @@ exports.editBook =async(bookId,bookData,userId)=>{
 }
 exports.bookIsPurchased =async (userId,bookId)=>{
     const book = await models.bookModel.findById(bookId)
-    if(!book.ownedBy.some((el)=>el.equals(userId))){
+    if(!book.ownedBy.some((id)=>id.equals(userId))){
         book.ownedBy.push(userId)
     }
     return book.save()
