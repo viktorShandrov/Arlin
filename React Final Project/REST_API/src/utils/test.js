@@ -24,11 +24,14 @@ const {translateChapter} = require("../managers/chapterManager");
 const stripeManager = require("../managers/stripeManager");
 const {wordModel} = require("../models/allModels");
 const {translateAPI} = require("./utils");
+const {createStripeProduct} = require("../managers/stripeManager");
 
 exports.test=async ()=> {
 
     setTodayNews()
     // wordManager.fillDBwithWords()
+
+    // await createStripeProduct("Абонамент",799,null,"month")
 
     // await createStripeProductsFromExistingBooks()
 

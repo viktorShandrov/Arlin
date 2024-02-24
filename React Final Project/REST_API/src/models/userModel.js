@@ -17,6 +17,11 @@ const schema = mongoose.Schema({
         enum: ["admin", "user"],
         default: "user"
     },
+    plan:{
+        type:String,
+        enum:["none","ultimate"],
+        default:"none"
+    },
     randomWordsTests: {
         type:Number,
         default: 0

@@ -4,20 +4,37 @@ const stripe = require('stripe')(utils.stripeSecretKey);
 
 
 
-exports.createBookStripeProduct = async (book,priceInCents)=>{
+exports.createBookStripeProduct = async (book)=>{
+    return exports.createStripeProduct(
+        book.name,
+        book.priceInCents,
+        book.image
+    )
+}
+
+
+exports.createStripeProduct=async(name,priceInCents,image=null,interval=null)=>{
+
+
     const product = await stripe.products.create({
-        name: book.name,
+        name,
         type: 'service',
-        images: [book.image],
-
+        images: image?[image]:[],
     });
 
-    const price = await stripe.prices.create({
+    const priceData = {
         product: product.id,
-        unit_amount: priceInCents, // Amount in cents
+        unit_amount: priceInCents,
         currency: 'bgn',
-        // No recurring field for one-time purchase
-    });
+    }
+
+    if(interval){
+        priceData.recurring = { // Details for recurring payments
+            interval, // Interval for the recurring payment (e.g., month or year)
+        }
+    }
+
+    const price = await stripe.prices.create(priceData);
 
     await stripe.products.update(product.id, {
         metadata: {
@@ -73,4 +90,41 @@ exports.createSession = async (bookId,userId)=>{
         cancel_url: `${utils.FEdomains[0]}/#/main/AllBooks/${bookId}`,
     });
     return session
+}
+
+
+exports.createSubscription=async(userId)=> {
+
+        // Create a customer
+        const customers = await stripe.customers.list();
+
+        let customer = customers.data.find(cust => cust.metadata.userId === userId)
+        if(!customer){
+            customer = await stripe.customers.create({
+                metadata: {
+                    userId: userId,
+                },
+            });
+        }
+
+
+
+        const session = await stripe.checkout.sessions.create({
+            customer: customer.id,
+            payment_method_types: ['card'],
+            line_items: [{
+                price: "price_1OnJkoAPrNaPFyVRPUQvvQRv",
+                quantity: 1,
+            }],
+            mode: 'subscription',
+            metadata: {
+               userId
+            },
+            success_url: `${utils.FEdomains[0]}/#/main/AllBooks`,
+            cancel_url: `${utils.FEdomains[0]}/#/main/AllBooks`,
+        });
+        return session;
+
+        return subscription;
+
 }

@@ -2,6 +2,7 @@ const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const utils = require("../utils/utils");
 const wordManager = require("./wordManager");
+const {models} = require("mongoose");
 
 
 
@@ -161,4 +162,15 @@ exports.calculateLevel=(exp) => {
     }
     return level
 
+}
+
+exports.userSubscribedEventHandler = async (userId)=>{
+    const user = await userModel.findById(userId)
+    user.plan = "ultimate"
+    return user.save()
+}
+exports.userUnsubscribedEventHandler = async (userId)=>{
+    const user = await userModel.findById(userId)
+    user.plan = "none"
+    return user.save()
 }

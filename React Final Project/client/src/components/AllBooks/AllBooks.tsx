@@ -9,6 +9,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import BookSection from "../BookSection/BookSection";
 import Popup from "../Popup/Popup";
 import {useNavigate} from "react-router-dom";
+import {loadStripe} from "@stripe/stripe-js";
 export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
@@ -164,6 +165,14 @@ export default function AllBooks(){
             }
         )
     }
+    const subscribeBtnClickHandler = () =>{
+        request("stripe/create-subscription-checkout-session",'POST').subscribe(
+            async (res:any)=>{
+                const stripe = await loadStripe('pk_test_51OEwwSAPrNaPFyVRyPTVcpxfNfy2RJiSVgl3frnwPgKe2tQZhlOVVz5PCvVN8nqoEyT2HwarufbQcoQzNy1giqkg00bLGKyRr4');
+                stripe.redirectToCheckout({ sessionId: res.id })
+            }
+        )
+    }
     const ownedFilterClickHandler = ()=>{
             setIsOwnedFilter((oldValue)=>!oldValue)
     }
@@ -234,7 +243,7 @@ export default function AllBooks(){
                                 <div className={styles.noContentInThisSectionC}>
                                     <h5>Няма съдържание за тази секция</h5>
                                     <div className={styles.noContentBtns}>
-                                        <button className={`${styles.noContentBtn} ${styles.subscribeBtn}`}>абонирай се</button>
+                                        <button onClick={subscribeBtnClickHandler}  className={`${styles.noContentBtn} ${styles.subscribeBtn}`}>абонирай се</button>
                                         <button className={`${styles.noContentBtn} ${styles.buyBookBtn}`}>купи книга</button>
                                     </div>
                                 </div>
