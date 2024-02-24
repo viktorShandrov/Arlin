@@ -11,7 +11,7 @@ const {
     uploadBytes,
     getDownloadURL,
 } = require("firebase/storage") ;
-const {createBookStripeProduct} = require("./stripeManager");
+const {createBookStripeProduct, deleteProduct} = require("./stripeManager");
 
 
 exports.getBook =async(bookId,userId)=>{
@@ -183,6 +183,8 @@ exports.bookIsPurchased =async (userId,bookId)=>{
 exports.deleteBook =async(bookId,userId)=>{
    await isAdmin(null,userId)
    await deleteBookChapters(bookId)
+    const book = await models.bookModel.findById(bookId)
+    await deleteProduct(book.stripeProductId)
    return models.bookModel.findByIdAndDelete(bookId)
 }
 async function deleteBookChapters(bookId){

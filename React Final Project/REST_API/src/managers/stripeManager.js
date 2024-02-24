@@ -25,3 +25,18 @@ exports.createBookStripeProduct = async (book)=>{
     });
     return product
 }
+
+
+exports.deleteProduct = async (productId) => {
+    try {
+        const response = await fetch(`https://api.stripe.com/v1/products/${productId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${utils.stripeSecretKey}`,
+            },
+        });
+
+    } catch (error) {
+        console.error('Error deleting product:', error);
+    }
+};
