@@ -95,10 +95,9 @@ export default function MachFourTest(){
         //     old.splice(old.indexOf())
         //     return
         // })
-        request("unknownWords/giveTest","POST",{testType:"matchFour"}).subscribe(
+        request("unknownWords/giveTest","POST",{testType:"matchFourTests"}).subscribe(
              (res:any)=>{
                     setWholeTest(res.test)
-                 // console.log(res.test)
                     setCurrentTest(res.test.slice(0,4))
                     setCurrentTestIndex(0)
 
@@ -232,7 +231,7 @@ export default function MachFourTest(){
 
     return(
     <>
-        {isTestDone&&<TestResume questions={wholeTest.map(question=>question.word)} answers={wholeTest.map(question=>question.translatedText)} testType={"matchFour"} />}
+        {isTestDone&&<TestResume questions={wholeTest.map(question=>question.word)} answers={wholeTest.map(question=>question.translatedText)} testType={"matchFourTests"} />}
         {!isTestDone&& <div ref={testWrapperRef} className={styles.testWrapper}>
             <div className={styles.questionsWrapper}>
 

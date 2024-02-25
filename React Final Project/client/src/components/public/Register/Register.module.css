@@ -99,6 +99,8 @@
 }
 .inputC i {
     color: grey;
+    display: flex;
+    align-items: center;
 }
 .inputC .input {
     flex: 1;
@@ -150,6 +152,25 @@
     font-size: 1.2em;
 }
 
+.uploadImageBtn{
+    display: flex;
+    padding: 10px;
+    width: 96%;
+    border: none;
+    border-radius: 10px;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+    color: white;
+    background-color: #75A9AB;
+}
+.imageInput{
+    transform: translateX(-8000px);
+}
+
+
+
+
 @media (max-width: 1280px) {
     .right img {
         width: 24em;
@@ -164,12 +185,21 @@
     .right {
         display: none;
     }
+    .container{
+        height: 100%;
+    }
 
     .left {
+        text-align: center;
         margin: 0 auto;
+        padding: 0 20px;
     }
 }
-
+@media (max-width: 945px) {
+    .form{
+        gap: 10px;
+    }
+}
 
 
 

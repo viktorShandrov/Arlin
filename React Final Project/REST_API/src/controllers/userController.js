@@ -4,14 +4,18 @@ const userManager = require("../managers/userManager");
 const utils = require("../utils/utils");
 const router = require("express").Router()
 
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 //CRUD
-router.post("/register",async (req,res)=>{
+router.post("/register",upload.single('image'),async (req,res)=>{
     try {
 
-        const {email,password,repeatedPassword} = req.body
-        console.log(req.body)
+        const {username,email,password,repeatedPassword} = req.body
+        const image = req.file;
 
-        const payload = await userManager.register(email,password,repeatedPassword)
+        const payload = await userManager.register(username,email,password,repeatedPassword,image)
 
         res.status(201).json(payload)
     } catch (error) {

@@ -302,6 +302,7 @@ stripe-buy-button{
     background-color: white;
 }
 .popupWrapper{
+    max-width: 900px;
     max-height: 70%;
 }
 

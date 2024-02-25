@@ -102,10 +102,10 @@ export default function Story({chapter,changeChapterClickHandler,isLoading,isRat
                         <div className={styles.testsWrapper}>
                             {!areTestsHidden&&
                                 <>
-                                    <Link to={`/main/test/textWords/${chapter.currentChapter._id}`}>
+                                    <Link to={`/main/test/wordsFromChapterTests/${chapter.currentChapter._id}`}>
                                         <button className={`${styles.btn} ${styles.textWordsTest}`}>тест на думи от текста</button>
                                     </Link>
-                                    <Link to={`/main/test/textQuestions/${chapter.currentChapter._id}`}>
+                                    <Link to={`/main/test/chapterPlotTests/${chapter.currentChapter._id}`}>
                                         <button disabled={!chapter.hasChapterPlotTest} className={`${styles.btn} ${styles.textTest}`}>тест на разбраното от текста</button>
                                     </Link>
                                 </>
@@ -135,13 +135,16 @@ export default function Story({chapter,changeChapterClickHandler,isLoading,isRat
 
             </div>
             {isRatePopUpVisible&&<Popup hidePopup={hideRatePopUp} styleSelector={styles.ratePopupWrapper}>
-                <h5>Оценете книгата</h5>
-                <div className={styles.startsC}>
-                    <Rating value={formValue.bookUserRating} name={"bookUserRating"} onChange={onChange} />
+                <div className={styles.ratePopUpC}>
+                    <h5>Оценете книгата</h5>
+                    <div className={styles.startsC}>
+                        <Rating value={formValue.bookUserRating} name={"bookUserRating"} onChange={onChange} />
+                    </div>
+                    <textarea onChange={onChange} name="rateText" className={styles.rateText} placeholder={"Споделете впечатленията си тук"}/>
+                    <button onClick={saveReviewForBook} defaultValue={0} disabled={!formValue.bookUserRating} className={styles.sendRateBtn}>Запази оценка</button>
                 </div>
-                <textarea onChange={onChange} name="rateText" className={styles.rateText} placeholder={"Споделете впечатленията си тук"}/>
-                <button onClick={saveReviewForBook} defaultValue={0} disabled={!formValue.bookUserRating} className={styles.sendRateBtn}>Запази оценка</button>
-            </Popup> }
+
+                 </Popup> }
         </div>
 
 

@@ -40,38 +40,29 @@ useEffect(()=>{
                         userPayload = {...userPayload,advancementsAchieved:responseData.advancementsAchieved}
                     }
                     // Calculate the new user state outside of the action creator
+                    console.log("responseData.expAdded",(Number(responseData.expAdded)||0))
                     if(responseData.itemAdded||responseData.expAdded){
                         const exp = Number(userPayload.exp) + (Number(responseData.expAdded)||0);
+                        console.log(exp)
+
+                        if(responseData.itemAdded&&!userPayload.inventory){
+                            userPayload.inventory={}
+                        }
                         const newInventory = responseData.itemAdded? {
                             ...userPayload.inventory,
                             [responseData.itemAdded]: (userPayload.inventory[responseData.itemAdded] || 0) + 1
                         }:userPayload.inventory;
+
                         userPayload = {...userPayload, exp, inventory: newInventory }
+                        console.log(userPayload)
                     }
                     if(responseData.info){
                         for (const info of responseData.info) {
                             toast.info(info)
                         }
                     }
+                        dispatch(setUser(userPayload));
 
-                    dispatch(setUser(userPayload));
-
-// Dispatch a plain object action with the calculated values
-
-
-                    // if(user.token&&responseData.expAdded){
-                    //     const exp = Number(user.exp)+Number(responseData.expAdded)
-                    //     if(responseData.itemAdded){
-                    //         const newUser = {...user,exp,inventory:{...user.inventory,[responseData.itemAdded]:user.inventory[responseData.itemAdded]+1}}
-                    //         console.log("newUser1",newUser)
-                    //
-                    //         dispatch(setUser(newUser))
-                    //     }else{
-                    //         const newUser = {...user,exp}
-                    //         console.log("newUser2",newUser)
-                    //         dispatch(setUser(newUser))
-                    //     }
-                    // }
                 }
 
                 return response;

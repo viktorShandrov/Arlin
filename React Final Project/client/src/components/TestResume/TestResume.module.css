@@ -1,4 +1,5 @@
 .testDoneContainer{
+    max-width: 98%;
     display: flex;
     flex-direction: column;
     background-color: #4C6A69;
@@ -7,7 +8,7 @@
     color: white;
     text-align: center;
     height: fit-content;
-    margin: auto 0;
+    margin: auto;
 }
 .rowsC{
     display: flex;

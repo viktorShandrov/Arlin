@@ -28,6 +28,7 @@ export function request(url: string, method?: string, body?: any, headers: any =
             });
             promiseRequest
                 .then((response: any) => {
+                    console.log(window.location.href)
                     if (!response.ok) {
                         response.json().then((errorData: any) => {
                             console.error('Fetch Error:', errorData);

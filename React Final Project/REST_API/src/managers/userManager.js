@@ -2,46 +2,60 @@ const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const utils = require("../utils/utils");
 const wordManager = require("./wordManager");
+const bookManager = require("./bookManager");
 const {models} = require("mongoose");
 
 
 
 
-exports.register = async(email,password,repeatedPassword)=>{
-    if(!email||!password||!repeatedPassword){
-        throw new Error("All fields are required")
+exports.register = async(username,email,password,repeatedPassword,image)=>{
+    if(!username||!email||!password||!repeatedPassword){
+        throw new Error("Всички полета за задължителни")
     }
 
     const user =await userModel.findOne({email})
     if(user){
-        throw new Error("Email already exists!")
+        throw new Error("Потребител със същия имейл вече е ригистриран!")
+    }
+    let imageURL
+    if(image){
+        imageURL = await bookManager.uploadFile("images",image)
     }
 
-    const newUser = await  userModel.create({email,password,repeatedPassword})
+    const userData = {
+        username,
+        email,
+        password,
+        repeatedPassword,
+        inventory:{},
+        imageURL,
+    }
+
+    const newUser = await  userModel.create(userData)
     await wordManager.createWordContainer(newUser,"#a6a600","Неконкретизирани","systemGenerated")
     return exports.login(email,password)
 
 }
 exports.login = async (email,password)=>{
     const user = await userModel.findOne({email});
-    if(!user) throw new Error("Email or password is incorrect.")
+    if(!user) throw new Error("Имейлът или паролата са неправилни.")
     const isPasswordMatching = await bcrypt.compare(password,user.password);
-    if(!isPasswordMatching) throw new Error("Email or password is incorrect.")
+    if(!isPasswordMatching) throw new Error("Имейлът или паролата са неправилни.")
 
     const payload = {
         email,
         _id:user._id,
     }
     const token = await utils.sign(payload,utils.secret)
-    return {
-        token,
-        email,
-        userId:user._id,
-        role:user.role,
-        lastReading:user.lastReading,
-        exp:user.exp,
-        inventory:user.inventory,
-    }
+
+    const userData = user.toObject()
+    delete userData.password
+    userData.token = token
+
+    return {...userData,other:{
+            advancementsInfo: utils.advancements,
+            levelRewards: utils.levelRewards,
+        }}
 
 }
 exports.getUserInfo = async (_id,res)=>{

@@ -61,7 +61,11 @@ const schema = mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    exp:Number,
+    exp:{
+        type:Number,
+        default: 0
+    },
+
     expMultiplier:{
         value:{
             type:Number,

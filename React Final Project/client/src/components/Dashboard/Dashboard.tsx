@@ -9,6 +9,7 @@ import {setUser} from "../../redux/user";
 import {toast} from "react-toastify";
 import {rewardNames} from "../../contants";
 import {useNavigate} from "react-router-dom";
+import NoContentSection from "../NoContentSection/NoContentSection";
 export default function Dashboard(){
     const [userInfo,setUserInfo] = useState({
         randomWordsTests: undefined,
@@ -162,8 +163,8 @@ export default function Dashboard(){
                                 <button className={styles.changeBtn}>ПРОМЕНИ</button>
                             </article>
                             <article className={styles.credential}>
-                                <p className={styles.info}><span>Абонаментен план:</span> {userInfo.plan||"няма активиран"}</p>
-                                <button className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>НАДГРАДИ</button>
+                                <p className={styles.info}><span>Абонаментен план:</span> {(userInfo.plan=="none"?"няма активиран":null)||userInfo.plan||"няма активиран"}</p>
+                                <button onClick={()=>navigate("/main/plans")} className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>НАДГРАДИ</button>
                             </article>
                         </div>
                         <div className={styles.userImageC}>
@@ -222,7 +223,7 @@ export default function Dashboard(){
                 </section>
                 <section id={"inventory"} className={styles.inventoryWrapper}>
                     <h1 className={styles.heading}>Инвентар</h1>
-                    <div className={styles.inventoryC}>
+                    {userInfo.inventory&&<div className={styles.inventoryC}>
                         {Object.entries(userInfo.inventory).length>0&&Object.entries(userInfo.inventory).map(([key,value])=><div className={styles.inventoryItem}>
                                 <div className={styles.imageC}>
                                     <img src={`/public/rewardImages/${key}.png`} alt=""/>
@@ -237,10 +238,11 @@ export default function Dashboard(){
                                 {key==="chest"&&value>0&&<button onClick={openChest} className={styles.useBtn}>отвори</button>}
 
 
-                        </div>
+                            </div>
                         )}
 
-                    </div>
+                    </div>}
+                        {!userInfo.inventory&&<NoContentSection/>}
 
                 </section>
 

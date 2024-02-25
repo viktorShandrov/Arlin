@@ -7,7 +7,7 @@ const userManager = require("../managers/userManager");
 const {isAuth} = require("../utils/authentication");
 const stripeManager = require("../managers/stripeManager");
 
-const stripe = require('stripe')(utils.stripeSecretKey);
+// const stripe = require('stripe')(utils.stripeSecretKey);
 
 
 router.use(bodyParser.raw({ type: 'application/json' }));
@@ -70,12 +70,12 @@ router.post("/stripeWebhook",async (req,res)=>{
                 break;
             case 'customer.subscription.deleted':
                 const customerId = req.body.data.object.customer
-                const customer = await stripe.customers.retrieve(customerId);
+                const customer = await utils.stripe.customers.retrieve(customerId);
                 await userManager.userUnsubscribedEventHandler(customer.metadata.userId)
                 break;
             case 'invoice.payment_failed':
                 const customerId_1 = req.body.data.object.customer
-                const customer_1 = await stripe.customers.retrieve(customerId_1);
+                const customer_1 = await utils.stripe.customers.retrieve(customerId_1);
                 await userManager.userUnsubscribedEventHandler(customer_1.metadata.userId)
                 break;
             case 'invoice.payment_succeeded':

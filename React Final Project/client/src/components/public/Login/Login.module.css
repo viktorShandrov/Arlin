@@ -99,6 +99,8 @@
 }
 .inputC i {
     color: grey;
+    display: flex;
+    align-items: center;
 }
 .inputC .input {
     flex: 1;
@@ -166,7 +168,9 @@
     }
 
     .left {
+        text-align: center;
         margin: 0 auto;
+        padding: 0 20px;
     }
 }
 

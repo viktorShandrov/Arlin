@@ -16,10 +16,10 @@ export default function ReadToolBox({chapter, changeChapterClickHandler}){
             </button>
             {!areTestsHidden&&
                 <>
-                    <Link to={`/main/test/textWords/${chapter.currentChapter._id}`}>
+                    <Link to={`/main/test/wordsFromChapterTests/${chapter.currentChapter._id}`}>
                         <button className={`${styles.btn} ${styles.textWordsTest}`}>тест на думи от текста</button>
                     </Link>
-                    <Link to={`/main/test/textQuestions/${chapter.currentChapter._id}`}>
+                    <Link to={`/main/test/chapterPlotTests/${chapter.currentChapter._id}`}>
                         <button disabled={!chapter.hasChapterPlotTest} className={`${styles.btn} ${styles.textTest}`}>тест на разбраното от текста</button>
                     </Link>
                 </>

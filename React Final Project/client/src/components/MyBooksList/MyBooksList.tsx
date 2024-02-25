@@ -44,7 +44,9 @@ export default function MyBooksList(){
                             bookName:book.name
                         }
                 }))
-                setCurrentReading(allBooks.find((book:any)=>book._id.toString() === user.lastReading.bookId.toString()))
+                if(user.lastReading){
+                    setCurrentReading(allBooks.find((book:any)=>book._id.toString() === user.lastReading.bookId.toString()))
+                }
                 setIsLoading(false)
 
             },
@@ -76,6 +78,7 @@ export default function MyBooksList(){
 
     const navigate = useNavigate()
     const continueReadingHandler=(e:any)=>{
+
         const target = e.currentTarget
         // target.parentElement.textContent = "d"
         // target.classList.add(styles.clicked)
@@ -122,21 +125,17 @@ export default function MyBooksList(){
                         {/*        </div>*/}
                         {/*    </div>*/}
                         {/*</div>*/}
-                        <div className={styles.continueReadingBtnWrapper}>
+                        {currentReading.genre&&<div className={styles.continueReadingBtnWrapper}>
                             <div onClick={continueReadingHandler} className={styles.buttonFundament}>
                                 <div className={styles.btnCore}>
-                                   <h6 className={styles.continueHeading}>{currentReading.name}</h6>
-                                   <h4 className={styles.continueHeading}>продължете четенето</h4>
+                                    <h6 className={styles.continueHeading}>{currentReading.name}</h6>
+                                    <h4 className={styles.continueHeading}>продължете четенето</h4>
                                     <div className={styles.btnCover}>
-
                                     </div>
                                 </div>
-
-
-
                             </div>
+                        </div>}
 
-                        </div>
                         
 
                         <section className={styles.moreOfThisGenreWrapper}>
@@ -160,13 +159,12 @@ export default function MyBooksList(){
                                 </BookSection>
 
                         </section>
-                        <section className={styles.moreOfThisGenreWrapper}>
+                        {currentReading.author&&<section className={styles.moreOfThisGenreWrapper}>
+                            <BookSection books={books.filter((book:any)=>book.author === currentReading.author&&!book.isBookOwnedByUser)} sectionHeader={`Още книги от ${currentReading.author}`} headerColor={"white"}>
+                                <NoContentSection/>
+                            </BookSection>
+                        </section>}
 
-                                <BookSection books={books.filter((book:any)=>book.author === currentReading.author&&!book.isBookOwnedByUser)} sectionHeader={`Още книги от ${currentReading.author}`} headerColor={"white"}>
-                                    <NoContentSection/>
-                                </BookSection>
-
-                        </section>
                         <section className={styles.moreOfThisGenreWrapper}>
                                 <BookSection books={books.filter((book:any)=>!book.isBookOwnedByUser)} sectionHeader={`Може да закупите`} headerColor={"white"}>
                                     <NoContentSection/>

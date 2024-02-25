@@ -8,7 +8,8 @@ exports.auth= async(req,res,next)=>{
         }
         next()
     }catch (error) {
-        res.status(403).json({message:"Invalid token"})
+        // throw new Error("Невалидна сесия")
+        res.status(403).json({message:"Невалидна сесия"})
     }
 }
 exports.isAuth= async(req,res,next)=>{
@@ -16,7 +17,8 @@ exports.isAuth= async(req,res,next)=>{
     if(req.user){
         next()
     }else{
-        res.status(403).json({message:"Forbidden for unauthenticated users"})
+        // throw new Error("Трябва влезете в профила си, за да достъпите ресурса")
+        res.status(403).json({message:"Трябва влезете в профила си, за да достъпите ресурса"})
     }
 
 

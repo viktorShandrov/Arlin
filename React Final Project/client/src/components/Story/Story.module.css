@@ -96,7 +96,7 @@
     align-self: start;
     /*margin-top: 50px;*/
     position: absolute;
-    /*bottom: 0;*/
+    bottom: 0;
     right: 0;
     z-index: 999999;
     font-size: 14px;
@@ -219,6 +219,10 @@
     border: none;
     margin-top: 20px;
     width: 100%;
+}
+.ratePopUpC{
+    display: flex;
+    flex-direction: column;
 }
 @media (max-width: 1200px){
     .testsWrapper{

@@ -1,6 +1,5 @@
 const utils = require("../utils/utils");
 const allModels = require("../models/allModels");
-const stripe = require('stripe')(utils.stripeSecretKey);
 
 
 
@@ -16,7 +15,7 @@ exports.createBookStripeProduct = async (book)=>{
 exports.createStripeProduct=async(name,priceInCents,image=null,interval=null,subscriptionType=null)=>{
 
 
-    const product = await stripe.products.create({
+    const product = await utils.stripe.products.create({
         name,
         type: 'service',
         images: image?[image]:[],
@@ -34,7 +33,7 @@ exports.createStripeProduct=async(name,priceInCents,image=null,interval=null,sub
         }
     }
 
-    const price = await stripe.prices.create(priceData);
+    const price = await utils.stripe.prices.create(priceData);
 
     const productData ={
         metadata: {
@@ -45,7 +44,7 @@ exports.createStripeProduct=async(name,priceInCents,image=null,interval=null,sub
         productData.metadata.subscriptionType = subscriptionType
     }
 
-    await stripe.products.update(product.id, productData);
+    await utils.stripe.products.update(product.id, productData);
     return {
         product,
         priceId:price.id
@@ -55,7 +54,7 @@ exports.createStripeProduct=async(name,priceInCents,image=null,interval=null,sub
 
 exports.deleteProduct = async (productId) => {
     try {
-        const product = await stripe.products.update(productId, {
+        const product = await utils.stripe.products.update(productId, {
             active:false
         });
     } catch (error) {
@@ -65,7 +64,7 @@ exports.deleteProduct = async (productId) => {
 
 exports.getProductById = async (productId)=> {
     try {
-        return await stripe.products.retrieve(productId);
+        return await utils.stripe.products.retrieve(productId);
     } catch (error) {
         console.error('Error retrieving product:', error);
         return null; // Return null if product retrieval fails
@@ -74,7 +73,7 @@ exports.getProductById = async (productId)=> {
 
 exports.createSession = async (bookId,userId)=>{
     const book = await allModels.bookModel.findById(bookId)
-    const session = await stripe.checkout.sessions.create({
+    const session = await utils.stripe.checkout.sessions.create({
         mode: 'payment',
         payment_method_types: ['card'],
         line_items: [
@@ -88,11 +87,11 @@ exports.createSession = async (bookId,userId)=>{
             bookId,
             userId
         },
+        success_url: `${utils.FEdomains[0]}/#/main/AllBooks/${bookId}`,
+        cancel_url: `${utils.FEdomains[0]}/#/main/AllBooks/${bookId}`,
         // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
         // the actual Session ID is returned in the query parameter when your customer
         // is redirected to the success page.
-        success_url: `${utils.FEdomains[0]}/#/main/AllBooks/${bookId}`,
-        cancel_url: `${utils.FEdomains[0]}/#/main/AllBooks/${bookId}`,
     });
     return session
 }
@@ -101,11 +100,11 @@ exports.createSession = async (bookId,userId)=>{
 exports.createSubscription=async(userId,stripeSubscriptionPriceId,subscriptionType)=> {
 
         // Create a customer
-        const customers = await stripe.customers.list();
+        const customers = await utils.stripe.customers.list();
 
         let customer = customers.data.find(cust => cust.metadata.userId === userId)
         if(!customer){
-            customer = await stripe.customers.create({
+            customer = await utils.stripe.customers.create({
                 metadata: {
                     userId: userId,
                 },
@@ -114,7 +113,7 @@ exports.createSubscription=async(userId,stripeSubscriptionPriceId,subscriptionTy
 
 
 
-        const session = await stripe.checkout.sessions.create({
+        const session = await utils.stripe.checkout.sessions.create({
             customer: customer.id,
             payment_method_types: ['card'],
             line_items: [{

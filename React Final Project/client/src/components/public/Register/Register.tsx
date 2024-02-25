@@ -1,4 +1,4 @@
-import { useState} from "react";
+import {useRef, useState} from "react";
 import styles from "./Register.module.css"
 import {Link, useNavigate} from "react-router-dom";
 import {request} from "../../../functions";
@@ -13,10 +13,14 @@ export default function  Register(){
     const navigate =useNavigate()
     const dispatch = useDispatch()
     const [formValues,setFormValues] = useState({
+        username:"",
         email:"",
+        image:"",
         password:"",
         repeatedPassword:"",
     })
+    const [image,setImage] = useState(null)
+    const imageUploadInput =useRef(null)
     const onFormChange=(e:any)=>{
 
         setFormValues(state=>{
@@ -27,31 +31,58 @@ export default function  Register(){
         })
     }
     const onSubmit=()=>{
-        request("users/register","POST",formValues).subscribe(
+        formValues.image = image?image:""
+        const formData = new FormData();
+        for (const key in formValues) {
+            formData.append(key, formValues[key]);
+        }
+        request("users/register","POST",formData,{},true).subscribe(
             (res:any)=>{
                 // localStorage.setItem("user",JSON.stringify(res))
                 if(res){
                     dispatch(setUser(res))
                     localStorage.setItem("token",res.token)
                     // navigate("/main")
-                    navigate(-1)
+                    navigate("/main/hero")
                 }
             }
         )
     }
+
+    const handleImageChange = (event) => {
+        const imageFile = event.target.files[0];
+        setImage(imageFile)
+
+    };
+
+    // Function to trigger file input dialog
+    const handleSelectImageClick = () => {
+        imageUploadInput.current.click();
+    };
 
     return(
         <>
         <div className={styles.container}>
             <div className={styles.left}>
                 <form className={styles.form} >
-                <div className={styles.headingLeft}>
-                    <h1>Create your account</h1>
-                    <p >Unlock all Features!</p>
-                </div>
+                    <div className={styles.headingLeft}>
+                        <h1>Влезте в своя профил</h1>
+                        <p >Отключете всички възможности!</p>
+                    </div>
 
 
-
+                    <div className={styles.inputC}>
+                        <i className="fa-solid fa-user"></i>
+                        <input
+                            className={styles.input}
+                            type="text"
+                            required
+                            name="username"
+                            placeholder="Потребителско име"
+                            value={formValues.username}
+                            onChange={onFormChange}
+                        />
+                    </div>
 
                 <div className={styles.inputC}>
                     <i className="fa-regular fa-envelope"></i>
@@ -61,7 +92,7 @@ export default function  Register(){
                         required
                         // pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
                         name="email"
-                        placeholder="Email"
+                        placeholder="Имейл"
                         value={formValues.email}
                         onChange={onFormChange}
                     />
@@ -74,26 +105,44 @@ export default function  Register(){
                 type="password"
                 required
                 name="password"
-                placeholder="Password"
+                placeholder="Парола"
                 value={formValues.password}
                 onChange={onFormChange}
             />
         </div>
-    <div className={styles.inputC}>
-        <i className="fa-solid fa-key"></i>
-        <input
-            className={styles.input}
-            type="password"
-            required
-            name="repeatedPassword"
-            placeholder="Confirm Password"
-            value={formValues.repeatedPassword}
-            onChange={onFormChange}
-        />
-    </div>
-    <button  className={styles.otherAuthBtn}>
-        <img src={googleImage} alt="google" /> Google
-        </button>
+        <div className={styles.inputC}>
+            <i className="fa-solid fa-key"></i>
+            <input
+                className={styles.input}
+                type="password"
+                required
+                name="repeatedPassword"
+                placeholder="Повторете паролата"
+                value={formValues.repeatedPassword}
+                onChange={onFormChange}
+            />
+        </div>
+
+                        <button type={"button"} onClick={handleSelectImageClick} className={styles.uploadImageBtn}>
+
+                            {!image&&<><i className="fa-solid fa-camera"></i>Избрери снимка</>}
+                            {image&&<><i className="fa-solid fa-check"></i>Избрана успешно</>}
+
+                        </button>
+            <input
+                className={`${styles.input} ${styles.imageInput}`}
+                ref={imageUploadInput}
+                type="file"
+                name="image"
+                placeholder="Снимка"
+                onChange={handleImageChange}
+            />
+        {/*            <div className={styles.inputC}>*/}
+        {/*</div>*/}
+
+    {/*<button  className={styles.otherAuthBtn}>*/}
+    {/*    <img src={googleImage} alt="google" /> Google*/}
+    {/*    </button>*/}
                     {/*<LoginSocialFacebook*/}
                     {/*    appId={facebookAppId}*/}
                     {/*    onReject={()=>{*/}
@@ -129,21 +178,21 @@ export default function  Register(){
             type="checkbox"
             name="rememberMe"
         />
-        <div>Accept <span className={styles.accept}>terms and conditions</span></div>
+        <div>Приемам <span className={styles.accept}>условията за ползване</span></div>
     </div>
 
-    <button className={styles.submitBtn} onClick={onSubmit}  type="button">REGISTER</button>
+    <button className={styles.submitBtn} onClick={onSubmit}  type="button">Регистриране</button>
     <p>
-        You have an account?
-        <Link to={"/user/login"} className={styles.loginLink}>Sign in</Link>
+        Имате съществуващ профил?
+        <Link to={"/user/login"} className={styles.loginLink}>Влезте</Link>
     </p>
 </form>
 </div>
-    <div className={styles.right}>
-        <img src={registerImage} alt="register" />
-        <div className={styles.headingRight}>Connect with any device.</div>
-        <p>Everything you need is an internet connection.</p>
-    </div>
+            <div className={styles.right}>
+                <img src={registerImage} alt="register" />
+                <div className={styles.headingRight}>Свързаност от всяко устройство.</div>
+                <p>Нужна Ви е само интернет свързаност.</p>
+            </div>
 </div>
         </>
     )

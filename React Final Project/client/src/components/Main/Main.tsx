@@ -26,11 +26,17 @@ export default function Main(){
         <>
             <div className={styles.templateWrapper}>
                 <Navigation/>
-                <LevelInfo />
+                    <Routes>
+                        <Route element={<AuthGuard/>}>
+                            <Route path={"*"} element={<LevelInfo />}></Route>
+
+                        </Route>
+                    </Routes>
+
                 <Routes>
                         <Route element={<AuthGuard/>}>
+                            <Route path={"/test/matchFourTests"} element={<MachFourTest />}></Route>
                             <Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>
-                            <Route path={"/test/matchFour"} element={<MachFourTest />}></Route>
                             <Route path={"/tests"} element={<TestsList />}></Route>
                             <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
                             <Route path={"/AllBooks/freeBookMode?"} element={<AllBooks />}></Route>

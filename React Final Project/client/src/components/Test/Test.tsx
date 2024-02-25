@@ -11,7 +11,7 @@ export default function Test(){
     const {testType,chapterId} = useParams()
     const [test,setTest] = useState([])
     const [isLoading,setIsLoading] = useState(true)
-    const [isTestDone,setIsTestDone] = useState(false)
+    const [isTestDone,setIsTestDone] = useState(true)
     const [question,setQuestion] = useState({
         answers:[{answer:"",isCorrect:false}],
         question:""
@@ -60,6 +60,7 @@ export default function Test(){
     useEffect(()=>{
         request("unknownWords/giveTest","POST",{testType,chapterId}).subscribe(
             (res:any)=>{
+                console.log(res.test)
                 setTest(res.test)
                 setQuestion(res.test[0])
                 setIsLoading(false)

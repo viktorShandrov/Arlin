@@ -6,7 +6,7 @@ export default function TestsList(){
         <div className={styles.testListWrapper}>
             <div className={styles.testListC}>
                 <h1>Всички видове тестове</h1>
-                <Link to={"/main/test/randomWords"}>
+                <Link to={"/main/test/randomWordsTests"}>
                     <div className={styles.testC}>
                         <div className={styles.titleAndDescription}>
                             <h4 className={styles.testTitle}>Думи от речника</h4>
@@ -46,7 +46,7 @@ export default function TestsList(){
                         Your browser does not support the video tag.
                     </video>
                 </div>
-                <Link to={"/main/test/matchFour"}>
+                <Link to={"/main/test/matchFourTests"}>
                     <div className={styles.testC}>
                         <div className={styles.titleAndDescription}>
                             <h4 className={styles.testTitle}>Вържи 4 с 4</h4>

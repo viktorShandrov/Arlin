@@ -194,15 +194,15 @@ async function deleteBookChapters(bookId){
         await chapter.delete()
     }
 }
-    const uploadFile =async (bucketName,image) => {
-        if (!image) throw new Error("No image uploaded");
+    exports.uploadFile =async (bucketName,image) => {
+        if (!image) throw new Error("Няма избрана снимка за качване");
 
         const allowedExtensions = {
             'image/jpeg': 'jpg',
             'image/png': 'png',
         };
-        const  fileExtension = allowedExtensions[contentType]
-        if(!fileExtension) throw new Error("File type not supported")
+        const  fileExtension = allowedExtensions[image.mimetype]
+        if(!fileExtension) throw new Error("Типа на снимката трябва да е jpg или png")
 
         // @ts-ignore
         const imageRef = ref(storage, `${bucketName}/${image.originalname + v4()}.${fileExtension}`);
@@ -213,7 +213,7 @@ async function deleteBookChapters(bookId){
 exports.addImageToBook =async(bookId,userId,image)=>{
    await isAdmin(null,userId)
 
-    const imageUrl = await uploadFile("images",image)
+    const imageUrl = await exports.uploadFile("images",image)
 
     const book = await models.bookModel.findById(bookId)
     book.image = imageUrl
