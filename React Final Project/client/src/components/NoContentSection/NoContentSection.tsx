@@ -2,15 +2,12 @@
 import styles from "./NoContentSection.module.css"
 import {request} from "../../functions";
 import {loadStripe} from "@stripe/stripe-js";
+import {useNavigate} from "react-router-dom";
 export default function NoContentSection({isWithBtns=false}){
+    const navigate = useNavigate()
 
     const subscribeBtnClickHandler = () =>{
-        request("stripe/create-subscription-checkout-session",'POST').subscribe(
-            async (res:any)=>{
-                const stripe = await loadStripe('pk_test_51OEwwSAPrNaPFyVRyPTVcpxfNfy2RJiSVgl3frnwPgKe2tQZhlOVVz5PCvVN8nqoEyT2HwarufbQcoQzNy1giqkg00bLGKyRr4');
-                stripe.redirectToCheckout({ sessionId: res.id })
-            }
-        )
+        navigate("/main/plans")
     }
     return(
         <div className={styles.noContentInThisSectionWrapper}>

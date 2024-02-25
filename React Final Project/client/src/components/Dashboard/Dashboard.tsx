@@ -162,7 +162,7 @@ export default function Dashboard(){
                                 <button className={styles.changeBtn}>ПРОМЕНИ</button>
                             </article>
                             <article className={styles.credential}>
-                                <p className={styles.info}><span>Subscription plan:</span> {userInfo.plan||"none"}</p>
+                                <p className={styles.info}><span>Абонаментен план:</span> {userInfo.plan||"няма активиран"}</p>
                                 <button className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>НАДГРАДИ</button>
                             </article>
                         </div>
