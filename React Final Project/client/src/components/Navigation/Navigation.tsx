@@ -123,6 +123,13 @@ export default function Navigation(){
                         <h6 className={styles.navItemLabel}>Планове</h6>
                     </article>
                 </Link>
+                <Link onClick={navigateHandler} to={"/user/login"}  className={styles.linkItem} >
+                    <article className={styles.linkC}>
+                        <div className={styles.imageC}>
+                            <img src="/nav%20icons%20new/exit.png" alt=""/>
+                        </div>
+                    </article>
+                </Link>
 
 
             </section>
