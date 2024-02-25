@@ -7,11 +7,13 @@ import FreeChapter from "./FreeChapter/FreeChapter";
 import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
 import {request} from "../../functions";
 import News from "./News/News";
+import {useNavigate} from "react-router-dom";
 export default function LandingPage(){
     const additionalInfos = useRef([])
     const wrapper = useRef(0)
     const [freeChapters,setFreeChapters] = useState([])
     const [news,setNews] = useState([])
+    const navigate = useNavigate()
     useEffect(()=>{
 // @ts-ignore
         wrapper.current.addEventListener("scroll",()=>{
@@ -113,8 +115,8 @@ export default function LandingPage(){
                     </section>
                     <section className={styles.callToActionBtsWrapper}>
                         <div className={styles.callToActionBtsC}>
-                            <button  className={styles.beginBtn}>КУПИ КНИГА</button>
-                            <button  className={styles.beginBtn}>АБОНИРАЙ СЕ</button>
+                            <button onClick={()=>navigate("/main/AllBooks")}  className={styles.beginBtn}>КУПИ КНИГА</button>
+                            <button onClick={()=>navigate("/main/plans")} className={styles.beginBtn}>АБОНИРАЙ СЕ</button>
                             <button  className={styles.beginBtn}>ОСТАВИ БАКШИШ</button>
                         </div>
                     </section>

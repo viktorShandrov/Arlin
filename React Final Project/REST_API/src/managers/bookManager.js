@@ -73,8 +73,8 @@ exports.getBookForFree = async(userId,bookId)=>{
 
     user.inventory.freeBook--
 
-    if (user.isModified("inventory")) {
         user.markModified("inventory")
+    if (user.isModified("inventory")) {
     }
 
 
@@ -115,6 +115,7 @@ exports.addOrRemoveFromWishlist =async (bookId,userId) =>{
     await book.save()
     return isWishedByUser
 }
+
 exports.likeOrDislikeFeedback =async (bookId,reviewId,userId) =>{
     const book = await models.bookModel.findById(bookId)
     const review = book.reviews.find((review)=>review._id.equals(reviewId))

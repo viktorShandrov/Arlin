@@ -28,6 +28,11 @@ export function request(url: string, method?: string, body?: any, headers: any =
             });
             promiseRequest
                 .then((response: any) => {
+                    // console.log(response.status)
+                    // if(response.status ==403){
+                    //     // window.location.href ="/main"
+                    //
+                    // }
                     console.log(window.location.href)
                     if (!response.ok) {
                         response.json().then((errorData: any) => {

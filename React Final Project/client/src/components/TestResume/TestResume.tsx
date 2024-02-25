@@ -15,8 +15,14 @@ export default function TestResume({questions,answers,testType,wordsIds=null}){
         request("unknownWords/testCompleted","POST",{testType,wordsIds}).subscribe(
             ()=>{
                 navigate("/main/read")
-                
-                dispatch(setUser({...user,[testType]:user[testType]+1}))
+
+                dispatch((dispatch, getState) => {
+                    setTimeout(()=>{
+                        let { user } = getState();
+                        user = user.user
+                        dispatch(setUser({...user,[testType]:user[testType]+1}));
+                    },0)
+                })
                 toast.success("Браво за успеха!")
             }
         )

@@ -147,15 +147,18 @@ exports.updateUserExp =async (plusExp,user,res) =>{
 async function checkIfNewLevel(exp,levelWithOldExp,user,res){
     const levelWithNewExp =  exports.calculateLevel(exp)
     const inventoryItemName = utils.levelRewards[levelWithNewExp]
+    console.log("levelWithNewExp",levelWithNewExp)
+    console.log("inventoryItemName",inventoryItemName)
+    console.log("levelWithOldExp",levelWithOldExp)
     if(levelWithNewExp!==levelWithOldExp&&inventoryItemName){
         if(user.inventory.hasOwnProperty(inventoryItemName)){
             user.inventory[inventoryItemName]+=1
         }else{
-            user.inventory[inventoryItemName] = 0
+            user.inventory[inventoryItemName] = 1
         }
 
-        if (user.isModified("inventory")) {
             user.markModified("inventory");
+        if (user.isModified("inventory")) {
         }
         res.body = {...res.body,itemAdded:inventoryItemName}
         return user.save()

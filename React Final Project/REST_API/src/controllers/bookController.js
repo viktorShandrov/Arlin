@@ -52,16 +52,6 @@ router.get("/all",async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-router.get("/:id",isAuth,async (req,res)=>{
-    try{
-        const {_id} = req.user
-        const bookId = req.params.id
-        const book = await bookManager.getBook(bookId,_id)
-        res.status(200).json({book})
-    } catch (error) {
-        res.status(400).json({message:error.message})
-    }
-})
 router.get("/:id/details",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
@@ -117,6 +107,16 @@ router.get("/:id/addOrRemoveFromWishlist",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/:id/getForFree",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const bookId = req.params.id
+        await bookManager.getBookForFree(_id,bookId)
+        res.status(200).end()
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
 router.get("/:bookId/:reviewId/likeOrDislikeFeedback",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
@@ -126,6 +126,16 @@ router.get("/:bookId/:reviewId/likeOrDislikeFeedback",isAuth,async (req,res)=>{
         res.status(200).json({isLikedByUser})
     } catch (error) {
         console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
+router.get("/:id",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const bookId = req.params.id
+        const book = await bookManager.getBook(bookId,_id)
+        res.status(200).json({book})
+    } catch (error) {
         res.status(400).json({message:error.message})
     }
 })

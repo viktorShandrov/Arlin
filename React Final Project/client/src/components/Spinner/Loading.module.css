@@ -1,4 +1,7 @@
 .spinner{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -6,7 +9,13 @@
     position: fixed !important;
     top: 0;
     left: 0;
-    background-color: rgba(100,100,100,1);
+    background-color: #75A9AB;
     z-index: 99999999999999999999999999999999999999999;
     align-items: center;
+    color:white;
+}
+
+.logo{
+    display: flex;
+    gap: 10px;
 }

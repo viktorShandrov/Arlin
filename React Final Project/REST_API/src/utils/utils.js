@@ -226,7 +226,7 @@ exports.inventoryItems = ["freeBook","chest","expMultiplier"]
 
 exports.levelRewards = {
     "5": "expMultiplier",
-    "6": "expMultiplier",
+    "6": "freeBook",
     "15": "freeBook",
     "20": "chest",
     "25": "expMultiplier",
