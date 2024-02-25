@@ -10,6 +10,7 @@ import BookSection from "../BookSection/BookSection";
 import Popup from "../Popup/Popup";
 import {useNavigate} from "react-router-dom";
 import {loadStripe} from "@stripe/stripe-js";
+import NoContentSection from "../NoContentSection/NoContentSection";
 export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
@@ -165,14 +166,7 @@ export default function AllBooks(){
             }
         )
     }
-    const subscribeBtnClickHandler = () =>{
-        request("stripe/create-subscription-checkout-session",'POST').subscribe(
-            async (res:any)=>{
-                const stripe = await loadStripe('pk_test_51OEwwSAPrNaPFyVRyPTVcpxfNfy2RJiSVgl3frnwPgKe2tQZhlOVVz5PCvVN8nqoEyT2HwarufbQcoQzNy1giqkg00bLGKyRr4');
-                stripe.redirectToCheckout({ sessionId: res.id })
-            }
-        )
-    }
+
     const ownedFilterClickHandler = ()=>{
             setIsOwnedFilter((oldValue)=>!oldValue)
     }
@@ -239,38 +233,18 @@ export default function AllBooks(){
 
                     {/*books.filter((book:any)=>book.isBookOwnedByUser)*/}
                         <BookSection books={[]} sectionHeader={"Мои книги"}>
-                            <div className={styles.noContentInThisSectionWrapper}>
-                                <div className={styles.noContentInThisSectionC}>
-                                    <h5>Няма съдържание за тази секция</h5>
-                                    <div className={styles.noContentBtns}>
-                                        <button onClick={subscribeBtnClickHandler}  className={`${styles.noContentBtn} ${styles.subscribeBtn}`}>абонирай се</button>
-                                        <button className={`${styles.noContentBtn} ${styles.buyBookBtn}`}>купи книга</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <NoContentSection isWithBtns={true}/>
                         </BookSection>
 
                         <BookSection books={books.filter((book:any)=>book.isRecommended&&!book.isBookOwnedByUser)} sectionHeader={"Препоръчани"}>
-                            <div className={styles.noContentInThisSectionWrapper}>
-                                <div className={styles.noContentInThisSectionC}>
-                                    <h5>Няма съдържание за тази секция</h5>
-                                </div>
-                            </div>
+                            <NoContentSection/>
                         </BookSection>
 
                         <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(user.userId)&&!book.isBookOwnedByUser)} sectionHeader={"В списъка с желания"}>
-                            <div className={styles.noContentInThisSectionWrapper}>
-                                <div className={styles.noContentInThisSectionC}>
-                                    <h5>Няма съдържание за тази секция</h5>
-                                </div>
-                            </div>
+                            <NoContentSection/>
                         </BookSection>
                         <BookSection books={books.filter((book:any)=>!book.isBookOwnedByUser)} sectionHeader={"Всички книги, които нямате"}>
-                            <div className={styles.noContentInThisSectionWrapper}>
-                                <div className={styles.noContentInThisSectionC}>
-                                    <h5>Имате всички книги</h5>
-                                </div>
-                            </div>
+                            <NoContentSection/>
                         </BookSection>
 
                     <BookSection books={books} sectionHeader={"Абсолютно всички книги"}/>

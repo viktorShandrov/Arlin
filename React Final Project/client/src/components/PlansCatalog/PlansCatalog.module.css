@@ -4,6 +4,7 @@
     height: 100%;
     display: flex;
     align-items: center;
+    overflow-y: auto;
 }
 .plansC{
     flex: 1;
@@ -138,4 +139,49 @@
     padding: 10px 40px;
     border: none;
     border-radius: 20px;
+}
+@media (max-width: 1150px){
+    .plansC{
+        gap: 10px;
+        padding: 50px 20px;
+    }
+    .secondaryInfo{
+        width: 90%;
+    }
+}
+
+@media (max-width: 1050px){
+    .plansWrapper{
+        align-items: start;
+    }
+    .plansC{
+        flex-direction: column;
+        align-items: center;
+    }
+    .planWrapper{
+        width: 50%;
+    }
+    .planWrapper:nth-child(2){
+        transform: translateY(0);
+    }
+}
+
+
+@media (max-width: 750px){
+    .planWrapper{
+        width: 70%;
+    }
+}
+@media (max-width: 600px){
+    .planWrapper{
+        width: 90%;
+    }
+}
+@media (max-width: 500px){
+    .plansC{
+        padding: 50px 10px;
+    }
+    .planWrapper{
+        width: 100%;
+    }
 }
