@@ -36,7 +36,14 @@ export default function  Login(){
         request("users/login","POST",formValues).subscribe(
             (res:any)=>{
                 if(res){
-                    dispatch(setUser(res))
+                    dispatch((dispatch, getState) => {
+                        setTimeout(async()=>{
+                            let { user } = getState();
+                            user = user.user
+                            dispatch(setUser({...res}));
+                        },0)
+                    })
+                    // dispatch(setUser(res))
                     localStorage.setItem("token",res.token)
                     navigate("/main/hero")
                     // navigate(-1)

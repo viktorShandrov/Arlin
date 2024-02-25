@@ -81,8 +81,10 @@ export default function LevelInfo(){
         levelInfoWrapperRef.current.style.top="-100%"
     }
     const showPopup = ()=>{
+        if(levelInfoWrapperRef.current){
         // @ts-ignore
-        levelInfoWrapperRef.current.style.top="0"
+            levelInfoWrapperRef.current.style.top="0"
+        }
         setTimeout(()=>{
             hidePopup()
         },5000)
@@ -128,7 +130,7 @@ export default function LevelInfo(){
 
 
 
-
+    if(!user.expMultiplier) return null
 
 
 

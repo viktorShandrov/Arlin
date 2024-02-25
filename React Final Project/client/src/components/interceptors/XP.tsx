@@ -30,41 +30,48 @@ useEffect(()=>{
 
                 const contentType = clonedResponse.headers.get('Content-Type');
                 if (contentType && contentType.includes('application/json')) {
-                    const responseData = await clonedResponse.json();
 
-                    // console.log("responseData.itemAdded:", responseData.itemAdded);
-                    // console.log("user.token:", user.token);
-                    let userPayload = {...user}
+                    dispatch((dispatch, getState) => {
+                        setTimeout(async()=>{
+                            let { user } = getState();
+                            user = user.user
+                            const data = await newUserData(user)
+                            dispatch(setUser(data));
+                        },0)
+                    })
 
-                    if(responseData.advancementsAchieved){
-                        userPayload = {...userPayload,advancementsAchieved:responseData.advancementsAchieved}
-                    }
-                    // Calculate the new user state outside of the action creator
-                    console.log("responseData.expAdded",(Number(responseData.expAdded)||0))
-                    if(responseData.itemAdded||responseData.expAdded){
-                        const exp = Number(userPayload.exp) + (Number(responseData.expAdded)||0);
-                        console.log(exp)
+                   async function newUserData(trueUser){
+                        const responseData = await clonedResponse.json();
 
-                        if(responseData.itemAdded&&!userPayload.inventory){
-                            userPayload.inventory={}
+                        // console.log("responseData.itemAdded:", responseData.itemAdded);
+                        // console.log("user.token:", user.token);
+                        let userPayload = {...trueUser}
+
+                        if(responseData.advancementsAchieved){
+                            userPayload = {...userPayload,advancementsAchieved:responseData.advancementsAchieved}
                         }
-                        const newInventory = responseData.itemAdded? {
-                            ...userPayload.inventory,
-                            [responseData.itemAdded]: (userPayload.inventory[responseData.itemAdded] || 0) + 1
-                        }:userPayload.inventory;
+                        // Calculate the new user state outside of the action creator
+                        if(responseData.itemAdded||responseData.expAdded){
+                            const exp = Number(userPayload.exp) + (Number(responseData.expAdded)||0);
 
-                        userPayload = {...userPayload, exp, inventory: newInventory }
-                        console.log(userPayload)
-                    }
-                    if(responseData.info){
-                        for (const info of responseData.info) {
-                            toast.info(info)
+                            if(responseData.itemAdded&&!userPayload.inventory){
+                                userPayload.inventory={}
+                            }
+                            const newInventory = responseData.itemAdded? {
+                                ...userPayload.inventory,
+                                [responseData.itemAdded]: (userPayload.inventory[responseData.itemAdded] || 0) + 1
+                            }:userPayload.inventory;
+
+                            userPayload = {...userPayload, exp, inventory: newInventory }
                         }
+                        if(responseData.info){
+                            for (const info of responseData.info) {
+                                toast.info(info)
+                            }
+                        }
+                        return userPayload
                     }
-                        dispatch(setUser(userPayload));
-
                 }
-
                 return response;
             })
             .catch(error => {
