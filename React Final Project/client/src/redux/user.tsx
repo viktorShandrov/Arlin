@@ -1,17 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
-import {REST_API} from "../contants";
+
 
 
 
 export const counterSlice = createSlice({
     name: 'user',
     initialState:{
-        user:await getDataFromServer()
+        user:null
     },
     reducers: {
         setUser(state,action){
             state.user = action.payload
-        }
+        },
+        setInitialData: (state, action) => {
+            //@ts-ignore
+            state.data = action.payload;
+        },
     },
 })
 // function getDataFromLocalStorage(){
@@ -21,17 +25,9 @@ export const counterSlice = createSlice({
 //     }
 //     return {}
 // }
-async function getDataFromServer(){
-    const token = localStorage.getItem("token")
-    if(token){
-        const userData = await(await fetch(`${REST_API}users/userInfo`,{headers:{Authorization:token}})).json()
-        return {...userData,token,userId:userData._id}
-    }else{
-        return null
-    }
-}
+
 
 // Action creators are generated for each case reducer function
-export const { setUser } = counterSlice.actions
+export const { setUser,setInitialData } = counterSlice.actions
 
 export default counterSlice.reducer
