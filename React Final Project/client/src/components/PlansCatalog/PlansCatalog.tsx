@@ -36,9 +36,9 @@ export default function PlansCatalog(){
         )
     }
     const images =[
-        "../../../public/rewardImages/freeBook.png",
-        "../../../public/rewardImages/expMultiplier.png",
-        "../../../public/rewardImages/chest.png",
+        "/public/rewardImages/freeBook.png",
+        "/public/rewardImages/expMultiplier.png",
+        "/public/rewardImages/chest.png",
     ]
 
 
