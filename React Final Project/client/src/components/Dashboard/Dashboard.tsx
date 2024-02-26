@@ -212,7 +212,7 @@ export default function Dashboard(){
                         {showedAdvancements.length>0&&showedAdvancements.map((adv:any)=>{
                             return <div className={styles.advancementC}>
                                 <div className={styles.advImageCLocked}>
-                                    <img src={`/public/advancementsIcons/${adv.type}.png`} alt=""/>
+                                    <img src={`/advancementsIcons/${adv.type}.png`} alt=""/>
                                     {adv.isLocked&&<div className={styles.lockC}>
                                         <i className={`${styles.lock} fa-solid fa-lock`}></i>
                                     </div>}
@@ -232,7 +232,7 @@ export default function Dashboard(){
                     {userInfo.inventory&&<div className={styles.inventoryC}>
                         {Object.entries(userInfo.inventory).length>0&&Object.entries(userInfo.inventory).map(([key,value])=><div className={styles.inventoryItem}>
                                 <div className={styles.imageC}>
-                                    <img src={`/public/rewardImages/${key}.png`} alt=""/>
+                                    <img src={`/rewardImages/${key}.png`} alt=""/>
                                     <div className={styles.count}>
                                         {/*//@ts-ignore*/}
                                         {value}

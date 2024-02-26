@@ -54,7 +54,7 @@ export default function TrophyRoad(){
                     {rewardLevels.length>0&&rewardLevels.map((level:any)=><div data-isuserlevel={level.isUserLevel} className={styles.levelC}>
                             <h5 className={styles.levelName}>Ниво {level.level}</h5>
                             {level.isUserLevel&&<h5>текущо ниво</h5>}
-                            {!level.isUserLevel&&<img src={`/public/rewardImages/${level.rewardName}.png`} alt=""/>}
+                            {!level.isUserLevel&&<img src={`/rewardImages/${level.rewardName}.png`} alt=""/>}
 
                         </div>
                     )}

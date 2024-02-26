@@ -186,7 +186,7 @@ export default function LevelInfo(){
                         <h3>Честито</h3>
                         <h4>спечелихте награда</h4>
                         <div className={styles.rewardPicC}>
-                            <img src={`/public/rewardImages/${reward}.png`} alt=""/>
+                            <img src={`/rewardImages/${reward}.png`} alt=""/>
                         </div>
                         {/*//@ts-ignore*/}
                         <h3 className={styles.rewardName}>{rewardNames[reward]}</h3>
@@ -210,7 +210,7 @@ export default function LevelInfo(){
                         <h4>отключихте постижение</h4>
                         <div className={styles.rewardPicC}>
                             {/*//@ts-ignore*/}
-                            <img src={`/public/advancementsIcons/${advancementAchievedInfo.type}.png`} alt=""/>
+                            <img src={`/advancementsIcons/${advancementAchievedInfo.type}.png`} alt=""/>
                         </div>
                         {/*//@ts-ignore*/}
                         <h3 className={styles.rewardName}>"{advancementAchievedInfo.name}"</h3>

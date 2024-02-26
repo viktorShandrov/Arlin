@@ -16,7 +16,7 @@ export default function TestsList(){
                             </p>
                         </div>
                         <video className={styles.testVideo}  autoPlay muted loop>
-                            <source src="../../../public/videos/randomWordsTest.mp4" type="video/mp4" />
+                            <source src="/videos/randomWordsTest.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                     </div>
@@ -30,7 +30,7 @@ export default function TestsList(){
                         </p>
                     </div>
                     <video className={styles.testVideo}   autoPlay muted loop>
-                        <source src="../../../public/videos/randomWordsTest.mp4" type="video/mp4" />
+                        <source src="/videos/randomWordsTest.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -42,7 +42,7 @@ export default function TestsList(){
                         </p>
                     </div>
                     <video className={styles.testVideo}   autoPlay muted loop>
-                        <source src="../../../public/videos/textQuestionsTest.mp4" type="video/mp4" />
+                        <source src="/videos/textQuestionsTest.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -55,7 +55,7 @@ export default function TestsList(){
                             </p>
                         </div>
                         <video className={styles.testVideo}  autoPlay muted loop>
-                            <source src="../../../public/videos/matchFourTest.mp4" type="video/mp4" />
+                            <source src="/videos/matchFourTest.mp4" type="video/mp4" />
                             Your browser does not support the video tag.
                         </video>
                     </div>

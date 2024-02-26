@@ -186,7 +186,7 @@ export default function  BookDetails(){
 
                     <section className={styles.bookImageAndResume}>
                         <article className={styles.image}>
-                            <img src={book.image||"../../../public/chapter.jpg"} alt=""/>
+                            <img src={book.image||"/chapter.jpg"} alt=""/>
                             <div className={styles.adminBtnsC}>
                                 {/*<button onClick={()=>navigate(`/admin/addBook/${book._id}`)}  className={styles.adminBtn}>Редактирай</button>*/}
                                 {/*<button onClick={toggleDeleteDialog} className={styles.adminBtn}>Изтрий</button>*/}
