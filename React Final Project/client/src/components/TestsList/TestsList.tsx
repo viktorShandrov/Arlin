@@ -5,7 +5,7 @@ export default function TestsList(){
     return(
         <div className={styles.testListWrapper}>
             <div className={styles.testListC}>
-                <h1>Всички видове тестове</h1>
+                <h1 className={styles.TestCheading}>Всички видове тестове</h1>
                 <Link to={"/main/test/randomWordsTests"}>
                     <div className={styles.testC}>
                         <div className={styles.titleAndDescription}>

@@ -6,6 +6,9 @@
     padding: 50px 0;
     overflow-y: auto;
 }
+.TestCheading{
+    text-align: center;
+}
 .testListC{
     max-width: 680px;
     width: 50%;
