@@ -7,8 +7,8 @@ export default function Loading(){
     return(
         <div className={styles.spinner}>
             <div className={styles.logo}>
-                <img src="../../../public/logo/logo.png" alt=""/>
-                <img src="../../../public/logo/name.png" alt=""/>
+                <img src="/logo/logo.png" alt=""/>
+                <img src="/logo/name.png" alt=""/>
             </div>
 
 
