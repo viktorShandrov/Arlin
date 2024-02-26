@@ -4,7 +4,6 @@ import styles from "./TranslationContainer.module.css";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {request} from "../../functions";
 import ComponentLoading from "../ComponentLoading/ComponentLoading";
-import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
 import Popup from "../Popup/Popup";
 import CreateWordContainer from "../CreateWordContainer/CreateWordContainer";
 
@@ -97,6 +96,7 @@ export default function TranslationContainer() {
             // }
             request("unknownWords/create", "POST", { words:clickedWords.filter((word:any)=>!word.isSaved)} ).subscribe(
                 () => {
+                    {/*//@ts-ignore*/}
                     setClickedWords((previous:any)=>{
                         return [...previous.map((word:any)=>{return {...word,isSaved:true}})]
                     })
@@ -159,6 +159,7 @@ export default function TranslationContainer() {
                                 <span
                                     style={
                                         {
+                                            /*//@ts-ignore*/
                                             backgroundColor:clickedWords.find((word:any)=>word.text===el)?.colorCode
                                         }
                                     }
@@ -174,6 +175,7 @@ export default function TranslationContainer() {
                             );
                         })}
                     </p>
+                    {/*//@ts-ignore*/}
                     {clickedWords.some((el) => !el.isSaved) && (
                         <button onClick={saveWordsClickHandler} className={styles.saveWords}>
                             Запази думи

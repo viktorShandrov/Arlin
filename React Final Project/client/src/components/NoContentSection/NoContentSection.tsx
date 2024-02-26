@@ -1,7 +1,5 @@
 
 import styles from "./NoContentSection.module.css"
-import {request} from "../../functions";
-import {loadStripe} from "@stripe/stripe-js";
 import {useNavigate} from "react-router-dom";
 export default function NoContentSection({isWithBtns=false}){
     const navigate = useNavigate()

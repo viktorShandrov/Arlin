@@ -55,7 +55,9 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,isMobile
 
     const handleMobileClick = () =>{
         if(isMobile&&targetContainer){
+            {/*//@ts-ignore*/}
             targetContainer.current.textContent =""
+            {/*//@ts-ignore*/}
             const questionText = targetContainer.current.parentElement.textContent
             // console.log(questionText)
             // targetContainer.current.innerHTML = ""
@@ -65,6 +67,7 @@ export default function AnswerC({dragOverElRefs,text,setPairs,reference,isMobile
                 }
 
             })
+            {/*//@ts-ignore*/}
             hidePopup()
         }
     }

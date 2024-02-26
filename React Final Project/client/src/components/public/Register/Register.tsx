@@ -4,7 +4,6 @@ import {Link, useNavigate} from "react-router-dom";
 import {request} from "../../../functions";
 import {setUser} from "../../../redux/user";
 import {useDispatch} from "react-redux";
-import googleImage from "../../../../public/google.png"
 import registerImage from "../../../../public/register.png"
 
 export default function  Register(){
@@ -34,12 +33,14 @@ export default function  Register(){
         formValues.image = image?image:""
         const formData = new FormData();
         for (const key in formValues) {
+            {/*//@ts-ignore*/}
             formData.append(key, formValues[key]);
         }
         request("users/register","POST",formData,{},true).subscribe(
             (res:any)=>{
                 // localStorage.setItem("user",JSON.stringify(res))
                 if(res){
+                    {/*//@ts-ignore*/}
                     dispatch((dispatch, getState) => {
                         setTimeout(async()=>{
                             dispatch(setUser(res));
@@ -55,7 +56,7 @@ export default function  Register(){
         )
     }
 
-    const handleImageChange = (event) => {
+    const handleImageChange = (event:any) => {
         const imageFile = event.target.files[0];
         setImage(imageFile)
 
@@ -63,6 +64,7 @@ export default function  Register(){
 
     // Function to trigger file input dialog
     const handleSelectImageClick = () => {
+        {/*//@ts-ignore*/}
         imageUploadInput.current.click();
     };
 

@@ -4,7 +4,6 @@ import {useEffect, useRef, useState} from "react";
 import AnswerC from "./AnswerC/AnswerC";
 import {request} from "../../functions";
 import TestResume from "../TestResume/TestResume";
-import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
 import Popup from "../Popup/Popup";
 export default function MachFourTest(){
     const dragOverElRef1= useRef(null)
@@ -109,6 +108,7 @@ export default function MachFourTest(){
         if(isMobileDevice){
             for (const dragOverElRef of dragOverElRefs) {
                 const html = `Изберете дума <div class="${styles.growSpinner} spinner-grow" role="status"><span className="sr-only">Loading...</span></div>`;
+                {/*//@ts-ignore*/}
                 dragOverElRef.current.innerHTML = html;
 
 
@@ -144,15 +144,18 @@ export default function MachFourTest(){
         // @ts-ignore
         const answers = shuffleArray(currentTest.map((question:any)=>question.translatedText))
         // console.log(answers)
+        {/*//@ts-ignore*/}
         setAnswers(answers)
         if(currentTestIndex>0){
             if(mobileAnswerElRefs.some(el=>el.current)){
                 for (const answerRef of mobileAnswerElRefs) {
+                    {/*//@ts-ignore*/}
                     answerRef.current!.style.opacity = 1
                 }
             }
             if(answerElRefs.some(el=>el.current)){
                 for (const answerRef of answerElRefs) {
+                    {/*//@ts-ignore*/}
                     answerRef.current!.style.opacity = 1
                 }
             }
@@ -170,14 +173,14 @@ export default function MachFourTest(){
 
 
 
-    const toggleAnswersShadowingCclickHandler=(e:any)=>{
-        if(!e.target.classList.contains("fa-solid")&&!e.target.classList.contains(styles.expandIcon)){
-            setAreAnswersShadowed(!areAnswersShadowed)
-        }
-    }
-    const toggleAnswersExpandableCclickHandler=()=>{
-        setAreAnswersExpanded(!areAnswersExpanded)
-    }
+    // const toggleAnswersShadowingCclickHandler=(e:any)=>{
+    //     if(!e.target.classList.contains("fa-solid")&&!e.target.classList.contains(styles.expandIcon)){
+    //         setAreAnswersShadowed(!areAnswersShadowed)
+    //     }
+    // }
+    // const toggleAnswersExpandableCclickHandler=()=>{
+    //     setAreAnswersExpanded(!areAnswersExpanded)
+    // }
 
     const checkAnswersClickHandler = () =>{
         let rightAnswersCount = 0
@@ -206,10 +209,12 @@ export default function MachFourTest(){
         if(currentTestIndex===2){
             setIsTestDone(true)
         }else{
+            {/*//@ts-ignore*/}
             testWrapperRef.current!.style.opacity = 0
             setTimeout(()=>{
                 setCurrentTestIndex(old=>++old)
                 setCurrentTest(wholeTest.slice((currentTestIndex+1)*4,(currentTestIndex+1)*4+4))
+                {/*//@ts-ignore*/}
                 testWrapperRef.current!.style.opacity = 1
             },1000)
         }
@@ -231,6 +236,7 @@ export default function MachFourTest(){
 
     return(
     <>
+        {/*//@ts-ignore*/}
         {isTestDone&&<TestResume questions={wholeTest.map(question=>question.word)} answers={wholeTest.map(question=>question.translatedText)} testType={"matchFourTests"} />}
         {!isTestDone&& <div ref={testWrapperRef} className={styles.testWrapper}>
             <div className={styles.questionsWrapper}>
@@ -240,9 +246,12 @@ export default function MachFourTest(){
 
                         <h6>{question.word}</h6>
                             {/*{!(pairs[question.word])?"Изберете дума":""}*/}
+                        {/*//@ts-ignore*/}
                         <div data-isEmpty={!!pairs[question.word]} onClick={()=>showAnswersPopup(dragOverElRefs[index])} ref={dragOverElRefs[index]} className={styles.questionFreeSpace}>
+                            {/*//@ts-ignore*/}
                             {pairs[question.word] && (
                                 <div onClick={() => removeAnswerClickHandler(question.word)} className={styles.innerAnswerC}>
+                                    {/*//@ts-ignore*/}
                                     {pairs[question.word]}
                                     <i className={`${styles.xmark} fa-solid fa-xmark`}></i>
                                 </div>

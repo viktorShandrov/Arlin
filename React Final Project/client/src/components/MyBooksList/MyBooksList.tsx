@@ -1,11 +1,14 @@
 
 import styles from "./MyBooksList.module.css"
+{/*//@ts-ignore*/}
 import ContinueBookElement from "../Read/ContinueBookElement/BookElement";
 import {useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {request} from "../../functions";
+{/*//@ts-ignore*/}
 import BookElement from "../AllBooks/BookElement/BookElement";
 import SearchBar from "../SearchBar/SearchBar";
+{/*//@ts-ignore*/}
 import {Link, useNavigate} from "react-router-dom";
 import BookSection from "../BookSection/BookSection";
 import Loading from "../Spinner/Loading";
@@ -24,6 +27,7 @@ export default function MyBooksList(){
     const [currentReading,setCurrentReading] = useState({
         genre:"",
         author:"",
+        name:"",
 
     })
     const fetchAllBooks = ()=>{
@@ -79,6 +83,7 @@ export default function MyBooksList(){
     const navigate = useNavigate()
     const continueReadingHandler=(e:any)=>{
 
+        {/*//@ts-ignore*/}
         const target = e.currentTarget
         // target.parentElement.textContent = "d"
         // target.classList.add(styles.clicked)
@@ -155,18 +160,21 @@ export default function MyBooksList(){
                         </section>
                         <section className={styles.moreOfThisGenreWrapper}>
                                 <BookSection books={books.filter((book:any)=>book.genre === currentReading.genre&&!book.isBookOwnedByUser)} sectionHeader={"Може да харесате"} headerColor={"white"}>
+                                    {/*//@ts-ignore*/}
                                     <NoContentSection/>
                                 </BookSection>
 
                         </section>
                         {currentReading.author&&<section className={styles.moreOfThisGenreWrapper}>
                             <BookSection books={books.filter((book:any)=>book.author === currentReading.author&&!book.isBookOwnedByUser)} sectionHeader={`Още книги от ${currentReading.author}`} headerColor={"white"}>
+                                {/*//@ts-ignore*/}
                                 <NoContentSection/>
                             </BookSection>
                         </section>}
 
                         <section className={styles.moreOfThisGenreWrapper}>
                                 <BookSection books={books.filter((book:any)=>!book.isBookOwnedByUser)} sectionHeader={`Може да закупите`} headerColor={"white"}>
+                                    {/*//@ts-ignore*/}
                                     <NoContentSection/>
                                 </BookSection>
                         </section>

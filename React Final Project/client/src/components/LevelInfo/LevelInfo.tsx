@@ -3,10 +3,12 @@ import styles from "./LevelInfo.module.css"
 import {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+//@ts-ignore
 import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
 import {rewardNames} from "../../contants";
 import {calculateLevel} from "../../functions";
 import Popup from "../Popup/Popup";
+//@ts-ignore
 import {setUser} from "../../redux/user";
 export default function LevelInfo(){
     const {user} = useSelector((state:any)=>state.user)
@@ -15,10 +17,13 @@ export default function LevelInfo(){
     const [userCurrentLevel,setUserCurrentLevel] = useState(0)
     const [isRewardPopupVisible,setIsRewardPopupVisible] = useState(false)
     const [reward,setReward] = useState("")
+    //@ts-ignore
     const [userInventory,setUserInventory] = useState(null)
+    //@ts-ignore
     const [userAdvancementsAchieved,setUserAdvancementsAchieved] = useState(null)
     const [advancementAchievedInfo,setAdvancementAchievedInfo] = useState(null)
     const navigate = useNavigate()
+    //@ts-ignore
     const dispatch = useDispatch()
 
     // const [exp,setExp] = useState(0)
@@ -38,6 +43,7 @@ export default function LevelInfo(){
                 for (const [key,value] of Object.entries(user.inventory)) {
                     // console.log("old",old[key])
                     // console.log("new",value)
+                    //@ts-ignore
                     if(value>old[key]){
                         console.log("showing reward")
                         showRewardPopup(key)
@@ -182,6 +188,7 @@ export default function LevelInfo(){
                         <div className={styles.rewardPicC}>
                             <img src={`/public/rewardImages/${reward}.png`} alt=""/>
                         </div>
+                        {/*//@ts-ignore*/}
                         <h3 className={styles.rewardName}>{rewardNames[reward]}</h3>
                         <div className={styles.btnsC}>
                             <button onClick={navigateToInventory}>виж инвентар</button>
@@ -202,8 +209,10 @@ export default function LevelInfo(){
                         <h3>Честито</h3>
                         <h4>отключихте постижение</h4>
                         <div className={styles.rewardPicC}>
+                            {/*//@ts-ignore*/}
                             <img src={`/public/advancementsIcons/${advancementAchievedInfo.type}.png`} alt=""/>
                         </div>
+                        {/*//@ts-ignore*/}
                         <h3 className={styles.rewardName}>"{advancementAchievedInfo.name}"</h3>
                         <div className={styles.btnsC}>
                             <button onClick={closeAdvancementPopup}>супер</button>

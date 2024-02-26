@@ -13,6 +13,7 @@ export default function DashboardStat({name,testValue}:any){
                 const duration = 3000; // Animation duration in milliseconds
                 const startValue = 0; // Initial value
                 const endValue = testValue; // Final value
+            {/*//@ts-ignore*/}
                 const easing = t => t * (2 - t); // Easing function (ease out)
 
                 const elapsed = Math.min(currentTime - startTime, duration);

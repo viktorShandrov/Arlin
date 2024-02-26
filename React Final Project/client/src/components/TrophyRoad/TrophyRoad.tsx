@@ -12,6 +12,7 @@ export default function TrophyRoad(){
         const rewardLevels = Object.entries(user.other.levelRewards).map(([level,rewardName])=> {
             return {level:Number(level),rewardName}
         })
+        {/*//@ts-ignore*/}
         setRewardLevels(rewardLevels)
         const currentUserLevel = calculateLevel(user.exp)
         for (let i =0;i<rewardLevels.length;i++){
@@ -19,15 +20,19 @@ export default function TrophyRoad(){
 
             const currentLevel = rewardLevels[i].level
             if(currentUserLevel===currentLevel){
+                {/*//@ts-ignore*/}
                 rewardLevels.splice(i,1,{level:currentUserLevel,isUserLevel:true})
                 break
             }else if(currentUserLevel<Math.min(...rewardLevels.map((el)=>el.level))){
+                {/*//@ts-ignore*/}
                 rewardLevels.unshift({level:currentUserLevel,isUserLevel:true})
                 break
             }else if(currentUserLevel>previousLevel&&currentUserLevel<currentLevel){
+                {/*//@ts-ignore*/}
                 rewardLevels.splice(i,0,{level:currentUserLevel,isUserLevel:true})
                 break
             }else if(currentUserLevel>Math.max(...rewardLevels.map((el)=>el.level))){
+                {/*//@ts-ignore*/}
                 rewardLevels.push({level:currentUserLevel,isUserLevel:true})
                 break
             }

@@ -3,19 +3,19 @@ import styles from "./TestResume.module.css"
 import {request} from "../../functions";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {setUser} from "../../redux/user";
 // @ts-ignore
 export default function TestResume({questions,answers,testType,wordsIds=null}){
     const navigate = useNavigate()
-    const {user} = useSelector((state:any)=>state.user)
+
 
     const dispatch = useDispatch()
     const proceedClickHandler = (testType:string)=>{
         request("unknownWords/testCompleted","POST",{testType,wordsIds}).subscribe(
             ()=>{
                 navigate("/main/read")
-
+                {/*//@ts-ignore*/}
                 dispatch((dispatch, getState) => {
                     setTimeout(()=>{
                         let { user } = getState();

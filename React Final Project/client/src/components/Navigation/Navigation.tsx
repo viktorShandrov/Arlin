@@ -2,7 +2,7 @@
 import styles from "./Navigation.module.css"
 import {Link} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {setUser} from "../../redux/user";
 export default function Navigation(){
     const [currentSectionName,setCurrentSectionName] = useState("")

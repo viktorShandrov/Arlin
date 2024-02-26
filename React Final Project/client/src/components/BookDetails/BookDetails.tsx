@@ -20,6 +20,7 @@ export default function  BookDetails(){
 
     const {id} = useParams()
     const additionalInfos = useRef([])
+    {/*//@ts-ignore*/}
     const authorDetails = useRef(null)
     const wrapper = useRef(0)
     // @ts-ignore
@@ -132,11 +133,12 @@ export default function  BookDetails(){
             }
         )
     }
-    const likeReviewBtnClickHandler = (reviewId) =>{
+    const likeReviewBtnClickHandler = (reviewId:any) =>{
         request(`books/${book._id}/${reviewId}/likeOrDislikeFeedback`,"GET").subscribe(
             (res:any)=>{
                 const reviewIndex = book.reviews.findIndex((review:any)=>review._id===reviewId)
                 const updatedReviews = [...book.reviews]
+                {/*//@ts-ignore*/}
                 updatedReviews[reviewIndex] = {...updatedReviews[reviewIndex],isLikedByUser:res.isLikedByUser}
                 setBook({...book,reviews: updatedReviews})
             }
@@ -146,6 +148,7 @@ export default function  BookDetails(){
         request(`stripe/create-checkout-session`,"POST",{bookId:book._id}).subscribe(
             async (res:any)=>{
                 const stripe = await loadStripe('pk_test_51OEwwSAPrNaPFyVRyPTVcpxfNfy2RJiSVgl3frnwPgKe2tQZhlOVVz5PCvVN8nqoEyT2HwarufbQcoQzNy1giqkg00bLGKyRr4');
+                {/*//@ts-ignore*/}
                 stripe.redirectToCheckout({ sessionId: res.id })
             }
         )

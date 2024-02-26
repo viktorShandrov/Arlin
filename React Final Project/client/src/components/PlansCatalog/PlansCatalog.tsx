@@ -14,12 +14,13 @@ export default function PlansCatalog(){
         getPlansInfo()
     },[])
 
-
+    {/*//@ts-ignore*/}
     const subscribeBtnClickHandler = (stripeSubscriptionPriceId,subscriptionType) =>{
         setIsLoading(true)
         request("stripe/create-subscription-checkout-session",'POST',{stripeSubscriptionPriceId,subscriptionType}).subscribe(
             async (res:any)=>{
                 const stripe = await loadStripe('pk_test_51OEwwSAPrNaPFyVRyPTVcpxfNfy2RJiSVgl3frnwPgKe2tQZhlOVVz5PCvVN8nqoEyT2HwarufbQcoQzNy1giqkg00bLGKyRr4');
+                {/*//@ts-ignore*/}
                 stripe.redirectToCheckout({ sessionId: res.id })
                 setIsLoading(false)
             }

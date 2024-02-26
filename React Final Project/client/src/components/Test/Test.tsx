@@ -131,6 +131,7 @@ export default function Test(){
                              // @ts-ignore
                              answers={test.map(question=>question.answers.find((el:any)=>el.isCorrect))}
                              testType={testType}
+                             // @ts-ignore
                              wordsIds={test.map((question:any)=>question.wordId)}
                          />
 

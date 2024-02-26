@@ -9,7 +9,6 @@ import SearchBar from "../SearchBar/SearchBar";
 import BookSection from "../BookSection/BookSection";
 import Popup from "../Popup/Popup";
 import {useNavigate} from "react-router-dom";
-import {loadStripe} from "@stripe/stripe-js";
 import NoContentSection from "../NoContentSection/NoContentSection";
 export default function AllBooks(){
 
@@ -18,7 +17,7 @@ export default function AllBooks(){
     const [completions,setCompletions] = useState([])
     const [filteredAutoCompletions,setFilteredAutoCompletions] = useState([])
     const [isFilterPanelShown,setIsFilterPanelShown] = useState(false)
-    const [isOwnedFilter,setIsOwnedFilter] = useState(false)
+    const [isOwnedFilter] = useState(false)
     const [isFreeBookModePopupVisible,setIsFreeBookModePopupVisible] = useState(false)
     const [searchParams,setSearchParams] = useState("")
     const [filterData,setFilterData] = useState({
@@ -167,9 +166,9 @@ export default function AllBooks(){
         )
     }
 
-    const ownedFilterClickHandler = ()=>{
-            setIsOwnedFilter((oldValue)=>!oldValue)
-    }
+    // const ownedFilterClickHandler = ()=>{
+    //         setIsOwnedFilter((oldValue)=>!oldValue)
+    // }
     const changeAutoCompletions = ()=>{
         const data = completions.filter((completion:any)=>completion.bookName.indexOf(searchParams)==0)
         console.log(data)
@@ -233,17 +232,21 @@ export default function AllBooks(){
 
                     {/**/}
                         <BookSection books={books.filter((book:any)=>book.isBookOwnedByUser)} sectionHeader={"Мои книги"}>
+                            {/*//@ts-ignore*/}
                             <NoContentSection isWithBtns={true}/>
                         </BookSection>
 
                         <BookSection books={books.filter((book:any)=>book.isRecommended&&!book.isBookOwnedByUser)} sectionHeader={"Препоръчани"}>
+                            {/*//@ts-ignore*/}
                             <NoContentSection/>
                         </BookSection>
 
                         <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(user.userId)&&!book.isBookOwnedByUser)} sectionHeader={"В списъка с желания"}>
+                            {/*//@ts-ignore*/}
                             <NoContentSection/>
                         </BookSection>
                         <BookSection books={books.filter((book:any)=>!book.isBookOwnedByUser)} sectionHeader={"Всички книги, които нямате"}>
+                            {/*//@ts-ignore*/}
                             <NoContentSection/>
                         </BookSection>
 

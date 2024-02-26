@@ -128,23 +128,23 @@ export default function AddBook() {
                 <h1>Create/Edit book</h1>
                 <div className={styles.formWrapper}>
                     <div className={styles.formC}>
-                        <input name={"name"} placeholder={"Book name"} value={formValues.name}
+                        <input name={"name"} placeholder={"Име на книга"} value={formValues.name}
                                onChange={formValueChangeHandler}/>
-                        <input name={"author"} placeholder={"Book author"} value={formValues.author}
+                        <input name={"author"} placeholder={"Автор"} value={formValues.author}
                                onChange={formValueChangeHandler}/>
-                        <textarea name={"resume"} placeholder={"Book resume"} value={formValues.resume}
+                        <textarea name={"resume"} placeholder={"Резюме"} value={formValues.resume}
                                   onChange={formValueChangeHandler}/>
-                        <input name={"genre"} placeholder={"Book genre"} value={formValues.genre}
+                        <input name={"genre"} placeholder={"Жанр"} value={formValues.genre}
                                onChange={formValueChangeHandler}/>
-                        <input type={"number"} name={"priceInCents"} placeholder={"priceInCents"} value={formValues.priceInCents}
+                        <input type={"number"} name={"priceInCents"} placeholder={"цента в стотики"} value={formValues.priceInCents}
                                onChange={formValueChangeHandler}/>
-                        <input type={"date"} name={"releaseDate"} placeholder={"Book releaseDate"}
+                        <input type={"date"} name={"releaseDate"} placeholder={"Дата на издаване"}
                                value={formValues.releaseDate} onChange={formValueChangeHandler}/>
                         {!bookId &&
-                            <button onClick={createBookHandler} className={styles.submitBtn}>Create</button>
+                            <button onClick={createBookHandler} className={styles.submitBtn}>Създай</button>
                         }
                         {bookId &&
-                            <button onClick={editBookHandler} className={styles.editBtn}>Edit</button>
+                            <button onClick={editBookHandler} className={styles.editBtn}>Редактирай</button>
                         }
 
 
@@ -167,7 +167,7 @@ export default function AddBook() {
                                 disabled={!createdBook}
                                 onClick={uploadFile}
                             >
-                                Attach image
+                                Закачи снимка
                             </button>
 
                         </div>

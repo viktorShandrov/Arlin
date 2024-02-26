@@ -5,7 +5,6 @@ import {request} from "../../../functions";
 // import {userContext} from "../../App";
 import {setUser} from "../../../redux/user"
 import {useDispatch} from "react-redux";
-import googleImage from "../../../../public/google.png"
 import registerImage from "../../../../public/register.png"
 export default function  Login(){
 
@@ -36,6 +35,7 @@ export default function  Login(){
         request("users/login","POST",formValues).subscribe(
             (res:any)=>{
                 if(res){
+                    {/*//@ts-ignore*/}
                     dispatch((dispatch, getState) => {
                         setTimeout(async()=>{
                             let { user } = getState();

@@ -4,6 +4,7 @@ import useForm from "../../hooks/useForm";
 import {toast} from "react-toastify";
 import {request} from "../../functions";
 import Popup from "../Popup/Popup";
+{/*//@ts-ignore*/}
 export default function CreateWordContainer({setIsCreateGroupPopUpVisible,setUserWordContainers}){
 
     const [createWordContainerForm,onChange,resetForm] = useForm({containerName:"",colorCode:"#de2bff"})
@@ -21,7 +22,7 @@ export default function CreateWordContainer({setIsCreateGroupPopUpVisible,setUse
             ()=>{
                 toast.success("Успешно създадена група")
                 if(setUserWordContainers){
-                    setUserWordContainers((old)=>{
+                    setUserWordContainers((old:any)=>{
                         return [
                                 ...old,
                                 {

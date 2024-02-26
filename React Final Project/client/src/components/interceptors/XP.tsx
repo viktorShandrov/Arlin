@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {setUser} from "../../redux/user";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import {toast} from "react-toastify";
 
 export default function XP(){
@@ -22,6 +22,7 @@ useEffect(()=>{
         // Log the request
 
         // Call the original fetch function
+        //@ts-ignore
         return originalFetch.current.apply(this, arguments)
             .then(async(response) => {
 
@@ -30,7 +31,7 @@ useEffect(()=>{
 
                 const contentType = clonedResponse.headers.get('Content-Type');
                 if (contentType && contentType.includes('application/json')) {
-
+                    //@ts-ignore
                     dispatch((dispatch, getState) => {
                         setTimeout(async()=>{
                             let { user } = getState();
@@ -40,6 +41,7 @@ useEffect(()=>{
                         },0)
                     })
 
+                    //@ts-ignore
                    async function newUserData(trueUser){
                         const responseData = await clonedResponse.json();
 
@@ -52,7 +54,7 @@ useEffect(()=>{
                         }
                         // Calculate the new user state outside of the action creator
                         if(responseData.itemAdded||responseData.expAdded){
-                            const exp = Number(userPayload.exp) + (Number(responseData.expAdded)||0);
+                            const exp = Number(userPayload.exp) + ((Number(responseData.expAdded)||0)*user.expMultiplier.value);
 
                             if(responseData.itemAdded&&!userPayload.inventory){
                                 userPayload.inventory={}

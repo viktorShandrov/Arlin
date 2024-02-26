@@ -1,6 +1,7 @@
 
 import styles from "./Popup.module.css"
 import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
+{/*//@ts-ignore*/}
 export default function Popup({children,hidePopup,styleSelector}){
     return(
         <PopUpOverlay>

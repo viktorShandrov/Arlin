@@ -26,6 +26,7 @@ export default function Dashboard(){
         matchFourTests: undefined
 
     })
+    {/*//@ts-ignore*/}
     const [changedCredential,setChangedCredential] = useState({
         field:"",
         oldValue:"",
@@ -41,7 +42,9 @@ export default function Dashboard(){
 
     useEffect(()=>{
         setUserInfo(user)
+        {/*//@ts-ignore*/}
         setAdvancements(setAdvancementsForUser(user))
+        {/*//@ts-ignore*/}
         setShowedAdvancements(setAdvancementsForUser(user).splice(0,2))
         const hash = window.location.hash;
         if (hash.slice(hash.lastIndexOf("#")) === "#inventory") {
@@ -50,6 +53,7 @@ export default function Dashboard(){
                 inventoryElement.scrollIntoView({ behavior: "smooth" });
             }
         }
+        {/*//@ts-ignore*/}
         const timerInterval = setInterval(()=>updateCountdown(timerInterval), 1000);
 
     },[user])
@@ -72,6 +76,7 @@ export default function Dashboard(){
         const expirationTime = new Date(user.expMultiplier.dueTo);
 
         // Calculate the remaining time
+        {/*//@ts-ignore*/}
         const remainingTime = expirationTime - currentTime;
 
         // Check if the expiration time (dueTo) is in the future
@@ -106,6 +111,7 @@ export default function Dashboard(){
                             dueTo:expirationTime
                         }}))
                 setTimeout(()=>{
+                    {/*//@ts-ignore*/}
                     const timerInterval = setInterval(()=>updateCountdown(timerInterval), 1000);
                 },0)
 
@@ -228,13 +234,18 @@ export default function Dashboard(){
                                 <div className={styles.imageC}>
                                     <img src={`/public/rewardImages/${key}.png`} alt=""/>
                                     <div className={styles.count}>
+                                        {/*//@ts-ignore*/}
                                         {value}
                                     </div>
 
                                 </div>
+                            {/*//@ts-ignore*/}
                                 <h6>{rewardNames[key]}</h6>
+                            {/*//@ts-ignore*/}
                                 {key==="expMultiplier"&&value>0&&<button disabled={expDueToCountDown} onClick={useExpMultiplier} className={styles.useBtn}>{expDueToCountDown||'използвай'}</button>}
+                            {/*//@ts-ignore*/}
                                 {key==="freeBook"&&value>0&&<button onClick={unlockBookForFree} className={styles.useBtn}>отключи книга</button>}
+                            {/*//@ts-ignore*/}
                                 {key==="chest"&&value>0&&<button onClick={openChest} className={styles.useBtn}>отвори</button>}
 
 
