@@ -46,6 +46,12 @@ exports.getBookDetails =async(bookId,userId)=>{
 
     if (book.reviews){
         for (const review of book.reviews) {
+            if(!review.writtenBy) {
+                //TODO:to be deleted in DB
+                const reviewIndex = book.reviews.indexOf(review)
+                book.reviews.splice(reviewIndex,1)
+                continue
+            }
             review.writtenBy = {
                 imageURL:review.writtenBy.imageURL,
                 username:review.writtenBy.username

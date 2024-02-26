@@ -353,6 +353,9 @@
     .callToActionBtsC{
         flex-direction: column;
     }
+    .testsC{
+        width: 90%;
+    }
 }
 @media (max-width: 380px){
     .advancementsC{

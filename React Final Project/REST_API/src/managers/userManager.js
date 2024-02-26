@@ -27,7 +27,10 @@ exports.register = async(username,email,password,repeatedPassword,image)=>{
         email,
         password,
         repeatedPassword,
-        inventory:{},
+        inventory:{
+            expMultiplier:0,
+            freeBook:0
+        },
         imageURL,
     }
 

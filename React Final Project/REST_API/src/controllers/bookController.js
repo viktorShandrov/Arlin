@@ -59,6 +59,7 @@ router.get("/:id/details",isAuth,async (req,res)=>{
         const book = await bookManager.getBookDetails(bookId,_id)
         res.status(200).json({book})
     } catch (error) {
+        console.log(error)
         res.status(400).json({message:error.message})
     }
 })

@@ -231,8 +231,8 @@ export default function AllBooks(){
                                 {/*    }*/}
                                 {/*})}*/}
 
-                    {/*books.filter((book:any)=>book.isBookOwnedByUser)*/}
-                        <BookSection books={[]} sectionHeader={"Мои книги"}>
+                    {/**/}
+                        <BookSection books={books.filter((book:any)=>book.isBookOwnedByUser)} sectionHeader={"Мои книги"}>
                             <NoContentSection isWithBtns={true}/>
                         </BookSection>
 

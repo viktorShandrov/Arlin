@@ -257,7 +257,7 @@ export default function Dashboard(){
                 <section className={styles.callToAction}>
                     <div className={styles.callToActionBtsC}>
                         <button className={`${styles.changeBtn}`}>ОСТАВИ БАКШИШ</button>
-                        <button className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>НАДГРАДИ</button>
+                        <button onClick={()=>navigate("/main/plans")} className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>НАДГРАДИ</button>
                     </div>
 
                 </section>
