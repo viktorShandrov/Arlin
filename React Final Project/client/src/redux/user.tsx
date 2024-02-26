@@ -14,7 +14,7 @@ export const counterSlice = createSlice({
         },
         setInitialData: (state, action) => {
             //@ts-ignore
-            state.data = action.payload;
+            state.user = action.payload;
         },
     },
 })

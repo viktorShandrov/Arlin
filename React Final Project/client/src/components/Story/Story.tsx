@@ -96,7 +96,7 @@ export default function Story({chapter,changeChapterClickHandler,isLoading,isRat
                     <div className={styles.btns}>
                         <button disabled={!chapter.previousChapterId} onClick={()=>changeChapterClickHandler(chapter.previousChapterId)} className={` ${styles.btn}`} ><span className={styles.btnName}>предишна глава</span> <i className={`fa-solid fa-caret-left ${styles.btnIcon}`}></i> </button>
                         <button disabled={!chapter.nextChapterId} onClick={()=>changeChapterClickHandler(chapter.nextChapterId)} className={`    ${styles.btn}`} ><span className={styles.btnName}>следваща глава</span><i className={`fa-solid fa-caret-right ${styles.btnIcon}`}></i>  </button>
-                        {isRateBtnVisible&&!chapter.hasUserRatedTheBook&&<button onClick={showRatePopUp} className={`${styles.btn} ${styles.rateBtn}`}><span className={styles.btnName}>оцени книгата</span> <i className={`fa-solid fa-star ${styles.btnIcon}`}></i></button>}
+                        {chapter.isBookOwnedByUser&&isRateBtnVisible&&!chapter.hasUserRatedTheBook&&<button onClick={showRatePopUp} className={`${styles.btn} ${styles.rateBtn}`}><span className={styles.btnName}>оцени книгата</span> <i className={`fa-solid fa-star ${styles.btnIcon}`}></i></button>}
                         <p></p>
                     </div>
                         <div className={styles.testsWrapper}>

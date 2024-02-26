@@ -40,7 +40,7 @@ exports.getBookDetails =async(bookId,userId)=>{
     delete book.chapters
 
 
-    book.isBookOwnedByUser = isBookOwnedByUser(book,userId)
+    book.isBookOwnedByUser = exports.isBookOwnedByUser(book,userId)
     book.similarBooks = await getSimilarBooks(book)
     book.similarBooks.splice(book.similarBooks.findIndex((currBook=>book._id===currBook._id)),1)
 
@@ -90,7 +90,7 @@ exports.writeReview = async (bookId,userId,stars,text)=>{
     const book = await models.bookModel.findById(bookId)
     const user = await models.userModel.findById(userId)
 
-    if(!isBookOwnedByUser(book,userId)&&user.role!=="admin") throw new Error("Не притежавате книгата")
+    if(!exports.isBookOwnedByUser(book,userId)&&user.role!=="admin") throw new Error("Не притежавате книгата")
 
     if(!book.toObject().hasOwnProperty("reviews")) book.reviews = []
 
@@ -152,7 +152,7 @@ async function getSimilarBooks(book){
         return book
     })
 }
-function isBookOwnedByUser(book,userId){
+exports.isBookOwnedByUser = (book,userId)=>{
     return book.ownedBy.some(id=>id.toString()===userId.toString())
 }
 
@@ -165,7 +165,7 @@ exports.getAllBooks =async(userId)=>{
     const payload =[]
     for (let book of books) {
         book = book.toObject()
-        book.isBookOwnedByUser = isBookOwnedByUser(book,userId)
+        book.isBookOwnedByUser = exports.isBookOwnedByUser(book,userId)
         delete book.ownedBy
         payload.push(book)
     }

@@ -151,7 +151,7 @@ export default function MyBooksList(){
                                         {books.filter((book:any)=>book.isBookOwnedByUser).length>0&&<div className={styles.searchBarC}>
                                             <SearchBar searchParams={searchParams} searchParamsChangeHandler={searchParamsChangeHandler} filteredAutoCompletions={filteredAutoCompletions}/>
                                         </div>}
-                                        {books.filter((book:any)=>book.isBookOwnedByUser).length===0&&<NoContentSection/>}
+                                        {books.filter((book:any)=>book.isBookOwnedByUser).length===0&&<NoContentSection isWithBtns={true}/>}
                                     </>
 
 

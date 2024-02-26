@@ -17,7 +17,7 @@ export default function Navigation(){
         burgerMenuClickHandler()
     }
     const logoutHandler = ()=>{
-        dispatch(setUser({}))
+        dispatch(setUser(null))
         burgerMenuClickHandler()
     }
 
