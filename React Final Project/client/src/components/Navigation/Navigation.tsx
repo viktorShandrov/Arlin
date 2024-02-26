@@ -2,14 +2,22 @@
 import styles from "./Navigation.module.css"
 import {Link} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {setUser} from "../../redux/user";
 export default function Navigation(){
     const [currentSectionName,setCurrentSectionName] = useState("")
     const navigationWrapperRef = useRef(null)
+    // const {user} = useSelector((state:any)=>state.user)
+    const dispatch = useDispatch();
     useEffect(()=>{
         setCurrentSectionName("Начало")
     },[])
     const navigateHandler = (e:any)=>{
         setCurrentSectionName(e.target.textContent?e.target.textContent:"Начало")
+        burgerMenuClickHandler()
+    }
+    const logoutHandler = ()=>{
+        dispatch(setUser({}))
         burgerMenuClickHandler()
     }
 
@@ -123,7 +131,7 @@ export default function Navigation(){
                         <h6 className={styles.navItemLabel}>Планове</h6>
                     </article>
                 </Link>
-                <Link onClick={navigateHandler} to={"/user/login"}  className={styles.linkItem} >
+                <Link onClick={logoutHandler} to={"/user/login"}  className={styles.linkItem} >
                     <article className={styles.linkC}>
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/exit.png" alt=""/>

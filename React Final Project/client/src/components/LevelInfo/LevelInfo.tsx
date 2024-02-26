@@ -39,6 +39,7 @@ export default function LevelInfo(){
                     // console.log("old",old[key])
                     // console.log("new",value)
                     if(value>old[key]){
+                        console.log("showing reward")
                         showRewardPopup(key)
                     }
                 }
@@ -49,12 +50,18 @@ export default function LevelInfo(){
         if(user.advancementsAchieved){
             const advancementInfo = user.other.advancementsInfo.find((el:any)=>el.id===user.advancementsAchieved[0])
             setAdvancementAchievedInfo(advancementInfo)
+            // dispatch((dispatch, getState) => {
+            //     setTimeout(async()=>{
+            //         let { user } = getState();
+            //         user = user.user
+            //         dispatch(setUser({...user,advancementsAchieved:[...user.advancementsAchieved,advancementInfo.id]}));
+            //     },0)
+            // })
         }
-
-
     },[user.advancementsAchieved])
     const closeAdvancementPopup=()=>{
-        dispatch(setUser({...user,advancementsAchieved:user.advancementsAchieved.slice(1)}))
+        setAdvancementAchievedInfo(null)
+        // dispatch(setUser({...user,advancementsAchieved:user.advancementsAchieved.slice(1)}))
     }
     const showRewardPopup = (key:any) =>{
         setReward(key)

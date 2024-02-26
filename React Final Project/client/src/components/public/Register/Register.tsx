@@ -40,10 +40,16 @@ export default function  Register(){
             (res:any)=>{
                 // localStorage.setItem("user",JSON.stringify(res))
                 if(res){
-                    dispatch(setUser(res))
+                    dispatch((dispatch, getState) => {
+                        setTimeout(async()=>{
+                            dispatch(setUser(res));
+                        },0)
+                    })
                     localStorage.setItem("token",res.token)
                     // navigate("/main")
-                    navigate("/main/hero")
+                    setTimeout(async()=>{
+                        navigate("/main/hero")
+                    },100)
                 }
             }
         )
