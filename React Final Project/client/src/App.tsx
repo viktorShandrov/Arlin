@@ -5,7 +5,6 @@ import {Navigate, Route, Routes} from "react-router-dom";
 // import AdminPanel from "./admin/AdminPanel";
 import Main from "./components/Main/Main";
 import React, {createContext, useEffect, Suspense} from "react";
-import {Provider} from "react-redux";
 // @ts-ignore
 import {store} from "./redux/store.js";
 
@@ -19,7 +18,7 @@ import AuthGuard from "./guards/AuthGuard/AuthGuard";
 import NotFound from "./components/NotFound/NotFound";
 import XP from "./components/interceptors/XP";
 
-export const userContext=createContext({})
+// export const userContext=createContext({})
 function App() {
 
     useEffect(()=>{
@@ -31,7 +30,6 @@ function App() {
   return (
       <>
           <ToastContainer position={toast.POSITION.TOP_RIGHT} />
-          <Provider store={store}>
               <div  className={styles.mainWrapper}>
                   <Routes>
 
@@ -53,7 +51,8 @@ function App() {
                   </Routes>
               </div>
                  <XP/>
-          </Provider>
+          {/*<Provider store={store}>*/}
+          {/*</Provider>*/}
 
 
 

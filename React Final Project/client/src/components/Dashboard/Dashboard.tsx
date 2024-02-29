@@ -1,16 +1,18 @@
 
 import styles from "./Dashboard.module.css"
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 
 import {request} from "../../functions";
-import {useDispatch, useSelector} from "react-redux";
+// import {useDispatch, useSelector} from "react-redux";
 import DashboardStat from "./DashboardStat/DashboardStat";
-import {setUser} from "../../redux/user";
+// import {setUser} from "../../redux/user";
 import {toast} from "react-toastify";
 import {rewardNames} from "../../contants";
 import {useNavigate} from "react-router-dom";
 import NoContentSection from "../NoContentSection/NoContentSection";
+import {userContext} from "../../redux/StateProvider/StateProvider";
 export default function Dashboard(){
+    const { userState,setUserState } = useContext(userContext);
     const [userInfo,setUserInfo] = useState({
         randomWordsTests: undefined,
         wordsFromChapterTests: undefined,
@@ -36,12 +38,13 @@ export default function Dashboard(){
     const [advancements,setAdvancements] = useState([])
     const [showedAdvancements,setShowedAdvancements] = useState([])
     // const passedTestNumberElementsRefs = useRef([])
-    const {user} = useSelector((state:any)=>state.user)
-    const dispatch = useDispatch()
+    // const {user} = useSelector((state:any)=>state.user)
+    // const dispatch = useDispatch()
     const navigate = useNavigate()
 
     useEffect(()=>{
-        setUserInfo(user)
+        // setUserState(user)
+        setUserInfo(userState)
         {/*//@ts-ignore*/}
         setAdvancements(setAdvancementsForUser(user))
         {/*//@ts-ignore*/}
@@ -56,7 +59,7 @@ export default function Dashboard(){
         {/*//@ts-ignore*/}
         const timerInterval = setInterval(()=>updateCountdown(timerInterval), 1000);
 
-    },[user])
+    },[userState])
     function setAdvancementsForUser(user:any){
         return [...user.other.advancementsInfo.filter((adv:any)=>user.advancements.includes(adv.id)),
             ...user.other.advancementsInfo.filter((adv:any)=>!user.advancements.includes(adv.id)).map((adv:any)=>{return {...adv,isLocked:true}})]
@@ -67,13 +70,13 @@ export default function Dashboard(){
     }
 
     function updateCountdown(timerInterval:any) {
-        if(!user.expMultiplier.dueTo)  return clearInterval(timerInterval);
+        if(!userState.expMultiplier.dueTo)  return clearInterval(timerInterval);
 
         // Get the current time
         const currentTime = new Date();
 
         // Convert the dueTo string to a Date object
-        const expirationTime = new Date(user.expMultiplier.dueTo);
+        const expirationTime = new Date(userState.expMultiplier.dueTo);
 
         // Calculate the remaining time
         {/*//@ts-ignore*/}
@@ -101,15 +104,19 @@ export default function Dashboard(){
                 const expirationTime = new Date();
                 expirationTime.setMinutes(expirationTime.getMinutes() + 30);
 
-                dispatch(setUser(
-                    {...user,
-                            inventory:{...user.inventory,
-                            expMultiplier:user.inventory.expMultiplier-1
-                            },
+                setUserState(
+                    {...userState,
+                        inventory:{...userState.inventory,
+                            expMultiplier:userState.inventory.expMultiplier-1
+                        },
                         expMultiplier:{
                             value:1.5,
                             dueTo:expirationTime
-                        }}))
+                        }}
+                )
+
+                // dispatch(setUser(
+                //     ))
                 setTimeout(()=>{
                     {/*//@ts-ignore*/}
                     const timerInterval = setInterval(()=>updateCountdown(timerInterval), 1000);

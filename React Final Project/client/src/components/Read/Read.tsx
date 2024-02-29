@@ -2,19 +2,22 @@ import Story from "../Story/Story";
 import TranslationContainer from "../TranslationContainer/TranslationContainer";
 import { Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
 import styles from "./Read.module.css"
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+// import {useDispatch, useSelector} from "react-redux";
+import {useContext, useEffect, useState} from "react";
 import ReadToolBox from "../ReadToolBox/ReadToolBox";
 import {request} from "../../functions";
-import {setUser} from "../../redux/user";
+import {userContext} from "../../redux/StateProvider/StateProvider";
+// import {setUser} from "../../redux/user";
 export default  function Read(){
 
     const {chapterId} = useParams()
     const {bookId} = useParams()
 
-    const {user} = useSelector((selector:any)=>selector.user)
+    // const {user} = useSelector((selector:any)=>selector.user)
+    const { userState,setUserState } = useContext(userContext);
+
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const urlLocation = useLocation()
     const [chapter,setChapter] = useState({
         currentChapter: {text:"", _id: undefined},
@@ -40,10 +43,15 @@ export default  function Read(){
                     navigate("/main/read")
                 }
 
-                dispatch(setUser({...user,lastReading:{
-                        bookId,
-                        chapterId
-                    }}))
+
+                setUserState(
+                    {...userState,lastReading:{
+                            bookId,
+                            chapterId
+                        }}
+                )
+
+                // dispatch(setUser())
                 const isAtLeastOneThird = (index:number, length:number) => {
                     //the index starts with 1
                     if([1,2].includes(index)) return false

@@ -1,17 +1,19 @@
 
 import styles from "./LevelInfo.module.css"
-import {useEffect, useRef, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useContext, useEffect, useRef, useState} from "react";
+// import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 //@ts-ignore
 import PopUpOverlay from "../PopUpOverlay/PopUpOverlay";
 import {rewardNames} from "../../contants";
 import {calculateLevel} from "../../functions";
 import Popup from "../Popup/Popup";
+import {userContext} from "../../redux/StateProvider/StateProvider";
 //@ts-ignore
-import {setUser} from "../../redux/user";
+// import {setUser} from "../../redux/user";
 export default function LevelInfo(){
-    const {user} = useSelector((state:any)=>state.user)
+    // const {user} = useSelector((state:any)=>state.user)
+    const { userState,setUserState } = useContext(userContext);
 
     const levelInfoWrapperRef=useRef(null)
     const [userCurrentLevel,setUserCurrentLevel] = useState(0)
@@ -24,23 +26,23 @@ export default function LevelInfo(){
     const [advancementAchievedInfo,setAdvancementAchievedInfo] = useState(null)
     const navigate = useNavigate()
     //@ts-ignore
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     // const [exp,setExp] = useState(0)
 
     useEffect(()=>{
         setTimeout(()=>{
-            setUserCurrentLevel(calculateLevel(user.exp))
+            setUserCurrentLevel(calculateLevel(userState.exp))
         },0)
     },[])
     useEffect(()=>{
         showPopup()
         // saveExpToLocalStorage()
-    },[user.exp])
+    },[userState.exp])
     useEffect(()=>{
             setUserInventory((old)=>{
-                if(!old) return user.inventory
-                for (const [key,value] of Object.entries(user.inventory)) {
+                if(!old) return userState.inventory
+                for (const [key,value] of Object.entries(userState.inventory)) {
                     // console.log("old",old[key])
                     // console.log("new",value)
                     //@ts-ignore
@@ -49,12 +51,12 @@ export default function LevelInfo(){
                         showRewardPopup(key)
                     }
                 }
-                return user.inventory
+                return userState.inventory
             })
-    },[user.inventory])
+    },[userState.inventory])
     useEffect(()=>{
-        if(user.advancementsAchieved){
-            const advancementInfo = user.other.advancementsInfo.find((el:any)=>el.id===user.advancementsAchieved[0])
+        if(userState.advancementsAchieved){
+            const advancementInfo = userState.other.advancementsInfo.find((el:any)=>el.id===userState.advancementsAchieved[0])
             setAdvancementAchievedInfo(advancementInfo)
             // dispatch((dispatch, getState) => {
             //     setTimeout(async()=>{
@@ -64,7 +66,7 @@ export default function LevelInfo(){
             //     },0)
             // })
         }
-    },[user.advancementsAchieved])
+    },[userState.advancementsAchieved])
     const closeAdvancementPopup=()=>{
         setAdvancementAchievedInfo(null)
         // dispatch(setUser({...user,advancementsAchieved:user.advancementsAchieved.slice(1)}))
@@ -143,7 +145,7 @@ export default function LevelInfo(){
 
 
 
-    if(!user.expMultiplier) return null
+    if(!userState.expMultiplier) return null
 
 
 
@@ -151,14 +153,14 @@ export default function LevelInfo(){
         <>
             <div ref={levelInfoWrapperRef} className={styles.levelWrapper}>
                 <i onClick={hidePopup}      className={`fa-solid fa-xmark ${styles.xmark}`}></i>
-                {user.expMultiplier.value>1&&<div className={styles.expMultiplier}>
-                    множител на опит <span className={styles.value}>x{user.expMultiplier.value}</span>
+                {userState.expMultiplier.value>1&&<div className={styles.expMultiplier}>
+                    множител на опит <span className={styles.value}>x{userState.expMultiplier.value}</span>
                 </div>}
 
                 <div className={styles.levelBarC}>
                     <div
                         style={{
-                            width:calculateExpPercentage(user.exp,userCurrentLevel)+"%"||0
+                            width:calculateExpPercentage(userState.exp,userCurrentLevel)+"%"||0
                         }}
                         className={styles.levelBarProgress}>
 

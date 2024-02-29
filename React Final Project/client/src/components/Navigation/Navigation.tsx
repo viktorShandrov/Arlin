@@ -1,14 +1,16 @@
 
 import styles from "./Navigation.module.css"
 import {Link} from "react-router-dom";
-import {useEffect, useRef, useState} from "react";
-import {useDispatch} from "react-redux";
-import {setUser} from "../../redux/user";
+import {useContext, useEffect, useRef, useState} from "react";
+import {userContext} from "../../redux/StateProvider/StateProvider";
+// import {useDispatch} from "react-redux";
+// import {setUser} from "../../redux/user";
 export default function Navigation(){
+    const { userState,setUserState } = useContext(userContext);
     const [currentSectionName,setCurrentSectionName] = useState("")
     const navigationWrapperRef = useRef(null)
     // const {user} = useSelector((state:any)=>state.user)
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     useEffect(()=>{
         setCurrentSectionName("Начало")
     },[])
@@ -17,7 +19,8 @@ export default function Navigation(){
         burgerMenuClickHandler()
     }
     const logoutHandler = ()=>{
-        dispatch(setUser(null))
+        setUserState(null)
+        // dispatch(setUser(null))
         burgerMenuClickHandler()
     }
 

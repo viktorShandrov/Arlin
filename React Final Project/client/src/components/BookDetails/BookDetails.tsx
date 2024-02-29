@@ -1,23 +1,25 @@
 import styles from "./BookDetails.module.css"
-import {useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {request} from "../../functions";
 // import BuyBtn from "../BuyBtn/BuyBtn";
 // import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import {useDispatch, useSelector} from "react-redux";
+// import {useDispatch, useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import Loading from "../Spinner/Loading";
 import BookElement from "../AllBooks/BookElement/BookElement";
 import AddtionalInfo from "../AddtionalInfo/AddtionalInfo";
 import additional from "../AddtionalInfo/AddtionalInfo.module.css";
 import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
-import {setUser} from "../../redux/user";
+// import {setUser} from "../../redux/user";
 import Rating from "@mui/material/Rating";
+import {userContext} from "../../redux/StateProvider/StateProvider";
 
 export default function  BookDetails(){
     // @ts-ignore
 
+const { userState,setUserState } = useContext(userContext);
     const {id} = useParams()
     const additionalInfos = useRef([])
     {/*//@ts-ignore*/}
@@ -25,7 +27,7 @@ export default function  BookDetails(){
     const wrapper = useRef(0)
     // @ts-ignore
     const navigate = useNavigate()
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     // const {user} = useContext(userContext)
     // @ts-ignore
@@ -87,7 +89,8 @@ export default function  BookDetails(){
                 toast.success("Книгата успешно е добавена в профила Ви")
                 setBook({...book,isBookOwnedByUser: true})
                 navigate("/main/AllBooks/"+book._id)
-                dispatch(setUser({...user,inventory:{...user.inventory,freeBook: user.inventory.freeBook-1}}))
+                setUserState({...user,inventory:{...user.inventory,freeBook: user.inventory.freeBook-1}})
+                // dispatch(setUser())
             }
         )
     }

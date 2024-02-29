@@ -33,7 +33,7 @@ export function request(url: string, method?: string, body?: any, headers: any =
                     //     // window.location.href ="/main"
                     //
                     // }
-                    console.log(window.location.href)
+                    // console.log(window.location.href)
                     if (!response.ok) {
                         response.json().then((errorData: any) => {
                             console.error('Fetch Error:', errorData);

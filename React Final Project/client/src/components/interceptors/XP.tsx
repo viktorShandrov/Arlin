@@ -1,11 +1,14 @@
-import {useDispatch, useSelector} from "react-redux";
-import {setUser} from "../../redux/user";
-import {useEffect, useRef} from "react";
+// import {useDispatch, useSelector} from "react-redux";
+// import {setUser} from "../../redux/user";
+import {useContext, useEffect, useRef} from "react";
 import {toast} from "react-toastify";
+import {userContext} from "../../redux/StateProvider/StateProvider";
 
 export default function XP(){
-    const {user} = useSelector((state:any)=>state.user)
-    const dispatch = useDispatch();
+    const { userState,setUserState } = useContext(userContext);
+
+    // const {user} = useSelector((state:any)=>state.user)
+    // const dispatch = useDispatch();
     const originalFetch = useRef(window.fetch);
     // setTimeout(()=>{
     //     console.log(user.exp);
@@ -31,15 +34,18 @@ useEffect(()=>{
 
                 const contentType = clonedResponse.headers.get('Content-Type');
                 if (contentType && contentType.includes('application/json')) {
+                    console.log("hee",userState)
+                    const data = await newUserData(userState)
+                    setUserState(data)
                     //@ts-ignore
-                    dispatch((dispatch, getState) => {
-                        setTimeout(async()=>{
-                            let { user } = getState();
-                            user = user.user
-                            const data = await newUserData(user)
-                            dispatch(setUser(data));
-                        },0)
-                    })
+                    // dispatch((dispatch, getState) => {
+                    //     setTimeout(async()=>{
+                    //         let { user } = getState();
+                    //         user = user.user
+                    //
+                    //         dispatch(setUser(data));
+                    //     },0)
+                    // })
 
                     //@ts-ignore
                    async function newUserData(trueUser){
@@ -54,7 +60,7 @@ useEffect(()=>{
                         }
                         // Calculate the new user state outside of the action creator
                         if(responseData.itemAdded||responseData.expAdded){
-                            const exp = Number(userPayload.exp) + ((Number(responseData.expAdded)||0)*user.expMultiplier.value);
+                            const exp = Number(userPayload.exp) + ((Number(responseData.expAdded)||0)*userState.expMultiplier.value);
 
                             if(responseData.itemAdded&&!userPayload.inventory){
                                 userPayload.inventory={}
@@ -80,7 +86,7 @@ useEffect(()=>{
                 throw error;
             });
     }
-},[user])
+},[userState])
 
 
 

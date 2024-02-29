@@ -3,26 +3,33 @@ import styles from "./TestResume.module.css"
 import {request} from "../../functions";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
-import {useDispatch} from "react-redux";
-import {setUser} from "../../redux/user";
+import {userContext} from "../../redux/StateProvider/StateProvider";
+import {useContext} from "react";
+// import {useDispatch} from "react-redux";
+// import {setUser} from "../../redux/user";
 // @ts-ignore
 export default function TestResume({questions,answers,testType,wordsIds=null}){
     const navigate = useNavigate()
+    const { userState,setUserState } = useContext(userContext);
 
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const proceedClickHandler = (testType:string)=>{
         request("unknownWords/testCompleted","POST",{testType,wordsIds}).subscribe(
             ()=>{
                 navigate("/main/read")
-                {/*//@ts-ignore*/}
-                dispatch((dispatch, getState) => {
-                    setTimeout(()=>{
-                        let { user } = getState();
-                        user = user.user
-                        dispatch(setUser({...user,[testType]:user[testType]+1}));
-                    },0)
-                })
+
+                setUserState(
+                    {...userState,[testType]:userState[testType]+1}
+                )
+
+                // dispatch((dispatch, getState) => {
+                //     setTimeout(()=>{
+                //         let { user } = getState();
+                //         user = user.user
+                //         dispatch(setUser());
+                //     },0)
+                // })
                 toast.success("Браво за успеха!")
             }
         )

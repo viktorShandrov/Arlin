@@ -10,30 +10,29 @@ import {REST_API} from "./contants";
 //@ts-ignore
 import {store} from "./redux/store";
 import {setInitialData} from "./redux/user";
+import StateProvider from "./redux/StateProvider/StateProvider";
+import {StrictMode} from "react";
 
 
 
 
-async function getDataFromServer(){
-    const token = localStorage.getItem("token")
-    if(token){
-        const userData = await(await fetch(`${REST_API}users/userInfo`,{headers:{Authorization:token}})).json()
-        return {...userData,token,userId:userData._id}
-    }else{
-        return null
-    }
-}
 
 
 
-getDataFromServer().then((initialData) => {
-    store.dispatch(setInitialData(initialData));
+
     ReactDOM.createRoot(document.getElementById('root')!).render(
-        <HashRouter >
-            <App />
-        </HashRouter>
+        <StrictMode>
+            <HashRouter >
+                <StateProvider>
+                    <App />
+                </StateProvider>
+            </HashRouter>
+        </StrictMode>
+
 
     )
-})
+// getDataFromServer().then((initialData) => {
+//     store.dispatch(setInitialData(initialData));
+// })
 
 

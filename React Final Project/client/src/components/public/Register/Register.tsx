@@ -1,16 +1,19 @@
-import {useRef, useState} from "react";
+import {useContext, useRef, useState} from "react";
 import styles from "./Register.module.css"
 import {Link, useNavigate} from "react-router-dom";
 import {request} from "../../../functions";
-import {setUser} from "../../../redux/user";
-import {useDispatch} from "react-redux";
+// import {setUser} from "../../../redux/user";
+// import {useDispatch} from "react-redux";
 import registerImage from "../../../../public/register.png"
+import {userContext} from "../../../redux/StateProvider/StateProvider";
 
 export default function  Register(){
 
     // const {user,setUser}= useContext(userContext)
+    // @ts-ignore
+    const { userState,setUserState } = useContext(userContext);
     const navigate =useNavigate()
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const [formValues,setFormValues] = useState({
         username:"",
         email:"",
@@ -41,11 +44,12 @@ export default function  Register(){
                 // localStorage.setItem("user",JSON.stringify(res))
                 if(res){
                     {/*//@ts-ignore*/}
-                    dispatch((dispatch, getState) => {
-                        setTimeout(async()=>{
-                            dispatch(setUser(res));
-                        },0)
-                    })
+                    setUserState(res)
+                    // dispatch((dispatch, getState) => {
+                    //     setTimeout(async()=>{
+                    //         dispatch(setUser(res));
+                    //     },0)
+                    // })
                     localStorage.setItem("token",res.token)
                     // navigate("/main")
                     setTimeout(async()=>{

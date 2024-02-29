@@ -1,16 +1,19 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import styles from "./Login.module.css"
 import {Link, useNavigate} from "react-router-dom";
 import {request} from "../../../functions";
 // import {userContext} from "../../App";
-import {setUser} from "../../../redux/user"
-import {useDispatch} from "react-redux";
+// import {setUser} from "../../../redux/user"
+// import {useDispatch} from "react-redux";
 import registerImage from "../../../../public/register.png"
+import {userContext} from "../../../redux/StateProvider/StateProvider";
 export default function  Login(){
 
     // const {user,setUser} = useContext(userContext)
     // const {user} = useSelector((state:any)=>state.user)
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
+    const { userState,setUserState } = useContext(userContext);
+
     const navigate = useNavigate()
     const [formValues,setFormValues] = useState({
         email:"viktor_shandrov@abv.bg",
@@ -35,14 +38,18 @@ export default function  Login(){
         request("users/login","POST",formValues).subscribe(
             (res:any)=>{
                 if(res){
+                    setUserState({...res})
+                    console.log(userState)
+
+
                     {/*//@ts-ignore*/}
-                    dispatch((dispatch, getState) => {
-                        setTimeout(async()=>{
-                            let { user } = getState();
-                            user = user.user
-                            dispatch(setUser({...res}));
-                        },0)
-                    })
+                    // dispatch((dispatch, getState) => {
+                    //     setTimeout(async()=>{
+                    //         let { user } = getState();
+                    //         user = user.user
+                    //         dispatch(setUser({}));
+                    //     },0)
+                    // })
                     // dispatch(setUser(res))
                     localStorage.setItem("token",res.token)
                     navigate("/main/hero")
