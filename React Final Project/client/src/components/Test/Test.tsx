@@ -72,6 +72,11 @@ export default function Test(){
 
     return(
         <>
+
+            <div className={styles.wrapper}>
+
+            </div>
+
             <div className={styles.wrapper}>
                 {!isTestDone&&
                     <div ref={containerRef} className={styles.container}>

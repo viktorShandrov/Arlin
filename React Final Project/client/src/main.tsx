@@ -15,22 +15,29 @@ import {StrictMode} from "react";
 
 
 
+async function getDataFromServer(){
+    const token = localStorage.getItem("token")
+    if(token){
+        const userData = await(await fetch(`${REST_API}users/userInfo`,{headers:{Authorization:token}})).json()
+        return {...userData,token,userId:userData._id}
+    }else{
+        return null
+    }
+}
 
 
-
-
-
-    ReactDOM.createRoot(document.getElementById('root')!).render(
-        <StrictMode>
+getDataFromServer()
+    .then((user:any)=>{
+        ReactDOM.createRoot(document.getElementById('root')!).render(
             <HashRouter >
-                <StateProvider>
+                <StateProvider initialState={user}>
                     <App />
                 </StateProvider>
             </HashRouter>
-        </StrictMode>
+        )
+    })
 
 
-    )
 // getDataFromServer().then((initialData) => {
 //     store.dispatch(setInitialData(initialData));
 // })

@@ -64,7 +64,7 @@ export default function LandingPage(){
                                 Учене на език, чрез книги, новини и AI.
                             </h1>
                             <h2 className={styles.afterHeading}>
-                                учи чужд език по лесен и интерактивен начин с Arlin - твоята дигитална библиотека
+                                учи английски език по иновативен, лесен и интерактивен начин, чрез книги и новини
                             </h2>
                             <button onClick={handleScroll} className={styles.beginBtn}>ЗАПОЧНИ СЕГА</button>
 

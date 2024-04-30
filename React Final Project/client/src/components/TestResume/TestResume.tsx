@@ -20,7 +20,7 @@ export default function TestResume({questions,answers,testType,wordsIds=null}){
                 navigate("/main/read")
 
                 setUserState(
-                    {...userState,[testType]:userState[testType]+1}
+                    {...userState(),[testType]:userState()[testType]+1}
                 )
 
                 // dispatch((dispatch, getState) => {

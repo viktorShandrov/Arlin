@@ -39,7 +39,7 @@ export default function  Login(){
             (res:any)=>{
                 if(res){
                     setUserState({...res})
-                    console.log(userState)
+                    console.log("neeeeeeeeeeee",userState())
 
 
                     {/*//@ts-ignore*/}

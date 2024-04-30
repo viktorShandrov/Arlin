@@ -19,7 +19,6 @@ import {userContext} from "../../redux/StateProvider/StateProvider";
 export default function  BookDetails(){
     // @ts-ignore
 
-const { userState,setUserState } = useContext(userContext);
     const {id} = useParams()
     const additionalInfos = useRef([])
     {/*//@ts-ignore*/}
@@ -31,7 +30,9 @@ const { userState,setUserState } = useContext(userContext);
 
     // const {user} = useContext(userContext)
     // @ts-ignore
-    const {user}:any = useSelector((selector:any)=>selector.user)
+    // const {user}:any = useSelector((selector:any)=>selector.user)
+
+    const { userState,setUserState } = useContext(userContext);
     const [isDialogShown,setIsDialogShown] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
     const [isFreeBookMode,setIsFreeBookMode] = useState(false)
@@ -89,7 +90,7 @@ const { userState,setUserState } = useContext(userContext);
                 toast.success("Книгата успешно е добавена в профила Ви")
                 setBook({...book,isBookOwnedByUser: true})
                 navigate("/main/AllBooks/"+book._id)
-                setUserState({...user,inventory:{...user.inventory,freeBook: user.inventory.freeBook-1}})
+                setUserState({...userState(),inventory:{...userState().inventory,freeBook: userState().inventory.freeBook-1}})
                 // dispatch(setUser())
             }
         )

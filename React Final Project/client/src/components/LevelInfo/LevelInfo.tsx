@@ -32,17 +32,17 @@ export default function LevelInfo(){
 
     useEffect(()=>{
         setTimeout(()=>{
-            setUserCurrentLevel(calculateLevel(userState.exp))
+            setUserCurrentLevel(calculateLevel(userState().exp))
         },0)
     },[])
     useEffect(()=>{
         showPopup()
         // saveExpToLocalStorage()
-    },[userState.exp])
+    },[userState().exp])
     useEffect(()=>{
             setUserInventory((old)=>{
-                if(!old) return userState.inventory
-                for (const [key,value] of Object.entries(userState.inventory)) {
+                if(!old) return userState().inventory
+                for (const [key,value] of Object.entries(userState().inventory)) {
                     // console.log("old",old[key])
                     // console.log("new",value)
                     //@ts-ignore
@@ -51,12 +51,12 @@ export default function LevelInfo(){
                         showRewardPopup(key)
                     }
                 }
-                return userState.inventory
+                return userState().inventory
             })
-    },[userState.inventory])
+    },[userState().inventory])
     useEffect(()=>{
-        if(userState.advancementsAchieved){
-            const advancementInfo = userState.other.advancementsInfo.find((el:any)=>el.id===userState.advancementsAchieved[0])
+        if(userState().advancementsAchieved){
+            const advancementInfo = userState().other.advancementsInfo.find((el:any)=>el.id===userState().advancementsAchieved[0])
             setAdvancementAchievedInfo(advancementInfo)
             // dispatch((dispatch, getState) => {
             //     setTimeout(async()=>{
@@ -66,7 +66,7 @@ export default function LevelInfo(){
             //     },0)
             // })
         }
-    },[userState.advancementsAchieved])
+    },[userState().advancementsAchieved])
     const closeAdvancementPopup=()=>{
         setAdvancementAchievedInfo(null)
         // dispatch(setUser({...user,advancementsAchieved:user.advancementsAchieved.slice(1)}))
@@ -145,7 +145,7 @@ export default function LevelInfo(){
 
 
 
-    if(!userState.expMultiplier) return null
+    if(!userState().expMultiplier) return null
 
 
 
@@ -153,14 +153,14 @@ export default function LevelInfo(){
         <>
             <div ref={levelInfoWrapperRef} className={styles.levelWrapper}>
                 <i onClick={hidePopup}      className={`fa-solid fa-xmark ${styles.xmark}`}></i>
-                {userState.expMultiplier.value>1&&<div className={styles.expMultiplier}>
-                    множител на опит <span className={styles.value}>x{userState.expMultiplier.value}</span>
+                {userState().expMultiplier.value>1&&<div className={styles.expMultiplier}>
+                    множител на опит <span className={styles.value}>x{userState().expMultiplier.value}</span>
                 </div>}
 
                 <div className={styles.levelBarC}>
                     <div
                         style={{
-                            width:calculateExpPercentage(userState.exp,userCurrentLevel)+"%"||0
+                            width:calculateExpPercentage(userState().exp,userCurrentLevel)+"%"||0
                         }}
                         className={styles.levelBarProgress}>
 

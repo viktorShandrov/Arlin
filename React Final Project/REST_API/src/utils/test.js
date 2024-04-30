@@ -16,7 +16,7 @@ const models = require("../models/allModels"); // Import a fetch-compatible libr
 const newsManager = require("../managers/newsManager")
 const {response} = require("express");
 const wordManager = require("../managers/wordManager");
-const {setTodayNews} = require("../managers/newsManager");
+const {setTodayNews, fillDBWithNews} = require("../managers/newsManager");
 const {createClient} = require('@supabase/supabase-js')
 const mongoose = require("mongoose");
 const mongodb = require("mongodb");
@@ -28,14 +28,14 @@ const {createStripeProduct} = require("../managers/stripeManager");
 
 exports.test=async ()=> {
 
-    setTodayNews()
+    // setTodayNews()
     // wordManager.fillDBwithWords()
 
     // await createStripeProduct("Обикновен абонамент",499,null,"month","basic")
 
     // await createStripeProductsFromExistingBooks()
 
-
+    // fillDBWithNews()
 
     setTimeout(()=>{
         // translateChapter()

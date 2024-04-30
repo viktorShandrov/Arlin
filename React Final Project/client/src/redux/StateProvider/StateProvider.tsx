@@ -2,30 +2,25 @@
 import styles from "./StateProvider.module.css"
 import {createContext, useEffect, useState} from "react";
 import {REST_API} from "../../contants";
+import { useSynchronousState } from '@toolz/use-synchronous-state';
 
 
 
-async function getDataFromServer(){
-    const token = localStorage.getItem("token")
-    if(token){
-        const userData = await(await fetch(`${REST_API}users/userInfo`,{headers:{Authorization:token}})).json()
-        return {...userData,token,userId:userData._id}
-    }else{
-        return null
+
+
+
+
+export const userContext = createContext(null);
+export default function StateProvider({initialState,children}){
+    const [userState, setUser] = useSynchronousState(initialState);
+
+
+
+
+    const setUserState =(user:any)=>{
+        // console.log("state changed from:", window.location.hash)
+        setUser(user)
     }
-}
-
-
-export const userContext = createContext(await getDataFromServer());
-export default function StateProvider({children}){
-    const [userState, setUserState] = useState(null);
-
-            useEffect(()=>{
-                console.log("State updated: ",userState)
-            },[userState])
-    // const setUser =(user:any)=>{
-    //     setUserState(user)
-    // }
     return(
         <userContext.Provider value={{ userState, setUserState }}>
             {children}

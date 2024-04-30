@@ -44,11 +44,11 @@ export default function Dashboard(){
 
     useEffect(()=>{
         // setUserState(user)
-        setUserInfo(userState)
+        setUserInfo(userState())
         {/*//@ts-ignore*/}
-        setAdvancements(setAdvancementsForUser(user))
+        setAdvancements(setAdvancementsForUser(userState()))
         {/*//@ts-ignore*/}
-        setShowedAdvancements(setAdvancementsForUser(user).splice(0,2))
+        setShowedAdvancements(setAdvancementsForUser(userState()).splice(0,2))
         const hash = window.location.hash;
         if (hash.slice(hash.lastIndexOf("#")) === "#inventory") {
             const inventoryElement = document.getElementById("inventory");
@@ -59,7 +59,7 @@ export default function Dashboard(){
         {/*//@ts-ignore*/}
         const timerInterval = setInterval(()=>updateCountdown(timerInterval), 1000);
 
-    },[userState])
+    },[userState()])
     function setAdvancementsForUser(user:any){
         return [...user.other.advancementsInfo.filter((adv:any)=>user.advancements.includes(adv.id)),
             ...user.other.advancementsInfo.filter((adv:any)=>!user.advancements.includes(adv.id)).map((adv:any)=>{return {...adv,isLocked:true}})]
@@ -70,13 +70,13 @@ export default function Dashboard(){
     }
 
     function updateCountdown(timerInterval:any) {
-        if(!userState.expMultiplier.dueTo)  return clearInterval(timerInterval);
+        if(!userState().expMultiplier.dueTo)  return clearInterval(timerInterval);
 
         // Get the current time
         const currentTime = new Date();
 
         // Convert the dueTo string to a Date object
-        const expirationTime = new Date(userState.expMultiplier.dueTo);
+        const expirationTime = new Date(userState().expMultiplier.dueTo);
 
         // Calculate the remaining time
         {/*//@ts-ignore*/}
@@ -105,9 +105,9 @@ export default function Dashboard(){
                 expirationTime.setMinutes(expirationTime.getMinutes() + 30);
 
                 setUserState(
-                    {...userState,
-                        inventory:{...userState.inventory,
-                            expMultiplier:userState.inventory.expMultiplier-1
+                    {...userState(),
+                        inventory:{...userState().inventory,
+                            expMultiplier:userState().inventory.expMultiplier-1
                         },
                         expMultiplier:{
                             value:1.5,

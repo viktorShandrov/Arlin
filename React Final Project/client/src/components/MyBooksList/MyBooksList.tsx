@@ -3,7 +3,7 @@ import styles from "./MyBooksList.module.css"
 {/*//@ts-ignore*/}
 import ContinueBookElement from "../Read/ContinueBookElement/BookElement";
 import {useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {request} from "../../functions";
 {/*//@ts-ignore*/}
 import BookElement from "../AllBooks/BookElement/BookElement";
@@ -13,11 +13,12 @@ import {Link, useNavigate} from "react-router-dom";
 import BookSection from "../BookSection/BookSection";
 import Loading from "../Spinner/Loading";
 import NoContentSection from "../NoContentSection/NoContentSection";
+import {userContext} from "../../redux/StateProvider/StateProvider";
 export default function MyBooksList(){
 
 
-    const {user} = useSelector((selector:any)=>selector.user)
-
+    // const {user} = useSelector((selector:any)=>selector.user)
+    const { userState,setUserState } = useContext(userContext);
     const [reqBooks,setReqBooks] = useState([])
     const [books,setBooks] = useState([])
     const [isLoading,setIsLoading] = useState(true)
@@ -48,8 +49,8 @@ export default function MyBooksList(){
                             bookName:book.name
                         }
                 }))
-                if(user.lastReading){
-                    setCurrentReading(allBooks.find((book:any)=>book._id.toString() === user.lastReading.bookId.toString()))
+                if(userState.lastReading){
+                    setCurrentReading(allBooks.find((book:any)=>book._id.toString() === userState.lastReading.bookId.toString()))
                 }
                 setIsLoading(false)
 
@@ -87,7 +88,7 @@ export default function MyBooksList(){
         const target = e.currentTarget
         // target.parentElement.textContent = "d"
         // target.classList.add(styles.clicked)
-            navigate(`/main/read/${user.lastReading.bookId}/chapterId=${user.lastReading.chapterId}`)
+            navigate(`/main/read/${userState.lastReading.bookId}/chapterId=${userState.lastReading.chapterId}`)
         // setTimeout(()=>{
         //     // target.classList.remove(styles.clicked)
         // },1000)

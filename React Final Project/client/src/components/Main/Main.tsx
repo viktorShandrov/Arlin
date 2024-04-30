@@ -23,17 +23,16 @@ import TrophyRoad from "../TrophyRoad/TrophyRoad";
 import PlansCatalog from "../PlansCatalog/PlansCatalog";
 export default function Main(){
     return(
-        <>
-            <div className={styles.templateWrapper}>
-                <Navigation/>
+            <>
+                <div className={styles.templateWrapper}>
+                    <Navigation/>
                     <Routes>
                         <Route element={<AuthGuard/>}>
                             <Route path={"*"} element={<LevelInfo />}></Route>
-
                         </Route>
                     </Routes>
 
-                <Routes>
+                    <Routes>
                         <Route element={<AuthGuard/>}>
                             <Route path={"/test/matchFourTests"} element={<MachFourTest />}></Route>
                             <Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>
@@ -53,10 +52,9 @@ export default function Main(){
                         <Route path={"/hero"} element={<LandingPage />}></Route>
                         <Route path={"/news/:id/"} element={<NewsDetails />}></Route>
                         <Route path={"/news"} element={<NewsList />}></Route>
-                </Routes>
-            </div>
-
-        </>
+                    </Routes>
+                </div>
+            </>
 
     )
 }

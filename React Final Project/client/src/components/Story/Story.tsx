@@ -1,5 +1,5 @@
 import Sentence from "./Sentence/Sentence.tsx";
-import { useState} from "react";
+import {useContext, useState} from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import styles from "./Story.module.css"
 import { useSelector} from "react-redux";
@@ -9,6 +9,7 @@ import Rating from "@mui/material/Rating";
 import useForm from "../../hooks/useForm";
 import {request} from "../../functions";
 import {toast} from "react-toastify";
+import {userContext} from "../../redux/StateProvider/StateProvider";
 // import {setUser} from "../../redux/user";
 // @ts-ignore
 export default function Story({chapter,changeChapterClickHandler,isLoading,isRateBtnVisible,bookId}){
@@ -16,8 +17,8 @@ export default function Story({chapter,changeChapterClickHandler,isLoading,isRat
     const urlLocation = useLocation()
     const navigate = useNavigate();
 // @ts-ignore
-    const {user} = useSelector((state:any)=>state.user)
-
+//     const {user} = useSelector((state:any)=>state.user)
+    const { userState,setUserState } = useContext(userContext);
     const [isRatePopUpVisible,setIsRatePopUpVisible] = useState(false)
     const [formValue,onChange,resetForm] = useForm({rateText:"",bookUserRating:0})
 

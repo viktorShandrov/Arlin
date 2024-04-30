@@ -2,19 +2,21 @@
 import styles from "./TrophyRoad.module.css"
 import {calculateLevel} from "../../functions";
 import {useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import {userContext} from "../../redux/StateProvider/StateProvider";
 export default function TrophyRoad(){
-    const {user} = useSelector((state:any)=>state.user)
+    // const {user} = useSelector((state:any)=>state.user)
+    const { userState,setUserState } = useContext(userContext);
     const [rewardLevels,setRewardLevels] = useState([])
 
     useEffect(()=>{
-        if(!user.other.levelRewards) return
-        const rewardLevels = Object.entries(user.other.levelRewards).map(([level,rewardName])=> {
+        if(!userState().other.levelRewards) return
+        const rewardLevels = Object.entries(userState().other.levelRewards).map(([level,rewardName])=> {
             return {level:Number(level),rewardName}
         })
         {/*//@ts-ignore*/}
         setRewardLevels(rewardLevels)
-        const currentUserLevel = calculateLevel(user.exp)
+        const currentUserLevel = calculateLevel(userState().exp)
         for (let i =0;i<rewardLevels.length;i++){
             const previousLevel = rewardLevels[i-1]?.level
 
@@ -37,9 +39,9 @@ export default function TrophyRoad(){
                 break
             }
         }
-    },[user])
+    },[userState()])
 
-    if(!user.other.levelRewards) return null
+    if(!userState().other.levelRewards) return null
 
 
 

@@ -1,5 +1,5 @@
 import styles from "./AllBooks.module.css"
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {request} from "../../functions";
 // import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -10,6 +10,7 @@ import BookSection from "../BookSection/BookSection";
 import Popup from "../Popup/Popup";
 import {useNavigate} from "react-router-dom";
 import NoContentSection from "../NoContentSection/NoContentSection";
+import {userContext} from "../../redux/StateProvider/StateProvider";
 export default function AllBooks(){
 
     const [reqBooks,setReqBooks] = useState([])
@@ -30,7 +31,8 @@ export default function AllBooks(){
         author:[],
         genre:[],
     })
-    const {user} = useSelector((selector:any)=>selector.user)
+
+    const { userState,setUserState } = useContext(userContext);
     const navigate = useNavigate()
     useEffect(()=>{
         getAll()
@@ -241,7 +243,7 @@ export default function AllBooks(){
                             <NoContentSection/>
                         </BookSection>
 
-                        <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(user.userId)&&!book.isBookOwnedByUser)} sectionHeader={"В списъка с желания"}>
+                        <BookSection books={books.filter((book:any)=>book.wishedBy?.includes(userState().userId)&&!book.isBookOwnedByUser)} sectionHeader={"В списъка с желания"}>
                             {/*//@ts-ignore*/}
                             <NoContentSection/>
                         </BookSection>

@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt")
 
 
 const schema = mongoose.Schema({
-    source_id:String,
+    idFromSource:String,
     keywords: {
         type: [String],
         default: undefined,

@@ -45,7 +45,7 @@ export default  function Read(){
 
 
                 setUserState(
-                    {...userState,lastReading:{
+                    {...userState(),lastReading:{
                             bookId,
                             chapterId
                         }}
