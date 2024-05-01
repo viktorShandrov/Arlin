@@ -298,7 +298,7 @@ import('random-words')
                     async function makeTestOutOfWords(words){
                         const container = []
                         for (const question of words) {
-
+                            console.log(question)
                            const answers = await makeWrongAnswers(question)
                              const rightAnswer ={
                                answer:question.translatedText,
@@ -311,6 +311,9 @@ import('random-words')
 
                                 container.push(
                                     {
+                                        sentenceWhereWordsIsPresent:question.examples[0].sentenceWhereWordsIsPresent,
+                                        sentenceWhereWordsIsPresentTranslation:question.examples[0].translation,
+                                        translation:question.translatedText,
                                         wordId:question._id,
                                         question:question.word,
                                         answers

@@ -9,6 +9,7 @@
     --lightRed: #A73701;
     --lightBlue: #75A9AB;
     --darkBlue: #4C6A69;
+    --navDisplay: block;
 }
 body,html{
     margin: 0;

@@ -53,6 +53,7 @@ const giveTestRoute = async (req,res)=>{
         const {_id} = req.user
         const {testType,chapterId} = req.body
         const test =  await wordManager.generateTest(_id,testType,chapterId)
+        console.log(test)
         res.status(200).json({test})
     } catch (error) {
         console.log(error)

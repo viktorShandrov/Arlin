@@ -1,6 +1,10 @@
 
 .wrapper{
     padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .quitAndRestartBtns{
@@ -10,11 +14,17 @@
 }
 
 .quitAndRestartBtns .btn{
-    padding: 3px 16px;
+    padding: 3px 12px;
     color: white;
     border-radius: 10px;
     border: solid 2px var(--darkRed);
     background-color: var(--darkRed);
+    display: flex;
+    gap: 5px;
+}
+.quitAndRestartBtns .btn *{
+    display: flex;
+    align-self: center;
 }
 .quitAndRestartBtns .btn.quitBtn{
     color: var(--darkRed);
@@ -26,10 +36,13 @@
 
 .questionAndNavigation{
     padding-left: 40px;
+    display: flex;
+    justify-content: space-between;
 }
 .questionHeadingFirst{
     display: inline-block;
 }
+
 
 .word{
     /*padding: 10px   ;*/
@@ -37,9 +50,62 @@
     display: inline-block;
     padding-left: 20px;
 }
+.helpBtn{
+    display: flex;
+    gap: 6px;
+    font-size: 14px;
+    padding: 4px 15px;
+    background-color: white;
+    border-radius: 5px;
+    border: solid 2px var(--lightBlue);
+   color: var(--lightBlue);
+}
+
+.helpBtn .infoIcon{
+    border: solid var(--lightBlue) 1px;
+    padding: 3px;
+    font-size: 12px;
+    width: 20px;
+    height: 20px;
+    border-radius: 100px;
+}
 
 
+.navigationWrapper{
+    display: flex;
+    gap: 13px;
+}
+.questionNumberNavEl{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+    border-radius: 100px;
+    border:  solid 2px var(--lightBlue);
+    color: var(--lightBlue);
+    aspect-ratio: 1/1;
+    cursor: pointer;
 
+}
+.questionNumberNavEl:hover{
+    background-color: var(--darkBlue);
+    border: var(--darkBlue);
+    color: white;
+}
+
+
+.alreadyAnsweredQuestion{
+    background-color: var(--lightBlue);
+    color: white;
+    border: var(--lightBlue);
+}
+.questionNumberNavEl.currentQuestion{
+    background-color: var(--darkBlue);
+    color: white;
+    border: var(--darkBlue);
+}
 
 
 
@@ -75,6 +141,13 @@
     align-items: center;
     gap: 10px;
     color: white;
+    cursor: pointer;
+}
+.answerBtn{
+    border: 2px solid var(--lightBlue);
+}
+.answerBtn:hover{
+    background-color: var(--darkBlue);
 }
 
 .forwardBtn{
@@ -82,7 +155,13 @@
     font-weight: bolder;
     display: flex;
     justify-content: center;
-    border: none;
+    border: solid 2px var(--lightRed);
+}
+
+.forwardBtn.cannotProceed{
+    background-color: white;
+    color: var(--lightRed);
+    cursor: not-allowed;
 }
 
 .dot{
@@ -100,14 +179,64 @@
 
 
 
+
 .helpWrapper{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 30px;
+}
+.questionedWord{
+    color: var(--lightRed);
+    display: inline;
+}
+.wordInSentence{
+    display: inline;
+}
+
+.warning{
+    color: grey;
+    font-size: 12px;
 }
 
 
 
+
+
+
+
+
+
+
+
+.incorectAnswers:not(.wrongAnswer):not(.rightAnswer){
+    background-color: white;
+    color: var(--lightBlue);
+    cursor: not-allowed;
+}
+
+.incorectAnswers:not(.wrongAnswer):not(.rightAnswer) .dot{
+    background-color: var(--lightBlue);
+}
+.wrongAnswer{
+    background-color: red;
+    border: 2px solid red;
+}
+.wrongAnswer:hover{
+    background-color: red;
+}
+.rightAnswer{
+    background-color: green;
+    border: 2px solid green;
+}
+.rightAnswer:hover{
+    background-color: green;
+}
+.textAndHeadingPair:nth-child(2){
+    display: none;
+}
+.textAndHeadingPair.helpSectionIsVisible{
+    display: block;
+}
 
 
 

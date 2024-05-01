@@ -24,7 +24,7 @@ import PlansCatalog from "../PlansCatalog/PlansCatalog";
 export default function Main(){
     return(
             <>
-                <div className={styles.templateWrapper}>
+                <div id={"templateWrapper"} className={styles.templateWrapper}>
                     <Navigation/>
                     <Routes>
                         <Route element={<AuthGuard/>}>

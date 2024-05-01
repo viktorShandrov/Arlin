@@ -10,11 +10,18 @@ export default function Test(){
 
     const {testType,chapterId} = useParams()
     const [test,setTest] = useState([])
+    const [isCurrentQuestionGuessed,setIsCurrentQuestionGuessed] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
+    const helpSectionRef = useRef(null)
+    const questionNumbersNavEls = useRef([])
+    const [answersHistory,setAnswersHistory] = useState([])
     const [isTestDone,setIsTestDone] = useState(false)
     const [question,setQuestion] = useState({
         answers:[{answer:"",isCorrect:false}],
-        question:""
+        question:"",
+        translation:"",
+        sentenceWhereWordsIsPresent:"",
+        sentenceWhereWordsIsPresentTranslation: undefined
     })
     const answerRefs = useRef([])
     const containerRef = useRef(null)
@@ -26,6 +33,86 @@ export default function Test(){
     const textToSpeechClickHandler = ()=>{
         const voice = new SpeechSynthesisUtterance(question.question)
         window.speechSynthesis.speak(voice)
+    }
+    const answerCLickEvent = (index:number,question:any)=>{
+        //if its already answered ->
+        if(answersHistory.some(el=>el.questionIndex == test.indexOf(question))) return
+        setIsCurrentQuestionGuessed(true)
+        const rightAnswerIndex = question.answers.findIndex(el=>el.isCorrect)
+        const clickedAnswer = question.answers[index]
+        // @ts-ignore
+        setAnswersHistory([...answersHistory,{
+            questionIndex: test.indexOf(question),
+            rightAnswerIndex:rightAnswerIndex,
+            guessedAnswerIndex: index
+        }])
+        console.log(answersHistory)
+        markCorrectAndIncorrectAnswers(index,rightAnswerIndex)
+
+        // @ts-ignore
+        if(answerRefs.current[index].getAttribute("data-iscorrect")=="true"){
+
+
+        }
+
+    }
+    function resetAnswersColors(){
+        for (const answerRef of answerRefs.current) {
+            //remove colors
+            answerRef.classList.remove(styles.wrongAnswer)
+            answerRef.classList.remove(styles.rightAnswer)
+            answerRef.classList.remove(styles.incorectAnswers)
+            helpSectionRef.current.classList.remove(styles.helpSectionIsVisible)
+        }
+    }
+    function checkIfAnsweredAlready(questionIndex){
+        const answeredQuestionData = answersHistory.find(el=>el.questionIndex==questionIndex)
+        if(answeredQuestionData){
+            markCorrectAndIncorrectAnswers(answeredQuestionData.guessedAnswerIndex,answeredQuestionData.rightAnswerIndex)
+        }
+    }
+    function markCorrectAndIncorrectAnswers(guessedIndex,rightAnswerIndex){
+
+        answerRefs.current.forEach(el=>{
+            el.classList.add(styles.incorectAnswers)
+        })
+        answerRefs.current[guessedIndex].classList.add(styles.wrongAnswer);
+        answerRefs.current[rightAnswerIndex].classList.add(styles.rightAnswer);
+
+    }
+    const forwardBtnCLick = () =>{
+        if(!isCurrentQuestionGuessed) return
+        setIsCurrentQuestionGuessed(false)
+        const questionIndex = test.findIndex(question1=>question1==question)
+        resetAnswersColors()
+        if(questionIndex==test.length-1){
+            setIsTestDone(true)
+            // makeUnknownWordsKnown()
+
+        }else{
+            setQuestion(()=>{
+                return test[questionIndex+1]
+            })
+            //change colors on test number nav
+            questionNumbersNavEls.current[questionIndex].classList.add(styles.alreadyAnsweredQuestion)
+            questionNumbersNavEls.current[questionIndex].classList.remove(styles.currentQuestion)
+            questionNumbersNavEls.current[questionIndex+1].classList.add(styles.currentQuestion)
+        }
+    }
+
+    const changeQuestionClick = (index) =>{
+        const questionIndex = test.findIndex(question1=>question1==question)
+
+        questionNumbersNavEls.current[questionIndex].classList.remove(styles.currentQuestion)
+        questionNumbersNavEls.current[index].classList.add(styles.currentQuestion)
+        resetAnswersColors();
+        checkIfAnsweredAlready(index);
+        setQuestion(()=>{
+            return test[index]
+        })
+    }
+    const helpBtnCLick = ()=>{
+        helpSectionRef.current.classList.add(styles.helpSectionIsVisible)
     }
 
     const answerClickHandler=(index:number)=>{
@@ -58,14 +145,28 @@ export default function Test(){
     }
 
     useEffect(()=>{
+        const r = document.querySelector("#root")
+        const t = document.querySelector("#templateWrapper")
+        // @ts-ignore
+        r.style.setProperty("--navDisplay", "none");
         request("unknownWords/giveTest","POST",{testType,chapterId}).subscribe(
             (res:any)=>{
                 console.log(res.test)
                 setTest(res.test)
                 setQuestion(res.test[0])
+                questionNumbersNavEls.current[0].classList.add(styles.currentQuestion)
+
                 setIsLoading(false)
             }
         )
+        return() =>{
+            // @ts-ignore
+            r.style.setProperty("--navDisplay", "block")
+            // @ts-ignore
+            t.style.setProperty("padding-left", "0")
+        }
+
+
     },[])
 
 
@@ -74,59 +175,88 @@ export default function Test(){
         <>
 
             <div className={styles.wrapper}>
-                <div className={styles.quitAndRestartBtns}>
-                        <button className={`${styles.btn} ${styles.restartBtn}`}>рестарт</button>
-                        <button className={`${styles.btn} ${styles.quitBtn}`}>изход</button>
-                </div>
-                <div className={styles.questionAndNavigation}>
-                    <div className={styles.questionWrapper}>
-                        <p >какво е значението на </p>
-                        <p className={styles.questionHeadingFirst}>думата</p>
-                        <h4 className={styles.word}>work</h4>
+                <div className={styles.mainView}>
+                    <div className={styles.quitAndRestartBtns}>
+                        <button className={`${styles.btn} ${styles.restartBtn}`}><i
+                            className="fa-solid fa-rotate-right"></i> рестарт</button>
+                        <button className={`${styles.btn} ${styles.quitBtn}`}><i
+                            className="fa-solid fa-person-walking-arrow-right"></i> изход</button>
                     </div>
-                </div>
-                        <div className={styles.answersAndHelp}>
-                            <div className={styles.answersBtnsWrapper}>
-                                <div className={styles.answersBtnsC}>
-                                    <div className={styles.answerBtn}>
-                                        <div className={styles.dot}></div>
-                                        <p className={styles.answerText}>самолет</p>
-                                    </div>
-                                    <div className={styles.answerBtn}>
-                                        <div className={styles.dot}></div>
-                                        <p className={styles.answerText}>самолет</p>
-                                    </div>
-                                    <div className={styles.answerBtn}>
-                                        <div className={styles.dot}></div>
-                                        <p className={styles.answerText}>самолет</p>
-                                    </div>
-                                    <div className={styles.answerBtn}>
-                                        <div className={styles.dot}></div>
-                                        <p className={styles.answerText}>самолет</p>
-                                    </div>
+                    <div className={styles.questionAndNavigation}>
+                        <div className={styles.questionWrapper}>
+                            <p >какво е значението на </p>
+                            <p className={styles.questionHeadingFirst}>думата:</p>
+                            <h4 className={styles.word}>{question.question}</h4>
+                            <button onClick={helpBtnCLick} className={styles.helpBtn}>затруднявам се <i className={`fa-solid fa-info ${styles.infoIcon}`}></i></button>
+                        </div>
+                        <div className={styles.navigationWrapper}>
+                            {test.map((question,index)=>{
+                                return <div onClick={()=>changeQuestionClick(index)} ref={(el:any) => questionNumbersNavEls.current[index] = el} className={styles.questionNumberNavEl}>
+                                    {index+1}
                                 </div>
-                            </div>
-                            <div className={styles.helpWrapper}>
-                                <div className={styles.textAndHeadingPair}>
-                                    <p>пример в изречение</p>
-                                    <h5>The people who want to receive money should work harder.</h5>
-                                </div>
-
-                                <div className={styles.textAndHeadingPair}>
-                                    <p>помощ</p>
-                                    <h5>Хората, които искат да получават пари, трябва да работят повече.</h5>
-                                </div>
-
-                                <button className={styles.forwardBtn}>
-                                    НАПРЕД &gt;
-                                </button>
-
-                            </div>
-
-
+                            })}
 
 
                         </div>
+                    </div>
+                    <div className={styles.answersAndHelp}>
+                        <div className={styles.answersBtnsWrapper}>
+                            <div className={styles.answersBtnsC}>
+                                {question.answers.map((answer,index)=>{
+                                   return <div className={styles.answerBtn} onClick={()=>answerCLickEvent(index,question)} ref={(el:any) => answerRefs.current[index] = el} data-iscorrect={answer.isCorrect}>
+                                        <div className={styles.dot}></div>
+                                        <p className={styles.answerText}>{answer.answer}</p>
+                                    </div>
+                                })
+
+                                }
+
+
+                            </div>
+                        </div>
+                        <div className={styles.helpWrapper}>
+                            <div className={styles.textAndHeadingPair}>
+                                <p>пример в изречение</p>
+                                <p className={styles.warning}>* смисловото значение на думата в изречението може и да не съвпада с възможните отговори</p>
+                                {question.sentenceWhereWordsIsPresent.split(" ")
+                                    .map(word=>{
+                                        return <h5 className={word == question.question?styles.questionedWord:styles.wordInSentence}>{word} </h5>
+                                    })
+                                }
+                                {/*<h5 className={styles.sentenceWhereWordsIsPresent}>*/}
+                                {/*    {question.sentenceWhereWordsIsPresent.split(" ")*/}
+                                {/*    .slice(0,question.sentenceWhereWordsIsPresent.split(" ").indexOf(question.question))*/}
+                                {/*    .join(" ")}*/}
+
+                                {/*    <h5 className={styles.wordInSentence}>{question.question}</h5>*/}
+
+                                {/*    {question.sentenceWhereWordsIsPresent.split(" ")*/}
+                                {/*        .slice(question.sentenceWhereWordsIsPresent.split(" ").indexOf(question.question))*/}
+                                {/*        .join(" ")}*/}
+
+                                {/*</h5>*/}
+                            </div>
+
+                            <div ref={helpSectionRef} className={styles.textAndHeadingPair}>
+                                <p>помощ</p>
+                                <h5>{question.sentenceWhereWordsIsPresentTranslation}</h5>
+                            </div>
+
+
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+
+
+
+                <button onClick={forwardBtnCLick} className={`${styles.forwardBtn} ${isCurrentQuestionGuessed?styles.canProceed:styles.cannotProceed}`}>
+                    НАПРЕД &gt;
+                </button >
 
 
             </div>

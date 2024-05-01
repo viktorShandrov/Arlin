@@ -10,6 +10,7 @@
     transition: 1s;
     font-family: "Shantell Sans", serif;
     z-index: 999;
+    display: var(--navDisplay);
 }
 
 
