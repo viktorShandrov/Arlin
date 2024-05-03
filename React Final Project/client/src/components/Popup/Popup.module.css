@@ -4,8 +4,11 @@
     display: block !important;
     /*flex-direction: column;*/
     border-radius: 20px;
+    border: solid 3px var(--lightBlue);
     background-color: white;
     z-index: 999999999;
+    min-width: 200px;
+    min-height: 200px;
     max-height: 100%;
     overflow-y: auto;
 }
@@ -13,17 +16,24 @@
     height: fit-content;
 }
 .xmark{
-    width: fit-content;
     position: absolute;
     right: 10px;
     top: 10px;
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+    font-size: 20px;
     border-radius: 100px;
-    transition: 0.3s;
+    transition: 0.2s;
     align-self: flex-end;
+    color: white;
+    background-color: var(--lightBlue);
 }
 .xmark:hover{
-    background-color: black;
+    background-color: var(--darkBlue);
     color: white;
     cursor: pointer;
 }

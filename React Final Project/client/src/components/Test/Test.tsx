@@ -5,6 +5,7 @@ import {request} from "../../functions";
 import Spinner from 'react-bootstrap/Spinner';
 import { useParams} from "react-router-dom";
 import TestResume from "../TestResume/TestResume";
+import Popup from "../Popup/Popup";
 
 export default function Test(){
 
@@ -12,8 +13,10 @@ export default function Test(){
     const [test,setTest] = useState([])
     const [isCurrentQuestionGuessed,setIsCurrentQuestionGuessed] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
+    const [isMobileNavVisible,setIsMobileNavVisible] = useState(true)
     const helpSectionRef = useRef(null)
     const questionNumbersNavEls = useRef([])
+    const questionNumbersNavMobileEls = useRef([])
     const [answersHistory,setAnswersHistory] = useState([])
     const [isTestDone,setIsTestDone] = useState(false)
     const [question,setQuestion] = useState({
@@ -85,18 +88,38 @@ export default function Test(){
         setIsCurrentQuestionGuessed(false)
         const questionIndex = test.findIndex(question1=>question1==question)
         resetAnswersColors()
-        if(questionIndex==test.length-1){
+        if(answersHistory.length==test.length){
             setIsTestDone(true)
             // makeUnknownWordsKnown()
 
         }else{
+            let targetIndex = questionIndex+1
+
+            //if its on the end of the test but has unchecked questions
+            if(targetIndex>test.length-1){
+                targetIndex = findUnguessedQuestion()
+            }
+
             setQuestion(()=>{
-                return test[questionIndex+1]
+                return test[targetIndex]
             })
             //change colors on test number nav
             questionNumbersNavEls.current[questionIndex].classList.add(styles.alreadyAnsweredQuestion)
             questionNumbersNavEls.current[questionIndex].classList.remove(styles.currentQuestion)
-            questionNumbersNavEls.current[questionIndex+1].classList.add(styles.currentQuestion)
+            questionNumbersNavEls.current[targetIndex].classList.add(styles.currentQuestion)
+            //mobile nav
+            questionNumbersNavMobileEls.current[questionIndex].classList.add(styles.alreadyAnsweredQuestion)
+            questionNumbersNavMobileEls.current[questionIndex].classList.remove(styles.currentQuestion)
+            questionNumbersNavMobileEls.current[targetIndex].classList.add(styles.currentQuestion)
+        }
+    }
+    function findUnguessedQuestion(){
+        let prevIndex = -1;
+        for (const {questionIndex} of answersHistory.sort((a,b)=>a.questionIndex - b.questionIndex)) {
+            if(questionIndex!==prevIndex+1){
+                return prevIndex+1;
+            }
+            prevIndex++
         }
     }
 
@@ -105,6 +128,11 @@ export default function Test(){
 
         questionNumbersNavEls.current[questionIndex].classList.remove(styles.currentQuestion)
         questionNumbersNavEls.current[index].classList.add(styles.currentQuestion)
+        //mobile nav
+        questionNumbersNavMobileEls.current[questionIndex]?.classList.remove(styles.currentQuestion)
+        questionNumbersNavMobileEls.current[index]?.classList.add(styles.currentQuestion)
+
+        setIsMobileNavVisible(false)
         resetAnswersColors();
         checkIfAnsweredAlready(index);
         setQuestion(()=>{
@@ -154,7 +182,12 @@ export default function Test(){
                 console.log(res.test)
                 setTest(res.test)
                 setQuestion(res.test[0])
-                questionNumbersNavEls.current[0].classList.add(styles.currentQuestion)
+                setTimeout(()=>{
+                    questionNumbersNavEls.current[0].classList.add(styles.currentQuestion)
+                    questionNumbersNavMobileEls.current[0]?.classList.add(styles.currentQuestion)
+                },0)
+                // @ts-ignore
+                t.style.setProperty("padding", "0")
 
                 setIsLoading(false)
             }
@@ -162,21 +195,23 @@ export default function Test(){
         return() =>{
             // @ts-ignore
             r.style.setProperty("--navDisplay", "block")
-            // @ts-ignore
-            t.style.setProperty("padding-left", "0")
         }
 
 
     },[])
 
-
+    const hideNavMobilePopup=()=>{
+        setIsMobileNavVisible(false)
+    }
 
     return(
         <>
 
             <div className={styles.wrapper}>
                 <div className={styles.mainView}>
+
                     <div className={styles.quitAndRestartBtns}>
+                        <button onClick={()=>setIsMobileNavVisible(true)} className={`${styles.btn} ${styles.questionsMenuMobileBtn}`}>въпрос {test.indexOf(question)+1}</button>
                         <button className={`${styles.btn} ${styles.restartBtn}`}><i
                             className="fa-solid fa-rotate-right"></i> рестарт</button>
                         <button className={`${styles.btn} ${styles.quitBtn}`}><i
@@ -195,9 +230,20 @@ export default function Test(){
                                     {index+1}
                                 </div>
                             })}
-
-
                         </div>
+
+                            <Popup hidePopup={hideNavMobilePopup} styleSelector={styles.navMobilePopup} isWithDisplayNone={!isMobileNavVisible}>
+                                <div className={styles.questionsMenuMobile}>
+                                    {test.map((question,index)=>{
+                                        return <div onClick={()=>changeQuestionClick(index)} ref={(el:any) => questionNumbersNavMobileEls.current[index] = el} className={styles.questionNumberNavMobileEl}>
+                                            {index+1}
+                                        </div>
+                                    })}
+                                </div>
+
+
+                            </Popup>
+
                     </div>
                     <div className={styles.answersAndHelp}>
                         <div className={styles.answersBtnsWrapper}>
@@ -223,18 +269,7 @@ export default function Test(){
                                         return <h5 className={word == question.question?styles.questionedWord:styles.wordInSentence}>{word} </h5>
                                     })
                                 }
-                                {/*<h5 className={styles.sentenceWhereWordsIsPresent}>*/}
-                                {/*    {question.sentenceWhereWordsIsPresent.split(" ")*/}
-                                {/*    .slice(0,question.sentenceWhereWordsIsPresent.split(" ").indexOf(question.question))*/}
-                                {/*    .join(" ")}*/}
 
-                                {/*    <h5 className={styles.wordInSentence}>{question.question}</h5>*/}
-
-                                {/*    {question.sentenceWhereWordsIsPresent.split(" ")*/}
-                                {/*        .slice(question.sentenceWhereWordsIsPresent.split(" ").indexOf(question.question))*/}
-                                {/*        .join(" ")}*/}
-
-                                {/*</h5>*/}
                             </div>
 
                             <div ref={helpSectionRef} className={styles.textAndHeadingPair}>
