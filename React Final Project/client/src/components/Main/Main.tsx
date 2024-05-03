@@ -21,6 +21,7 @@ import LevelInfo from "../LevelInfo/LevelInfo";
 import TestsList from "../TestsList/TestsList";
 import TrophyRoad from "../TrophyRoad/TrophyRoad";
 import PlansCatalog from "../PlansCatalog/PlansCatalog";
+import TestResume from "../TestResume/TestResume";
 export default function Main(){
     return(
             <>
@@ -39,6 +40,7 @@ export default function Main(){
                             <Route path={"/exercise"} element={<Test isExercise={true} />}></Route>
                             <Route path={"/tests"} element={<TestsList />}></Route>
                             <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
+                            <Route path={"/testResults/:testId"} element={<TestResume />}></Route>
                             <Route path={"/AllBooks/freeBookMode?"} element={<AllBooks />}></Route>
                             <Route path={"/read"} element={<MyBooksList />}></Route>
                             <Route path={"/read/:bookId/:chapterId/:textToTranslate?"} element={<Read />}></Route>

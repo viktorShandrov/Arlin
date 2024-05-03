@@ -1,49 +1,21 @@
-.testDoneContainer{
-    max-width: 98%;
+.questionsListC{
+    width: 50%;
     display: flex;
     flex-direction: column;
-    background-color: #4C6A69;
-    padding: 30px;
-    border-radius: 20px;
+    gap: 30px;
+}
+
+.questionListItem{
+    padding: 20px;
+    background-color:var(--darkBlue);
     color: white;
-    text-align: center;
-    height: fit-content;
-    margin: auto;
-}
-.rowsC{
-    display: flex;
-    flex-direction: column;
-    background-color: #75A9AB;
-    padding: 10px;
     border-radius: 10px;
-    margin-top: 30px;
 }
-.row{
-    text-align: center;
+
+.headings{
     display: flex;
     justify-content: space-between;
-    color: white;
 }
-.row:not(:first-child){
-    border-top: 1px #4C6A69 solid;
-
-}
-.row>*{
-    text-wrap: normal;
-    flex: 1;
-}
-.proceedBtn{
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #76f200;
-    border-radius: 10px;
-    border: none;
-    color: white;
-}
-
-@media (max-width: 450px){
-    .testDoneContainer{
-        padding: 10px;
-        padding-bottom: 20px;
-    }
+.wordPair{
+    display: flex;
 }

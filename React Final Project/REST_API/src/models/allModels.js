@@ -6,4 +6,5 @@ module.exports = {
     chapterQuestionsModel : require("./chapterQuestionsModel"),
     newsModel : require("./newsModel"),
     wordsContainer : require("./wordContainerModel"),
+    testModel : require("./testModel"),
 }

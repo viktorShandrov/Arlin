@@ -52,6 +52,8 @@ export default function Test({isExercise}){
             rightAnswerIndex:rightAnswerIndex,
             guessedAnswerIndex: index
         }])
+
+
         console.log(answersHistory)
         markCorrectAndIncorrectAnswers(index,rightAnswerIndex)
 

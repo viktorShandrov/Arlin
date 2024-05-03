@@ -53,7 +53,6 @@ const giveTestRoute = async (req,res)=>{
         const {_id} = req.user
         const {testType,chapterId,isExercise} = req.body
         const test =  await wordManager.generateTest(_id,testType,chapterId,isExercise)
-        console.log(test)
         res.status(200).json({test})
     } catch (error) {
         console.log(error)
@@ -70,9 +69,20 @@ router.post("/giveTest",isAuth,giveTestRoute)
 router.post("/testCompleted",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
-        const {testType,wordsIds} = req.body
-        await wordManager.markTestAsCompleted(_id,testType,wordsIds,res)
+        const {testType,wordsIds,isExercise,results} = req.body
+        await wordManager.markTestAsCompleted(_id,testType,wordsIds,res,results,isExercise)
         res.status(200).json({...res.body})
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
+
+router.get("/testDetails/:testId",isAuth,async (req,res)=>{
+    try{
+        const {testId} = req.params
+        const testDetails = await wordManager.getTestDetails(testId)
+        res.status(200).send({testDetails})
     } catch (error) {
         console.log(error)
         res.status(400).json({message:error.message})

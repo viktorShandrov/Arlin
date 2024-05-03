@@ -1,6 +1,5 @@
 
 
-
 const models = require("../models/allModels");
 const utils = require("../utils/utils");
 const { isOwnedByUser, isAdmin } = require("../managerUtils/managerUtil");
@@ -47,7 +46,20 @@ import('random-words')
                         questions = [...questions,...randomWordsToFill]
 
 
-                        return await makeTestOutOfWords(questions,testType,isExercise)
+
+                        const containerForTestResult ={
+                            madeBy:userId,
+                            questions:[],
+                            score:0,
+                            isExercise,
+                            isDone:false
+                        }
+
+                        const test = await makeTestOutOfWords(questions,testType,isExercise,containerForTestResult)
+                        await allModels.testModel.create(containerForTestResult)
+
+
+                        return test
                     }
 
 
@@ -270,8 +282,17 @@ import('random-words')
                         "
                     `
 
-                    exports.markTestAsCompleted =async (userId,testType,wordsIds,res)=>{
+                    exports.markTestAsCompleted =async (userId,testType,wordsIds,res,results,isExercise)=>{
                         const user = await models.userModel.findById(userId)
+
+                        await allModels.testModel.create({
+                            madeBy:userId,
+                            questions:results,
+                            isExercise
+                        })
+
+
+
                         switch(testType){
                             case utils.testTypes.randomWords :
                                 await exports.makeThemKnown(wordsIds,userId)
@@ -298,7 +319,7 @@ import('random-words')
                         const randomIndex = Math.floor(Math.random() * wordsArray.length);
                         return wordsArray[randomIndex];
                     }
-                    async function makeWrongAnswers(question,testType){
+                    async function makeWrongAnswers(question,testType,i,containerForTestResult){
 
                         return (await allModels.wordModel.aggregate([
                             { $match: { word: { $ne: question.word } } },
@@ -306,8 +327,10 @@ import('random-words')
                         ])).map(question=>{
                             switch (testType){
                                 case utils.testTypes.randomWords:
+                                    containerForTestResult.questions[i].possibleAnswers.push(question._id)
                                     return {answer:question.translatedText,isCorrect : false,}
                                 case utils.testTypes.fillWord:
+                                    containerForTestResult.questions[i].possibleAnswers.push(question._id)
                                     return {answer:question.word,isCorrect : false,}
                             }
 
@@ -315,10 +338,10 @@ import('random-words')
                         // return (await allModels.wordModel.find({ word: { $ne: question.word } }).limit(3)).map(el=>el.translatedText);
                         // return exports.translateWrongAnswers([randomWords.generate(),randomWords.generate(),randomWords.generate()])
                     }
-                    function makeTestPlan(){
+                    function makeTestPlan(isExersice){
                         const testsPlan = []
                         let marker = 0;
-                        const testTypesCount = Object.keys(utils.excersiceTypes).length
+                        const testTypesCount =isExersice? Object.keys(utils.excersiceTypes).length : Object.keys(utils.testTypes).length
                         const everyTestTypeCount =12/testTypesCount;
                         for (let i = 0; i < 12; i+=everyTestTypeCount) {
                             for (let j = 0; j < everyTestTypeCount; j++) {
@@ -330,26 +353,46 @@ import('random-words')
                     }
 
 
-                    async function makeTestOutOfWords(words,testType,isExercise){
+                    async function makeTestOutOfWords(words,testType,isExercise,containerForTestResult){
                         const container = []
-                        const testsPlan = makeTestPlan()
+                        const testsPlan = makeTestPlan(isExercise)
+
+
 
 
                         for (let i = 0; i < words.length; i++) {
                             const question = words[i]
-                            const testType = isExercise?Object.entries(utils.excersiceTypes)[testsPlan[i]][1]:Object.entries(utils.testTypes)[i][1]
-                            const answers = await makeWrongAnswers(question,testType)
+                            const testType = isExercise?Object.entries(utils.excersiceTypes)[testsPlan[i]][1]:Object.entries(utils.testTypes)[testsPlan[i]][1]
+
+                            // save for DB
+                            containerForTestResult.questions.push(
+                                {
+                                    question:question.word,
+                                    testType,
+                                    possibleAnswers:[],
+                                    rightAnswer:{
+                                        stringValue:null,
+                                        wordId:null
+                                    }
+                                }
+                            )
+
+                            const answers = await makeWrongAnswers(question,testType,i,containerForTestResult)
                             const rightAnswer ={
                                 isCorrect : true,
                             }
+                            console.log(containerForTestResult.questions[i])
                             switch (testType){
                                 case utils.testTypes.randomWords:
                                     rightAnswer.answer = question.translatedText;
+                                    containerForTestResult.questions[i].rightAnswer.stringValue = question.translatedText
                                     break;
                                 case utils.testTypes.fillWord:
                                     rightAnswer.answer = question.word;
+                                    containerForTestResult.questions[i].rightAnswer.wordId = question.wordId
                                     break;
                             }
+
 
                             const randomNumber = Math.floor(Math.random() * 4);
                             //place it on random place
@@ -440,6 +483,10 @@ import('random-words')
             exports.translateText=async(text)=>{
                 const response = await((await fetch(utils.translateAPI+encodeURI(text))).json())
                 return response.translation
+            }
+
+            exports.getTestDetails = (testId)=>{
+                        return allModels.testModel.findById(testId)
             }
             })
 
