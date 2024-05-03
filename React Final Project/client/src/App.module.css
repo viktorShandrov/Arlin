@@ -5,8 +5,9 @@ main{
     display: flex;
 }
 .mainWrapper{
-    background-color: #b2adad;
-    padding: 7px;
+    /*background-color: #b2adad;*/
+    background-color: var(--lightBlue);
+    padding: 5px;
     border-radius: 10px;
     height: 100%;
     max-width: 1400px;

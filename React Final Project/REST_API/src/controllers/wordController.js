@@ -51,8 +51,8 @@ router.post("/makeThemKnown",isAuth,async (req,res)=>{
 const giveTestRoute = async (req,res)=>{
     try{
         const {_id} = req.user
-        const {testType,chapterId} = req.body
-        const test =  await wordManager.generateTest(_id,testType,chapterId)
+        const {testType,chapterId,isExercise} = req.body
+        const test =  await wordManager.generateTest(_id,testType,chapterId,isExercise)
         console.log(test)
         res.status(200).json({test})
     } catch (error) {

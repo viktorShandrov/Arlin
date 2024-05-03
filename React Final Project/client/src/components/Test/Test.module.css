@@ -17,6 +17,7 @@
     flex-wrap: wrap;
     justify-content: right;
     gap: 10px;
+    margin-bottom: 20px;
 }
 
 .quitAndRestartBtns .btn{
@@ -53,17 +54,35 @@
     padding-left: 40px;
     display: flex;
     justify-content: space-between;
+    gap: 10px;
+}
+.questionAndNavigation.sentence{
+    flex-direction: column;
+}
+.questionAndNavigation>*{
+    /*flex-grow: 1;*/
+    /*flex-basis: 0;*/
+}
+.questionAndNavigation.sentence>*:first-child{
+    order: 2;
+}
+.questionAndNavigation.sentence .navigationWrapper{
+    justify-content:right;
 }
 .questionHeadingFirst{
     display: inline-block;
 }
-
 
 .word{
     /*padding: 10px   ;*/
     text-align: center;
     display: inline-block;
     padding-left: 20px;
+}
+
+.word.sentence{
+    padding-left: 0;
+    text-align: left;
 }
 .helpBtn{
     display: flex;
@@ -89,12 +108,15 @@
 .navigationWrapper{
     display: flex;
     gap: 13px;
+    flex: 0 0 auto;
+   align-items: flex-start;
+
 }
 .questionNumberNavEl,
 .questionNumberNavMobileEl{
     display: flex;
     justify-content: center;
-    align-self: center;
+    /*align-self: center;*/
     width: 35px;
     height: 35px;
     padding: 5px;
@@ -111,7 +133,11 @@
     border: var(--darkBlue);
     color: white;
 }
-
+.popupHeading{
+    position: absolute;
+    top: 20px;
+    left: 30px;
+}
 .questionsMenuMobile{
     display: flex;
     flex-direction: column;
@@ -120,7 +146,7 @@
 }
 .questionNumberNavMobileEl{
     width: 100%;
-    border-radius: 10px;
+    border-radius: 13px;
     padding: 30px;
     display: flex;
     align-items: center;
@@ -307,6 +333,7 @@
     .quitAndRestartBtns{
         justify-content: left;
         max-width: 350px;
+
     }
 
     .quitAndRestartBtns .btn{

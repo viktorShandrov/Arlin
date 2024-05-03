@@ -7,6 +7,7 @@
     position: relative;
     flex-direction: column;
     background-color: white;
+    border-radius: 7px;
 }
 .templateWrapper:nth-child(2){
     flex: 1;

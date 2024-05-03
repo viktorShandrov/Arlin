@@ -1,5 +1,6 @@
 
 
+
 const models = require("../models/allModels");
 const utils = require("../utils/utils");
 const { isOwnedByUser, isAdmin } = require("../managerUtils/managerUtil");
@@ -18,40 +19,53 @@ import('random-words')
 
 
 
+                    function shuffleArray(array) {
+                        for (let i = array.length - 1; i > 0; i--) {
+                            const j = Math.floor(Math.random() * (i + 1));
+                            [array[i], array[j]] = [array[j], array[i]];
+                        }
+                        return array;
+                    }
 
-                    exports.generateTest =async(userId,testType,chapterId)=>{
+                    async function getWordDetailsAsQuestions(userId){
+                        const userWordsContainers = await allModels.wordsContainer.find({ownedBy:userId}).populate("words.wordRef")
+                        //12 words
+                        return shuffleArray(userWordsContainers.flatMap((container) => container.words.map((wordRef)=>wordRef.wordRef))).slice(0,12);
 
-                        function shuffleArray(array) {
-                            for (let i = array.length - 1; i > 0; i--) {
-                                const j = Math.floor(Math.random() * (i + 1));
-                                [array[i], array[j]] = [array[j], array[i]];
-                            }
-                            return array;
+                    }
+
+
+                    async function makeWordTest(userId,isExercise,testType=null){
+                        let questions = await getWordDetailsAsQuestions(userId)
+
+                        //fill with random words if necessary
+                        let randomWordsToFill = []
+                        if(12-questions.length>0){
+                            randomWordsToFill = await allModels.wordModel.find({ word: { $nin: questions.map(el=>el.word) } }).limit(12-questions.length);
                         }
 
+                        questions = [...questions,...randomWordsToFill]
 
 
-                        if(testType === utils.testTypes.randomWords){
-                            const userWordsContainers = await allModels.wordsContainer.find({ownedBy:userId}).populate("words.wordRef")
-                            //12 words
-                            let questions = shuffleArray(userWordsContainers.flatMap((container) => container.words.map((wordRef)=>wordRef.wordRef))).slice(0,12);
-
-                            //  questions = await models.wordModel.find({
-                            //     unknownFor:{
-                            //         $in:userId
-                            //     }
-                            // }).limit(12)
-
-                            //fill with random words if necessary
-                            let randomWordsToFill = []
-                            if(12-questions.length>0){
-                                randomWordsToFill = await allModels.wordModel.find({ word: { $nin: questions.map(el=>el.word) } }).limit(12-questions.length);
-                            }
-
-                            questions = [...questions,...randomWordsToFill]
+                        return await makeTestOutOfWords(questions,testType,isExercise)
+                    }
 
 
-                            return await makeTestOutOfWords(questions)
+
+
+                    exports.generateTest =async(userId,testType,chapterId,isExercise)=>{
+
+
+
+                        return makeWordTest(userId,isExercise,testType)
+
+
+
+
+                        if(testType === utils.testTypes.randomWords||
+                            testType === utils.testTypes.fillWord
+                        ){
+                            return makeWordTest(false,testType)
 
                         }else if(testType === utils.testTypes.textWords){
                             //12 words from text
@@ -81,6 +95,8 @@ import('random-words')
                         }else if(testType === utils.testTypes.matchFour){
                             //match 4 words
                             return allModels.wordModel.aggregate([{ $sample: { size: 12 } }])
+                        }else if(testType === utils.testTypes.fillWord) {
+
                         }
                     function refactorQuestionAnswers(questions){
                         return questions.map(question=>{
@@ -282,54 +298,90 @@ import('random-words')
                         const randomIndex = Math.floor(Math.random() * wordsArray.length);
                         return wordsArray[randomIndex];
                     }
-                    async function makeWrongAnswers(question){
+                    async function makeWrongAnswers(question,testType){
 
                         return (await allModels.wordModel.aggregate([
                             { $match: { word: { $ne: question.word } } },
                             { $sample: { size: 3 } }
                         ])).map(question=>{
-                            return {answer:question.translatedText,isCorrect : false,}
+                            switch (testType){
+                                case utils.testTypes.randomWords:
+                                    return {answer:question.translatedText,isCorrect : false,}
+                                case utils.testTypes.fillWord:
+                                    return {answer:question.word,isCorrect : false,}
+                            }
+
                         })
                         // return (await allModels.wordModel.find({ word: { $ne: question.word } }).limit(3)).map(el=>el.translatedText);
                         // return exports.translateWrongAnswers([randomWords.generate(),randomWords.generate(),randomWords.generate()])
                     }
+                    function makeTestPlan(){
+                        const testsPlan = []
+                        let marker = 0;
+                        const testTypesCount = Object.keys(utils.excersiceTypes).length
+                        const everyTestTypeCount =12/testTypesCount;
+                        for (let i = 0; i < 12; i+=everyTestTypeCount) {
+                            for (let j = 0; j < everyTestTypeCount; j++) {
+                                testsPlan.push(marker)
+                            }
+                            marker++
+                        }
+                        return testsPlan
+                    }
 
 
-                    async function makeTestOutOfWords(words){
+                    async function makeTestOutOfWords(words,testType,isExercise){
                         const container = []
-                        for (const question of words) {
-                            console.log(question)
-                           const answers = await makeWrongAnswers(question)
-                             const rightAnswer ={
-                               answer:question.translatedText,
-                                 isCorrect : true,
-                             }
+                        const testsPlan = makeTestPlan()
+
+
+                        for (let i = 0; i < words.length; i++) {
+                            const question = words[i]
+                            const testType = isExercise?Object.entries(utils.excersiceTypes)[testsPlan[i]][1]:Object.entries(utils.testTypes)[i][1]
+                            const answers = await makeWrongAnswers(question,testType)
+                            const rightAnswer ={
+                                isCorrect : true,
+                            }
+                            switch (testType){
+                                case utils.testTypes.randomWords:
+                                    rightAnswer.answer = question.translatedText;
+                                    break;
+                                case utils.testTypes.fillWord:
+                                    rightAnswer.answer = question.word;
+                                    break;
+                            }
 
                             const randomNumber = Math.floor(Math.random() * 4);
                             //place it on random place
                             answers.splice(randomNumber,0,rightAnswer)
-
-                                container.push(
-                                    {
-                                        sentenceWhereWordsIsPresent:question.examples[0].sentenceWhereWordsIsPresent,
-                                        sentenceWhereWordsIsPresentTranslation:question.examples[0].translation,
-                                        translation:question.translatedText,
-                                        wordId:question._id,
-                                        question:question.word,
-                                        answers
-                                    }
-                                )
-                            // if(question.translatedText) {
-                            // }else{
-                            //     container.push(
-                            //         {
-                            //             question,
-                            //             answers
-                            //         }
-                            //     )
-                            // }
+                            switch (testType){
+                                case utils.testTypes.randomWords:
+                                    container.push(
+                                        {
+                                            sentenceWhereWordsIsPresent:question.examples[0].sentenceWhereWordsIsPresent,
+                                            sentenceWhereWordsIsPresentTranslation:question.examples[0].translation,
+                                            translation:question.translatedText,
+                                            wordId:question._id,
+                                            question:question.word,
+                                            answers,
+                                            testType
+                                        }
+                                    )
+                                    break;
+                                case utils.testTypes.fillWord:
+                                    container.push(
+                                        {
+                                            question:question.examples[0].sentenceWhereWordsIsPresent.replace(question.word,"____"),
+                                            sentenceWhereWordsIsPresentTranslation:question.examples[0].translation,
+                                            wordId:question._id,
+                                            answers,
+                                            testType
+                                        }
+                                    )
+                                    break;
+                            }
                         }
-                        // console.log(container)
+
                         return container
                     }
 

@@ -7,13 +7,14 @@ import { useParams} from "react-router-dom";
 import TestResume from "../TestResume/TestResume";
 import Popup from "../Popup/Popup";
 
-export default function Test(){
+export default function Test({isExercise}){
 
-    const {testType,chapterId} = useParams()
+    const {chapterId} = useParams()
+    const [currentTestType,setCurrentTestType] = useState(null)
     const [test,setTest] = useState([])
     const [isCurrentQuestionGuessed,setIsCurrentQuestionGuessed] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
-    const [isMobileNavVisible,setIsMobileNavVisible] = useState(true)
+    const [isMobileNavVisible,setIsMobileNavVisible] = useState(false)
     const helpSectionRef = useRef(null)
     const questionNumbersNavEls = useRef([])
     const questionNumbersNavMobileEls = useRef([])
@@ -24,13 +25,15 @@ export default function Test(){
         question:"",
         translation:"",
         sentenceWhereWordsIsPresent:"",
-        sentenceWhereWordsIsPresentTranslation: undefined
+        sentenceWhereWordsIsPresentTranslation: undefined,
+        testType:null
     })
     const answerRefs = useRef([])
     const containerRef = useRef(null)
 
     useEffect(() => {
         answerRefs.current = answerRefs.current.slice(0, question.answers.length);
+
     }, [question]);
 
     const textToSpeechClickHandler = ()=>{
@@ -135,6 +138,7 @@ export default function Test(){
         setIsMobileNavVisible(false)
         resetAnswersColors();
         checkIfAnsweredAlready(index);
+        setCurrentTestType(test[index].testType)
         setQuestion(()=>{
             return test[index]
         })
@@ -177,11 +181,12 @@ export default function Test(){
         const t = document.querySelector("#templateWrapper")
         // @ts-ignore
         r.style.setProperty("--navDisplay", "none");
-        request("unknownWords/giveTest","POST",{testType,chapterId}).subscribe(
+        request("unknownWords/giveTest","POST",{chapterId,isExercise}).subscribe(
             (res:any)=>{
-                console.log(res.test)
                 setTest(res.test)
                 setQuestion(res.test[0])
+                setCurrentTestType(res.test[0].testType)
+                console.log(currentTestType)
                 setTimeout(()=>{
                     questionNumbersNavEls.current[0].classList.add(styles.currentQuestion)
                     questionNumbersNavMobileEls.current[0]?.classList.add(styles.currentQuestion)
@@ -217,11 +222,21 @@ export default function Test(){
                         <button className={`${styles.btn} ${styles.quitBtn}`}><i
                             className="fa-solid fa-person-walking-arrow-right"></i> изход</button>
                     </div>
-                    <div className={styles.questionAndNavigation}>
+                    <div className={`${styles.questionAndNavigation} ${currentTestType=="fillWord"?styles.sentence:styles.aaa} `}>
                         <div className={styles.questionWrapper}>
-                            <p >какво е значението на </p>
-                            <p className={styles.questionHeadingFirst}>думата:</p>
-                            <h4 className={styles.word}>{question.question}</h4>
+                            {currentTestType=="randomWordsTests"&&
+                                <>
+                                    <p >какво е значението на </p>
+                                    <p className={styles.questionHeadingFirst}>думата:</p>
+                                </>
+                            }
+                            {currentTestType=="fillWord"&&
+                                <>
+                                    <p >попълни пропусната дума в изречението:</p>
+                                </>
+                            }
+
+                            <h4 className={`${styles.word} ${currentTestType=="fillWord"?styles.sentence:styles.aaa}`}>{question.question}</h4>
                             <button onClick={helpBtnCLick} className={styles.helpBtn}>затруднявам се <i className={`fa-solid fa-info ${styles.infoIcon}`}></i></button>
                         </div>
                         <div className={styles.navigationWrapper}>
@@ -233,6 +248,7 @@ export default function Test(){
                         </div>
 
                             <Popup hidePopup={hideNavMobilePopup} styleSelector={styles.navMobilePopup} isWithDisplayNone={!isMobileNavVisible}>
+                                <p className={styles.popupHeading}>Всички въпроси:</p>
                                 <div className={styles.questionsMenuMobile}>
                                     {test.map((question,index)=>{
                                         return <div onClick={()=>changeQuestionClick(index)} ref={(el:any) => questionNumbersNavMobileEls.current[index] = el} className={styles.questionNumberNavMobileEl}>
@@ -262,12 +278,23 @@ export default function Test(){
                         </div>
                         <div className={styles.helpWrapper}>
                             <div className={styles.textAndHeadingPair}>
-                                <p>пример в изречение</p>
-                                <p className={styles.warning}>* смисловото значение на думата в изречението може и да не съвпада с възможните отговори</p>
-                                {question.sentenceWhereWordsIsPresent.split(" ")
-                                    .map(word=>{
-                                        return <h5 className={word == question.question?styles.questionedWord:styles.wordInSentence}>{word} </h5>
-                                    })
+                                {currentTestType=="randomWordsTests"&&
+                                    <>
+                                        <p>пример в изречение</p>
+                                        <p className={styles.warning}>* смисловото значение на думата в изречението може и да не съвпада с възможните отговори</p>
+                                        {question.sentenceWhereWordsIsPresent.split(" ")
+                                            .map(word=>{
+                                                return <h5 className={word == question.question?styles.questionedWord:styles.wordInSentence}>{word} </h5>
+                                            })
+                                        }
+                                    </>
+                                }
+
+                                {currentTestType=="fillWord"&&
+                                    <>
+                                        <p>превод на изречение</p>
+                                        <h5>{question.sentenceWhereWordsIsPresentTranslation}</h5>
+                                    </>
                                 }
 
                             </div>
