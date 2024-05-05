@@ -31,6 +31,7 @@ export default function TestResume(){
             <div className={styles.questionsListWrapper}>
                 <div className={styles.questionsListC}>
                     {questions.length>0&&questions.map(question=>{
+                        console.log(question)
                         if(!question.wrongAnswer.stringValue&&!question.wrongAnswer.wordId&&question.timeTaken>12){
 
                         }else if(!question.wrongAnswer.stringValue&&!question.wrongAnswer.wordId){
@@ -51,7 +52,7 @@ export default function TestResume(){
                                 </div>
                                 <div className={styles.wordPair}>
                                     <p>правилен отговор</p>
-                                    <span className={styles.word}>{question.rightAnswer.translatedText}</span>
+                                    <span className={styles.word}>{question.possibleAnswers.find(el=>el._id==question.rightAnswer).translatedText}</span>
                                 </div>
                             </div>
                         }else if(question.wrongAnswer.stringValue||question.wrongAnswer.wordId){
@@ -74,14 +75,14 @@ export default function TestResume(){
                                     <div className={styles.wrongAnswerC}>
                                         <div className={styles.textPair}>
                                             <div className={styles.dot}></div>
-                                            <h6 className={styles.wrongAnswerText}>{question.wrongAnswer.stringValue||question.wrongAnswer.wordId}</h6>
+                                            <h6 className={styles.wrongAnswerText}>{question.wrongAnswer.stringValue||question.possibleAnswers.find(el=>el._id==question.wrongAnswer.wordId).translatedText}</h6>
                                         </div>
                                         <h6 className={styles.answerText}>(твой отговор)</h6>
                                     </div>
                                     <div className={styles.rightAnswerC}>
                                         <div className={styles.textPair}>
                                             <div className={styles.dot}></div>
-                                            <h6 className={styles.wrongAnswerText}>{question.rightAnswer.translatedText}</h6>
+                                            <h6 className={styles.wrongAnswerText}>{question.possibleAnswers.find(el=>el._id==question.rightAnswer).translatedText}</h6>
                                         </div>
                                         <h6 className={styles.answerText}>(верен отговор)</h6>
                                     </div>
@@ -90,7 +91,7 @@ export default function TestResume(){
                                     <div className={styles.headingAndSentencePair}>
                                         <p>пример в изречение:</p>
                                         <div className={styles.sentenceC}>
-                                            {question.rightAnswer.examples[0].sentenceWhereWordsIsPresent.split(" ")
+                                            {question.possibleAnswers.find(el=>el._id==question.rightAnswer).examples[0].sentenceWhereWordsIsPresent.split(" ")
                                                 .map(word=>{
                                                     return <p className={word == question.question?styles.questionedWord:styles.wordInSentence}>{word} </p>
                                                 })
@@ -102,7 +103,7 @@ export default function TestResume(){
                                     </div>
                                     <div className={styles.headingAndSentencePair}>
                                         <p>превод на изречение:</p>
-                                        <p>{question.rightAnswer.examples[0].translation}</p>
+                                        <p>{question.possibleAnswers.find(el=>el._id==question.rightAnswer).examples[0].translation}</p>
                                     </div>
                                     <button className={styles.moreExamplesBtn}>още изречения</button>
 

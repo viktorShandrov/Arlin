@@ -35,13 +35,13 @@ import('random-words')
 
 
                     async function makeWordTest(userId,isExercise,testType=null){
-                        const numberOfQuestions =4
 
-                        let questions = await getWordDetailsAsQuestions(userId,numberOfQuestions)
+
+                        let questions = await getWordDetailsAsQuestions(userId,utils.excersiceQuestionsCount)
 
                         //fill with random words if necessary
                         let randomWordsToFill = []
-                        if(numberOfQuestions-questions.length>0){
+                        if(utils.excersiceQuestionsCount-questions.length>0){
                             randomWordsToFill = await allModels.wordModel.find({ word: { $nin: questions.map(el=>el.word) } }).limit(numberOfQuestions-questions.length);
                         }
 
@@ -410,9 +410,9 @@ import('random-words')
                             }
 
 
-                            const randomNumber = Math.floor(Math.random() * 4);
 
-                            //place it on random place
+                            //place right answer on random place
+                            const randomNumber = Math.floor(Math.random() * 4);
                             answers.splice(randomNumber,0,rightAnswer)
 
                             containerForTestResult.questions[i].possibleAnswers = answers.map(el=>el._id);
@@ -505,7 +505,7 @@ import('random-words')
             }
 
             exports.getTestDetails = (testId)=>{
-                        return allModels.testModel.findById(testId).populate("questions.rightAnswer")
+                        return allModels.testModel.findById(testId).populate("questions.possibleAnswers")
             }
             })
 
