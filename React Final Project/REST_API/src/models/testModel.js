@@ -17,15 +17,8 @@ const schema = mongoose.Schema({
                 }
             ],
             rightAnswer:{
-                wordId:{
-                    type:mongoose.Schema.Types.ObjectId,
-                    ref:"UnknownWord",
-                    default: null
-                },
-                stringValue:{
-                    type:String,
-                    default: null
-                }
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"UnknownWord",
             },
             wrongAnswer:{
                 wordId:{

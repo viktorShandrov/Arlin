@@ -12,6 +12,7 @@ export default function Test({isExercise}){
     const {chapterId} = useParams()
     const [currentTestType,setCurrentTestType] = useState(null)
     const [test,setTest] = useState([])
+    const [testInfo,setTestInfo] = useState(null)
     const [isCurrentQuestionGuessed,setIsCurrentQuestionGuessed] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
     const [isMobileNavVisible,setIsMobileNavVisible] = useState(false)
@@ -95,12 +96,21 @@ export default function Test({isExercise}){
         resetAnswersColors()
         if(answersHistory.length==test.length){
             setIsTestDone(true)
+            answersHistory.sort((a,b)=>a.questionIndex - b.questionIndex)
+
+            request("unknownWords/testCompleted","POST",{results:answersHistory,testId:testInfo._id}).subscribe(
+                (res:any)=> {
+
+                })
+
+
             // makeUnknownWordsKnown()
 
         }else{
             let targetIndex = questionIndex+1
 
             //if its on the end of the test but has unchecked questions
+            answersHistory.sort((a,b)=>a.questionIndex - b.questionIndex)
             if(targetIndex>test.length-1){
                 targetIndex = findUnguessedQuestion()
             }
@@ -120,7 +130,7 @@ export default function Test({isExercise}){
     }
     function findUnguessedQuestion(){
         let prevIndex = -1;
-        for (const {questionIndex} of answersHistory.sort((a,b)=>a.questionIndex - b.questionIndex)) {
+        for (const {questionIndex} of answersHistory) {
             if(questionIndex!==prevIndex+1){
                 return prevIndex+1;
             }
@@ -149,34 +159,7 @@ export default function Test({isExercise}){
         helpSectionRef.current.classList.add(styles.helpSectionIsVisible)
     }
 
-    const answerClickHandler=(index:number)=>{
-        // @ts-ignore
-        answerRefs.current[index].classList.add(styles.clicked);
-        setTimeout(()=>{
-            // @ts-ignore
-            answerRefs.current[index].classList.remove(styles.clicked);
-        },1000)
-        // @ts-ignore
-        if(answerRefs.current[index].getAttribute("data-iscorrect")=="true"){
-            // @ts-ignore
-            containerRef?.current.classList.add(styles.wrightAnswerAnimation)
-            setTimeout(()=>{
-                // @ts-ignore
-                containerRef?.current.classList.remove(styles.wrightAnswerAnimation)
-                const questionIndex = test.findIndex(question1=>question1==question)
-                if(questionIndex==test.length-1){
-                    setIsTestDone(true)
-                    // makeUnknownWordsKnown()
 
-                }else{
-                    setQuestion(()=>{
-                        return test[questionIndex+1]
-                    })
-                }
-            },1000)
-        }
-
-    }
 
     useEffect(()=>{
         const r = document.querySelector("#root")
@@ -185,10 +168,10 @@ export default function Test({isExercise}){
         r.style.setProperty("--navDisplay", "none");
         request("unknownWords/giveTest","POST",{chapterId,isExercise}).subscribe(
             (res:any)=>{
-                setTest(res.test)
-                setQuestion(res.test[0])
-                setCurrentTestType(res.test[0].testType)
-                console.log(currentTestType)
+                setTestInfo(res.test)
+                setTest(res.test.questions)
+                setQuestion(res.test.questions[0])
+                setCurrentTestType(res.test.questions[0].testType)
                 setTimeout(()=>{
                     questionNumbersNavEls.current[0].classList.add(styles.currentQuestion)
                     questionNumbersNavMobileEls.current[0]?.classList.add(styles.currentQuestion)
@@ -242,7 +225,7 @@ export default function Test({isExercise}){
                             <button onClick={helpBtnCLick} className={styles.helpBtn}>затруднявам се <i className={`fa-solid fa-info ${styles.infoIcon}`}></i></button>
                         </div>
                         <div className={styles.navigationWrapper}>
-                            {test.map((question,index)=>{
+                            {test.length>0&&test.map((question,index)=>{
                                 return <div onClick={()=>changeQuestionClick(index)} ref={(el:any) => questionNumbersNavEls.current[index] = el} className={styles.questionNumberNavEl}>
                                     {index+1}
                                 </div>
@@ -252,7 +235,7 @@ export default function Test({isExercise}){
                             <Popup hidePopup={hideNavMobilePopup} styleSelector={styles.navMobilePopup} isWithDisplayNone={!isMobileNavVisible}>
                                 <p className={styles.popupHeading}>Всички въпроси:</p>
                                 <div className={styles.questionsMenuMobile}>
-                                    {test.map((question,index)=>{
+                                    {test.length>0&&test.map((question,index)=>{
                                         return <div onClick={()=>changeQuestionClick(index)} ref={(el:any) => questionNumbersNavMobileEls.current[index] = el} className={styles.questionNumberNavMobileEl}>
                                             {index+1}
                                         </div>
@@ -266,7 +249,7 @@ export default function Test({isExercise}){
                     <div className={styles.answersAndHelp}>
                         <div className={styles.answersBtnsWrapper}>
                             <div className={styles.answersBtnsC}>
-                                {question.answers.map((answer,index)=>{
+                                {question.answers.length>0&&question.answers.map((answer,index)=>{
                                    return <div className={styles.answerBtn} onClick={()=>answerCLickEvent(index,question)} ref={(el:any) => answerRefs.current[index] = el} data-iscorrect={answer.isCorrect}>
                                         <div className={styles.dot}></div>
                                         <p className={styles.answerText}>{answer.answer}</p>
@@ -279,7 +262,8 @@ export default function Test({isExercise}){
                             </div>
                         </div>
                         <div className={styles.helpWrapper}>
-                            <div className={styles.textAndHeadingPair}>
+                            {question.sentenceWhereWordsIsPresent&&
+                                <div className={styles.textAndHeadingPair}>
                                 {currentTestType=="randomWordsTests"&&
                                     <>
                                         <p>пример в изречение</p>
@@ -299,7 +283,7 @@ export default function Test({isExercise}){
                                     </>
                                 }
 
-                            </div>
+                            </div>}
 
                             <div ref={helpSectionRef} className={styles.textAndHeadingPair}>
                                 <p>помощ</p>
@@ -319,8 +303,9 @@ export default function Test({isExercise}){
 
 
                 <button onClick={forwardBtnCLick} className={`${styles.forwardBtn} ${isCurrentQuestionGuessed?styles.canProceed:styles.cannotProceed}`}>
-                    НАПРЕД &gt;
+                    {isTestDone?"ПРЕДАЙ":<>НАПРЕД &gt;</>}
                 </button >
+
 
 
             </div>

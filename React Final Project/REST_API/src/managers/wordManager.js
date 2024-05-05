@@ -26,21 +26,23 @@ import('random-words')
                         return array;
                     }
 
-                    async function getWordDetailsAsQuestions(userId){
+                    async function getWordDetailsAsQuestions(userId,numberOfQuestions){
                         const userWordsContainers = await allModels.wordsContainer.find({ownedBy:userId}).populate("words.wordRef")
                         //12 words
-                        return shuffleArray(userWordsContainers.flatMap((container) => container.words.map((wordRef)=>wordRef.wordRef))).slice(0,12);
+                        return shuffleArray(userWordsContainers.flatMap((container) => container.words.map((wordRef)=>wordRef.wordRef))).slice(0,numberOfQuestions);
 
                     }
 
 
                     async function makeWordTest(userId,isExercise,testType=null){
-                        let questions = await getWordDetailsAsQuestions(userId)
+                        const numberOfQuestions =4
+
+                        let questions = await getWordDetailsAsQuestions(userId,numberOfQuestions)
 
                         //fill with random words if necessary
                         let randomWordsToFill = []
-                        if(12-questions.length>0){
-                            randomWordsToFill = await allModels.wordModel.find({ word: { $nin: questions.map(el=>el.word) } }).limit(12-questions.length);
+                        if(numberOfQuestions-questions.length>0){
+                            randomWordsToFill = await allModels.wordModel.find({ word: { $nin: questions.map(el=>el.word) } }).limit(numberOfQuestions-questions.length);
                         }
 
                         questions = [...questions,...randomWordsToFill]
@@ -54,12 +56,12 @@ import('random-words')
                             isExercise,
                             isDone:false
                         }
+                          const test = await makeTestOutOfWords(questions,testType,isExercise,containerForTestResult)
+                        return {
+                            _id: (await allModels.testModel.create(containerForTestResult))._id,
+                            questions:test,
+                        }
 
-                        const test = await makeTestOutOfWords(questions,testType,isExercise,containerForTestResult)
-                        await allModels.testModel.create(containerForTestResult)
-
-
-                        return test
                     }
 
 
@@ -282,16 +284,20 @@ import('random-words')
                         "
                     `
 
-                    exports.markTestAsCompleted =async (userId,testType,wordsIds,res,results,isExercise)=>{
+                    exports.markTestAsCompleted =async (userId,res,results,testId)=>{
                         const user = await models.userModel.findById(userId)
 
-                        await allModels.testModel.create({
-                            madeBy:userId,
-                            questions:results,
-                            isExercise
+                        const test = await allModels.testModel.findById(testId);
+
+                        results.forEach((question,index)=>{
+                            if(question.guessedAnswerIndex!==question.rightAnswerIndex){
+                                test.questions[index].wrongAnswer.wordId = test.questions[index].possibleAnswers[question.guessedAnswerIndex]
+                            }
                         })
+                        test.isDone = true
+                        await test.save()
 
-
+                        return
 
                         switch(testType){
                             case utils.testTypes.randomWords :
@@ -325,13 +331,21 @@ import('random-words')
                             { $match: { word: { $ne: question.word } } },
                             { $sample: { size: 3 } }
                         ])).map(question=>{
+                            console.log(question)
                             switch (testType){
                                 case utils.testTypes.randomWords:
-                                    containerForTestResult.questions[i].possibleAnswers.push(question._id)
-                                    return {answer:question.translatedText,isCorrect : false,}
+                                    return {
+                                        _id:question._id,
+                                        answer:question.translatedText,
+                                        isCorrect : false,
+                                    }
                                 case utils.testTypes.fillWord:
-                                    containerForTestResult.questions[i].possibleAnswers.push(question._id)
-                                    return {answer:question.word,isCorrect : false,}
+
+                                    return {
+                                        _id:question._id,
+                                        answer:question.word,
+                                        isCorrect : false,
+                                    }
                             }
 
                         })
@@ -370,33 +384,38 @@ import('random-words')
                                     question:question.word,
                                     testType,
                                     possibleAnswers:[],
-                                    rightAnswer:{
-                                        stringValue:null,
-                                        wordId:null
-                                    }
+                                    rightAnswer: question._id
                                 }
                             )
 
                             const answers = await makeWrongAnswers(question,testType,i,containerForTestResult)
-                            const rightAnswer ={
-                                isCorrect : true,
-                            }
-                            console.log(containerForTestResult.questions[i])
+
+                            let rightAnswer
+
                             switch (testType){
                                 case utils.testTypes.randomWords:
-                                    rightAnswer.answer = question.translatedText;
-                                    containerForTestResult.questions[i].rightAnswer.stringValue = question.translatedText
+                                    rightAnswer = {
+                                        _id:question._id,
+                                        answer:question.translatedText,
+                                        isCorrect : true,
+                                    }
                                     break;
                                 case utils.testTypes.fillWord:
-                                    rightAnswer.answer = question.word;
-                                    containerForTestResult.questions[i].rightAnswer.wordId = question.wordId
+                                    rightAnswer = {
+                                        _id:question._id,
+                                        answer:question.word,
+                                        isCorrect : true,
+                                    }
                                     break;
                             }
 
 
                             const randomNumber = Math.floor(Math.random() * 4);
+
                             //place it on random place
                             answers.splice(randomNumber,0,rightAnswer)
+
+                            containerForTestResult.questions[i].possibleAnswers = answers.map(el=>el._id);
                             switch (testType){
                                 case utils.testTypes.randomWords:
                                     container.push(
@@ -486,7 +505,7 @@ import('random-words')
             }
 
             exports.getTestDetails = (testId)=>{
-                        return allModels.testModel.findById(testId)
+                        return allModels.testModel.findById(testId).populate("questions.rightAnswer")
             }
             })
 
