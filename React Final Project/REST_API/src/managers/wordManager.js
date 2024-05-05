@@ -290,6 +290,7 @@ import('random-words')
                         const test = await allModels.testModel.findById(testId);
 
                         results.forEach((question,index)=>{
+                            test.questions[index].time = question.time
                             if(question.guessedAnswerIndex!==question.rightAnswerIndex){
                                 test.questions[index].wrongAnswer.wordId = test.questions[index].possibleAnswers[question.guessedAnswerIndex]
                             }

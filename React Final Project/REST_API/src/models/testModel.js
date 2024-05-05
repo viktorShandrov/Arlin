@@ -31,6 +31,7 @@ const schema = mongoose.Schema({
                     default: null
                 }
             },
+            time:Number
 
         }
     ],

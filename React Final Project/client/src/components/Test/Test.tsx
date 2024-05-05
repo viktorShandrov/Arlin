@@ -13,6 +13,8 @@ export default function Test({isExercise}){
     const [currentTestType,setCurrentTestType] = useState(null)
     const [test,setTest] = useState([])
     const [testInfo,setTestInfo] = useState(null)
+    const [timeForQuestion,setTimeForQuestion] = useState(0)
+    const [timerInterval,setTimerInterval] = useState(()=>{})
     const [isCurrentQuestionGuessed,setIsCurrentQuestionGuessed] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
     const [isMobileNavVisible,setIsMobileNavVisible] = useState(false)
@@ -45,24 +47,23 @@ export default function Test({isExercise}){
         //if its already answered ->
         if(answersHistory.some(el=>el.questionIndex == test.indexOf(question))) return
         setIsCurrentQuestionGuessed(true)
+        clearInterval(timerInterval)
+
         const rightAnswerIndex = question.answers.findIndex(el=>el.isCorrect)
         const clickedAnswer = question.answers[index]
         // @ts-ignore
         setAnswersHistory([...answersHistory,{
             questionIndex: test.indexOf(question),
             rightAnswerIndex:rightAnswerIndex,
-            guessedAnswerIndex: index
+            guessedAnswerIndex: index,
+            time:timeForQuestion
         }])
 
 
         console.log(answersHistory)
         markCorrectAndIncorrectAnswers(index,rightAnswerIndex)
 
-        // @ts-ignore
-        if(answerRefs.current[index].getAttribute("data-iscorrect")=="true"){
 
-
-        }
 
     }
     function resetAnswersColors(){
@@ -94,6 +95,7 @@ export default function Test({isExercise}){
         setIsCurrentQuestionGuessed(false)
         const questionIndex = test.findIndex(question1=>question1==question)
         resetAnswersColors()
+
         if(answersHistory.length==test.length){
             setIsTestDone(true)
             answersHistory.sort((a,b)=>a.questionIndex - b.questionIndex)
@@ -103,8 +105,6 @@ export default function Test({isExercise}){
 
                 })
 
-
-            // makeUnknownWordsKnown()
 
         }else{
             let targetIndex = questionIndex+1
@@ -126,6 +126,13 @@ export default function Test({isExercise}){
             questionNumbersNavMobileEls.current[questionIndex].classList.add(styles.alreadyAnsweredQuestion)
             questionNumbersNavMobileEls.current[questionIndex].classList.remove(styles.currentQuestion)
             questionNumbersNavMobileEls.current[targetIndex].classList.add(styles.currentQuestion)
+
+            setTimeForQuestion(0)
+            setTimerInterval(setInterval(()=>{
+                setTimeForQuestion(old=>old+1)
+            },1000))
+
+
         }
     }
     function findUnguessedQuestion(){
@@ -180,6 +187,11 @@ export default function Test({isExercise}){
                 t.style.setProperty("padding", "0")
 
                 setIsLoading(false)
+
+                setTimerInterval(setInterval(()=>{
+                    setTimeForQuestion(old=>old+1)
+                },1000))
+
             }
         )
         return() =>{
