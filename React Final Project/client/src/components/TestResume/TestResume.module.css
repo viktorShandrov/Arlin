@@ -1,21 +1,149 @@
+
+.questionsListWrapper{
+    overflow-y: auto;
+}
 .questionsListC{
     width: 50%;
     display: flex;
+
+    padding: 50px;
     flex-direction: column;
     gap: 30px;
 }
 
 .questionListItem{
-    padding: 20px;
-    background-color:var(--darkBlue);
+    padding: 30px;
     color: white;
     border-radius: 10px;
+    font-weight: bold;
 }
+.rightAnswer{
+    background-color:var(--darkBlue);
+}
+.wrongAnswer{
+    background-color:var(--darkRed);
+}
+.hardQuestionAnswer{
+    background-color: var(--lightRed);
+}
+
 
 .headings{
     display: flex;
     justify-content: space-between;
+    margin-bottom:25px;
 }
 .wordPair{
     display: flex;
+    gap: 5px;
+}
+.wordPair p {
+    display: flex;
+    align-items: end;
+
+}
+.wordType{
+
+}
+.fillWordType .wordPair:nth-child(2){
+    flex-direction: column;
+    gap: 0;
+}
+.fillWordType .wordPair:nth-child(2) p{
+    align-items: start;
+}
+.time{
+    font-weight: bold;
+}
+.word{
+    font-size: 25px;
+}
+
+
+
+
+
+
+
+
+.wrongAndRightAnswerPairC{
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0;
+    gap: 10px;
+}
+.wrongAndRightAnswerPairC>*{
+    display: flex;
+    padding: 10px;
+    border-radius: 5px;
+    justify-content: space-between;
+}
+
+.wrongAnswerC{
+    background-color: white;
+    border: 1px solid var(--lightBlue);
+    color: var(--darkBlue);
+
+}
+.rightAnswerC{
+    background-color: var(--darkBlue);
+    border: 1px solid var(--darkBlue);
+    color: white;
+    padding: 20px 10px;
+}
+
+.wrongAndRightAnswerPairC .textPair{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.dot{
+    border-radius: 100px;
+    width: 10px;
+    height: 10px;
+}
+.wrongAnswerC .dot{
+    background-color: var(--lightBlue);
+}
+.rightAnswerC .dot{
+    background-color: white;
+}
+
+
+
+.exampleC{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: white;
+    border-radius: 10px;
+    color: black;
+    margin-top: 10px;
+}
+.headingAndSentencePair p:last-child:not(.wordInSentence):not(.questionedWord),
+.sentenceC>*{
+    font-size: 23px;
+}
+
+.sentenceC{
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.wordInSentence{
+    font-weight: bold;
+}
+.questionedWord{
+    font-weight: bold!important;
+}
+
+.moreExamplesBtn{
+    background-color: white;
+    border: 2px solid var(--lightBlue);
+    color: var(--lightBlue);
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 10px;
 }
