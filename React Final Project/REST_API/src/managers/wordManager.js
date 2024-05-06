@@ -34,7 +34,7 @@ import('random-words')
                     }
 
 
-                    async function makeWordTest(userId,isExercise,testType=null){
+                    async function makeWordTest(userId,isExercise){
 
 
                         let questions = await getWordDetailsAsQuestions(userId,utils.excersiceQuestionsCount)
@@ -56,7 +56,7 @@ import('random-words')
                             isExercise,
                             isDone:false
                         }
-                          const test = await makeTestOutOfWords(questions,testType,isExercise,containerForTestResult)
+                          const test = await makeTestOutOfWords(questions,isExercise,containerForTestResult)
                         return {
                             _id: (await allModels.testModel.create(containerForTestResult))._id,
                             questions:test,
@@ -67,11 +67,11 @@ import('random-words')
 
 
 
-                    exports.generateTest =async(userId,testType,chapterId,isExercise)=>{
+                    exports.generateTest =async(userId,chapterId,isExercise)=>{
 
 
 
-                        return makeWordTest(userId,isExercise,testType)
+                        return makeWordTest(userId,isExercise)
 
 
 
@@ -357,8 +357,8 @@ import('random-words')
                         const testsPlan = []
                         let marker = 0;
                         const testTypesCount =isExersice? Object.keys(utils.excersiceTypes).length : Object.keys(utils.testTypes).length
-                        const everyTestTypeCount =12/testTypesCount;
-                        for (let i = 0; i < 12; i+=everyTestTypeCount) {
+                        const everyTestTypeCount =utils.excersiceQuestionsCount/testTypesCount;
+                        for (let i = 0; i < utils.excersiceQuestionsCount; i+=everyTestTypeCount) {
                             for (let j = 0; j < everyTestTypeCount; j++) {
                                 testsPlan.push(marker)
                             }
@@ -368,7 +368,7 @@ import('random-words')
                     }
 
 
-                    async function makeTestOutOfWords(words,testType,isExercise,containerForTestResult){
+                    async function makeTestOutOfWords(words,isExercise,containerForTestResult){
                         const container = []
                         const testsPlan = makeTestPlan(isExercise)
 
@@ -505,8 +505,11 @@ import('random-words')
                 return response.translation
             }
 
-            exports.getTestDetails = (testId)=>{
-                        return allModels.testModel.findById(testId).populate("questions.possibleAnswers")
+            exports.getTestDetails = async(testId)=>{
+                        return{
+                            test: await allModels.testModel.findById(testId).populate("questions.possibleAnswers"),
+                            testTypes:utils.testTypes
+                        }
             }
             })
 

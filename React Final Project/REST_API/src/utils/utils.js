@@ -35,7 +35,7 @@ exports.excersiceTypes ={
     randomWords:"randomWordsTests",
     fillWord:"fillWord",
 }
-exports.excersiceQuestionsCount = 4
+exports.excersiceQuestionsCount = 8
 exports.guardianNewsURL = (fromDate,page) => `https://content.guardianapis.com/search?show-fields=headline,bodyText,thumbnail,trailText,sectionName,webTitle&page=${page}&page-size=50&api-key=f96328e9-081e-43cc-ace9-c08daa8a174d&from-date=${fromDate}&order-by=oldest`
 exports.GoogleTranslateAPI_KEY = "AIzaSyCwcafxQT_4clYPFoz6pR5C3KOAbNhvTc8"
 exports.tmdbAPItoken = "fbfa933abdd195f5110498309e8859de"
