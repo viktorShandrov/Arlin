@@ -31,6 +31,15 @@ exports.testTypes ={
     matchFour:"matchFourTests",
     fillWord:"fillWord",
 }
+
+exports.testTypesTranslated ={
+    randomWordsTests:"Познай превода на думата",
+    wordsFromChapterTests:"Познай превода на думата от текста",
+    chapterPlotTests:"Въпроси от съдържанието на текста",
+    matchFourTests:"Свържи четити с четири думи",
+    fillWord:"Попълни липсващата дума",
+}
+
 exports.excersiceTypes ={
     randomWords:"randomWordsTests",
     fillWord:"fillWord",

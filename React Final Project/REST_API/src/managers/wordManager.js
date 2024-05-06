@@ -508,7 +508,7 @@ import('random-words')
             exports.getTestDetails = async(testId)=>{
                         return{
                             test: await allModels.testModel.findById(testId).populate("questions.possibleAnswers"),
-                            testTypes:utils.testTypes
+                            testTypes:utils.testTypesTranslated
                         }
             }
             })

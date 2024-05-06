@@ -10,6 +10,13 @@
     flex-direction: column;
     gap: 30px;
 }
+.wordTypeSection{
+    color: var(--lightBlue);
+    text-decoration: underline;
+    padding-top: 50px;
+    padding-left: 15px;
+    font-weight: 600;
+}
 
 .questionListItem{
     padding: 30px;

@@ -13,6 +13,7 @@ export default function TestResume(){
     const {testId} = useParams()
     const [questions,setQuestions] = useState([])
     const [testTypes,setTestTypes] = useState({})
+    const [testDetails,setTestDetails] = useState({})
     const { userState,setUserState } = useContext(userContext);
 
 
@@ -20,8 +21,8 @@ export default function TestResume(){
     useEffect(()=>{
         request(`unknownWords/testDetails/${testId}`,"GET").subscribe(
             (res:any)=>{
+                setTestDetails(res.testDetails.test)
                 setQuestions(res.testDetails.test.questions)
-                console.log(res.testDetails.testTypes)
                 setTestTypes(res.testDetails.testTypes)
             }
         )
@@ -35,7 +36,7 @@ export default function TestResume(){
 
                     {questions.length>0&&questions.map((question,index)=><>
 
-                        {questions[index].testType!==questions.at(index-1).testType&&<h1>{testTypes[question.testType]}</h1>}
+                        {questions[index].testType!==questions.at(index-1).testType&&<h5 className={styles.wordTypeSection}>{testTypes[question.testType]}</h5>}
 
                         {!question.wrongAnswer.stringValue&&!question.wrongAnswer.wordId&&question.time>20&&
                             <div className={`${styles.questionListItem} ${styles.hardQuestionAnswer} ${styles.wordType}`}>
