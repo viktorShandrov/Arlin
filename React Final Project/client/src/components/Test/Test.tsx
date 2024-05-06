@@ -7,7 +7,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import TestResume from "../TestResume/TestResume";
 import Popup from "../Popup/Popup";
 
-export default function Test({isExercise}){
+export default function Test({isPersonalExercise}){
 
     const {chapterId} = useParams()
     const [currentTestType,setCurrentTestType] = useState(null)
@@ -172,7 +172,7 @@ export default function Test({isExercise}){
         const t = document.querySelector("#templateWrapper")
         // @ts-ignore
         r.style.setProperty("--navDisplay", "none");
-        request("unknownWords/giveTest","POST",{chapterId,isExercise}).subscribe(
+        request("unknownWords/giveTest","POST",{chapterId,isPersonalExercise}).subscribe(
             (res:any)=>{
                 setTestInfo(res.test)
                 setTest(res.test.questions)

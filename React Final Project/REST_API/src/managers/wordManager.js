@@ -34,7 +34,7 @@ import('random-words')
                     }
 
 
-                    async function makeWordTest(userId,isExercise){
+                    async function makeWordTest(userId,isPersonalExercise){
 
 
                         let questions = await getWordDetailsAsQuestions(userId,utils.excersiceQuestionsCount)
@@ -47,16 +47,12 @@ import('random-words')
 
                         questions = [...questions,...randomWordsToFill]
 
-
-
                         const containerForTestResult ={
                             madeBy:userId,
                             questions:[],
-                            score:0,
-                            isExercise,
-                            isDone:false
+                            isPersonalExercise:true,
                         }
-                          const test = await makeTestOutOfWords(questions,isExercise,containerForTestResult)
+                          const test = await makeTestOutOfWords(questions,isPersonalExercise,containerForTestResult)
                         return {
                             _id: (await allModels.testModel.create(containerForTestResult))._id,
                             questions:test,
@@ -67,11 +63,11 @@ import('random-words')
 
 
 
-                    exports.generateTest =async(userId,chapterId,isExercise)=>{
+                    exports.generateTest =async(userId,chapterId,isPersonalExercise)=>{
 
 
 
-                        return makeWordTest(userId,isExercise)
+                        return makeWordTest(userId,isPersonalExercise)
 
 
 
@@ -286,16 +282,21 @@ import('random-words')
 
                     exports.markTestAsCompleted =async (userId,res,results,testId)=>{
                         const user = await models.userModel.findById(userId)
-
                         const test = await allModels.testModel.findById(testId);
 
+                        test.submissions.push({
+                            submittedBy: userId,
+                        })
                         results.forEach((question,index)=>{
-                            test.questions[index].time = question.time
-                            if(question.guessedAnswerIndex!==question.rightAnswerIndex){
-                                test.questions[index].wrongAnswer.wordId = test.questions[index].possibleAnswers[question.guessedAnswerIndex]
+                                test.submissions.at(-1).answers.push({
+                                    answerIndex:question.guessedAnswerIndex,
+                                    time:question.time
+                                })
+                            if(question.guessedAnswerIndex===question.rightAnswerIndex){
+                                test.submissions.at(-1).score++
                             }
                         })
-                        test.isDone = true
+
                         await test.save()
 
                         return
@@ -332,7 +333,6 @@ import('random-words')
                             { $match: { word: { $ne: question.word } } },
                             { $sample: { size: 3 } }
                         ])).map(question=>{
-                            console.log(question)
                             switch (testType){
                                 case utils.testTypes.randomWords:
                                     return {
@@ -353,10 +353,10 @@ import('random-words')
                         // return (await allModels.wordModel.find({ word: { $ne: question.word } }).limit(3)).map(el=>el.translatedText);
                         // return exports.translateWrongAnswers([randomWords.generate(),randomWords.generate(),randomWords.generate()])
                     }
-                    function makeTestPlan(isExersice){
+                    function makeTestPlan(isPersonalExercise){
                         const testsPlan = []
                         let marker = 0;
-                        const testTypesCount =isExersice? Object.keys(utils.excersiceTypes).length : Object.keys(utils.testTypes).length
+                        const testTypesCount =isPersonalExercise? Object.keys(utils.excersiceTypes).length : Object.keys(utils.testTypes).length
                         const everyTestTypeCount =utils.excersiceQuestionsCount/testTypesCount;
                         for (let i = 0; i < utils.excersiceQuestionsCount; i+=everyTestTypeCount) {
                             for (let j = 0; j < everyTestTypeCount; j++) {
@@ -368,21 +368,22 @@ import('random-words')
                     }
 
 
-                    async function makeTestOutOfWords(words,isExercise,containerForTestResult){
+                    async function makeTestOutOfWords(words,isPersonalExercise,containerForTestResult){
                         const container = []
-                        const testsPlan = makeTestPlan(isExercise)
-
-
-
+                        const testsPlan = makeTestPlan(isPersonalExercise)
 
                         for (let i = 0; i < words.length; i++) {
+
+                            //////////////////// stores it firstly in DB ////////////////////
                             const question = words[i]
-                            const testType = isExercise?Object.entries(utils.excersiceTypes)[testsPlan[i]][1]:Object.entries(utils.testTypes)[testsPlan[i]][1]
+                            const testType = isPersonalExercise?Object.entries(utils.excersiceTypes)[testsPlan[i]][1]:Object.entries(utils.testTypes)[testsPlan[i]][1]
 
                             // save for DB
                             containerForTestResult.questions.push(
                                 {
-                                    question:question.word,
+                                    question:{
+                                      elementId:question._id
+                                    },
                                     testType,
                                     possibleAnswers:[],
                                     rightAnswer: question._id
@@ -391,62 +392,29 @@ import('random-words')
 
                             const answers = await makeWrongAnswers(question,testType,i,containerForTestResult)
 
-                            let rightAnswer
-
-                            switch (testType){
-                                case utils.testTypes.randomWords:
-                                    rightAnswer = {
-                                        _id:question._id,
-                                        answer:question.translatedText,
-                                        isCorrect : true,
-                                    }
-                                    break;
-                                case utils.testTypes.fillWord:
-                                    rightAnswer = {
-                                        _id:question._id,
-                                        answer:question.word,
-                                        isCorrect : true,
-                                    }
-                                    break;
-                            }
-
-
-
-                            //place right answer on random place
                             const randomNumber = Math.floor(Math.random() * 4);
-                            answers.splice(randomNumber,0,rightAnswer)
 
-                            containerForTestResult.questions[i].possibleAnswers = answers.map(el=>el._id);
-                            switch (testType){
-                                case utils.testTypes.randomWords:
-                                    container.push(
-                                        {
-                                            sentenceWhereWordsIsPresent:question.examples[0].sentenceWhereWordsIsPresent,
-                                            sentenceWhereWordsIsPresentTranslation:question.examples[0].translation,
-                                            translation:question.translatedText,
-                                            wordId:question._id,
-                                            question:question.word,
-                                            answers,
-                                            testType
-                                        }
-                                    )
-                                    break;
-                                case utils.testTypes.fillWord:
-                                    container.push(
-                                        {
-                                            question:question.examples[0].sentenceWhereWordsIsPresent.replace(question.word,"____"),
-                                            sentenceWhereWordsIsPresentTranslation:question.examples[0].translation,
-                                            wordId:question._id,
-                                            answers,
-                                            testType
-                                        }
-                                    )
-                                    break;
-                            }
+                            ///////////////// sends to the client immediately ////////////////////
+                            prepareForSendingNow(testType,container,answers,question,randomNumber)
+
+                            containerForTestResult.questions[i].rightAnswerIndex = randomNumber;
+                            containerForTestResult.questions[i].possibleAnswers = answers.map(el=>{
+                                return {elementId:el._id}
+                            });
+
+
+
                         }
 
                         return container
                     }
+
+
+
+
+
+
+
 
             exports.translateWord=async(word)=>{
                 const response = await((await fetch(utils.translateAPI+word)).json())
@@ -505,9 +473,11 @@ import('random-words')
                 return response.translation
             }
 
-            exports.getTestDetails = async(testId)=>{
+            exports.getTestDetails = async(testId,_id)=>{
+                        const test = await allModels.testModel.findById(testId).populate("questions.possibleAnswers.elementId").populate("questions.question.elementId")
+                        test.submissions.filter(sub=>sub.submittedBy.equals(_id))
                         return{
-                            test: await allModels.testModel.findById(testId).populate("questions.possibleAnswers"),
+                            test,
                             testTypes:utils.testTypesTranslated
                         }
             }
@@ -625,6 +595,60 @@ async function saveWordFullInfo(word,wordRecord){
     await createWordExamples(wordWholeInfo.info.examples,wordRecord)
     wordRecord.save()
 }
+
+
+function prepareForSendingNow(testType,container,answers,question,randomNumber){
+    let rightAnswer
+    switch (testType){
+        case utils.testTypes.randomWords:
+            rightAnswer = {
+                _id:question._id,
+                answer:question.translatedText,
+                isCorrect : true,
+            }
+            break;
+        case utils.testTypes.fillWord:
+            rightAnswer = {
+                _id:question._id,
+                answer:question.word,
+                isCorrect : true,
+            }
+            break;
+    }
+
+
+
+    //place right answer on random place
+    answers.splice(randomNumber,0,rightAnswer)
+
+    switch (testType){
+        case utils.testTypes.randomWords:
+            container.push(
+                {
+                    sentenceWhereWordsIsPresent:question.examples[0].sentenceWhereWordsIsPresent,
+                    sentenceWhereWordsIsPresentTranslation:question.examples[0].translation,
+                    translation:question.translatedText,
+                    wordId:question._id,
+                    question:question.word,
+                    answers,
+                    testType
+                }
+            )
+            break;
+        case utils.testTypes.fillWord:
+            container.push(
+                {
+                    question:question.examples[0].sentenceWhereWordsIsPresent.replace(question.word,"____"),
+                    sentenceWhereWordsIsPresentTranslation:question.examples[0].translation,
+                    wordId:question._id,
+                    answers,
+                    testType
+                }
+            )
+            break;
+    }
+}
+
 
 async function createWordExamples(sentenceExamples,wordRecord){
     const payload = []

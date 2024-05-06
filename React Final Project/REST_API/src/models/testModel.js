@@ -8,45 +8,43 @@ const schema = mongoose.Schema({
     },
     questions:[
         {
-            question:String,
             testType:String,
-            possibleAnswers:[
-                {
+            question:{
+                elementId:{
                     type:mongoose.Schema.Types.ObjectId,
                     ref:"UnknownWord"
+                },
+                stringValue:String
+            },
+            possibleAnswers:[
+                {
+                    elementId:{
+                        type:mongoose.Schema.Types.ObjectId,
+                        ref:"UnknownWord"
+                    },
+                    stringValue:String
                 }
             ],
-            rightAnswer:{
-                type:mongoose.Schema.Types.ObjectId,
-                ref:"UnknownWord",
-            },
-            wrongAnswer:{
-                wordId:{
-                    type:mongoose.Schema.Types.ObjectId,
-                    ref:"UnknownWord",
-                    default: null
-                },
-                stringValue:{
-                    type:String,
-                    default: null
-                }
-            },
-            time:Number
-
+            rightAnswerIndex:Number,
         }
     ],
-    score:Number,
     isPersonalExercise:Boolean,
-    isDone:Boolean,
     submissions:[
         {
             submittedBy:{
                 type:mongoose.Schema.Types.ObjectId,
                 ref:"User"
             },
-            score:Number,
-            answers:
-
+            score:{
+                type:Number,
+                default:0
+            },
+            answers:[
+                {
+                    answerIndex:Number,
+                    time:Number
+                }
+            ]
         }
     ]
 

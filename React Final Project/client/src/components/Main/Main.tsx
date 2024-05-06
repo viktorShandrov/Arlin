@@ -37,7 +37,7 @@ export default function Main(){
                         <Route element={<AuthGuard/>}>
                             <Route path={"/test/matchFourTests"} element={<MachFourTest />}></Route>
                             {/*<Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>*/}
-                            <Route path={"/exercise"} element={<Test isExercise={true} />}></Route>
+                            <Route path={"/exercise"} element={<Test isPersonalExercise={true} />}></Route>
                             <Route path={"/tests"} element={<TestsList />}></Route>
                             <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
                             <Route path={"/testResults/:testId"} element={<TestResume />}></Route>

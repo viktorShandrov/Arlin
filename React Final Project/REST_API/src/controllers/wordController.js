@@ -51,8 +51,8 @@ router.post("/makeThemKnown",isAuth,async (req,res)=>{
 const giveTestRoute = async (req,res)=>{
     try{
         const {_id} = req.user
-        const {chapterId,isExercise} = req.body
-        const test =  await wordManager.generateTest(_id,chapterId,isExercise)
+        const {chapterId,isPersonalExercise} = req.body
+        const test =  await wordManager.generateTest(_id,chapterId,isPersonalExercise)
         res.status(200).json({test})
     } catch (error) {
         console.log(error)
@@ -80,8 +80,9 @@ router.post("/testCompleted",isAuth,async (req,res)=>{
 
 router.get("/testDetails/:testId",isAuth,async (req,res)=>{
     try{
+        const {_id} = req.user
         const {testId} = req.params
-        const testDetails = await wordManager.getTestDetails(testId)
+        const testDetails = await wordManager.getTestDetails(testId,_id)
         res.status(200).send({testDetails})
     } catch (error) {
         console.log(error)
