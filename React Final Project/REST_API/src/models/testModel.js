@@ -36,8 +36,20 @@ const schema = mongoose.Schema({
         }
     ],
     score:Number,
-    isExercise:Boolean,
-    isDone:Boolean
+    isPersonalExercise:Boolean,
+    isDone:Boolean,
+    submissions:[
+        {
+            submittedBy:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"User"
+            },
+            score:Number,
+            answers:
+
+        }
+    ]
+
 
 })
 

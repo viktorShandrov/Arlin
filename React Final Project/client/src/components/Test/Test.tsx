@@ -3,7 +3,7 @@ import styles from "./Test.module.css"
 import {useEffect, useRef, useState} from "react";
 import {request} from "../../functions";
 import Spinner from 'react-bootstrap/Spinner';
-import { useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import TestResume from "../TestResume/TestResume";
 import Popup from "../Popup/Popup";
 
@@ -32,11 +32,10 @@ export default function Test({isExercise}){
         testType:null
     })
     const answerRefs = useRef([])
-    const containerRef = useRef(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         answerRefs.current = answerRefs.current.slice(0, question.answers.length);
-
     }, [question]);
 
     const textToSpeechClickHandler = ()=>{
@@ -60,7 +59,6 @@ export default function Test({isExercise}){
         }])
 
 
-        console.log(answersHistory)
         markCorrectAndIncorrectAnswers(index,rightAnswerIndex)
 
 
@@ -94,19 +92,20 @@ export default function Test({isExercise}){
         if(!isCurrentQuestionGuessed) return
         setIsCurrentQuestionGuessed(false)
         const questionIndex = test.findIndex(question1=>question1==question)
-        resetAnswersColors()
-
-        if(answersHistory.length==test.length){
+        if(answersHistory.length+1==test.length){
             setIsTestDone(true)
+        }
+        if(answersHistory.length==test.length){
+
             answersHistory.sort((a,b)=>a.questionIndex - b.questionIndex)
 
             request("unknownWords/testCompleted","POST",{results:answersHistory,testId:testInfo._id}).subscribe(
                 (res:any)=> {
-
+                    navigate(`/main/testResults/${testInfo._id}`)
                 })
-
-
         }else{
+            resetAnswersColors()
+
             let targetIndex = questionIndex+1
 
             //if its on the end of the test but has unchecked questions
@@ -197,6 +196,8 @@ export default function Test({isExercise}){
         return() =>{
             // @ts-ignore
             r.style.setProperty("--navDisplay", "block")
+            // @ts-ignore
+            t.style.setProperty("padding-left", "80px")
         }
 
 
