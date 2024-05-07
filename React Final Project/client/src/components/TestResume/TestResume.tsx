@@ -44,7 +44,7 @@ export default function TestResume(){
                             <div className={`${styles.questionListItem} ${styles.hardQuestionAnswer} ${styles.wordType}`}>
                                 <div className={styles.headings}>
                                     <h6>Позамисли се</h6>
-                                    <p>време за отговор <span className={styles.time}>{(question.time/60).toFixed(0)}:{(question.time/60).toFixed(2).toString().split(".")[1]}</span> мин.</p>
+                                    <p>време за отговор <span className={styles.time}>{(answers[index].time/60).toFixed(0)}:{(answers[index].time/60).toFixed(2).toString().split(".")[1]}</span> мин.</p>
                                 </div>
                                 <div className={styles.wordPair}>
                                     {question.testType=="randomWordsTests"?<p>дума</p>:null}
@@ -76,7 +76,7 @@ export default function TestResume(){
                             `}>
                                 <div className={styles.headings}>
                                     <h6>Затвърдена е</h6>
-                                    <p>време за отговор <span className={styles.time}>{(question.time/60).toFixed(0)}:{(question.time/60).toFixed(2).toString().split(".")[1]}</span> мин.</p>
+                                    <p>време за отговор <span className={styles.time}>{(answers[index].time/60).toFixed(0)}:{(answers[index].time/60).toFixed(2).toString().split(".")[1]}</span> мин.</p>
                                 </div>
                                 <div className={styles.wordPair}>
                                     {question.testType=="randomWordsTests"?<p>дума</p>:null}
@@ -108,7 +108,7 @@ export default function TestResume(){
                             `}>
                                 <div className={styles.headings}>
                                     <h6>Ще упражним още</h6>
-                                    <p>време за отговор <span className={styles.time}>{(question.time/60).toFixed(0)}:{(question.time/60).toFixed(2).toString().split(".")[1]}</span> мин.</p>
+                                    <p>време за отговор <span className={styles.time}>{(answers[index].time/60).toFixed(0)}:{(answers[index].time/60).toFixed(2).toString().split(".")[1]}</span> мин.</p>
                                 </div>
                                 <div className={styles.wordPair}>
                                     {question.testType=="randomWordsTests"?<p>дума</p>:<></>}

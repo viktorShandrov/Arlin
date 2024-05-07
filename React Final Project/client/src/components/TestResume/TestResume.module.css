@@ -3,7 +3,9 @@
     overflow-y: auto;
 }
 .questionsListC{
-    width: 50%;
+    /*width: 50%;*/
+    max-width: 550px;
+
     display: flex;
 
     padding: 50px;
@@ -20,6 +22,7 @@
 
 .questionListItem{
     padding: 30px;
+    width: 100%;
     color: white;
     border-radius: 10px;
     font-weight: bold;
@@ -161,4 +164,26 @@
     font-weight: bold;
     border-radius: 5px;
     padding: 10px;
+}
+@media (max-width: 470px){
+    .headings{
+        flex-direction: column;
+    }
+    .questionListItem{
+        padding: 20px;
+    }
+    .wordPair{
+        flex-direction: column;
+        gap: 0;
+    }
+    .wordPair p {
+        transform: translateY(13px);
+    }
+
+}
+@media (max-width: 600px){
+    .questionsListC{
+        padding: 10px;
+        align-items: center;
+    }
 }

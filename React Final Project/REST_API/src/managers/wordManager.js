@@ -297,6 +297,9 @@ import('random-words')
                             }
                         })
 
+                        // order in question order
+                        test.submissions.at(-1).answers.sort((a,b)=>a.questionIndex-b.questionIndex)
+
                         await test.save()
 
                         return
