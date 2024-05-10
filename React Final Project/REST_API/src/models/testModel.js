@@ -2,6 +2,17 @@ const mongoose = require("mongoose")
 
 
 const schema = mongoose.Schema({
+    isDraft:{
+        type:Boolean,
+        default:true
+    },
+    title:{
+        type:String,
+        default: "Arlin упражнение"
+    },
+    startTime:String,
+    endTime:String,
+    date:Date,
     madeBy:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"

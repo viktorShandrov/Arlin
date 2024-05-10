@@ -11,12 +11,22 @@ export default function useForm(initialValue:any){
             }
         })
     }
-    const resetForm = () =>{
-        setFormValues(initialValue)
+    const populateForm = (data) =>{
+        setFormValues(data)
+    }
+    const resetForm = (keep) =>{
+        const payload = {...initialValue}
+        for (const [key,value] of Object.entries(formValues)) {
+            if(keep.includes(key)){
+                payload[key] = value
+            }
+        }
+        setFormValues(payload)
     }
     return[
         formValues,
         onFormChange,
-        resetForm
+        resetForm,
+        populateForm
     ]
 }

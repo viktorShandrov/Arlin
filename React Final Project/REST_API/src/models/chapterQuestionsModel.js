@@ -8,7 +8,7 @@ const schema = mongoose.Schema({
         ref:"Chapter"
     },
     question:String,
-    answers:[
+    possibleAnswers:[
         {
            option:String,
             isCorrect:Boolean

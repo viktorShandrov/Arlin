@@ -269,13 +269,15 @@
 
 
 
-.incorectAnswers:not(.wrongAnswer):not(.rightAnswer){
+.incorectAnswers:not(.wrongAnswer):not(.rightAnswer):not(.guessedAnswer){
     background-color: white;
     color: var(--lightBlue);
     cursor: not-allowed;
 }
-
-.incorectAnswers:not(.wrongAnswer):not(.rightAnswer) .dot{
+.answersBtnsC:has(.guessedAnswer) .incorectAnswers{
+    cursor: pointer !important;
+}
+.incorectAnswers:not(.wrongAnswer):not(.rightAnswer):not(.guessedAnswer) .dot{
     background-color: var(--lightBlue);
 }
 .wrongAnswer{
@@ -287,6 +289,10 @@
 }
 .rightAnswer{
     background-color: green;
+    border: 2px solid green;
+}
+.guessedAnswer{
+    background-color: var(--darkBlue);
     border: 2px solid green;
 }
 .rightAnswer:hover{

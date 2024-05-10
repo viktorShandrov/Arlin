@@ -7,9 +7,9 @@ import {useNavigate, useParams} from "react-router-dom";
 import TestResume from "../TestResume/TestResume";
 import Popup from "../Popup/Popup";
 
-export default function Test({isPersonalExercise}){
+export default function Test(){
 
-    const {chapterId} = useParams()
+    const {testId} = useParams()
     const [currentTestType,setCurrentTestType] = useState(null)
     const [test,setTest] = useState([])
     const [testInfo,setTestInfo] = useState(null)
@@ -24,7 +24,7 @@ export default function Test({isPersonalExercise}){
     const [answersHistory,setAnswersHistory] = useState([])
     const [isTestDone,setIsTestDone] = useState(false)
     const [question,setQuestion] = useState({
-        answers:[{answer:"",isCorrect:false}],
+        possibleAnswers:[{elementId:"",stringValue:""}],
         question:"",
         translation:"",
         sentenceWhereWordsIsPresent:"",
@@ -35,7 +35,7 @@ export default function Test({isPersonalExercise}){
     const navigate = useNavigate()
 
     useEffect(() => {
-        answerRefs.current = answerRefs.current.slice(0, question.answers.length);
+        answerRefs.current = answerRefs.current.slice(0, question.possibleAnswers.length);
     }, [question]);
 
     const textToSpeechClickHandler = ()=>{
@@ -44,12 +44,15 @@ export default function Test({isPersonalExercise}){
     }
     const answerCLickEvent = (index:number,question:any)=>{
         //if its already answered ->
-        if(answersHistory.some(el=>el.questionIndex == test.indexOf(question))) return
+        if(testInfo.isExpired){
+            if(answersHistory.some(el=>el.questionIndex == test.indexOf(question))) return
+        }
+
         setIsCurrentQuestionGuessed(true)
         clearInterval(timerInterval)
 
-        const rightAnswerIndex = question.answers.findIndex(el=>el.isCorrect)
-        const clickedAnswer = question.answers[index]
+        const rightAnswerIndex = question.possibleAnswers.findIndex(el=>el.isCorrect)
+        const clickedAnswer = question.possibleAnswers[index]
         // @ts-ignore
         setAnswersHistory([...answersHistory,{
             questionIndex: test.indexOf(question),
@@ -70,7 +73,8 @@ export default function Test({isPersonalExercise}){
             answerRef.classList.remove(styles.wrongAnswer)
             answerRef.classList.remove(styles.rightAnswer)
             answerRef.classList.remove(styles.incorectAnswers)
-            helpSectionRef.current.classList.remove(styles.helpSectionIsVisible)
+            answerRef.classList.remove(styles.guessedAnswer)
+            helpSectionRef?.current?.classList.remove(styles.helpSectionIsVisible)
         }
     }
     function checkIfAnsweredAlready(questionIndex){
@@ -80,12 +84,16 @@ export default function Test({isPersonalExercise}){
         }
     }
     function markCorrectAndIncorrectAnswers(guessedIndex,rightAnswerIndex){
-
+        resetAnswersColors()
         answerRefs.current.forEach(el=>{
             el.classList.add(styles.incorectAnswers)
         })
-        answerRefs.current[guessedIndex].classList.add(styles.wrongAnswer);
-        answerRefs.current[rightAnswerIndex].classList.add(styles.rightAnswer);
+        if(testInfo.isExpired){
+            answerRefs.current[rightAnswerIndex].classList.add(styles.rightAnswer);
+            answerRefs.current[guessedIndex].classList.add(styles.wrongAnswer);
+        }else{
+            answerRefs.current[guessedIndex].classList.add(styles.guessedAnswer);
+        }
 
     }
     const forwardBtnCLick = () =>{
@@ -172,8 +180,9 @@ export default function Test({isPersonalExercise}){
         const t = document.querySelector("#templateWrapper")
         // @ts-ignore
         r.style.setProperty("--navDisplay", "none");
-        request("unknownWords/giveTest","POST",{chapterId,isPersonalExercise}).subscribe(
+        request("unknownWords/giveTest","POST",{testId,isPersonalExercise:!!testId}).subscribe(
             (res:any)=>{
+                console.log(res.test)
                 setTestInfo(res.test)
                 setTest(res.test.questions)
                 setQuestion(res.test.questions[0])
@@ -234,7 +243,7 @@ export default function Test({isPersonalExercise}){
                                 </>
                             }
 
-                            <h4 className={`${styles.word} ${currentTestType=="fillWord"?styles.sentence:styles.aaa}`}>{question.question}</h4>
+                            <h4 className={`${styles.word} ${currentTestType=="fillWord"?styles.sentence:styles.aaa}`}>{question.question.stringValue}</h4>
                             <button onClick={helpBtnCLick} className={styles.helpBtn}>затруднявам се <i className={`fa-solid fa-info ${styles.infoIcon}`}></i></button>
                         </div>
                         <div className={styles.navigationWrapper}>
@@ -262,10 +271,10 @@ export default function Test({isPersonalExercise}){
                     <div className={styles.answersAndHelp}>
                         <div className={styles.answersBtnsWrapper}>
                             <div className={styles.answersBtnsC}>
-                                {question.answers.length>0&&question.answers.map((answer,index)=>{
+                                {question.possibleAnswers.length>0&&question.possibleAnswers.map((answer, index)=>{
                                    return <div className={styles.answerBtn} onClick={()=>answerCLickEvent(index,question)} ref={(el:any) => answerRefs.current[index] = el} data-iscorrect={answer.isCorrect}>
                                         <div className={styles.dot}></div>
-                                        <p className={styles.answerText}>{answer.answer}</p>
+                                        <p className={styles.answerText}>{answer.stringValue}</p>
                                     </div>
                                 })
 
@@ -297,11 +306,13 @@ export default function Test({isPersonalExercise}){
                                 }
 
                             </div>}
+                            {question.sentenceWhereWordsIsPresentTranslation&&
+                                <div ref={helpSectionRef} className={styles.textAndHeadingPair}>
+                                    <p>помощ</p>
+                                    <h5>{question.sentenceWhereWordsIsPresentTranslation}</h5>
+                                </div>
+                            }
 
-                            <div ref={helpSectionRef} className={styles.textAndHeadingPair}>
-                                <p>помощ</p>
-                                <h5>{question.sentenceWhereWordsIsPresentTranslation}</h5>
-                            </div>
 
 
                         </div>

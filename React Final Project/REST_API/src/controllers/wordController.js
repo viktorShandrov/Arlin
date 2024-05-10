@@ -51,8 +51,8 @@ router.post("/makeThemKnown",isAuth,async (req,res)=>{
 const giveTestRoute = async (req,res)=>{
     try{
         const {_id} = req.user
-        const {chapterId,isPersonalExercise} = req.body
-        const test =  await wordManager.generateTest(_id,chapterId,isPersonalExercise)
+        const {testId,isPersonalExercise} = req.body
+        const test =  await wordManager.generateTest(_id,testId,isPersonalExercise)
         res.status(200).json({test})
     } catch (error) {
         console.log(error)
@@ -84,6 +84,41 @@ router.get("/testDetails/:testId",isAuth,async (req,res)=>{
         const {testId} = req.params
         const testDetails = await wordManager.getTestDetails(testId,_id)
         res.status(200).send({testDetails})
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
+
+router.post("/createTest",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {testTitle} = req.body
+        const testId = await wordManager.createInitialTestInfo(testTitle,_id)
+        res.status(200).json(testId)
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
+router.post("/updateTestInfo",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {testInfo,testId} = req.body
+        await wordManager.updateTestInfo(testInfo,testId)
+        res.status(200).json(testId)
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
+
+router.post("/addQuestionToTest",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {testId,question} = req.body
+        await wordManager.addQuestionToTest(testId,question)
+        res.status(200).end()
     } catch (error) {
         console.log(error)
         res.status(400).json({message:error.message})

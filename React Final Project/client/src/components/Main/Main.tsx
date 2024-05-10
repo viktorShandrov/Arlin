@@ -22,6 +22,7 @@ import TestsList from "../TestsList/TestsList";
 import TrophyRoad from "../TrophyRoad/TrophyRoad";
 import PlansCatalog from "../PlansCatalog/PlansCatalog";
 import TestResume from "../TestResume/TestResume";
+import CreateTest from "../CreateTest/CreateTest";
 export default function Main(){
     return(
             <>
@@ -37,7 +38,8 @@ export default function Main(){
                         <Route element={<AuthGuard/>}>
                             <Route path={"/test/matchFourTests"} element={<MachFourTest />}></Route>
                             {/*<Route path={"/test/:testType/:chapterId?"} element={<Test />}></Route>*/}
-                            <Route path={"/exercise"} element={<Test isPersonalExercise={true} />}></Route>
+                            <Route path={"/test/:testId?"} element={<Test />}></Route>
+                            <Route path={"/createTest"} element={<CreateTest />}></Route>
                             <Route path={"/tests"} element={<TestsList />}></Route>
                             <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
                             <Route path={"/testResults/:testId"} element={<TestResume />}></Route>

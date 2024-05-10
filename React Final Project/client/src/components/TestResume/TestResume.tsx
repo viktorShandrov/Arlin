@@ -22,6 +22,7 @@ export default function TestResume(){
     useEffect(()=>{
         request(`unknownWords/testDetails/${testId}`,"GET").subscribe(
             (res:any)=>{
+                console.log(res.testDetails.test)
                 setTestDetails(res.testDetails.test)
                 setQuestions(res.testDetails.test.questions)
                 setAnswers(res.testDetails.test.submissions[0].answers)
@@ -49,14 +50,19 @@ export default function TestResume(){
                                 <div className={styles.wordPair}>
                                     {question.testType=="randomWordsTests"?<p>дума</p>:null}
                                     {question.testType=="fillWord"?<p>изречение</p>:null}
+                                    {question.testType=="justQuestion"?<p>въпрос</p>:null}
 
                                     {question.testType=="randomWordsTests"?<span className={styles.word}>{question.question}</span>:<></>}
                                     {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers.find(el=>el.word == question.question).examples[0].sentenceWhereWordsIsPresent.replace(question.question,"___")}</span> :<></>}
+                                    {question.testType=="justQuestion"?<span className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</span>:<></>}
+
                                 </div>
                                 <div className={styles.wordPair}>
                                     <p>правилен отговор</p>
                                     {question.testType=="randomWordsTests"?<span className={styles.word}>{question.possibleAnswers.find(el=>el._id==question.rightAnswer).translatedText}</span>:<></>}
                                     {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers.find(el=>el._id==question.rightAnswer).word}</span> :<></>}
+                                    {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}
+
                                 </div>
                                 {question.testType=="fillWord"&&
                                     <div className={styles.wordPair}>
@@ -81,14 +87,19 @@ export default function TestResume(){
                                 <div className={styles.wordPair}>
                                     {question.testType=="randomWordsTests"?<p>дума</p>:null}
                                     {question.testType=="fillWord"?<p>изречение</p>:null}
+                                    {question.testType=="justQuestion"?<p>въпрос</p>:null}
 
                                     {question.testType=="randomWordsTests"?<span className={styles.word}>{question.question.elementId?.word||question.question.stringValue}</span>:<></>}
                                     {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.replace(question.question,"___")}</span> :<></>}
+                                    {question.testType=="justQuestion"?<span className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</span>:<></>}
+
                                 </div>
                                 <div className={styles.wordPair}>
                                     <p>правилен отговор</p>
                                     {question.testType=="randomWordsTests"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.translatedText}</span>:<></>}
                                     {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.word}</span> :<></>}
+                                    {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}
+
                                 </div>
                                 {question.testType=="fillWord"&&
                                     <div className={styles.wordPair}>
@@ -113,9 +124,11 @@ export default function TestResume(){
                                 <div className={styles.wordPair}>
                                     {question.testType=="randomWordsTests"?<p>дума</p>:<></>}
                                     {question.testType=="fillWord"?<p>изречение</p>:<></>}
+                                    {question.testType=="justQuestion"?<p>въпрос</p>:<></>}
 
                                     {question.testType=="randomWordsTests"?<span className={styles.word}>{question.question.elementId?.word||question.question.stringValue}</span>:<></>}
                                     {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.replace(question.question.elementId?.word||question.question.stringValue,"___")}</span> :<></>}
+                                    {question.testType=="justQuestion"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</span>:<></>}
 
                                 </div>
                                 <div className={styles.wrongAndRightAnswerPairC}>
@@ -125,6 +138,7 @@ export default function TestResume(){
 
                                             {question.testType=="randomWordsTests"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[answers[index].answerIndex].elementId?.translatedText||question.possibleAnswers[answers[index].answerIndex].stringValue}</h6>:<></>}
                                             {question.testType=="fillWord"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[answers[index].answerIndex].elementId?.word||question.possibleAnswers[answers[index].answerIndex].stringValue}</h6> :<></>}
+                                            {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</h6>:<></>}
 
                                         </div>
                                         <h6 className={styles.answerText}>(твой отговор)</h6>
@@ -135,30 +149,34 @@ export default function TestResume(){
 
                                             {question.testType=="randomWordsTests"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.translatedText||question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}
                                             {question.testType=="fillWord"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.word||question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6> :<></>}
+                                            {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}
 
                                         </div>
                                         <h6 className={styles.answerText}>(верен отговор)</h6>
                                     </div>
                                 </div>
-                                <div className={styles.exampleC}>
-                                    {question.testType!=="fillWord"&&<div className={styles.headingAndSentencePair}>
-                                        <p>пример в изречение:</p>
-                                        <div className={styles.sentenceC}>
-                                            {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.split(" ")
-                                                .map(word=>{
-                                                    return <p className={word == question.question?styles.questionedWord:styles.wordInSentence}>{word} </p>
-                                                })
-                                            }
+                                {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent&&
+                                    <div className={styles.exampleC}>
+                                        {question.testType!=="fillWord"&&<div className={styles.headingAndSentencePair}>
+                                            <p>пример в изречение:</p>
+                                            <div className={styles.sentenceC}>
+                                                {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.split(" ")
+                                                    .map(word=>{
+                                                        return <p className={word == question.question?styles.questionedWord:styles.wordInSentence}>{word} </p>
+                                                    })
+                                                }
+                                            </div>
+                                        </div>}
+
+                                        <div className={styles.headingAndSentencePair}>
+                                            <p>превод на изречение:</p>
+                                            <p>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].translation}</p>
                                         </div>
-                                    </div>}
+                                        <button className={styles.moreExamplesBtn}>още изречения</button>
 
-                                    <div className={styles.headingAndSentencePair}>
-                                        <p>превод на изречение:</p>
-                                        <p>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].translation}</p>
                                     </div>
-                                    <button className={styles.moreExamplesBtn}>още изречения</button>
+                                }
 
-                                </div>
 
                             </div>
                         }

@@ -61,11 +61,41 @@ import('random-words')
                     }
 
 
+                    function checkIfTestExpired(test){
+                        const date = new Date()
+                        let isExpired
+                        if(test.date===date){
+                            const currentTime = new Date();
+
+                            const endTimeParts = test.endTime.split(':');
+                            const endHour = parseInt(endTimeParts[0], 10);
+                            const endMinute = parseInt(endTimeParts[1], 10);
+
+                            const endTime = new Date(currentTime);
+                            endTime.setHours(endHour);
+                            endTime.setMinutes(endMinute);
+                            endTime.setSeconds(0); // Optional if you want to ignore seconds
+
+                            isExpired = endTime < currentTime;
+                        }else{
+                            isExpired = test.date<date
+                        }
+                        return isExpired
+                    }
+
+                    exports.generateTest =async(userId,testId,isPersonalExercise)=>{
+
+                        if(testId){
+                            const test =  (await allModels.testModel.findById(testId)).toObject()
 
 
-                    exports.generateTest =async(userId,chapterId,isPersonalExercise)=>{
+                            test.isExpired = checkIfTestExpired(test)
+                            for (const question of test.questions) {
+                                delete question.rightAnswerIndex
+                            }
 
-
+                            return test
+                        }
 
                         return makeWordTest(userId,isPersonalExercise)
 
@@ -113,7 +143,7 @@ import('random-words')
 
 
 
-                            const updatedAnswers = question.answers.map((answer)=>{
+                            const updatedAnswers = question.possibleAnswers.map((answer)=>{
                                 const updatedAnswer = answer.toObject()
 
                                 if(updatedAnswer.hasOwnProperty("isCorrect")&&!updatedAnswer.isCorrect){
@@ -176,7 +206,7 @@ import('random-words')
                                 {
                                     chapterId,
                                     question:questionElement.question,
-                                    answers:questionElement.options,
+                                    possibleAnswers:questionElement.options,
                                 }
                             )
                         }
@@ -203,7 +233,7 @@ import('random-words')
                         answers=answers.map(el=>el.trim())
                         return{
                             question,
-                            answers,
+                            answers: possibleAnswers,
                             rightAnswerIndex
                         }
                     }
@@ -298,7 +328,7 @@ import('random-words')
                         })
 
                         // order in question order
-                        test.submissions.at(-1).answers.sort((a,b)=>a.questionIndex-b.questionIndex)
+                        test.submissions.at(-1).answers.sort((a, b)=>a.questionIndex-b.questionIndex)
 
                         await test.save()
 
@@ -324,6 +354,50 @@ import('random-words')
                         await userManager.updateUserExp(utils.defaultExp,user,res)
                         return user.save()
                     }
+
+                    exports.createInitialTestInfo=async (testTitle,userId)=>{
+                        if(!testTitle) throw new Error("Заглавието на теста е задължително")
+                        const test = await allModels.testModel.create({
+                            title:testTitle,
+                            madeBy:userId,
+                            isPersonalExercise:false,
+                            questions:[],
+                            submissions:[]
+                        })
+                        return test._id
+                    }
+
+                    exports.updateTestInfo=async (info,testId)=>{
+                        const test = await allModels.testModel.findById(testId)
+                        for (const [k,v] of Object.entries(info)) {
+                            test[k] = v
+                        }
+                        return test.save()
+                    }
+
+                    exports.addQuestionToTest=async (testId,question)=>{
+                        const test = await allModels.testModel.findById(testId)
+                            const payload = {
+                                testType:utils.testTypes.justQuestion,
+                                question:{
+                                    stringValue:question.question
+                                },
+                                possibleAnswers:[],
+                                rightAnswerIndex : question.rightIndex
+                            }
+                            const indexes = [0,1,2,3]
+                        indexes.forEach((i)=>{
+                                payload.possibleAnswers.push({
+                                    stringValue:question[`option${i+1}`],
+
+                                })
+                        })
+
+                        test.questions.push(payload)
+
+                        return test.save()
+                    }
+
 
 
                     function getRandomWord(wordsArray) {
@@ -633,7 +707,7 @@ function prepareForSendingNow(testType,container,answers,question,randomNumber){
                     translation:question.translatedText,
                     wordId:question._id,
                     question:question.word,
-                    answers,
+                    answers: possibleAnswers,
                     testType
                 }
             )
@@ -644,7 +718,7 @@ function prepareForSendingNow(testType,container,answers,question,randomNumber){
                     question:question.examples[0].sentenceWhereWordsIsPresent.replace(question.word,"____"),
                     sentenceWhereWordsIsPresentTranslation:question.examples[0].translation,
                     wordId:question._id,
-                    answers,
+                    answers: possibleAnswers,
                     testType
                 }
             )

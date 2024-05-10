@@ -30,6 +30,7 @@ exports.testTypes ={
     textQuestions:"chapterPlotTests",
     matchFour:"matchFourTests",
     fillWord:"fillWord",
+    justQuestion:"justQuestion"
 }
 
 exports.testTypesTranslated ={

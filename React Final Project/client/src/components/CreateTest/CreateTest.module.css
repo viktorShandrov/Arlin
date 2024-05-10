@@ -1,0 +1,129 @@
+.createTestWrapper{
+  color: var(--lightBlue);
+  padding: 30px;
+  width: 500px;
+  overflow-y: auto;
+}
+
+.textBox{
+  border: solid 3px var(--lightBlue);
+  padding: 15px;
+  width: 100%;
+}
+.textBox:focus{
+  border: solid 3px var(--darkBlue);
+  outline: none;
+}
+
+:disabled{
+  cursor: not-allowed;
+}
+.questionsNav{
+  display: flex;
+  gap: 10px;
+  margin-top: 30px;
+}
+.questionNumberNavEl{
+  display: flex;
+  justify-content: center;
+  /*align-self: center;*/
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  border-radius: 100px;
+  border:  solid 2px var(--lightBlue);
+  color: var(--lightBlue);
+  aspect-ratio: 1/1;
+  cursor: pointer;
+
+}
+.questionNumberNavEl:hover{
+  background-color: var(--darkBlue);
+  border: var(--darkBlue);
+  color: white;
+}
+
+
+.alreadyAnsweredQuestion{
+  background-color: var(--lightBlue);
+  color: white;
+  border: var(--lightBlue);
+}
+.currentQuestion{
+  background-color: var(--darkBlue);
+  color: white;
+  border: var(--darkBlue);
+}
+
+.optionsC{
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.optionAndTick{
+  display: flex;
+}
+.tick{
+  /*height: 100%;*/
+  width: 60px;
+  aspect-ratio: 1/1;
+  background-color: var(--lightBlue);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  cursor: pointer;
+}
+.optionAndTick:has(.unticked) .textBox{
+  opacity: 0.5;
+}
+.unticked{
+  opacity: 0.5;
+}
+
+
+.btnsC{
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.btn{
+  width: 100%;
+  padding: 20px 40px;
+  border: 3px solid var(--lightBlue);
+  border-radius: 10px;
+  font-size: 20px;
+}
+.btn.nextQuestion{
+  background-color: var(--lightBlue);
+  color: white;
+}
+.btn.save{
+  background-color: var(--darkBlue);
+  border: solid 3px var(--darkBlue);
+  color: white;
+}
+.btn.draft{
+  background-color: white;
+  border: solid 3px var(--lightBlue);
+  color:  var(--lightBlue);
+}
+
+.btn.nameSave{
+  background-color: var(--lightBlue);
+  color: white;
+  padding: 0px 30px;
+  margin-top: 10px;
+  width: fit-content;
+}
+
+
+.testFundamentalDetailsC{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
