@@ -315,6 +315,7 @@ import('random-words')
 
                         test.submissions.push({
                             submittedBy: userId,
+                            submissionTime:new Date()
                         })
                         results.forEach((question,index)=>{
                                 test.submissions.at(-1).answers.push({
@@ -547,16 +548,39 @@ import('random-words')
                 return response.translation
             }
 
-            exports.getTestDetails = async(testId,_id)=>{
-                        const test = (await allModels.testModel.findById(testId).populate("questions.possibleAnswers.elementId").populate("questions.question.elementId")).toObject()
-                        test.submissions = [test.submissions.filter(sub=>sub.submittedBy.equals(_id)).at(-1)]
-                console.log(test.submissions)
-                        return{
-                            test,
-                            testTypes:utils.testTypesTranslated
-                        }
+            exports.getTestDetails = async(testResultId,_id)=>{
+
+                        //to do testResultId instead of testResultId
+                        // const test = (await allModels.testModel.findById(testId).populate("questions.possibleAnswers.elementId").populate("questions.question.elementId")).toObject()
+                        // test.submissions = [test.submissions.filter(sub=>sub.submittedBy.equals(_id)).at(-1)]
+                        // return{
+                        //     test,
+                        //     testTypes:utils.testTypesTranslated
+                        // }
             }
             })
+            exports.getTestInfo = async(testId,userId)=>{
+                const test = (await allModels.testModel.findById(testId).populate("madeBy")).toObject()
+                test.questionsCount = test.questions.length
+                test.workTime = calcWorkTimeForTest(test.startDate,test.endDate)
+                test.createdBy = test.madeBy.username
+                test.submissions = test.submissions.filter(el=>el.submittedBy.equals(userId))
+
+                delete test.madeBy
+                delete test.questions
+                delete test.isDraft
+
+                return test
+            }
+
+
+            function calcWorkTimeForTest(start,end){
+                const timeDifference = Math.abs(end - start);
+                const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+                return formattedTime
+            }
 
 
 

@@ -1,0 +1,17 @@
+.testInfoWrapper{
+    color: var(--lightBlue);
+}
+
+.infoPair{
+    display: flex;
+    gap: 10px;
+}
+.infoLabel{
+    text-align: end;
+}
+.infoPair>*{
+    flex: 1;
+}
+
+.infoValue{
+}

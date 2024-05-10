@@ -115,7 +115,25 @@ export default function CreateTest(){
         resetNavColors()
         setNavCurrentQuestionColor(index)
     }
+    function convertTimeToDate(timeString){
+        const currentDate = new Date();
+
+        const [hoursStr, minutesStr] = timeString.split(':');
+
+        const hours = parseInt(hoursStr, 10);
+        const minutes = parseInt(minutesStr, 10);
+
+        currentDate.setHours(hours);
+        currentDate.setMinutes(minutes);
+        currentDate.setSeconds(0);
+
+        return currentDate
+    }
     const  saveAdditionaltestInfoClick = (info) =>{
+
+        info.startDate = convertTimeToDate(info.startTime)
+        info.endDate = convertTimeToDate(info.endTime)
+
         request("unknownWords/updateTestInfo","POST",{testInfo:info,testId:testInfo._id}).subscribe(
             (res)=>{
 

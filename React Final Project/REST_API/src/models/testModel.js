@@ -10,9 +10,8 @@ const schema = mongoose.Schema({
         type:String,
         default: "Arlin упражнение"
     },
-    startTime:String,
-    endTime:String,
-    date:Date,
+    startDate:Date,
+    endDate:Date,
     madeBy:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
@@ -46,6 +45,7 @@ const schema = mongoose.Schema({
                 type:mongoose.Schema.Types.ObjectId,
                 ref:"User"
             },
+            submissionTime:Date,
             score:{
                 type:Number,
                 default:0

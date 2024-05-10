@@ -78,12 +78,24 @@ router.post("/testCompleted",isAuth,async (req,res)=>{
     }
 })
 
-router.get("/testDetails/:testId",isAuth,async (req,res)=>{
+router.get("/testResult/:testResultId",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {testResultId} = req.params
+        const testResult = await wordManager.getTestDetails(testResultId,_id)
+        res.status(200).send({testResult})
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
+
+router.get("/testInfo/:testId",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
         const {testId} = req.params
-        const testDetails = await wordManager.getTestDetails(testId,_id)
-        res.status(200).send({testDetails})
+        const testInfo = await wordManager.getTestInfo(testId,_id)
+        res.status(200).send({testInfo})
     } catch (error) {
         console.log(error)
         res.status(400).json({message:error.message})
