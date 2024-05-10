@@ -88,7 +88,6 @@ import('random-words')
                         if(testId){
                             const test =  (await allModels.testModel.findById(testId)).toObject()
 
-
                             test.isExpired = checkIfTestExpired(test)
                             for (const question of test.questions) {
                                 delete question.rightAnswerIndex
@@ -322,7 +321,7 @@ import('random-words')
                                     answerIndex:question.guessedAnswerIndex,
                                     time:question.time
                                 })
-                            if(question.guessedAnswerIndex===question.rightAnswerIndex){
+                            if(question.guessedAnswerIndex===test.questions[question.questionIndex].rightAnswerIndex){
                                 test.submissions.at(-1).score++
                             }
                         })
@@ -405,7 +404,6 @@ import('random-words')
                         return wordsArray[randomIndex];
                     }
                     async function makeWrongAnswers(question,testType,i,containerForTestResult){
-
                         return (await allModels.wordModel.aggregate([
                             { $match: { word: { $ne: question.word } } },
                             { $sample: { size: 3 } }
@@ -418,12 +416,12 @@ import('random-words')
                                         isCorrect : false,
                                     }
                                 case utils.testTypes.fillWord:
-
                                     return {
                                         _id:question._id,
                                         answer:question.word,
                                         isCorrect : false,
                                     }
+
                             }
 
                         })
@@ -463,7 +461,6 @@ import('random-words')
                                     },
                                     testType,
                                     possibleAnswers:[],
-                                    rightAnswer: question._id
                                 }
                             )
 
@@ -706,8 +703,10 @@ function prepareForSendingNow(testType,container,answers,question,randomNumber){
                     sentenceWhereWordsIsPresentTranslation:question.examples[0].translation,
                     translation:question.translatedText,
                     wordId:question._id,
-                    question:question.word,
-                    answers: possibleAnswers,
+                    question:{
+                        stringValue:question.word
+                    },
+                    possibleAnswers:answers,
                     testType
                 }
             )
@@ -715,10 +714,12 @@ function prepareForSendingNow(testType,container,answers,question,randomNumber){
         case utils.testTypes.fillWord:
             container.push(
                 {
-                    question:question.examples[0].sentenceWhereWordsIsPresent.replace(question.word,"____"),
+                    question:{
+                        stringValue:question.examples[0].sentenceWhereWordsIsPresent.replace(question.word,"____")
+                    },
                     sentenceWhereWordsIsPresentTranslation:question.examples[0].translation,
                     wordId:question._id,
-                    answers: possibleAnswers,
+                    possibleAnswers:answers,
                     testType
                 }
             )

@@ -44,7 +44,7 @@ export default function Test(){
     }
     const answerCLickEvent = (index:number,question:any)=>{
         //if its already answered ->
-        if(testInfo.isExpired){
+        if(testInfo.isExpired||!testId){
             if(answersHistory.some(el=>el.questionIndex == test.indexOf(question))) return
         }
 
@@ -88,7 +88,7 @@ export default function Test(){
         answerRefs.current.forEach(el=>{
             el.classList.add(styles.incorectAnswers)
         })
-        if(testInfo.isExpired){
+        if(testInfo.isExpired||!testId){
             answerRefs.current[rightAnswerIndex].classList.add(styles.rightAnswer);
             answerRefs.current[guessedIndex].classList.add(styles.wrongAnswer);
         }else{
@@ -180,7 +180,7 @@ export default function Test(){
         const t = document.querySelector("#templateWrapper")
         // @ts-ignore
         r.style.setProperty("--navDisplay", "none");
-        request("unknownWords/giveTest","POST",{testId,isPersonalExercise:!!testId}).subscribe(
+        request("unknownWords/giveTest","POST",{testId,isPersonalExercise:!testId}).subscribe(
             (res:any)=>{
                 console.log(res.test)
                 setTestInfo(res.test)
@@ -274,13 +274,10 @@ export default function Test(){
                                 {question.possibleAnswers.length>0&&question.possibleAnswers.map((answer, index)=>{
                                    return <div className={styles.answerBtn} onClick={()=>answerCLickEvent(index,question)} ref={(el:any) => answerRefs.current[index] = el} data-iscorrect={answer.isCorrect}>
                                         <div className={styles.dot}></div>
-                                        <p className={styles.answerText}>{answer.stringValue}</p>
+                                        <p className={styles.answerText}>{answer.answer||answer.stringValue}</p>
                                     </div>
                                 })
-
                                 }
-
-
                             </div>
                         </div>
                         <div className={styles.helpWrapper}>
