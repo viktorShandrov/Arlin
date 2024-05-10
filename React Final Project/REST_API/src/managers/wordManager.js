@@ -548,8 +548,9 @@ import('random-words')
             }
 
             exports.getTestDetails = async(testId,_id)=>{
-                        const test = await allModels.testModel.findById(testId).populate("questions.possibleAnswers.elementId").populate("questions.question.elementId")
-                        test.submissions.filter(sub=>sub.submittedBy.equals(_id))
+                        const test = (await allModels.testModel.findById(testId).populate("questions.possibleAnswers.elementId").populate("questions.question.elementId")).toObject()
+                        test.submissions = [test.submissions.filter(sub=>sub.submittedBy.equals(_id)).at(-1)]
+                console.log(test.submissions)
                         return{
                             test,
                             testTypes:utils.testTypesTranslated
