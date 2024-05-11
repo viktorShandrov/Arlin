@@ -89,6 +89,14 @@ import('random-words')
                             const test =  (await allModels.testModel.findById(testId)).toObject()
 
                             test.isExpired = checkIfTestExpired(test)
+                            //if test is active and already submitted test submission
+                            if(
+                                !test.isExpired&&
+                                test.submissions.filter(sub=>sub.submittedBy.equals(userId)).some(sub=>sub.isSubmittedAsTest)
+                            ){
+                                throw new Error("Вече сте предали решение на теста")
+                            }
+
                             for (const question of test.questions) {
                                 delete question.rightAnswerIndex
                             }
@@ -313,9 +321,12 @@ import('random-words')
                         const user = await models.userModel.findById(userId)
                         const test = await allModels.testModel.findById(testId);
 
+                        const submissionTime = new Date()
+
                         test.submissions.push({
                             submittedBy: userId,
-                            submissionTime:new Date()
+                            submissionTime,
+                            isSubmittedAsTest: submissionTime<test.endDate
                         })
                         results.forEach((question,index)=>{
                                 test.submissions.at(-1).answers.push({
@@ -565,6 +576,11 @@ import('random-words')
                 test.workTime = calcWorkTimeForTest(test.startDate,test.endDate)
                 test.createdBy = test.madeBy.username
                 test.submissions = test.submissions.filter(el=>el.submittedBy.equals(userId))
+
+                for (const sub of test.submissions) {
+                    delete sub.answers
+                    delete sub.score
+                }
 
                 delete test.madeBy
                 delete test.questions

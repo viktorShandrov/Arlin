@@ -2,11 +2,12 @@
 import styles from "./TestInfo.module.css"
 import {useEffect, useState} from "react";
 import {request} from "../../functions";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 export default function TestInfo(){
 
     const {testId} = useParams()
     const [testInfo,setTestInfo] = useState({
+        submissions: []
 
     })
     useEffect(()=>{
@@ -47,6 +48,23 @@ export default function TestInfo(){
                             <h6 className={styles.infoValue}>{testInfo.createdBy}</h6>
                         </div>
                     </div>
+                    <div className={styles.submissionsTable}>
+                        <div className={`${styles.cell} ${styles.heading}`}>
+                            <h6>Твои предавания на този тест</h6>
+                        </div>
+                        {testInfo.submissions.length>0&&testInfo.submissions.map((sub)=>
+                            <Link to={`/main/testResults/${sub._id}`}>
+                                <div className={styles.cell}>
+                                    <span>{sub.isSubmittedAsTest?"тест":"упражнение"}</span>
+                                    <span>детайли</span>
+                                </div>
+                            </Link>
+                        )}
+
+
+
+                    </div>
+
 
                 </div>
             </div>

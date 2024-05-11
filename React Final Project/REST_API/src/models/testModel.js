@@ -55,7 +55,8 @@ const schema = mongoose.Schema({
                     answerIndex:Number,
                     time:Number
                 }
-            ]
+            ],
+            isSubmittedAsTest:Boolean
         }
     ]
 
