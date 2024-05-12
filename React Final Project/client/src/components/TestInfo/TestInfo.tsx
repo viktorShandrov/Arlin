@@ -53,7 +53,7 @@ export default function TestInfo(){
                             <h6>Твои предавания на този тест</h6>
                         </div>
                         {testInfo.submissions.length>0&&testInfo.submissions.map((sub)=>
-                            <Link to={`/main/testResults/${sub._id}`}>
+                            <Link to={`/main/testResult/${sub._id}`}>
                                 <div className={styles.cell}>
                                     <span>{sub.isSubmittedAsTest?"тест":"упражнение"}</span>
                                     <span>детайли</span>

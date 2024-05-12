@@ -10,7 +10,7 @@ import {useContext, useEffect, useState} from "react";
 // @ts-ignore
 export default function TestResume(){
     const navigate = useNavigate()
-    const {testId} = useParams()
+    const {testResultId} = useParams()
     const [questions,setQuestions] = useState([])
     const [answers,setAnswers] = useState([])
     const [testTypes,setTestTypes] = useState({})
@@ -20,16 +20,16 @@ export default function TestResume(){
 
     // const dispatch = useDispatch()
     useEffect(()=>{
-        request(`unknownWords/testDetails/${testId}`,"GET").subscribe(
+        request(`unknownWords/testResult/${testResultId}`,"GET").subscribe(
             (res:any)=>{
-                console.log(res.testDetails.test)
-                setTestDetails(res.testDetails.test)
-                setQuestions(res.testDetails.test.questions)
-                setAnswers(res.testDetails.test.submissions[0].answers)
-                setTestTypes(res.testDetails.testTypes)
+                console.log(res.testResult)
+                setTestDetails(res.testResult.test)
+                setQuestions(res.testResult.test.questions)
+                setAnswers(res.testResult.test.submissions[0].answers)
+                setTestTypes(res.testResult.testTypes)
             }
         )
-    },[testId])
+    },[testResultId])
 
     return(
         <>

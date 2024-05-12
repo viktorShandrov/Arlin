@@ -1,7 +1,19 @@
 .testInfoWrapper{
     color: var(--lightBlue);
 }
+.testInfoC{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
 
+}
+.testInfoC>*{
+    width: fit-content;
+}
+.infoPairsC{
+    min-width: 320px;
+}
 .infoPair{
     display: flex;
     gap: 10px;
@@ -24,7 +36,7 @@
 
 .submissionsTable{
     max-width: 700px;
-
+    width: 100%;
 }
 .cell.heading{
     color: white;

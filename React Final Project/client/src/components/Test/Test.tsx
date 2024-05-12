@@ -44,14 +44,14 @@ export default function Test(){
     }
     const answerCLickEvent = (index:number,question:any)=>{
         //if its already answered ->
-        if(testInfo.isExpired||!testId){
+        if(testInfo.isExercise||testInfo.isPersonalExercise){
             if(answersHistory.some(el=>el.questionIndex == test.indexOf(question))) return
         }
 
         setIsCurrentQuestionGuessed(true)
         clearInterval(timerInterval)
 
-        const rightAnswerIndex = question.possibleAnswers.findIndex(el=>el.isCorrect)
+        const rightAnswerIndex = question.rightAnswerIndex
         const clickedAnswer = question.possibleAnswers[index]
         // @ts-ignore
         setAnswersHistory([...answersHistory,{
@@ -88,7 +88,8 @@ export default function Test(){
         answerRefs.current.forEach(el=>{
             el.classList.add(styles.incorectAnswers)
         })
-        if(testInfo.isExpired||!testId){
+        console.log(testInfo)
+        if(testInfo.isPersonalExercise||testInfo.isExercise){
             answerRefs.current[rightAnswerIndex].classList.add(styles.rightAnswer);
             answerRefs.current[guessedIndex].classList.add(styles.wrongAnswer);
         }else{
@@ -100,7 +101,8 @@ export default function Test(){
         if(!isCurrentQuestionGuessed) return
         setIsCurrentQuestionGuessed(false)
         const questionIndex = test.findIndex(question1=>question1==question)
-        if(answersHistory.length+1==test.length){
+
+        if(answersHistory.length+1===test.length){
             setIsTestDone(true)
         }
         if(answersHistory.length==test.length){
@@ -182,7 +184,7 @@ export default function Test(){
         r.style.setProperty("--navDisplay", "none");
         request("unknownWords/giveTest","POST",{testId,isPersonalExercise:!testId}).subscribe(
             (res:any)=>{
-                console.log(res.test)
+                console.log(res)
                 setTestInfo(res.test)
                 setTest(res.test.questions)
                 setQuestion(res.test.questions[0])
@@ -274,7 +276,7 @@ export default function Test(){
                                 {question.possibleAnswers.length>0&&question.possibleAnswers.map((answer, index)=>{
                                    return <div className={styles.answerBtn} onClick={()=>answerCLickEvent(index,question)} ref={(el:any) => answerRefs.current[index] = el} data-iscorrect={answer.isCorrect}>
                                         <div className={styles.dot}></div>
-                                        <p className={styles.answerText}>{answer.answer||answer.stringValue}</p>
+                                        <p className={styles.answerText}>{answer.stringValue}</p>
                                     </div>
                                 })
                                 }
