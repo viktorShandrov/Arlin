@@ -43,7 +43,7 @@ export default function Main(){
                             <Route path={"/createTest"} element={<CreateTest />}></Route>
                             <Route path={"/tests"} element={<TestsList />}></Route>
                             <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
-                            <Route path={"/testResult/:testResultId"} element={<TestResume />}></Route>
+                            <Route path={"/testSubmission/:testSubmissionId"} element={<TestResume />}></Route>
                             <Route path={"/testInfo/:testId"} element={<TestInfo />}></Route>
                             <Route path={"/AllBooks/freeBookMode?"} element={<AllBooks />}></Route>
                             <Route path={"/read"} element={<MyBooksList />}></Route>

@@ -1,5 +1,7 @@
 .testInfoWrapper{
     color: var(--lightBlue);
+    overflow-y: auto;
+    padding: 20px;
 }
 .testInfoC{
     display: flex;
@@ -46,12 +48,37 @@
 .cell{
     padding: 20px;
     border: solid 3px var(--lightBlue);
+    border-top: none;
     color: var(--lightBlue);
     display: flex;
     justify-content: space-between;
 }
+
 .cell:hover{
     background-color: var(--lightBlue);
     transition: 0.1s;
     color: white;
+}
+
+
+.btns{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.btns a>*{
+    padding: 20px 40px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+}
+
+.begin{
+    background-color: var(--lightBlue);
+}
+.exercise{
+    background-color: var(--lightRed);
+}
+.edit{
+    background-color: var(--darkRed);
 }

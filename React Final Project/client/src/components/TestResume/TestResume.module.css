@@ -1,6 +1,13 @@
 
 .questionsListWrapper{
     overflow-y: auto;
+    padding: 50px;
+}
+.heading{
+    color: var(--lightBlue);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .questionsListC{
     /*width: 50%;*/
@@ -8,7 +15,7 @@
 
     display: flex;
 
-    padding: 50px;
+    /*padding: 50px 0;*/
     flex-direction: column;
     gap: 30px;
 }
@@ -165,6 +172,20 @@
     border-radius: 5px;
     padding: 10px;
 }
+
+
+.textInfoPair{
+    display: flex;
+    gap: 10px;
+}
+
+.highlightedText{
+    color: var(--lightRed);
+}
+
+
+
+
 @media (max-width: 470px){
     .headings{
         flex-direction: column;

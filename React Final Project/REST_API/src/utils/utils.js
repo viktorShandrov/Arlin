@@ -39,6 +39,7 @@ exports.testTypesTranslated ={
     chapterPlotTests:"Въпроси от съдържанието на текста",
     matchFourTests:"Свържи четити с четири думи",
     fillWord:"Попълни липсващата дума",
+    justQuestion:"въпроси на учителя",
 }
 
 exports.excersiceTypes ={

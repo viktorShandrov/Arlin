@@ -10,42 +10,53 @@ import {useContext, useEffect, useState} from "react";
 // @ts-ignore
 export default function TestResume(){
     const navigate = useNavigate()
-    const {testResultId} = useParams()
+    const {testSubmissionId} = useParams()
     const [questions,setQuestions] = useState([])
     const [answers,setAnswers] = useState([])
     const [testTypes,setTestTypes] = useState({})
-    const [testDetails,setTestDetails] = useState({})
+    const [testDetails,setTestDetails] = useState({
+        submission: {},
+        questions: []
+    })
     const { userState,setUserState } = useContext(userContext);
 
 
     // const dispatch = useDispatch()
     useEffect(()=>{
-        request(`unknownWords/testResult/${testResultId}`,"GET").subscribe(
+        request(`unknownWords/testSubmission/${testSubmissionId}`,"GET").subscribe(
             (res:any)=>{
-                console.log(res.testResult)
-                setTestDetails(res.testResult.test)
-                setQuestions(res.testResult.test.questions)
-                setAnswers(res.testResult.test.submissions[0].answers)
-                setTestTypes(res.testResult.testTypes)
+                setTestDetails(res.testSubmission.test)
+                setQuestions(res.testSubmission.test.questions)
+                setAnswers(res.testSubmission.test.submission.answers)
+                setTestTypes(res.testSubmission.testTypes)
             }
         )
-    },[testResultId])
+    },[testSubmissionId])
 
     return(
         <>
 
             <div className={styles.questionsListWrapper}>
-                <div className={styles.questionsListC}>
+                <div className={styles.heading}>
+                    <h3>Браво!</h3>
+                    <h6 className={styles.textInfoPair}>Отнеха ти <h6 className={styles.highlightedText}>{`${Math.floor(testDetails.submission.time / 60)}:${(testDetails.submission.time % 60).toString().padStart(2, '0')}`}</h6> минути</h6>
+                    <h6 className={styles.textInfoPair}>С резултат <h6 className={styles.highlightedText}>{testDetails.submission.score}/{testDetails.questions.length}</h6> верни отговора</h6>
+                </div>
+
+               <div className={styles.questionsListC}>
+
+
+                    {questions.length>0&&questions.map(el=>el.testType).every(el=>el === questions.map(el=>el.testType)[0])&&<h5 className={styles.wordTypeSection}>{testTypes[questions[0].testType]}</h5>}
 
                     {questions.length>0&&questions.map((question,index)=><>
 
-                        {questions[index].testType!==questions.at(index-1).testType&&<h5 className={styles.wordTypeSection}>{testTypes[question.testType]}</h5>}
+                        {(question.testType!==questions.at(index-1).testType)&&<h5 className={styles.wordTypeSection}>{testTypes[question.testType]}</h5>}
 
                         {question.rightAnswerIndex==answers[index].answerIndex&&answers[index].time>20&&
                             <div className={`${styles.questionListItem} ${styles.hardQuestionAnswer} ${styles.wordType}`}>
                                 <div className={styles.headings}>
                                     <h6>Позамисли се</h6>
-                                    <p>време за отговор <span className={styles.time}>{(answers[index].time/60).toFixed(0)}:{(answers[index].time/60).toFixed(2).toString().split(".")[1]}</span> мин.</p>
+                                    <p>време за отговор <span className={styles.time}>{`${Math.floor(answers[index].time / 60)}:${(answers[index].time % 60).toString().padStart(2, '0')}`}</span> мин.</p>
                                 </div>
                                 <div className={styles.wordPair}>
                                     {question.testType=="randomWordsTests"?<p>дума</p>:null}
@@ -81,8 +92,8 @@ export default function TestResume(){
                             ${question.testType=="fillWord"?styles.fillWordType:null}
                             `}>
                                 <div className={styles.headings}>
-                                    <h6>Затвърдена е</h6>
-                                    <p>време за отговор <span className={styles.time}>{(answers[index].time/60).toFixed(0)}:{(answers[index].time/60).toFixed(2).toString().split(".")[1]}</span> мин.</p>
+                                    <h6>Затвърдено е</h6>
+                                    <p>време за отговор <span className={styles.time}>{`${Math.floor(answers[index].time / 60)}:${(answers[index].time % 60).toString().padStart(2, '0')}`}</span> мин.</p>
                                 </div>
                                 <div className={styles.wordPair}>
                                     {question.testType=="randomWordsTests"?<p>дума</p>:null}
@@ -119,7 +130,7 @@ export default function TestResume(){
                             `}>
                                 <div className={styles.headings}>
                                     <h6>Ще упражним още</h6>
-                                    <p>време за отговор <span className={styles.time}>{(answers[index].time/60).toFixed(0)}:{(answers[index].time/60).toFixed(2).toString().split(".")[1]}</span> мин.</p>
+                                    <p>време за отговор <span className={styles.time}>{`${Math.floor(answers[index].time / 60)}:${(answers[index].time % 60).toString().padStart(2, '0')}`}</span> мин.</p>
                                 </div>
                                 <div className={styles.wordPair}>
                                     {question.testType=="randomWordsTests"?<p>дума</p>:<></>}

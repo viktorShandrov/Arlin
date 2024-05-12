@@ -598,10 +598,13 @@ import('random-words')
                 return response.translation
             }
 
-            exports.getTestDetails = async(testResultId,_id)=>{
+            exports.getTestSubmission = async(testSubmissionId,_id)=>{
 
-                        const test = (await allModels.testModel.findOne({ "submissions._id": testResultId }).populate("questions.possibleAnswers.elementId").populate("questions.question.elementId")).toObject();
-                        test.submission = test.submissions.find(sub=>sub._id.equals(_id))
+                        const test = (await allModels.testModel.findOne({ "submissions._id": testSubmissionId }).populate("questions.possibleAnswers.elementId").populate("questions.question.elementId")).toObject();
+                        test.submission = test.submissions.find(sub=>sub._id.equals(testSubmissionId))
+                        test.submission.time = test.submission.answers.reduce((acc,current)=>acc+current.time,0)
+
+                        delete test.submissions
                         return{
                             test,
                             testTypes:utils.testTypesTranslated
@@ -614,6 +617,10 @@ import('random-words')
                 test.workTime = calcWorkTimeForTest(test.startDate,test.endDate)
                 test.createdBy = test.madeBy.username
                 test.submissions = test.submissions.filter(el=>el.submittedBy.equals(userId))
+                test.isSubmittedAsTest = test.submissions.some(sub=>sub.isSubmittedAsTest)
+                test.isUserAbleToEdit = test.madeBy._id.equals(userId)
+
+
 
                 for (const sub of test.submissions) {
                     delete sub.answers

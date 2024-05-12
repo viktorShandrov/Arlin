@@ -78,12 +78,12 @@ router.post("/testCompleted",isAuth,async (req,res)=>{
     }
 })
 
-router.get("/testResult/:testResultId",isAuth,async (req,res)=>{
+router.get("/testSubmission/:testSubmissionId",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
-        const {testResultId} = req.params
-        const testResult = await wordManager.getTestDetails(testResultId,_id)
-        res.status(200).send({testResult})
+        const {testSubmissionId} = req.params
+        const testSubmission = await wordManager.getTestSubmission(testSubmissionId,_id)
+        res.status(200).send({testSubmission})
     } catch (error) {
         console.log(error)
         res.status(400).json({message:error.message})

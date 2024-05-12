@@ -48,24 +48,37 @@ export default function TestInfo(){
                             <h6 className={styles.infoValue}>{testInfo.createdBy}</h6>
                         </div>
                     </div>
+                    <div className={styles.btns}>
+                        {!testInfo.isSubmittedAsTest&&
+                            <Link to={`/main/test/${testInfo._id}`}>
+                                <button className={styles.begin}>Започни тест</button>
+                            </Link>
+                        }
+                        {testInfo.isSubmittedAsTest&&
+                            <Link to={`/main/test/${testInfo._id}`}>
+                                <button className={styles.exercise}>Упражнявай</button>
+                            </Link>
+                        }
+                        {testInfo.isUserAbleToEdit&&
+                            <Link to={`/main/test/${testInfo._id}/edit`}>
+                                <button className={styles.edit}>Редактиране</button>
+                            </Link>
+                        }
+
+                    </div>
                     <div className={styles.submissionsTable}>
                         <div className={`${styles.cell} ${styles.heading}`}>
                             <h6>Твои предавания на този тест</h6>
                         </div>
                         {testInfo.submissions.length>0&&testInfo.submissions.map((sub)=>
-                            <Link to={`/main/testResult/${sub._id}`}>
+                            <Link to={`/main/testSubmission/${sub._id}`}>
                                 <div className={styles.cell}>
                                     <span>{sub.isSubmittedAsTest?"тест":"упражнение"}</span>
                                     <span>детайли</span>
                                 </div>
                             </Link>
                         )}
-
-
-
                     </div>
-
-
                 </div>
             </div>
 
