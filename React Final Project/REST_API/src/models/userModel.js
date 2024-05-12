@@ -5,16 +5,25 @@ const {inventoryItems} = require("../utils/utils");
 
 
 const schema = mongoose.Schema({
-    username:{
+    firstName:{
         type:String,
     },
+    lastName:{
+        type:String,
+    },
+    classMembers:[
+        {
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"User",
+        }
+    ],
     email:String,
     password:{
         type:String,
     },
     role: {
         type: String,
-        enum: ["admin", "user","teacher"],
+        enum: ["admin", "user","teacher","student"],
         default: "user"
     },
     plan:{

@@ -2,21 +2,55 @@
 import styles from "./TestInfo.module.css"
 import {useEffect, useState} from "react";
 import {request} from "../../functions";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import {toast} from "react-toastify";
 export default function TestInfo(){
 
     const {testId} = useParams()
+    const navigate = useNavigate()
     const [testInfo,setTestInfo] = useState({
-        submissions: []
+        submissions: [],
+        assignedTo: []
 
     })
     useEffect(()=>{
         request(`unknownWords/testInfo/${testId}`,"GET").subscribe(
             (res)=>{
                 setTestInfo(res.testInfo)
+                console.log(res.testInfo)
             }
         )
     },[])
+    const submissionDetailsClick = (subId,operation,userId) => {
+            if(!subId){
+                if(operation=="assign"){
+                    setTestInfo(old=>{
+                        return {
+                            ...old,
+                            assignedTo: [...old.assignedTo,userId]
+                        }
+                    })
+                }else if(operation=="unassign"){
+                    setTestInfo(old=>{
+                        const temp = {...old}
+                        temp.assignedTo.splice(old.assignedTo.indexOf(userId),1)
+                        return temp
+                    })
+                }
+
+            }else{
+                navigate(`/main/testSubmission/${subId}`)
+            }
+
+    }
+
+    const saveAssignmentsClick = () =>{
+        request("unknownWords/updateTestInfo","POST",{testInfo:{assignedTo:testInfo.assignedTo},testId:testInfo._id}).subscribe(
+            (res)=>{
+                toast.success("Успешно запзихте промените")
+            }
+        )
+    }
     return(
         <>
             <div className={styles.testInfoWrapper}>
@@ -48,24 +82,28 @@ export default function TestInfo(){
                             <h6 className={styles.infoValue}>{testInfo.createdBy}</h6>
                         </div>
                     </div>
-                    <div className={styles.btns}>
-                        {!testInfo.isSubmittedAsTest&&
-                            <Link to={`/main/test/${testInfo._id}`}>
-                                <button className={styles.begin}>Започни тест</button>
-                            </Link>
-                        }
-                        {testInfo.isSubmittedAsTest&&
-                            <Link to={`/main/test/${testInfo._id}`}>
-                                <button className={styles.exercise}>Упражнявай</button>
-                            </Link>
-                        }
-                        {testInfo.isUserAbleToEdit&&
-                            <Link to={`/main/test/${testInfo._id}/edit`}>
-                                <button className={styles.edit}>Редактиране</button>
-                            </Link>
-                        }
+                    {!testInfo.isForTeacher&&
+                        <div className={styles.btns}>
+                            {!testInfo.isSubmittedAsTest&&
+                                <Link to={`/main/test/${testInfo._id}`}>
+                                    <button className={styles.begin}>Започни тест</button>
+                                </Link>
+                            }
+                            {testInfo.isSubmittedAsTest&&
+                                <Link to={`/main/test/${testInfo._id}`}>
+                                    <button className={styles.exercise}>Упражнявай</button>
+                                </Link>
+                            }
+                            {testInfo.isUserAbleToEdit&&
+                                <Link to={`/main/test/${testInfo._id}/edit`}>
+                                    <button className={styles.edit}>Редактиране</button>
+                                </Link>
+                            }
 
-                    </div>
+                        </div>
+                    }
+
+                    {!testInfo.isForTeacher&&
                     <div className={styles.submissionsTable}>
                         <div className={`${styles.cell} ${styles.heading}`}>
                             <h6>Твои предавания на този тест</h6>
@@ -79,6 +117,47 @@ export default function TestInfo(){
                             </Link>
                         )}
                     </div>
+                    }
+                    {testInfo.isForTeacher&&
+                        <>
+                            <div className={styles.submissionsTable}>
+                                <div className={`${styles.cell} ${styles.heading}`}>
+                                    <h6>Възложен на</h6>
+                                </div>
+                                {testInfo.availableStudents.length>0&&testInfo.availableStudents.map((user)=>
+
+                                    <div
+                                        onClick={()=>
+                                            submissionDetailsClick(user.submissionId,
+                                                testInfo.assignedTo.includes(user._id)?"unassign":"assign",user._id)
+                                        }
+
+                                        className={styles.cell}
+                                    >
+                                        <span>{user.firstName}</span>
+                                        {testInfo.assignedTo.includes(user._id)&&
+                                            <>
+                                                <span className={user.submissionId?styles.submitted:styles.notSubmitted}>{user.submissionId?"предал":"непредал"}</span>
+                                                <span>{user.submissionId?"детайли":"отмяна"}</span>
+                                            </>
+                                        }
+                                        {!testInfo.assignedTo.includes(user._id)&&
+                                            <>
+                                                <span className={styles.notAssigned}>невъзложено</span>
+                                                <span>възложи</span>
+                                            </>
+
+                                        }
+                                    </div>
+
+                                )}
+                            </div>
+                            <button onClick={saveAssignmentsClick} className={styles.saveBtn}>Запази промените</button>
+                        </>
+
+
+                    }
+
                 </div>
             </div>
 

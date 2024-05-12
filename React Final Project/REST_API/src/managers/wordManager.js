@@ -418,6 +418,8 @@ import('random-words')
                         return test._id
                     }
 
+
+
                     exports.updateTestInfo=async (info,testId)=>{
                         const test = await allModels.testModel.findById(testId)
                         for (const [k,v] of Object.entries(info)) {
@@ -613,12 +615,37 @@ import('random-words')
             })
             exports.getTestInfo = async(testId,userId)=>{
                 const test = (await allModels.testModel.findById(testId).populate("madeBy")).toObject()
+                const user = (await allModels.userModel.findById(userId).populate("classMembers")).toObject()
+                // for all users
                 test.questionsCount = test.questions.length
                 test.workTime = calcWorkTimeForTest(test.startDate,test.endDate)
                 test.createdBy = test.madeBy.username
-                test.submissions = test.submissions.filter(el=>el.submittedBy.equals(userId))
-                test.isSubmittedAsTest = test.submissions.some(sub=>sub.isSubmittedAsTest)
+
+                //for teacher
                 test.isUserAbleToEdit = test.madeBy._id.equals(userId)
+                test.isForTeacher = user.role === "teacher"
+
+                if(test.isForTeacher){
+                    test.availableStudents = [...user.classMembers]
+                    for (const userElement of test.availableStudents) {
+                        //if person have assigment and has submitted the test as TEST
+                        if(test.assignedTo.some(id=>id.equals(userElement._id))){
+                            userElement.isAssignedToUser = true
+                            const testSubmission = test.submissions.find(sub=>sub.submittedBy.equals(userElement._id)&&sub.isSubmittedAsTest)
+                            if(testSubmission){
+                                userElement.submissionId = testSubmission._id
+                            }
+                        }else{
+                            userElement.isAssignedToUser = false
+                        }
+
+                    }
+                }else{
+                    delete test.assignedTo
+                    test.submissions = test.submissions.filter(el=>el.submittedBy.equals(userId))
+                    test.isSubmittedAsTest = test.submissions.some(sub=>sub.isSubmittedAsTest)
+
+                }
 
 
 

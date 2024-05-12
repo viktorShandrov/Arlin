@@ -10,6 +10,12 @@ const schema = mongoose.Schema({
         type:String,
         default: "Arlin упражнение"
     },
+    assignedTo:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"User",
+        }
+    ],
     startDate:Date,
     endDate:Date,
     madeBy:{

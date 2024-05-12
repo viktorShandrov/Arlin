@@ -51,7 +51,9 @@
     border-top: none;
     color: var(--lightBlue);
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .cell:hover{
@@ -66,7 +68,8 @@
     flex-direction: column;
     gap: 10px;
 }
-.btns a>*{
+.btns a>*,
+.saveBtn{
     padding: 20px 40px;
     border-radius: 10px;
     border: none;
@@ -82,3 +85,32 @@
 .edit{
     background-color: var(--darkRed);
 }
+
+.saveBtn{
+    background-color: var(--lightBlue);
+
+}
+
+
+.submitted{
+    color: white;
+    background-color: green;
+    padding: 5px;
+    width: 120px;
+    text-align: center;
+}
+.notSubmitted{
+    color: white;
+    background-color: red;
+    padding: 5px;
+    width: 120px;
+    text-align: center;
+}
+.notAssigned{
+    color: white;
+    background-color: var(--lightRed);
+    padding: 5px;
+    width: 120px;
+    text-align: center;
+}
+
