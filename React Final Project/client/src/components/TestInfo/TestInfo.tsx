@@ -10,12 +10,14 @@ export default function TestInfo(){
     const navigate = useNavigate()
     const [testInfo,setTestInfo] = useState({
         submissions: [],
-        assignedTo: []
+        assignedTo: [],
+        assignedToClone: []
 
     })
     useEffect(()=>{
         request(`unknownWords/testInfo/${testId}`,"GET").subscribe(
             (res)=>{
+                res.testInfo.assignedToClone = [...res.testInfo.assignedTo]
                 setTestInfo(res.testInfo)
                 console.log(res.testInfo)
             }
@@ -47,6 +49,13 @@ export default function TestInfo(){
     const saveAssignmentsClick = () =>{
         request("unknownWords/updateTestInfo","POST",{testInfo:{assignedTo:testInfo.assignedTo},testId:testInfo._id}).subscribe(
             (res)=>{
+                setTestInfo(old=>{
+                    return {
+                        ...old,
+                        assignedToClone:[...testInfo.assignedTo]
+                    }
+                })
+                // testInfo.assignedToClone = [...testInfo.assignedTo]
                 toast.success("Успешно запзихте промените")
             }
         )
@@ -152,7 +161,7 @@ export default function TestInfo(){
 
                                 )}
                             </div>
-                            <button onClick={saveAssignmentsClick} className={styles.saveBtn}>Запази промените</button>
+                            <button disabled={JSON.stringify(testInfo.assignedToClone.sort())===JSON.stringify(testInfo.assignedTo.sort())} onClick={saveAssignmentsClick} className={styles.saveBtn}>Запази промените</button>
                         </>
 
 
