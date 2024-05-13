@@ -24,6 +24,7 @@ import PlansCatalog from "../PlansCatalog/PlansCatalog";
 import TestResume from "../TestResume/TestResume";
 import CreateTest from "../CreateTest/CreateTest";
 import TestInfo from "../TestInfo/TestInfo";
+import TestsDashboard from "../TestsDashboard/TestsDashboard";
 export default function Main(){
     return(
             <>
@@ -44,6 +45,7 @@ export default function Main(){
                             <Route path={"/tests"} element={<TestsList />}></Route>
                             <Route path={"/unknownWords"} element={<UnknownWords />}></Route>
                             <Route path={"/testSubmission/:testSubmissionId"} element={<TestResume />}></Route>
+                            <Route path={"/testsDashboard"} element={<TestsDashboard />}></Route>
                             <Route path={"/testInfo/:testId"} element={<TestInfo />}></Route>
                             <Route path={"/AllBooks/freeBookMode?"} element={<AllBooks />}></Route>
                             <Route path={"/read"} element={<MyBooksList />}></Route>

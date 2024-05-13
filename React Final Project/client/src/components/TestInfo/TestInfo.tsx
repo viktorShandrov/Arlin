@@ -4,10 +4,12 @@ import {useEffect, useState} from "react";
 import {request} from "../../functions";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
+import Loading from "../Spinner/Loading";
 export default function TestInfo(){
 
     const {testId} = useParams()
     const navigate = useNavigate()
+    const [isLoading,setIsLoading] = useState(true)
     const [testInfo,setTestInfo] = useState({
         submissions: [],
         assignedTo: [],
@@ -17,9 +19,12 @@ export default function TestInfo(){
     useEffect(()=>{
         request(`unknownWords/testInfo/${testId}`,"GET").subscribe(
             (res)=>{
-                res.testInfo.assignedToClone = [...res.testInfo.assignedTo]
+                if(res.testInfo.assignedTo){
+                    res.testInfo.assignedToClone = [...res.testInfo.assignedTo]
+                }
                 setTestInfo(res.testInfo)
                 console.log(res.testInfo)
+                setIsLoading(false)
             }
         )
     },[])
@@ -56,12 +61,14 @@ export default function TestInfo(){
                     }
                 })
                 // testInfo.assignedToClone = [...testInfo.assignedTo]
-                toast.success("Успешно запзихте промените")
+                toast.success("Успешно запазихте промените")
             }
         )
     }
     return(
         <>
+            {isLoading&&<Loading/>}
+
             <div className={styles.testInfoWrapper}>
                 <div className={styles.testInfoC}>
                     <h1>Информация за тест</h1>
@@ -108,7 +115,6 @@ export default function TestInfo(){
                                     <button className={styles.edit}>Редактиране</button>
                                 </Link>
                             }
-
                         </div>
                     }
 

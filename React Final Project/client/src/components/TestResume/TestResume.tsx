@@ -5,6 +5,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import {userContext} from "../../redux/StateProvider/StateProvider";
 import {useContext, useEffect, useState} from "react";
+import Loading from "../Spinner/Loading";
 // import {useDispatch} from "react-redux";
 // import {setUser} from "../../redux/user";
 // @ts-ignore
@@ -14,6 +15,7 @@ export default function TestResume(){
     const [questions,setQuestions] = useState([])
     const [answers,setAnswers] = useState([])
     const [testTypes,setTestTypes] = useState({})
+    const [isLoading,setIsLoading] = useState(true)
     const [testDetails,setTestDetails] = useState({
         submission: {},
         questions: []
@@ -29,13 +31,14 @@ export default function TestResume(){
                 setQuestions(res.testSubmission.test.questions)
                 setAnswers(res.testSubmission.test.submission.answers)
                 setTestTypes(res.testSubmission.testTypes)
+                setIsLoading(false)
             }
         )
     },[testSubmissionId])
 
     return(
         <>
-
+            {isLoading&&<Loading/>}
             <div className={styles.questionsListWrapper}>
                 <div className={styles.heading}>
                     <h3>Браво!</h3>

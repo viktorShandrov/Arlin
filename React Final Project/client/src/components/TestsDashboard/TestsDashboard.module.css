@@ -1,0 +1,57 @@
+
+
+.testDashboardWrapper{
+    overflow-y: auto;
+    color: var(--lightBlue);
+    padding: 50px;
+}
+.header{
+    padding-bottom: 30px;
+}
+.number{
+    font-size: 30px;
+    color: var(--lightRed);
+}
+.stats{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 0;
+}
+.tables{
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+.submissionsTable{
+    max-width: 700px;
+    width: 100%;
+}
+.cell.heading{
+    color: white;
+    text-align: center;justify-content: center;
+    background-color: var(--lightBlue);
+}
+.cell{
+    padding: 20px;
+    border: solid 3px var(--lightBlue);
+    border-top: none;
+    color: var(--lightBlue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.cell:hover{
+    background-color: var(--lightBlue);
+    transition: 0.1s;
+    color: white;
+}
+
+.cell.createTestBtn{
+    background-color: var(--darkBlue);
+    border: var(--darkBlue);
+    color: white;
+    justify-content: center;
+}

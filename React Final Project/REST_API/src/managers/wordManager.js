@@ -613,6 +613,77 @@ import('random-words')
                         }
             }
             })
+            function calculateGrade(achievedPoints, totalPoints) {
+                const percentage = (achievedPoints / totalPoints);
+                const gradeRange = 6 - 2;
+                const grade = (percentage * gradeRange) + 2;
+                return grade;
+            }
+            exports.getTestElementsForUserType = async (userId) =>{
+                const user = await allModels.userModel.findById(userId)
+                switch(user.role){
+
+                    case "teacher":
+                        //only test made by teacher
+                        const tests = (await allModels.testModel
+                            .find({madeBy:userId,isPersonalExercise:false}))
+                            .map(el=>el.toObject())
+
+                        //only submissions from classMembers
+                        tests.forEach(test=>{
+                            test.submissions = test.submissions.filter(sub=>user.classMembers.some(member=>member.equals(sub.submittedBy)))
+                        })
+
+                        const subsCount = (await allModels.testModel.aggregate([
+                            { $match: { "submissions.isSubmittedAsTest": true } },
+                        ])).length;
+
+                        const totalScoreFromAllClassSubs = tests.reduce((acc,curr)=>acc+curr.submissions.reduce((acc1,curr1)=>acc1+curr1.score,0),0)
+                        const totalSubsCount = tests.reduce((acc,curr)=>acc+curr.submissions.length,0)
+                        // console.log(totalScoreFromAllClassSubs)
+                        // console.log(totalSubsCount)
+                        return {
+                            madeByUser: tests.map(el => {
+                                return {
+                                    _id: el._id,
+                                    title: el.title
+                                }
+                            }),
+                            stats:{
+                                madeByTeachersClassCount:tests.reduce((acc,curr)=>acc+curr.submissions.length,0),
+                                averageGrade:totalScoreFromAllClassSubs / totalSubsCount,
+                                createdByTeacher:tests.length,
+                                allSubs:subsCount
+                            }
+                        }
+                    case "student":
+                        const testsArr = (await allModels.testModel
+                            .find({ assignedTo: { $in: [userId] }}))
+                            .map(test=>test.toObject())
+
+                        const submittedByUser = []
+                        testsArr.forEach(test=>{
+                            const submissions = test.submissions.filter(sub=>sub.submittedBy.equals(userId))
+                            if(submissions.length>0){
+                                for (const submission of submissions) {
+                                    submittedByUser.push({
+                                        title:test.title,
+                                        submissionId:submission._id
+                                    })
+                                }
+                            }
+                        })
+
+                        return {
+                            assignedToUser: testsArr.map(test=>{return {testId:test._id,title:test.title}}),
+                            submittedByUser,
+                            stats:{
+
+                            }
+                        }
+
+                }
+            }
             exports.getTestInfo = async(testId,userId)=>{
                 const test = (await allModels.testModel.findById(testId).populate("madeBy")).toObject()
                 const user = (await allModels.userModel.findById(userId).populate("classMembers")).toObject()

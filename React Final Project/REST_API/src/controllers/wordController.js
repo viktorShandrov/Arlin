@@ -101,6 +101,16 @@ router.get("/testInfo/:testId",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.get("/testElements",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const testEls = await wordManager.getTestElementsForUserType(_id)
+        res.status(200).send({testEls})
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
 
 router.post("/createTest",isAuth,async (req,res)=>{
     try{

@@ -6,6 +6,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import {useNavigate, useParams} from "react-router-dom";
 import TestResume from "../TestResume/TestResume";
 import Popup from "../Popup/Popup";
+import Loading from "../Spinner/Loading";
 
 export default function Test(){
 
@@ -220,7 +221,7 @@ export default function Test(){
 
     return(
         <>
-
+            {isLoading&&<Loading/>}
             <div className={styles.wrapper}>
                 <div className={styles.mainView}>
 
