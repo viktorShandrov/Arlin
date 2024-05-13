@@ -8,8 +8,8 @@ const {models} = require("mongoose");
 
 
 
-exports.register = async(username,email,password,repeatedPassword,image)=>{
-    if(!username||!email||!password||!repeatedPassword){
+exports.register = async(firstName,lastName,email,password,repeatedPassword,image)=>{
+    if(!firstName||!lastName||!email||!password||!repeatedPassword){
         throw new Error("Всички полета за задължителни")
     }
 
@@ -23,7 +23,8 @@ exports.register = async(username,email,password,repeatedPassword,image)=>{
     }
 
     const userData = {
-        username,
+        firstName,
+        lastName,
         email,
         password,
         repeatedPassword,

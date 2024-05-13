@@ -12,10 +12,10 @@ const upload = multer({ storage: storage });
 router.post("/register",upload.single('image'),async (req,res)=>{
     try {
 
-        const {username,email,password,repeatedPassword} = req.body
+        const {firstName,lastName,email,password,repeatedPassword} = req.body
         const image = req.file;
 
-        const payload = await userManager.register(username,email,password,repeatedPassword,image)
+        const payload = await userManager.register(firstName,lastName,email,password,repeatedPassword,image)
 
         res.status(201).json(payload)
     } catch (error) {
@@ -27,7 +27,6 @@ router.post("/login",async (req,res)=>{
     try {
 
         const {email,password} = req.body
-
         const payload = await userManager.login(email,password)
         res.status(201).json(payload)
     } catch (error) {
