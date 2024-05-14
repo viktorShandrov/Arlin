@@ -112,7 +112,7 @@ export default function Test(){
 
             request("unknownWords/testCompleted","POST",{results:answersHistory,testId:testInfo._id}).subscribe(
                 (res:any)=> {
-                    navigate(`/main/testResults/${testInfo._id}`)
+                    navigate(`/main/testSubmission/${res.submissionId}`)
                 })
         }else{
             resetAnswersColors()

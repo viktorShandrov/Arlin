@@ -27,6 +27,7 @@ export default function TestResume(){
     useEffect(()=>{
         request(`unknownWords/testSubmission/${testSubmissionId}`,"GET").subscribe(
             (res:any)=>{
+                console.log(res.testSubmission)
                 setTestDetails(res.testSubmission.test)
                 setQuestions(res.testSubmission.test.questions)
                 setAnswers(res.testSubmission.test.submission.answers)
@@ -44,6 +45,8 @@ export default function TestResume(){
                     <h3>Браво!</h3>
                     <h6 className={styles.textInfoPair}>Отнеха ти <h6 className={styles.highlightedText}>{`${Math.floor(testDetails.submission.time / 60)}:${(testDetails.submission.time % 60).toString().padStart(2, '0')}`}</h6> минути</h6>
                     <h6 className={styles.textInfoPair}>С резултат <h6 className={styles.highlightedText}>{testDetails.submission.score}/{testDetails.questions.length}</h6> верни отговора</h6>
+                    <h6 className={styles.textInfoPair}>Предадено на<h6 className={styles.highlightedText}>{new Date(testDetails.submission.submissionTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' })}</h6> часа</h6>
+
                 </div>
 
                <div className={styles.questionsListC}>

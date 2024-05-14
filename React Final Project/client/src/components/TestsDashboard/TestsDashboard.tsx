@@ -83,7 +83,7 @@ export default function TestsDashboard(){
                         {testElTables.submittedByUser&&
                             <Table title={"Предадени твои тестове"} arr={testElTables.submittedByUser}>
                                 {testElTables.submittedByUser.length>0&&testElTables.submittedByUser.map((test)=>
-                                    <Link to={`/main/testSubmission/${test.submissionId}`}>
+                                    <Link to={`/main/testInfo/${test.testId}`}>
                                         <div className={styles1.cell}>
                                             <span>{test.title}</span>
                                             <span>детайли</span>

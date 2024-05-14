@@ -636,15 +636,15 @@ import('random-words')
                             .find({madeBy:userId,isPersonalExercise:false}))
                             .map(el=>el.toObject())
 
-                        //only submissions from classMembers
+                        //only TEST submissions from classMembers
                         tests.forEach(test=>{
-                            test.submissions = test.submissions.filter(sub=>user.classMembers.some(member=>member.equals(sub.submittedBy)))
+                            test.submissions = test.submissions.filter(sub=>user.classMembers.some(member=>member.equals(sub.submittedBy)&&sub.isSubmittedAsTest))
                         })
 
 
 
                         const totalScoreFromAllClassSubs = tests.reduce((acc,curr)=>acc+curr.submissions.reduce((acc1,curr1)=>acc1+curr1.score,0),0)
-                        const totalSubsCount = tests.reduce((acc,curr)=>acc+curr.submissions.length,0)
+                        const totalPossibleScoreFromAllClassSubs = tests.reduce((acc,curr)=>acc+curr.submissions.length,0)
                         // console.log(totalScoreFromAllClassSubs)
                         // console.log(totalSubsCount)
                         return {
@@ -656,7 +656,7 @@ import('random-words')
                             }),
                             stats:{
                                 madeByTeachersClassCount:tests.reduce((acc,curr)=>acc+curr.submissions.length,0),
-                                averageGrade:totalScoreFromAllClassSubs / totalSubsCount,
+                                averageGrade:calculateGrade(totalScoreFromAllClassSubs,totalPossibleScoreFromAllClassSubs),
                                 createdByTeacher:tests.length,
                                 allSubs:subsCount
                             }
@@ -666,19 +666,19 @@ import('random-words')
                             .find({ assignedTo: { $in: [userId] }}))
                             .map(test=>test.toObject())
 
-                        const submittedByUser = []
-                        testsArr.forEach(test=>{
-                            const submissions = test.submissions.filter(sub=>sub.submittedBy.equals(userId))
-                            if(submissions.length>0){
-                                for (const submission of submissions) {
-                                    submittedByUser.push({
-                                        title:test.title,
-                                        submissionId:submission._id,
-                                        submissionTime:submission.submissionTime
-                                    })
-                                }
-                            }
-                        })
+                        const submittedByUser = testsArr.filter(test=>test.submissions.some(sub=>sub.submittedBy.equals(userId))).map(test=>{return {testId:test._id,title:test.title}})
+                        // testsArr.forEach(test=>{
+                        //     const submissions = test.submissions.filter(sub=>sub.submittedBy.equals(userId))
+                        //     if(submissions.length>0){
+                        //         for (const submission of submissions) {
+                        //             submittedByUser.push({
+                        //                 title:test.title,
+                        //                 submissionId:submission._id,
+                        //                 submissionTime:submission.submissionTime
+                        //             })
+                        //         }
+                        //     }
+                        // })
 
 
                         return {
