@@ -1,10 +1,12 @@
 
 import styles from "./TestInfo.module.css"
+import styles1 from "../Table/Table.module.css"
 import {useEffect, useState} from "react";
 import {request} from "../../functions";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import Loading from "../Spinner/Loading";
+import Table from "../Table/Table";
 export default function TestInfo(){
 
     const {testId} = useParams()
@@ -21,6 +23,9 @@ export default function TestInfo(){
             (res)=>{
                 if(res.testInfo.assignedTo){
                     res.testInfo.assignedToClone = [...res.testInfo.assignedTo]
+                }
+                if(res.testInfo.submissions){
+                    res.testInfo.submissions.sort((a,b)=>new Date(b.submissionTime) - new Date(a.submissionTime))
                 }
                 setTestInfo(res.testInfo)
                 console.log(res.testInfo)
@@ -100,12 +105,12 @@ export default function TestInfo(){
                     </div>
                     {!testInfo.isForTeacher&&
                         <div className={styles.btns}>
-                            {!testInfo.isSubmittedAsTest&&
+                            {!testInfo.isSubmittedAsTest&&!testInfo.isExpired&&
                                 <Link to={`/main/test/${testInfo._id}`}>
                                     <button className={styles.begin}>Започни тест</button>
                                 </Link>
                             }
-                            {testInfo.isSubmittedAsTest&&
+                            {(testInfo.isSubmittedAsTest||testInfo.isExpired)&&
                                 <Link to={`/main/test/${testInfo._id}`}>
                                     <button className={styles.exercise}>Упражнявай</button>
                                 </Link>
@@ -119,54 +124,48 @@ export default function TestInfo(){
                     }
 
                     {!testInfo.isForTeacher&&
-                    <div className={styles.submissionsTable}>
-                        <div className={`${styles.cell} ${styles.heading}`}>
-                            <h6>Твои предавания на този тест</h6>
-                        </div>
-                        {testInfo.submissions.length>0&&testInfo.submissions.map((sub)=>
-                            <Link to={`/main/testSubmission/${sub._id}`}>
-                                <div className={styles.cell}>
-                                    <span>{sub.isSubmittedAsTest?"тест":"упражнение"}</span>
-                                    <span>детайли</span>
-                                </div>
-                            </Link>
-                        )}
-                    </div>
+                        <Table title={"Твои предавания на този тест"} arr={testInfo.submissions} noContentText={"Няма твои предавания"}>
+                            {testInfo.submissions.length>0&&testInfo.submissions.map((sub)=>
+                                <Link to={`/main/testSubmission/${sub._id}`}>
+                                    <div className={styles1.cell}>
+                                        <span>{sub.isSubmittedAsTest?"тест":"упражнение"}</span>
+                                        <span>детайли</span>
+                                    </div>
+                                </Link>
+                            )}
+                        </Table>
+
                     }
                     {testInfo.isForTeacher&&
                         <>
-                            <div className={styles.submissionsTable}>
-                                <div className={`${styles.cell} ${styles.heading}`}>
-                                    <h6>Възложен на</h6>
-                                </div>
-                                {testInfo.availableStudents.length>0&&testInfo.availableStudents.map((user)=>
+                                <Table title={"Възложен на"} arr={testInfo.availableStudents} noContentText={"Нямате ученици на които да го възложите"}>
+                                    {testInfo.availableStudents.length>0&&testInfo.availableStudents.map((user)=>
 
-                                    <div
-                                        onClick={()=>
-                                            submissionDetailsClick(user.submissionId,
-                                                testInfo.assignedTo.includes(user._id)?"unassign":"assign",user._id)
-                                        }
+                                        <div
+                                            onClick={()=>
+                                                submissionDetailsClick(user.submissionId,
+                                                    testInfo.assignedTo.includes(user._id)?"unassign":"assign",user._id)
+                                            }
 
-                                        className={styles.cell}
-                                    >
-                                        <span>{user.firstName}</span>
-                                        {testInfo.assignedTo.includes(user._id)&&
-                                            <>
-                                                <span className={user.submissionId?styles.submitted:styles.notSubmitted}>{user.submissionId?"предал":"непредал"}</span>
-                                                <span>{user.submissionId?"детайли":"отмяна"}</span>
-                                            </>
-                                        }
-                                        {!testInfo.assignedTo.includes(user._id)&&
-                                            <>
-                                                <span className={styles.notAssigned}>невъзложено</span>
-                                                <span>възложи</span>
-                                            </>
+                                            className={styles1.cell}
+                                        >
+                                            <span>{user.firstName}</span>
+                                            {testInfo.assignedTo.includes(user._id)&&
+                                                <>
+                                                    <span className={user.submissionId?styles.submitted:styles.notSubmitted}>{user.submissionId?"предал":"непредал"}</span>
+                                                    <span>{user.submissionId?"детайли":"отмяна"}</span>
+                                                </>
+                                            }
+                                            {!testInfo.assignedTo.includes(user._id)&&
+                                                <>
+                                                    <span className={styles.notAssigned}>невъзложено</span>
+                                                    <span>възложи</span>
+                                                </>
+                                            }
+                                        </div>
+                                    )}
+                                </Table>
 
-                                        }
-                                    </div>
-
-                                )}
-                            </div>
                             <button disabled={JSON.stringify(testInfo.assignedToClone.sort())===JSON.stringify(testInfo.assignedTo.sort())} onClick={saveAssignmentsClick} className={styles.saveBtn}>Запази промените</button>
                         </>
 

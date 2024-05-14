@@ -9,7 +9,27 @@ const userManager =require("./userManager") ;
 // const fetch1 = await import("node-fetch")
 
 
+function checkIfTestExpired(test){
+    const date = new Date()
+    let isExpired
+    if(test.endDate===date){
+        const currentTime = new Date();
 
+        const endTimeParts = test.endTime.split(':');
+        const endHour = parseInt(endTimeParts[0], 10);
+        const endMinute = parseInt(endTimeParts[1], 10);
+
+        const endTime = new Date(currentTime);
+        endTime.setHours(endHour);
+        endTime.setMinutes(endMinute);
+        endTime.setSeconds(0); // Optional if you want to ignore seconds
+
+        isExpired = endTime < currentTime;
+    }else{
+        isExpired = test.endDate<date
+    }
+    return isExpired
+}
 import('random-words')
     .then(async (randomWordsModule )=>{
         globalThis.fetch = (await import('node-fetch')).default;
@@ -42,7 +62,7 @@ import('random-words')
                         //fill with random words if necessary
                         let randomWordsToFill = []
                         if(utils.excersiceQuestionsCount-questions.length>0){
-                            randomWordsToFill = await allModels.wordModel.find({ word: { $nin: questions.map(el=>el.word) } }).limit(numberOfQuestions-questions.length);
+                            randomWordsToFill = await allModels.wordModel.find({ word: { $nin: questions.map(el=>el.word) } }).limit(utils.excersiceQuestionsCount-questions.length);
                         }
 
                         questions = [...questions,...randomWordsToFill]
@@ -93,27 +113,7 @@ import('random-words')
                     }
 
 
-                    function checkIfTestExpired(test){
-                        const date = new Date()
-                        let isExpired
-                        if(test.date===date){
-                            const currentTime = new Date();
 
-                            const endTimeParts = test.endTime.split(':');
-                            const endHour = parseInt(endTimeParts[0], 10);
-                            const endMinute = parseInt(endTimeParts[1], 10);
-
-                            const endTime = new Date(currentTime);
-                            endTime.setHours(endHour);
-                            endTime.setMinutes(endMinute);
-                            endTime.setSeconds(0); // Optional if you want to ignore seconds
-
-                            isExpired = endTime < currentTime;
-                        }else{
-                            isExpired = test.date<date
-                        }
-                        return isExpired
-                    }
 
                     exports.generateTest =async(userId,testId,isPersonalExercise)=>{
 
@@ -354,6 +354,7 @@ import('random-words')
                     `
 
                     exports.markTestAsCompleted =async (userId,res,results,testId)=>{
+                        res.body = {}
                         const user = await models.userModel.findById(userId)
                         const test = await allModels.testModel.findById(testId);
 
@@ -380,7 +381,7 @@ import('random-words')
 
                         // order in question order
                         test.submissions.at(-1).answers.sort((a, b)=>a.questionIndex-b.questionIndex)
-
+                        res.body.submissionId = test.submissions.at(-1)._id
                         await test.save()
 
                         return
@@ -621,6 +622,12 @@ import('random-words')
             }
             exports.getTestElementsForUserType = async (userId) =>{
                 const user = await allModels.userModel.findById(userId)
+
+                const subsCount = (await allModels.testModel.aggregate([
+                    { $match: { "submissions.isSubmittedAsTest": true } },
+                ])).length;
+
+
                 switch(user.role){
 
                     case "teacher":
@@ -634,9 +641,7 @@ import('random-words')
                             test.submissions = test.submissions.filter(sub=>user.classMembers.some(member=>member.equals(sub.submittedBy)))
                         })
 
-                        const subsCount = (await allModels.testModel.aggregate([
-                            { $match: { "submissions.isSubmittedAsTest": true } },
-                        ])).length;
+
 
                         const totalScoreFromAllClassSubs = tests.reduce((acc,curr)=>acc+curr.submissions.reduce((acc1,curr1)=>acc1+curr1.score,0),0)
                         const totalSubsCount = tests.reduce((acc,curr)=>acc+curr.submissions.length,0)
@@ -668,19 +673,28 @@ import('random-words')
                                 for (const submission of submissions) {
                                     submittedByUser.push({
                                         title:test.title,
-                                        submissionId:submission._id
+                                        submissionId:submission._id,
+                                        submissionTime:submission.submissionTime
                                     })
                                 }
                             }
                         })
 
+
                         return {
-                            assignedToUser: testsArr.map(test=>{return {testId:test._id,title:test.title}}),
+                            assignedToUser: testsArr.filter(test=>test.submissions.every(sub=>!sub.submittedBy.equals(userId))).map(test=>{return {testId:test._id,title:test.title}}),
                             submittedByUser,
                             stats:{
-
+                                allSubs:subsCount
                             }
                         }
+                    default:{
+                        return{
+                            stats:{
+                                allSubs:subsCount
+                            }
+                        }
+                    }
 
                 }
             }
@@ -715,7 +729,7 @@ import('random-words')
                     delete test.assignedTo
                     test.submissions = test.submissions.filter(el=>el.submittedBy.equals(userId))
                     test.isSubmittedAsTest = test.submissions.some(sub=>sub.isSubmittedAsTest)
-
+                    test.isExpired = checkIfTestExpired(test)
                 }
 
 

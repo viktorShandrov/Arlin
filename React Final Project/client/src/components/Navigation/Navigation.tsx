@@ -94,7 +94,7 @@ export default function Navigation(){
                         <h6 className={styles.navItemLabel}>Речник</h6>
                     </article>
                 </Link>
-                <Link onClick={navigateHandler} to={"/main/tests"}  className={styles.linkItem} >
+                <Link onClick={navigateHandler} to={"/main/testsDashboard"}  className={styles.linkItem} >
                     <article className={styles.linkC}>
                         <div className={styles.imageC}>
                             <img src="/nav%20icons%20new/test.png" alt=""/>

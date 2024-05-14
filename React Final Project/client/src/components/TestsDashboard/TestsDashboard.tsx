@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import {request} from "../../functions";
 import {Link} from "react-router-dom";
 import Loading from "../Spinner/Loading";
+import Table from "../Table/Table";
+import styles1 from "../Table/Table.module.css"
 export default function TestsDashboard(){
     const [testElTables,setTestElTables] = useState({
         madeByUser: [],
@@ -17,6 +19,9 @@ export default function TestsDashboard(){
         request("unknownWords/testElements","GET").subscribe(
             (res)=>{
                 console.log(res)
+                if(res.testEls.submittedByUser){
+                    res.testEls.submittedByUser.sort((a,b)=>new Date(b.submissionTime) - new Date(a.submissionTime))
+                }
                 setTestElTables(res.testEls)
                 setIsLoading(false)
             }
@@ -29,81 +34,65 @@ export default function TestsDashboard(){
                 <div className={styles.testDashboardC}>
                     <h1 className={styles.header}>Тестове</h1>
                     <div className={styles.stats}>
-                        {testElTables.stats.allSubs&&
+                        {!!testElTables.stats.allSubs&&
                             <h6><span className={styles.number}>{testElTables.stats.allSubs}</span> общо предадени от всички</h6>
                         }
-                        {testElTables.stats.averageGrade&&
+                        {!!testElTables.stats.averageGrade&&
                             <h6><span className={styles.number}>{testElTables.stats.averageGrade}</span> средна оценка от твоя клас</h6>
                         }
-                        {testElTables.stats.madeByTeachersClassCount&&
+                        {!!testElTables.stats.madeByTeachersClassCount&&
                             <h6><span className={styles.number}>{testElTables.stats.madeByTeachersClassCount}</span> направени теста от твоя клас</h6>
                         }
-                        {testElTables.stats.createdByTeacher&&
+                        {!!testElTables.stats.createdByTeacher&&
                             <h6><span className={styles.number}>{testElTables.stats.createdByTeacher}</span> създадени от теб</h6>
                         }
                     </div>
-
-
-
-
-
                     <div className={styles.tables}>
                         {testElTables.assignedToUser&&
-                            <div className={styles.submissionsTable}>
-                                <div className={`${styles.cell} ${styles.heading}`}>
-                                    <h6>Възложени тестове</h6>
-                                </div>
+                            <Table title={"Възложени тестове"} arr={testElTables.assignedToUser}>
                                 {testElTables.assignedToUser.length>0&&testElTables.assignedToUser.map((test)=>
                                     <Link to={`/main/testInfo/${test.testId}`}>
-                                        <div className={styles.cell}>
+                                        <div className={styles1.cell}>
                                             <span>{test.title}</span>
                                             <span>детайли</span>
                                         </div>
                                     </Link>
                                 )}
-                            </div>
+                            </Table>
                         }
                         {testElTables.madeByUser&&
-                            <div className={styles.submissionsTable}>
-                                <div className={`${styles.cell} ${styles.heading}`}>
-                                    <h6>Създадени твои тестове</h6>
-                                </div>
-                                {testElTables.madeByUser.length>0&&testElTables.madeByUser.map((test)=>
-                                    <Link to={`/main/testInfo/${test._id}`}>
-                                        <div className={styles.cell}>
-                                            <span>{test.title}</span>
-                                            <span>детайли</span>
+                            <Table title={"Създадени твои тестове"} arr={testElTables.madeByUser}>
+                                <>
+                                    {testElTables.madeByUser.length>0&&testElTables.madeByUser.map((test)=>
+                                        <Link to={`/main/testInfo/${test._id}`}>
+                                            <div className={styles1.cell}>
+                                                <span>{test.title}</span>
+                                                <span>детайли</span>
+                                            </div>
+                                        </Link>
+                                    )}
+                                    <Link to={`/main/createTest`}>
+                                        <div className={`${styles1.cell} ${styles1.createTestBtn}`}>
+                                            <span>+ създаване на тест</span>
                                         </div>
                                     </Link>
-                                )}
-                                <Link to={`/main/createTest`}>
-                                    <div className={`${styles.cell} ${styles.createTestBtn}`}>
-                                        <span>+ създай тест</span>
-                                    </div>
-                                </Link>
-                            </div>
-                        }
+                                </>
 
+                            </Table>
+                        }
                         {testElTables.submittedByUser&&
-                            <div className={styles.submissionsTable}>
-                                <div className={`${styles.cell} ${styles.heading}`}>
-                                    <h6>Предадени твои тестове</h6>
-                                </div>
+                            <Table title={"Предадени твои тестове"} arr={testElTables.submittedByUser}>
                                 {testElTables.submittedByUser.length>0&&testElTables.submittedByUser.map((test)=>
                                     <Link to={`/main/testSubmission/${test.submissionId}`}>
-                                        <div className={styles.cell}>
+                                        <div className={styles1.cell}>
                                             <span>{test.title}</span>
                                             <span>детайли</span>
                                         </div>
                                     </Link>
                                 )}
-                            </div>
+                            </Table>
                         }
-
                     </div>
-
-
-
                 </div>
             </div>
         </>

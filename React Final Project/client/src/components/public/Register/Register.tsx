@@ -49,6 +49,7 @@ export default function  LoginAndRegister(){
                     setUserState(res)
                     localStorage.setItem("token",res.token)
                     setTimeout(async()=>{
+                        resetForm()
                         navigate("/main/hero")
                     },100)
                 }
