@@ -23,7 +23,7 @@
     background-color: #75A9AB;
     color: white;
     padding: 20px 40px;
-    border-radius: 30px;
+    border-radius: 10px;
     font-weight: bolder;
     border: none;
     align-self: flex-start;
@@ -44,6 +44,7 @@
     /*padding: 50px;*/
 }
 .createWordGroupC{
+    color: var(--lightBlue);
     text-align: center;
     width:    80%;
     margin: 0 auto;
@@ -88,9 +89,12 @@
 }
 
 .nameInput{
+    color: var(--lightBlue);
     width: 100%;
     padding: 5px;
     border-radius: 10px;
+    border:2px solid var(--lightBlue);
+    outline: var(--lightBlue);
 }
 
 .createBtns{

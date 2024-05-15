@@ -12,7 +12,11 @@ const schema = mongoose.Schema({
     examples:[{
         sentenceWhereWordsIsPresent:String,
         translation:String
-    }]
+    }],
+    synonyms: {
+        type: [String],
+        default: []
+    }
 
 })
 

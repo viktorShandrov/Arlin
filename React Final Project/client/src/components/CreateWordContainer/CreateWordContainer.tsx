@@ -39,7 +39,7 @@ export default function CreateWordContainer({setIsCreateGroupPopUpVisible,setUse
     }
 
     return(
-        <Popup hidePopup={hidePopup} styleSelector={styles.popupWrapper}>
+        <Popup isWithDisplayNone={!setIsCreateGroupPopUpVisible} hidePopup={hidePopup} styleSelector={styles.popupWrapper}>
             <div className={styles.createWordGroupWrapper}>
                 <div className={styles.createWordGroupC}>
                     <h5>създаване на нова група за думи</h5>

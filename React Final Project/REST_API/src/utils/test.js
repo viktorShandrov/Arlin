@@ -45,7 +45,26 @@ exports.test=async ()=> {
         //     }
         // )
 
+
+        //to be continued - to be played again
+        // setSynonymsOfEveryWord()
+
     },0)
+    async function setSynonymsOfEveryWord(){
+        const words = await models.wordModel.find({})
+        for (const word of words) {
+            if(word.synonyms.length===0){
+                const synonyms = (await(await fetch(translateAPI + encodeURI(word.word))).json()).info?.extraTranslations?.[0]?.list?.[0]?.meanings ;
+                if(synonyms){
+                    word.synonyms = synonyms
+                    await word.save()
+                }
+
+            }
+
+        }
+        console.log("done")
+    }
     async function putSentenceForWords(){
         try {
             const words = await models.wordModel.find({})
@@ -70,6 +89,7 @@ exports.test=async ()=> {
                             console.log(`${normal} th normal`)
                         }
                     }else{
+                        // when getting wordExample from another source is needed
                         const  sentenceWhereWordsIsPresent = (await wordManager.giveSentence(word.word)).text
                         const translation = await wordManager.translateText(sentenceWhereWordsIsPresent)
                         payload.push(
