@@ -25,6 +25,7 @@ const stripeManager = require("../managers/stripeManager");
 const {wordModel} = require("../models/allModels");
 const {translateAPI} = require("./utils");
 const {createStripeProduct} = require("../managers/stripeManager");
+const {model} = require("mongoose");
 
 exports.test=async ()=> {
 
@@ -44,12 +45,24 @@ exports.test=async ()=> {
         //
         //     }
         // )
-
+        // wordManager.setTranslationToAllWords()
 
         //to be continued - to be played again
         // setSynonymsOfEveryWord()
+        // removeUglySymbolsFromWordsInDB()
 
     },0)
+    async function removeUglySymbolsFromWordsInDB(){
+        const words = await models.wordModel.find({})
+        let count = 0
+        for (const word of words) {
+            word.word = word.word.replace(/[^\w\s]/gi, '')
+            count++
+            console.log(count)
+            await word.save()
+        }
+        console.log("gotowo")
+    }
     async function setSynonymsOfEveryWord(){
         const words = await models.wordModel.find({})
         for (const word of words) {

@@ -46,39 +46,78 @@ import('random-words')
                         return array;
                     }
 
+                    async function fillWordCircle(userId,allHardWordsForUser){
+                        const userDefaultContainer  = await allModels.wordsContainer.findOne({ownedBy:userId,type:"forUnknownWordsCircle"});
+                        const randomUnknownWords  = await allModels.wordModel.find({
+                            _id: { $nin: allHardWordsForUser.map(w=>w.wordRef._id) } // Assuming arrayOfIds contains the IDs of documents you want to exclude
+                        }).limit(utils.numberOfWordsInCircleToAppearOnTest-allHardWordsForUser.length);
+
+                        const randomWordsInEqualFormatAsInput = []
+                        for (const randomUnknownWord of randomUnknownWords) {
+                            randomWordsInEqualFormatAsInput.push({
+                                _isRandomAndAddedNow:true,
+                                wordRef:randomUnknownWord._id,
+                                addedOn: new Date()
+                            })
+                            userDefaultContainer.words.push({...randomWordsInEqualFormatAsInput.at(-1)})
+                        }
+
+                        await userDefaultContainer.save()
+                        return [...allHardWordsForUser,...randomWordsInEqualFormatAsInput]
+                    }
+                    async function checkIfEnoughWords(allHardWordsForUser,userId){
+                        if(allHardWordsForUser.length<utils.numberOfWordsInCircleToAppearOnTest){
+                            return fillWordCircle(userId, allHardWordsForUser)
+                        }else{
+                            return allHardWordsForUser
+                        }
+                    }
+
                     async function getWordDetailsAsQuestions(userId,numberOfQuestions){
+
                         const userWordsContainers = await allModels.wordsContainer.find({ownedBy:userId}).populate("words.wordRef")
-                        //12 words
-                        return shuffleArray(userWordsContainers.flatMap((container) => container.words.map((wordRef)=>wordRef.wordRef))).slice(0,numberOfQuestions);
+
+                        //get test number of words , sorted by addedOn date
+                        let allHardWordsForUser = userWordsContainers.flatMap(c => c.words).filter(word=>word.status==="hard");
+                        //fill with random words if necessary
+                        allHardWordsForUser = await checkIfEnoughWords(allHardWordsForUser,userId)
+
+                        const user = await allModels.userModel.findById(userId)
+                        user.testCompleteCirclesCount++
+                        if(user.testCompleteCirclesCount===utils.numberOfCirclesForWordsToAppearOnTest){
+                            user.testCompleteCirclesCount=0
+                        }
+                        await user.save()
+
+                        const startPosition = user.testCompleteCirclesCount*utils.excersiceQuestionsCount
+                        let wordForTest = allHardWordsForUser
+                            .sort((a,b)=>a.addedOn-b.addedOn)
+                            .slice( startPosition,startPosition+utils.excersiceQuestionsCount)
+
+                        for (const word of wordForTest) {
+                            if(!word._isRandomAndAddedNow){
+                                word.lastTimeGivenOnTest = new Date()
+                                word.save({ suppressWarning: true });
+                            }
+                        }
+
+                        const onlyWordsStandAloneInfo = wordForTest.map(w=>w.wordRef)
+                        return shuffleArray(onlyWordsStandAloneInfo)
 
                     }
 
 
                     async function makeWordTest(userId,isPersonalExercise){
 
-
                         let questions = await getWordDetailsAsQuestions(userId,utils.excersiceQuestionsCount)
 
-                        //fill with random words if necessary
-                        let randomWordsToFill = []
-                        if(utils.excersiceQuestionsCount-questions.length>0){
-                            randomWordsToFill = await allModels.wordModel.find({ word: { $nin: questions.map(el=>el.word) } }).limit(utils.excersiceQuestionsCount-questions.length);
-                        }
+                        let testRecord = await makeTestOutOfWords(questions,isPersonalExercise,userId)
 
-                        questions = [...questions,...randomWordsToFill]
-
-                        const containerForTestResult ={
-                            madeBy:userId,
-                            questions:[],
-                            isPersonalExercise:true,
-                        }
-                        await makeTestOutOfWords(questions,isPersonalExercise,containerForTestResult)
-                        let testRecord = await allModels.testModel.create(containerForTestResult)
                         testRecord = (await allModels.testModel.findById(testRecord._id).populate("questions.question.elementId").populate("questions.possibleAnswers.elementId")).toObject();
 
-                            for (const question of testRecord.questions) {
-                                populateStringValueToQuestionsAndAnswers(question)
-                            }
+                        for (const question of testRecord.questions) {
+                            populateStringValueToQuestionsAndAnswers(question)
+                        }
 
                         return testRecord
 
@@ -111,36 +150,42 @@ import('random-words')
 
 
                     }
+                    async function giveExistingTest(testId,userId){
+                        const test =  (await allModels.testModel.findById(testId)).toObject()
 
-
-
-
-                    exports.generateTest =async(userId,testId,isPersonalExercise)=>{
-
-                        if(testId){
-                            const test =  (await allModels.testModel.findById(testId)).toObject()
-
-                            if(!test.isPersonalExercise){
-                                if(!checkIfTestExpired(test)){
-                                    //if test already submitted
-                                    //if submitted as test, now is sent like exercise
-                                    if(
-                                        !test.submissions.filter(sub=>sub.submittedBy.equals(userId)).some(sub=>sub.isSubmittedAsTest)
-                                    ){
-                                        for (const question of test.questions) {
-                                            delete question.rightAnswerIndex
-                                        }
-                                    }else{
-                                        test.isExercise = true
+                        if(!test.isPersonalExercise){
+                            if(!checkIfTestExpired(test)){
+                                //if test already submitted
+                                //if submitted as test, now is sent like exercise
+                                if(
+                                    !test.submissions.filter(sub=>sub.submittedBy.equals(userId)).some(sub=>sub.isSubmittedAsTest)
+                                ){
+                                    for (const question of test.questions) {
+                                        delete question.rightAnswerIndex
                                     }
                                 }else{
                                     test.isExercise = true
                                 }
+                            }else{
+                                test.isExercise = true
                             }
-                            return test
+                        }
+                        return test
+                    }
+
+
+
+
+                    exports.generateTest =async(testId,userId,isPersonalExercise)=>{
+
+                        if(testId){
+                            return giveExistingTest(testId,userId)
+                        }else{
+                            //generate exercise test
+                            return makeWordTest(userId,isPersonalExercise)
                         }
 
-                        return makeWordTest(userId,isPersonalExercise)
+
 
 
 
@@ -369,42 +414,57 @@ import('random-words')
                         }
                         test.submissions.push(payload)
 
+                        const rightAnsweredWords = []
+
                         results.forEach((question,index)=>{
-                                test.submissions.at(-1).answers.push({
-                                    answerIndex:question.guessedAnswerIndex,
-                                    time:question.time
-                                })
-                            if(question.guessedAnswerIndex===test.questions[question.questionIndex].rightAnswerIndex){
-                                test.submissions.at(-1).score++
-                            }
+                            addAnswerToSubmission(question,test,rightAnsweredWords)
                         })
+                        for (const rightAnsweredWordId of rightAnsweredWords) {
+                            await increaseRightAnsweredCountOfWord(rightAnsweredWordId,userId)
+                        }
 
                         // order in question order
                         test.submissions.at(-1).answers.sort((a, b)=>a.questionIndex-b.questionIndex)
+                        //return submissionId
                         res.body.submissionId = test.submissions.at(-1)._id
                         await test.save()
 
-                        return
 
-                        switch(testType){
-                            case utils.testTypes.randomWords :
-                                await exports.makeThemKnown(wordsIds,userId)
-                                ++user.randomWordsTests
-                                user.knownWords+=12
-                                break;
-                            case utils.testTypes.textWords :
-                                ++user.wordsFromChapterTests
-                                break;
-                            case utils.testTypes.textQuestions :
-                                ++user.chapterPlotTests
-                                break;
-                                case utils.testTypes.matchFour :
-                                ++user.matchFourTests
-                                break;
-
-                        }
                         await userManager.updateUserExp(utils.defaultExp,user,res)
                         return user.save()
+                    }
+
+                    function addAnswerToSubmission(question,test,rightAnsweredWords){
+                        test.submissions.at(-1).answers.push({
+                            answerIndex:question.guessedAnswerIndex,
+                            time:question.time
+                        })
+
+                        if(question.guessedAnswerIndex===test.questions[question.questionIndex].rightAnswerIndex){
+                            markWordAsRightlyGuessed(question,test,rightAnsweredWords)
+                        }
+                    }
+                    function markWordAsRightlyGuessed(question,test,rightAnsweredWords){
+                        test.submissions.at(-1).score++
+                        const id = test.questions[question.questionIndex].question.elementId
+                        if(id){
+                            rightAnsweredWords.push(id)
+                        }
+
+                    }
+                    async function increaseRightAnsweredCountOfWord(wordId,userId){
+                        const containers = await allModels.wordsContainer.find({ownedBy:userId,"words.wordRef":wordId})
+                        for (const container of containers) {
+                            const word = container.words.find(word=>word.wordRef.equals(wordId))
+                            if(word.answeredRightCount<3){
+                                word.answeredRightCount++
+                            }
+                            //the "=" is for dev case
+                            if(word.answeredRightCount>=3){
+                                word.status = "known"
+                            }
+                            await container.save();
+                        }
                     }
 
                     exports.createInitialTestInfo=async (testTitle,userId)=>{
@@ -498,16 +558,28 @@ import('random-words')
                     }
 
 
-                    async function makeTestOutOfWords(words,isPersonalExercise,containerForTestResult){
+                    async function makeTestOutOfWords(words,isPersonalExercise,userId){
+
+                        const newTestElement ={
+                            madeBy:userId,
+                            questions:[],
+                            isPersonalExercise:true,
+                        }
+
                         const testsPlan = makeTestPlan(isPersonalExercise)
 
                         for (let i = 0; i < words.length; i++) {
-
                             //////////////////// stores it in DB ////////////////////
                             const question = words[i]
-                            const testType = isPersonalExercise?Object.entries(utils.excersiceTypes)[testsPlan[i]][1]:Object.entries(utils.testTypes)[testsPlan[i]][1]
+                            let testType = isPersonalExercise
+                                ?Object.entries(utils.excersiceTypes)[testsPlan[i]][1]
+                                :Object.entries(utils.testTypes)[testsPlan[i]][1]
 
-                            containerForTestResult.questions.push(
+                            if(!question.examples[0]){
+                                testType = utils.testTypes.randomWords
+                            }
+
+                            newTestElement.questions.push(
                                 {
                                     question:{
                                       elementId:question._id
@@ -517,7 +589,7 @@ import('random-words')
                                 }
                             )
 
-                            const answers = await makeWrongAnswers(question,testType,i,containerForTestResult)
+                            const answers = await makeWrongAnswers(question,testType,i,newTestElement)
 
                             const rightAnswer = {
                                 _id:question._id,
@@ -526,14 +598,13 @@ import('random-words')
                             const randomNumber = Math.floor(Math.random() * 4);
                             answers.splice(randomNumber,0,rightAnswer)
 
-                            containerForTestResult.questions[i].rightAnswerIndex = randomNumber;
-                            containerForTestResult.questions[i].possibleAnswers = answers.map(el=>{
+                            newTestElement.questions[i].rightAnswerIndex = randomNumber;
+                            newTestElement.questions[i].possibleAnswers = answers.map(el=>{
                                 return {elementId:el._id}
                             });
-
-
-
                         }
+
+                        return allModels.testModel.create(newTestElement)
 
                     }
 
@@ -792,13 +863,13 @@ exports.giveSentence =async(word)=>{
     return await(await fetch(`https://api.wordnik.com/v4/word.json/${word}/topExample?useCanonical=false&api_key=c23b746d074135dc9500c0a61300a3cb7647e53ec2b9b658e`)).json()
 
 }
-exports.createWordContainer =async(user,colorCode,name,type = "custom")=>{
-    const existingContainer = await allModels.wordsContainer.findOne({ownedBy:user._id,name:name})
+exports.createWordContainer =async(userId,colorCode,name,type = "custom")=>{
+    const existingContainer = await allModels.wordsContainer.findOne({ownedBy:userId,name:name})
     if(existingContainer) throw new Error("Група със същото име вече съществува")
 
     const container = await allModels.wordsContainer.create(
         {
-            ownedBy:user._id,
+            ownedBy:userId,
             words:[],
             colorCode,
             name,
@@ -817,6 +888,9 @@ exports.createWords =async(words,userId,res)=>{
     const info = []
 
     for (const word of words) {
+
+        word.text = word.text.replace(/[^\w\s]/gi, '');
+
         let wordRecord = await allModels.wordModel.findOne({word:word.text})
         const targetContainer = await allModels.wordsContainer.findOne({ownedBy:userId,name:word.targetContainer}).populate("words.wordRef") || await allModels.wordsContainer.findOne({ownedBy:userId,type:"systemGenerated"}).populate("words.wordRef")
 
@@ -825,7 +899,6 @@ exports.createWords =async(words,userId,res)=>{
             if(!wordRecord){
                 wordRecord =  (await models.wordModel.create(
                     {
-                        // unknownFor:[userId],
                         word:word.text,
                         translatedText:"няма превод"
                     }
@@ -863,9 +936,28 @@ exports.createWords =async(words,userId,res)=>{
 }
 async function saveWordFullInfo(word,wordRecord){
     const wordWholeInfo = await getWordWholeInfo(word.text)
+
     wordRecord.translatedText = wordWholeInfo.translation
+
     await createWordExamples(wordWholeInfo.info.examples,wordRecord)
+
     wordRecord.save()
+}
+
+exports.setTranslationToAllWords=async()=>{
+    let c = 0
+
+    const words = await allModels.wordModel.find({})
+    for (const word of words) {
+        c++
+        console.log(c)
+            const wordWholeInfo = await getWordWholeInfo(word.word)
+            word.translatedText = wordWholeInfo.translation
+            word.save()
+        if(word.translatedText){
+        }
+    }
+
 }
 
 
@@ -939,15 +1031,16 @@ async function createWordExamples(sentenceExamples,wordRecord){
             )
         }
     }else{
-        const  sentenceWhereWordsIsPresent = (await exports.giveSentence(wordRecord.word)).text
-        const translation = await exports.translateText(sentenceWhereWordsIsPresent)
-        payload.push(
-            {
-                sentenceWhereWordsIsPresent,
-                translation
-            }
-        )
-
+        const  sentenceWhereWordsIsPresent = (await exports.giveSentence(wordRecord.word))?.text
+        if(sentenceWhereWordsIsPresent){
+            const translation = await exports.translateText(sentenceWhereWordsIsPresent)
+            payload.push(
+                {
+                    sentenceWhereWordsIsPresent,
+                    translation
+                }
+            )
+        }
     }
     wordRecord.examples = payload
     await wordRecord.save()

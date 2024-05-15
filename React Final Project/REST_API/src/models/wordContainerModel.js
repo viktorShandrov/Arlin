@@ -1,7 +1,6 @@
 const mongoose = require("mongoose")
 
 
-
 const schema = mongoose.Schema({
     ownedBy:{
         type:mongoose.Schema.Types.ObjectId,
@@ -12,9 +11,19 @@ const schema = mongoose.Schema({
             type:mongoose.Schema.Types.ObjectId,
             ref:"UnknownWord"
         },
-        isKnown:{
-            type:Boolean,
-            default: false
+        answeredRightCount:{
+            type:Number,
+            default: 0
+        },
+        lastTimeGivenOnTest:Date,
+        addedOn:{
+            type:Date,
+            default: new Date()
+        },
+        status:{
+            type:String,
+            enum:['known','hard'],
+            default:"hard"
         }
 
     }],
@@ -22,7 +31,7 @@ const schema = mongoose.Schema({
     name:String,
     type:{
         type:String,
-        enum:['systemGenerated','custom'],
+        enum:['unspecified','forUnknownWordsCircle','custom'],
         default:"custom"
     }
 

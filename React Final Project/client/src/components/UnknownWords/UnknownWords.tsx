@@ -32,6 +32,7 @@ export default function UnknownWords(){
     const fetchUserWordContainers = () =>{
         request("unknownWords/getWordContainers/true","GET").subscribe(
             (res:any)=>{
+                console.log(res.containers)
                 setUserWordContainers(res.containers)
                 setIsLoading(false)
             }
@@ -76,12 +77,13 @@ export default function UnknownWords(){
                                         <i className="fa-solid fa-gear"></i>
                                     </div>
                                 </summary>
-                                {container.words.length>0&&container.words.map(word=><div className={styles.wordCell}>
+                                {container.words.length>0&&container.words.sort((a,b)=>(a.status === b.status) ? 0 : b.status=="hard" ? 1 : -1).map(word=><div className={styles.wordCell}>
                                     <div className={styles.wordC}>
                                         <h6>{word.wordRef.word}</h6>
                                     </div>
                                     <div className={styles.options}>
-                                        <div className={`${styles.label} ${styles.hardWord}`}>затрудява те</div>
+                                        {word.status==="hard"&&<div className={`${styles.label} ${styles.hardWord}`}>затруднява те</div>}
+                                        {word.status==="known"&&<div className={`${styles.label} ${styles.knownWord}`}>затвърдена е</div>}
                                         <button className={`${styles.btn} ${styles.exerciseBtn}`}>упражнявай</button>
                                         <button className={`${styles.btn} ${styles.detailsBtn}`} onClick={()=>wordInfoClickHandler(word)}>детайли</button>
                                     </div>

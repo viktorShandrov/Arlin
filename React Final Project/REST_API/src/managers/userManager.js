@@ -36,8 +36,8 @@ exports.register = async(firstName,lastName,email,password,repeatedPassword,imag
     }
 
     const newUser = await  userModel.create(userData)
-    await wordManager.createWordContainer(newUser,"#a6a600","Неконкретизирани","systemGenerated")
-    await wordManager.createWordContainer(newUser,"#00ff28","Arlin иска да те тества","systemGenerated")
+    await wordManager.createWordContainer(newUser._id,"#a6a600","Неконкретизирани","unspecified")
+    await wordManager.createWordContainer(newUser._id,"#00ff28","Arlin иска да те тества","forUnknownWordsCircle")
     return exports.login(email,password)
 
 }

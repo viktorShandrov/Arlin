@@ -36,26 +36,6 @@ const schema = mongoose.Schema({
         type:String,
         default:""
     },
-    randomWordsTests: {
-        type:Number,
-        default: 0
-    },
-    wordsFromChapterTests: {
-        type:Number,
-        default: 0
-    },
-    chapterPlotTests: {
-        type:Number,
-        default: 0
-    },
-    matchFourTests: {
-        type:Number,
-        default: 0
-    },
-    knownWords: {
-        type:Number,
-        default: 0
-    },
     lastReading: {
         bookId:{
             type:mongoose.Schema.Types.ObjectId,
@@ -66,6 +46,10 @@ const schema = mongoose.Schema({
             ref:"Chapter",
         },
         default: {},
+    },
+    testCompleteCirclesCount:{
+        type:Number,
+        default:0
     },
     isPasswordHashed: {
         type: Boolean,

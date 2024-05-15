@@ -9,10 +9,15 @@ const schema = mongoose.Schema({
     // }],
     word:String,
     translatedText:String,
-    examples:[{
-        sentenceWhereWordsIsPresent:String,
-        translation:String
-    }],
+    examples: {
+        type:[
+            {
+                sentenceWhereWordsIsPresent:String,
+                translation:String
+            }
+        ],
+        default: []
+    },
     synonyms: {
         type: [String],
         default: []

@@ -97,6 +97,9 @@
 .label.hardWord{
     background-color: var(--darkRed);
 }
+.label.knownWord{
+    background-color: var(--lightGreen);
+}
 
 
 

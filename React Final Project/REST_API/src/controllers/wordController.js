@@ -3,56 +3,11 @@ const wordManager = require("../managers/wordManager");
 const router = require("express").Router()
 
 //CRUD
-router.post("/create",isAuth,async (req,res)=>{
-    try{
-        const {_id} = req.user
-        const {words} = req.body
-        const info = await wordManager.createWords(words,_id,res)
-        res.status(200).json(info.length>0?{info}:{})
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({message:error.message})
-    }
-})
-router.get("/all",isAuth,async (req,res)=>{
-    try{
-        const {_id} = req.user
-
-        const words =  await wordManager.getAllWords(_id)
-        res.status(200).json(words)
-    } catch (error) {
-        res.status(400).json({message:error.message})
-    }
-})
-
-
-router.post("/:id/delete",isAuth,async (req,res)=>{
-    try{
-        const {_id} = req.user
-        const wordId = req.params.id
-
-        await wordManager.deleteWord(wordId,_id)
-        res.status(200).end()
-    } catch (error) {
-        res.status(400).json({message:error.message})
-    }
-})
-router.post("/makeThemKnown",isAuth,async (req,res)=>{
-    try{
-        const {_id} = req.user
-        const {wordsIds}= req.body
-
-        await wordManager.makeThemKnown(wordsIds,_id)
-        res.status(200).end()
-    } catch (error) {
-        res.status(400).json({message:error.message})
-    }
-})
 const giveTestRoute = async (req,res)=>{
     try{
         const {_id} = req.user
         const {testId,isPersonalExercise} = req.body
-        const test =  await wordManager.generateTest(_id,testId,isPersonalExercise)
+        const test =  await wordManager.generateTest(testId,_id,isPersonalExercise)
         res.status(200).json({test})
     } catch (error) {
         console.log(error)
@@ -111,20 +66,6 @@ router.get("/testElements",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
-
-router.post("/createTest",isAuth,async (req,res)=>{
-    try{
-        const {_id} = req.user
-        const {testTitle} = req.body
-        const testId = await wordManager.createInitialTestInfo(testTitle,_id)
-        res.status(200).json(testId)
-    } catch (error) {
-        console.log(error)
-        res.status(400).json({message:error.message})
-    }
-})
-
-
 router.post("/updateTestInfo",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
@@ -148,7 +89,89 @@ router.post("/addQuestionToTest",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.post("/createTest",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {testTitle} = req.body
+        const testId = await wordManager.createInitialTestInfo(testTitle,_id)
+        res.status(200).json(testId)
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.post("/create",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {words} = req.body
+        const info = await wordManager.createWords(words,_id,res)
+        res.status(200).json(info.length>0?{info}:{})
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
+router.get("/all",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+
+        const words =  await wordManager.getAllWords(_id)
+        res.status(200).json(words)
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
+
+
+router.post("/:id/delete",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const wordId = req.params.id
+
+        await wordManager.deleteWord(wordId,_id)
+        res.status(200).end()
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
+router.post("/makeThemKnown",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {wordsIds}= req.body
+
+        await wordManager.makeThemKnown(wordsIds,_id)
+        res.status(200).end()
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
 router.post("/translateText",isAuth,async (req,res)=>{
     try{
         const {text} = req.body
