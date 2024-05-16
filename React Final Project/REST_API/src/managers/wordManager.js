@@ -833,6 +833,9 @@ import('random-words')
 exports.getAllWords =async(userId)=>{
    return  models.wordModel.find({unknownFor:userId})
 }
+exports.getWordInfo=async(wordString)=>{
+    return allModels.wordModel.findOne({word:wordString})
+}
 
 
 
@@ -892,7 +895,7 @@ exports.createWords =async(words,userId,res)=>{
         word.text = word.text.replace(/[^\w\s]/gi, '');
 
         let wordRecord = await allModels.wordModel.findOne({word:word.text})
-        const targetContainer = await allModels.wordsContainer.findOne({ownedBy:userId,name:word.targetContainer}).populate("words.wordRef") || await allModels.wordsContainer.findOne({ownedBy:userId,type:"systemGenerated"}).populate("words.wordRef")
+        const targetContainer = await allModels.wordsContainer.findOne({ownedBy:userId,name:word.targetContainer}).populate("words.wordRef") || await allModels.wordsContainer.findOne({ownedBy:userId,type:"unspecified"}).populate("words.wordRef")
 
 
 
@@ -937,7 +940,10 @@ exports.createWords =async(words,userId,res)=>{
 async function saveWordFullInfo(word,wordRecord){
     const wordWholeInfo = await getWordWholeInfo(word.text)
 
-    wordRecord.translatedText = wordWholeInfo.translation
+
+    if(wordWholeInfo.translation){
+        wordRecord.translatedText = wordWholeInfo.translation
+    }
 
     await createWordExamples(wordWholeInfo.info.examples,wordRecord)
 

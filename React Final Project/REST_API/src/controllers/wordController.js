@@ -149,6 +149,18 @@ router.get("/all",isAuth,async (req,res)=>{
     }
 })
 
+router.get("/getWordInfo/:wordString",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {wordString} = req.params
+
+        const word =  await wordManager.getWordInfo(wordString)
+        res.status(200).json({word})
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+})
+
 
 router.post("/:id/delete",isAuth,async (req,res)=>{
     try{

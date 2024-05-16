@@ -3,7 +3,7 @@ import TranslationContainer from "../TranslationContainer/TranslationContainer";
 import { Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
 import styles from "./Read.module.css"
 // import {useDispatch, useSelector} from "react-redux";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import ReadToolBox from "../ReadToolBox/ReadToolBox";
 import {request} from "../../functions";
 import {userContext} from "../../redux/StateProvider/StateProvider";
@@ -32,8 +32,31 @@ export default  function Read(){
 
     useEffect(()=>{
         getChapter(chapterId!.split("chapterId=")[1])
+
+
+        // translationWrapper.current.style.height = "1000px"
+        // expandBox()
     },[chapterId])
 
+    // function expandBox() {
+    //     var box = translationWrapper.current;
+    //     var height = 0; // Initial height
+    //     const windowInnerHeight = window.innerHeight
+    //     var targetHeight = windowInnerHeight *0.3; // Target height
+    //     var duration = 300; // Duration of animation in milliseconds
+    //     var interval = 10; // Interval between animation steps
+    //
+    //     var step = (targetHeight - height) / (duration / interval);
+    //
+    //     var animationInterval = setInterval(function() {
+    //         height += step;
+    //         box.style.height = height + 'px';
+    //
+    //         if (height >= targetHeight) {
+    //             clearInterval(animationInterval);
+    //         }
+    //     }, interval);
+    // }
 
     const getChapter=(chapterId:string)=>{
         setIsLoading(true)
@@ -96,6 +119,11 @@ export default  function Read(){
                         <Route path={"/:textToTranslate?"} element={<TranslationContainer/>}/>
                     </Routes>
                 </div>
+
+
+
+
+
 
 
             </section>
