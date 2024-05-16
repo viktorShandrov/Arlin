@@ -1,12 +1,14 @@
 
 import styles from "./TestsDashboard.module.css"
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {request} from "../../functions";
 import {Link} from "react-router-dom";
 import Loading from "../Spinner/Loading";
 import Table from "../Table/Table";
 import styles1 from "../Table/Table.module.css"
+import {userContext} from "../../redux/StateProvider/StateProvider";
 export default function TestsDashboard(){
+    const { userState,setUserState } = useContext(userContext);
     const [testElTables,setTestElTables] = useState({
         madeByUser: [],
         submittedByUser: [],
@@ -47,6 +49,13 @@ export default function TestsDashboard(){
                             <h6><span className={styles.number}>{testElTables.stats.createdByTeacher}</span> създадени от теб</h6>
                         }
                     </div>
+                    <div className={styles.btns}>
+                        {<Link to={"/main/test"}>
+                            <button className={`${styles.btn} ${styles.exBtn}`}>направи упражнение</button>
+                        </Link>}
+
+                    </div>
+                    
                     <div className={styles.tables}>
                         {testElTables.assignedToUser&&
                             <Table title={"Възложени тестове"} arr={testElTables.assignedToUser}>
