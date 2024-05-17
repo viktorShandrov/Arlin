@@ -49,7 +49,7 @@ export default function Main(){
                             <Route path={"/testInfo/:testId"} element={<TestInfo />}></Route>
                             <Route path={"/AllBooks/freeBookMode?"} element={<AllBooks />}></Route>
                             <Route path={"/read"} element={<MyBooksList />}></Route>
-                            <Route path={"/read/:bookId/:chapterId/:textToTranslate?"} element={<Read />}></Route>
+                            <Route path={"/read/:bookId/:chapterId/:textToTranslate?/*"} element={<Read />}></Route>
                             <Route path={"/AllBooks/:id/freeBookMode?"} element={<BookDetails />}></Route>
                             <Route path={"/AllBooks/:id/content"} element={<BookContent />}></Route>
                             <Route path={"/dashboard"} element={<Dashboard />}></Route>

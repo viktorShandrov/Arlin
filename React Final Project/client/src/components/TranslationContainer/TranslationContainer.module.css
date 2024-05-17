@@ -1,167 +1,4 @@
 
-/**{*/
-/*    font-family: Inter;*/
-/*}*/
-
-/*.overlay{*/
-/*    display: none;*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    width: 100%;*/
-/*    height: 100%;*/
-/*    background-color: black;*/
-/*    opacity: 0.3;*/
-/*}*/
-/*.container{*/
-/*    padding: 20px;*/
-/*    width: 300px;*/
-/*    max-height: 100%;*/
-/*    overflow-y: auto;*/
-/*    position: relative;*/
-/*    border: solid 1px black;*/
-/*    height: fit-content;*/
-/*    border-radius: 20px;*/
-/*    background-color: #EBEBEB;*/
-
-/*}*/
-/*.elements{*/
-/*    height: fit-content;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*}*/
-/*.heading{*/
-/*    margin-bottom: 20px!important;*/
-/*    margin-left: 10px!important;*/
-/*}*/
-/*.textForTranslate{*/
-/*    padding: 15px;*/
-/*    border-radius: 20px;*/
-/*    background-color: white;*/
-/*    display: flex;*/
-/*    gap: 5px;*/
-/*    flex-wrap: wrap;*/
-/*}*/
-/*.word{*/
-/*    display: flex;*/
-/*    gap: 5px;*/
-/*    border-radius: 10px;*/
-/*    padding: 5px;*/
-/*}*/
-/*.info{*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    padding: 5px;*/
-/*    width: 20px;*/
-/*    border-radius: 100px;*/
-/*    border: solid black 1px;*/
-/*    aspect-ratio: 1/1;*/
-/*    font-size: 12px;*/
-/*    background-color: white;*/
-/*}*/
-/*.word:hover{*/
-/*    cursor: pointer;*/
-/*    background-color: #a6a600 !important;*/
-/*}*/
-/*[data-isclicked="true"]{*/
-/*    !*background-color: #a6a600;*!*/
-
-/*}*/
-/*.saveWords{*/
-/*    border: none;*/
-/*    padding: 5px 10px;*/
-/*    background-color: green;*/
-/*    color: white;*/
-/*    border-radius: 5px;*/
-
-/*}*/
-/*.translation{*/
-/*    padding: 15px;*/
-/*    border-radius: 20px;*/
-/*    background-color: white;*/
-/*    position: relative;*/
-/*}*/
-/*.xmark{*/
-/*    width: fit-content;*/
-/*    position: absolute;*/
-/*    right: 20px;*/
-/*    top: 20px;*/
-/*    padding: 10px;*/
-/*    border-radius: 100px;*/
-/*    transition: 0.3s;*/
-/*    align-self: flex-end;*/
-/*}*/
-/*.xmark:hover{*/
-/*    background-color: black;*/
-/*    color: white;*/
-/*    cursor: pointer;*/
-/*}*/
-
-
-/*.popupWrapper{*/
-/*    position: absolute;*/
-/*    padding: 30px;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    border-radius: 20px;*/
-/*    background-color: white;*/
-/*    z-index: 999999999;*/
-/*}*/
-/*.infoC{*/
-/*    display: flex;*/
-/*    gap: 10px;*/
-/*}*/
-/*.infoC>*{*/
-/*    display: flex;*/
-/*    align-items: end;*/
-/*}*/
-/*.infoValue{*/
-/*    transform: translateY(-4px);*/
-/*}*/
-/*.infoTitle{*/
-/*    margin: 0;*/
-/*}*/
-/*.groupsHeading{*/
-/*    text-align: center;*/
-/*    padding-top: 20px;*/
-/*}*/
-/*.userWordContainersC{*/
-/*    position: relative;*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    gap: 10px;*/
-/*}*/
-/*.userWordContainerC{*/
-/*    padding: 10px;*/
-/*    border-radius: 10px;*/
-/*    background-color: #75A9AB;*/
-/*    display: flex;*/
-/*    gap: 10px;*/
-/*    color: white;*/
-/*    user-input: none;*/
-/*}*/
-/*.userWordContainerC:hover{*/
-/*    background-color: #4C6A69;*/
-/*    cursor: pointer;*/
-/*}*/
-/*.containerColor{*/
-/*    width: 30px;*/
-/*    aspect-ratio: 1/1;*/
-/*    border-radius: 5px;*/
-/*}*/
-
-/*.plusSign{*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*}*/
-
-
-
-
-
-
-
-
 .translationWrapperOverlay{
     position: fixed;
     top: 0;
@@ -176,15 +13,25 @@
     position: fixed;
     bottom: 0;
     left: 50%;
-    transform: translateX(-50%);
     width: 60%;
+    min-width: 420px;
+    max-width: 820px;
     height: 40vh;
     z-index: 99999999999;
     background-color: white;
     border-top-right-radius: 40px;
     border-top-left-radius: 40px;
     padding: 50px;
+    overflow-y: auto;
+    transform:translateX(-50%) translateY(100%);
+    animation: immersion 0.5s;
 }
+.translationC.emerged{
+    animation: emerge 0.5s;
+    transform:translateX(-50%) translateY(0);
+
+}
+
 
 .sentenceC{
     display: flex;
@@ -202,11 +49,35 @@
 }
 
 .sentenceTranslationC{
+    position: relative;
     margin-top: 10px;
     padding: 10px;
     border-radius: 10px;
     background-color: #F4F4F4;
     color: #6C6C6C;
+}
+
+.xmark{
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+    font-size: 20px;
+    border-radius: 100px;
+    transition: 0.2s;
+    align-self: flex-end;
+    color: white;
+    background-color: var(--lightBlue);
+}
+.xmark:hover{
+    background-color: var(--darkBlue);
+    color: white;
+    cursor: pointer;
 }
 
 
@@ -255,10 +126,24 @@
 
 }
 .translation{
+    min-height: 50px;
     color: var(--darkBlue);
 }
 
 
+.wordContainersLAbelAndBtn{
+    display: flex;
+    flex-direction: column;
+}
+.saveWordCBtn{
+    border-radius: 10px;
+    border: none;
+    color: white;
+    background-color: var(--lightBlue);
+    padding: 3px 15px;
+    margin-top: 10px;
+    width: fit-content;
+}
 .wordContainersC{
     padding: 20px;
     background-color: #F4F4F4;
@@ -272,6 +157,38 @@
     color: white;
     padding: 10px;
     cursor: pointer;
+
+}
+.wordContainerC:hover{
+    filter: brightness(0.85); /* Darken the color by 15% */
+}
+
+
+.wordContainersC:has(.clickedWordContainer)>*:not(.clickedWordContainer){
+    opacity: 0.4;
+}
+@media (max-width: 420px){
+    .translationC{
+        min-width: 320px;
+    }
+}
+
+
+@keyframes emerge {
+    0% {
+        transform:translateX(-50%) translateY(100%);
+    }
+    100% {
+        transform:translateX(-50%) translateY(0);
+    }
+}
+@keyframes immersion {
+    0% {
+        transform:translateX(-50%) translateY(0);
+    }
+    100% {
+        transform:translateX(-50%) translateY(100%);
+    }
 }
 
 /*@media (max-width:1200px){*/

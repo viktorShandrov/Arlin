@@ -883,8 +883,32 @@ exports.createWordContainer =async(userId,colorCode,name,type = "custom")=>{
 }
 exports.getUserWordContainer = (user,withPopulatedWords)=>{
     return withPopulatedWords?
-        allModels.wordsContainer.find({ownedBy:user._id}).populate("words.wordRef"):
-        allModels.wordsContainer.find({ownedBy:user._id})
+        allModels.wordsContainer.find({ownedBy:user._id,type: { $ne: 'forUnknownWordsCircle' }}).populate("words.wordRef"):
+        allModels.wordsContainer.find({ownedBy:user._id,type: { $ne: 'forUnknownWordsCircle' }})
+}
+exports.addWordToContainer =async(wordString,wordContainerId,userId)=>{
+    let wordRecord = await allModels.wordModel.findOne({word:wordString})
+    console.log(wordString)
+    if(wordRecord){
+        const wordContainerRecord = await allModels.wordsContainer.findById(wordContainerId)
+        console.log(wordRecord._id)
+        if(wordContainerRecord.words.some(el=>el.wordRef.equals(wordRecord._id))) throw new Error("вече е запазена в контейнера")
+        wordContainerRecord.words.push({
+            wordRef:wordRecord._id,
+        })
+        await wordContainerRecord.save()
+    }else{
+        wordRecord =  (await models.wordModel.create(
+            {
+                word:wordString,
+                translatedText:"няма превод"
+            }
+        ))
+
+        saveWordFullInfo({text:wordString},wordRecord)
+    }
+
+
 }
 exports.createWords =async(words,userId,res)=>{
     // const wordsAndTranslations = await exports.translateMultipleWords(words)

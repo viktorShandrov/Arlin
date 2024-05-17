@@ -15,15 +15,8 @@ export default function Popup({children,hidePopup,styleSelector,isWithDisplayNon
                     <div className={styles.popUpElements}>
                         {children}
                     </div>
-
-
                 </div>
-
             </PopUpOverlay>
-
-
         </div>
-
-
     )
 }

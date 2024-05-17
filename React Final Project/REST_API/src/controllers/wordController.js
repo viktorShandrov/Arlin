@@ -138,6 +138,17 @@ router.post("/create",isAuth,async (req,res)=>{
         res.status(400).json({message:error.message})
     }
 })
+router.post("/addWordToContainer",isAuth,async (req,res)=>{
+    try{
+        const {_id} = req.user
+        const {wordString,containerId} = req.body
+        await wordManager.addWordToContainer(wordString,containerId,_id)
+        res.status(200).end()
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({message:error.message})
+    }
+})
 router.get("/all",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
