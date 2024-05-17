@@ -28,9 +28,8 @@ export default function TranslationContainer() {
     useEffect(() => {
          textToTranslate = decodeURIComponent(textToTranslate!);
          if(textToTranslate){
+             console.log(typeof(textToTranslate) )
             toggleTranslationContainer()
-         }
-
             setIsTranslationLoading(true)
             request("unknownWords/translateText","POST",{text:textToTranslate}).subscribe(
                 (res:any)=>{
@@ -38,6 +37,8 @@ export default function TranslationContainer() {
                     setIsTranslationLoading(false)
                 }
             )
+         }
+
 
     }, [textToTranslate]);
 

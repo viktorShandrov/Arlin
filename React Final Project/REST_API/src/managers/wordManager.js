@@ -888,22 +888,25 @@ exports.getUserWordContainer = (user,withPopulatedWords)=>{
 }
 exports.addWordToContainer =async(wordString,wordContainerId,userId)=>{
     let wordRecord = await allModels.wordModel.findOne({word:wordString})
-    console.log(wordString)
     if(wordRecord){
         const wordContainerRecord = await allModels.wordsContainer.findById(wordContainerId)
-        console.log(wordRecord._id)
         if(wordContainerRecord.words.some(el=>el.wordRef.equals(wordRecord._id))) throw new Error("вече е запазена в контейнера")
         wordContainerRecord.words.push({
             wordRef:wordRecord._id,
         })
         await wordContainerRecord.save()
     }else{
+        const wordContainerRecord = await allModels.wordsContainer.findById(wordContainerId)
         wordRecord =  (await models.wordModel.create(
             {
-                word:wordString,
+                word:wordString.replace(/[^\w\s]/gi, ''),
                 translatedText:"няма превод"
             }
         ))
+        wordContainerRecord.words.push({
+            wordRef:wordRecord._id,
+        })
+        await wordContainerRecord.save()
 
         saveWordFullInfo({text:wordString},wordRecord)
     }
