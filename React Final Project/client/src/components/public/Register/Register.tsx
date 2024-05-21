@@ -170,14 +170,14 @@ export default function  LoginAndRegister(){
 
 
 
-
-                        <div className={styles.rememberMeC}>
-                            <input
-                                type="checkbox"
-                                name="rememberMe"
-                            />
-                            <div>Приемам <span className={styles.accept}>условията за ползване</span></div>
-                        </div>
+                        {/*TODO to be visible and active*/}
+                        {/*<div className={styles.rememberMeC}>*/}
+                        {/*    <input*/}
+                        {/*        type="checkbox"*/}
+                        {/*        name="rememberMe"*/}
+                        {/*    />*/}
+                        {/*    <div>Приемам <span className={styles.accept}>условията за ползване</span></div>*/}
+                        {/*</div>*/}
 
 
 

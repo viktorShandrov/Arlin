@@ -503,7 +503,6 @@ import('random-words')
                         indexes.forEach((i)=>{
                                 payload.possibleAnswers.push({
                                     stringValue:question[`option${i+1}`],
-
                                 })
                         })
 
@@ -563,6 +562,7 @@ import('random-words')
                         const newTestElement ={
                             madeBy:userId,
                             questions:[],
+                            assignedTo:[userId],
                             isPersonalExercise:true,
                         }
 
@@ -575,7 +575,7 @@ import('random-words')
                                 ?Object.entries(utils.excersiceTypes)[testsPlan[i]][1]
                                 :Object.entries(utils.testTypes)[testsPlan[i]][1]
 
-                            if(!question.examples[0]){
+                            if(!question.examples?.[0]){
                                 testType = utils.testTypes.randomWords
                             }
 
@@ -719,7 +719,7 @@ import('random-words')
                         // console.log(totalScoreFromAllClassSubs)
                         // console.log(totalSubsCount)
                         return {
-                            madeByUser: tests.map(el => {
+                            madeByUser: tests.reverse().map(el => {
                                 return {
                                     _id: el._id,
                                     title: el.title
@@ -737,7 +737,21 @@ import('random-words')
                             .find({ assignedTo: { $in: [userId] }}))
                             .map(test=>test.toObject())
 
-                        const submittedByUser = testsArr.filter(test=>test.submissions.some(sub=>sub.submittedBy.equals(userId))).map(test=>{return {testId:test._id,title:test.title}})
+                        const submittedByUser = testsArr
+                            .filter(test=>test.submissions.some(sub=>sub.submittedBy.equals(userId)))
+                            .map(test=>
+                            {
+                                return {
+                                    testId:test._id,
+                                    title:test.title,
+                                    //when is personal ex and the submission is one by default
+                                    submissionId:test.submissions[0]._id,
+                                    isPersonalExercise:test.isPersonalExercise,
+                                    isTestSubmittedOnlyAsExercise:!test.submissions.some(sub=>sub.submittedBy.equals(userId)&&sub.isSubmittedAsTest)
+                                }
+                            })
+
+
                         // testsArr.forEach(test=>{
                         //     const submissions = test.submissions.filter(sub=>sub.submittedBy.equals(userId))
                         //     if(submissions.length>0){
@@ -753,7 +767,8 @@ import('random-words')
 
 
                         return {
-                            assignedToUser: testsArr.filter(test=>test.submissions.every(sub=>!sub.submittedBy.equals(userId))).map(test=>{return {testId:test._id,title:test.title}}),
+                            //TODO i has to if the test is expired
+                            assignedToUser: testsArr.filter(test=>test.submissions.every(sub=>!sub.submittedBy.equals(userId))&&!test.isPersonalExercise).map(test=>{return {testId:test._id,title:test.title}}),
                             submittedByUser,
                             stats:{
                                 allSubs:subsCount

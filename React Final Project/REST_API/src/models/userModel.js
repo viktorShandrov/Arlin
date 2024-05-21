@@ -25,7 +25,8 @@ const schema = mongoose.Schema({
     role: {
         type: String,
         enum: ["admin", "user","teacher","student"],
-        default: "user"
+        default: "student"
+        //TODO to not be students when published for all users
     },
     plan:{
         type:String,

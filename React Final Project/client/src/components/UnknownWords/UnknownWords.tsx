@@ -84,7 +84,7 @@ export default function UnknownWords(){
                                     <div className={styles.options}>
                                         {word.status==="hard"&&<div className={`${styles.label} ${styles.hardWord}`}>затруднява те</div>}
                                         {word.status==="known"&&<div className={`${styles.label} ${styles.knownWord}`}>затвърдена е</div>}
-                                        <button className={`${styles.btn} ${styles.exerciseBtn}`}>упражнявай</button>
+                                        {/*<button className={`${styles.btn} ${styles.exerciseBtn}`}>упражнявай</button>*/}
                                         <button className={`${styles.btn} ${styles.detailsBtn}`} onClick={()=>wordInfoClickHandler(word)}>детайли</button>
                                     </div>
 

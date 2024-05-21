@@ -70,6 +70,7 @@ router.post("/updateTestInfo",isAuth,async (req,res)=>{
     try{
         const {_id} = req.user
         const {testInfo,testId} = req.body
+        console.log(testInfo)
         await wordManager.updateTestInfo(testInfo,testId)
         res.status(200).json(testId)
     } catch (error) {

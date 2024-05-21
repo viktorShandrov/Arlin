@@ -134,24 +134,7 @@ export default function Dashboard(){
 
 
     return(
-        // <div className={styles.dashboardWrapper}>
-        //     <div className={styles.summaryWrapper}>
-        //         <DashboardStat name={"Тестове на произволни думи"} value={userInfo.randomWordsTests} />
-        //         <DashboardStat name={"Тестове на думи от текст"} value={userInfo.wordsFromChapterTests} />
-        //         <DashboardStat name={'Тестове за "Четене с разбиране"'} value={userInfo.chapterPlotTests} />
-        //     </div>
-        //     <ResponsiveContainer width="100%" height="100%">
-        //         <LineChart width={500} height={300} data={data}>
-        //             <CartesianGrid strokeDasharray="3 3" />
-        //             <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
-        //             <YAxis />
-        //             <Tooltip />
-        //             <Legend />
-        //             <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-        //             <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-        //         </LineChart>
-        //     </ResponsiveContainer>
-        // </div>
+
         <div className={styles.profileWrapper}>
             {changedCredential.field&&<div className={styles.popupOverlay}>
                 <div className={styles.changeCredentialPopup}>
@@ -164,20 +147,16 @@ export default function Dashboard(){
                     <div className={styles.profileCredC}>
                         <div className={styles.credentialInfos}>
                             <article className={styles.credential}>
-                                <p className={styles.info}><span>Потребителско име:</span> {userInfo.username}</p>
-                                <button className={styles.changeBtn}>ПРОМЕНИ</button>
-                            </article>
-                            <article className={styles.credential}>
                                 <p className={styles.info}><span>Имейл:</span> {userInfo.email}</p>
-                                <button className={styles.changeBtn}>ПРОМЕНИ</button>
+                                {/*<button className={styles.changeBtn}>ПРОМЕНИ</button>*/}
                             </article>
                             <article className={styles.credential}>
                                 <p className={styles.info}><span>Парола:</span> ****************</p>
-                                <button className={styles.changeBtn}>ПРОМЕНИ</button>
+                                {/*<button className={styles.changeBtn}>ПРОМЕНИ</button>*/}
                             </article>
                             <article className={styles.credential}>
                                 <p className={styles.info}><span>Абонаментен план:</span> {(userInfo.plan=="none"?"няма активиран":null)||userInfo.plan||"няма активиран"}</p>
-                                <button onClick={()=>navigate("/main/plans")} className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>НАДГРАДИ</button>
+                                {/*<button onClick={()=>navigate("/main/plans")} className={`${styles.changeBtn} ${styles.subscriptionInfo}`}>НАДГРАДИ</button>*/}
                             </article>
                         </div>
                         <div className={styles.userImageC}>
@@ -187,31 +166,6 @@ export default function Dashboard(){
                     </div>
                 </section>
 
-
-                {/*<section className={styles.expWrapper}>*/}
-                {/*    <div className={styles.expC}>*/}
-                {/*        <div className={styles.fragment}></div>*/}
-                {/*        <div className={styles.fragment}></div>*/}
-                {/*        <div className={styles.fragment}></div>*/}
-                {/*        <div className={styles.fragment}></div>*/}
-                {/*        <div className={styles.fragment}></div>*/}
-                {/*        <div className={styles.fragment}></div>*/}
-                {/*        <div className={styles.fragment}></div>*/}
-                {/*        <div className={styles.fragment}></div>*/}
-                {/*        <div className={styles.fragment}></div>*/}
-                {/*        <div className={styles.fragment}></div>*/}
-                {/*    </div>*/}
-                {/*    <h6>{userInfo.exp} exp</h6>*/}
-                {/*</section>*/}
-                <section className={styles.testsSectionWrapper}>
-                    <h1 className={styles.heading}>Брой взети тестове</h1>
-                    <div className={styles.testsC}>
-                        <DashboardStat name={"тестa на произволни думи"} testValue={userInfo.randomWordsTests} />
-                        <DashboardStat name={"тестa на думи от текст"} testValue={userInfo.wordsFromChapterTests}  />
-                        <DashboardStat name={"теста за 'Четене с разбиране'"} testValue={userInfo.chapterPlotTests}  />
-                        <DashboardStat name={"теста за свързване на 4 с 4 думи"} testValue={userInfo.matchFourTests}  />
-                    </div>
-                </section>
                 <section className={styles.badgeSectionWrapper}>
                     <h1 className={styles.heading}>Постижения</h1>
                     <div className={styles.advancementsC}>

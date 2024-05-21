@@ -16,7 +16,11 @@ const schema = mongoose.Schema({
             ref:"User",
         }
     ],
-    startDate:Date,
+    startDate:{
+        type: Date,
+        default: new Date()
+        //TODO: to not be the current time
+    },
     endDate:Date,
     madeBy:{
         type:mongoose.Schema.Types.ObjectId,

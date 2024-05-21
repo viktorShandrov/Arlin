@@ -26,9 +26,9 @@ export default function TranslationContainer() {
     let { textToTranslate } = useParams();
 
     useEffect(() => {
-         textToTranslate = decodeURIComponent(textToTranslate!);
+        console.log(textToTranslate)
          if(textToTranslate){
-             console.log(typeof(textToTranslate) )
+            textToTranslate = decodeURIComponent(textToTranslate!);
             toggleTranslationContainer()
             setIsTranslationLoading(true)
             request("unknownWords/translateText","POST",{text:textToTranslate}).subscribe(

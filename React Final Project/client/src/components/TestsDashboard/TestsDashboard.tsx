@@ -25,6 +25,7 @@ export default function TestsDashboard(){
                     res.testEls.submittedByUser.sort((a,b)=>new Date(b.submissionTime) - new Date(a.submissionTime))
                 }
                 setTestElTables(res.testEls)
+                console.log(res.testEls)
                 setIsLoading(false)
             }
         )
@@ -37,29 +38,31 @@ export default function TestsDashboard(){
                     <h1 className={styles.header}>Тестове</h1>
                     <div className={styles.stats}>
                         {!!testElTables.stats.allSubs&&
-                            <h6><span className={styles.number}>{testElTables.stats.allSubs}</span> общо предадени от всички</h6>
+                            <h6><span className={styles.number}>{testElTables.stats.allSubs}</span> общо предадени теста от всички</h6>
                         }
                         {!!testElTables.stats.averageGrade&&
-                            <h6><span className={styles.number}>{testElTables.stats.averageGrade}</span> средна оценка от твоя клас</h6>
+                            <h6><span className={styles.number}>{testElTables.stats.averageGrade.toFixed(2)}</span> средна оценка от твоя клас</h6>
                         }
                         {!!testElTables.stats.madeByTeachersClassCount&&
                             <h6><span className={styles.number}>{testElTables.stats.madeByTeachersClassCount}</span> направени теста от твоя клас</h6>
                         }
                         {!!testElTables.stats.createdByTeacher&&
-                            <h6><span className={styles.number}>{testElTables.stats.createdByTeacher}</span> създадени от теб</h6>
+                            <h6><span className={styles.number}>{testElTables.stats.createdByTeacher}</span> създадени от теб тестове</h6>
                         }
                     </div>
-                    <div className={styles.btns}>
-                        {<Link to={"/main/test"}>
-                            <button className={`${styles.btn} ${styles.exBtn}`}>направи упражнение</button>
-                        </Link>}
+                    {userState().role!=="teacher"&&
+                        <div className={styles.btns}>
+                            {<Link to={"/main/test"}>
+                                <button className={`${styles.btn} ${styles.exBtn}`}>направи упражнение</button>
+                            </Link>}
+                        </div>
+                    }
 
-                    </div>
                     
                     <div className={styles.tables}>
                         {testElTables.assignedToUser&&
                             <Table title={"Възложени тестове"} arr={testElTables.assignedToUser}>
-                                {testElTables.assignedToUser.length>0&&testElTables.assignedToUser.map((test)=>
+                                {testElTables.assignedToUser.length>0&&testElTables.assignedToUser.reverse().map((test)=>
                                     <Link to={`/main/testInfo/${test.testId}`}>
                                         <div className={styles1.cell}>
                                             <span>{test.title}</span>
@@ -90,14 +93,30 @@ export default function TestsDashboard(){
                             </Table>
                         }
                         {testElTables.submittedByUser&&
-                            <Table title={"Предадени твои тестове"} arr={testElTables.submittedByUser}>
-                                {testElTables.submittedByUser.length>0&&testElTables.submittedByUser.map((test)=>
-                                    <Link to={`/main/testInfo/${test.testId}`}>
-                                        <div className={styles1.cell}>
-                                            <span>{test.title}</span>
-                                            <span>детайли</span>
-                                        </div>
-                                    </Link>
+                            <Table title={"Предадени тестове"} arr={testElTables.submittedByUser.filter(t=>!t.isPersonalExercise&&!t.isTestSubmittedOnlyAsExercise)}>
+                                {testElTables.submittedByUser.filter(t=>!t.isPersonalExercise&&!t.isTestSubmittedOnlyAsExercise).length>0&&testElTables.submittedByUser.filter(t=>!t.isPersonalExercise&&!t.isTestSubmittedOnlyAsExercise).reverse().map((test)=>
+                                    {
+                                            return  <Link to={`/main/testInfo/${test.testId}`}>
+                                                <div className={styles1.cell}>
+                                                    <span>{test.title}</span>
+                                                    <span>детайли</span>
+                                                </div>
+                                            </Link>
+                                        }
+                                )}
+                            </Table>
+                        }
+                        {testElTables.submittedByUser&&
+                            <Table title={"Предадени упражнениея"} arr={testElTables.submittedByUser.filter(t=>t.isPersonalExercise||t.isTestSubmittedOnlyAsExercise)}>
+                                {testElTables.submittedByUser.filter(t=>t.isPersonalExercise||t.isTestSubmittedOnlyAsExercise).length>0&&testElTables.submittedByUser.filter(t=>t.isPersonalExercise||t.isTestSubmittedOnlyAsExercise).map((test)=>
+                                {
+                                        return  <Link to={`/main/testSubmission/${test.submissionId}`}>
+                                            <div className={styles1.cell}>
+                                                <span>{test.title}</span>
+                                                <span>детайли</span>
+                                            </div>
+                                        </Link>
+                                }
                                 )}
                             </Table>
                         }

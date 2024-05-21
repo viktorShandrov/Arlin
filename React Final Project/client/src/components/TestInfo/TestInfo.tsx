@@ -91,12 +91,12 @@ export default function TestInfo(){
                             <h6 className={styles.infoValue}>{new Date(testInfo.startDate).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' })}</h6>
                         </div>
                         <div className={styles.infoPair}>
-                            <span className={styles.infoLabel}>краен срок</span>
+                            <span className={styles.infoLabel}>активен до</span>
                             <h6 className={styles.infoValue}>{new Date(testInfo.endDate).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' })}</h6>
                         </div>
                         <div className={styles.infoPair}>
-                            <span className={styles.infoLabel}>продължителност</span>
-                            <h6 className={styles.infoValue}>{testInfo.workTime}</h6>
+                            <span className={styles.infoLabel}>активен за</span>
+                            <h6 className={styles.infoValue}>{testInfo.workTime} часа</h6>
                         </div>
                         <div className={styles.infoPair}>
                             <span className={styles.infoLabel}>направен от</span>

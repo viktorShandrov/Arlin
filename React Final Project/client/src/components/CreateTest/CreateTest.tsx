@@ -4,6 +4,7 @@ import {useEffect, useRef, useState} from "react";
 import useForm from "../../hooks/useForm";
 import {request} from "../../functions";
 import {forEach} from "react-bootstrap/ElementChildren";
+import {useNavigate} from "react-router-dom";
 export default function CreateTest(){
     const emptyQuestion = {
         question:"",
@@ -22,7 +23,7 @@ export default function CreateTest(){
     });
     const [questionForm,onChange,resetForm,populateForm] = useForm({...emptyQuestion})
     const [testDetailsForm,onDetailsChange,resetDetailsForm,populateDetailsForm] = useForm({
-        startTime:"",
+        // startTime:"",
         endTime:"",
         date:""
     })
@@ -30,11 +31,14 @@ export default function CreateTest(){
     const ticksEls = useRef([])
     const testNameInput = useRef(null)
     const [areQuestionsReady,setAreQuestionsReady] = useState(false)
+    const [currentQuestionIndex,setCurrentQuestionIndex] = useState(0)
+    const navigate = useNavigate()
     const addQuestionBtnClick = (isFinal) =>{
         if(Object.values(questionForm).some(el=>!el&&el!==0)) return
 
         request("unknownWords/addQuestionToTest","POST",{testId:testInfo._id,question:questionForm}).subscribe(
             (res)=>{
+                setCurrentQuestionIndex(old=>old+1)
                 setTestInfo((old)=>{
                     const questions = [...testInfo.questions]
                     questions.pop()
@@ -106,6 +110,7 @@ export default function CreateTest(){
         })
     }
     const changeQuestionClick = (index:number) =>{
+        setCurrentQuestionIndex(index)
         const question = testInfo.questions[index]
         setTimeout(()=>{
             populateForm(question)
@@ -130,15 +135,41 @@ export default function CreateTest(){
         return currentDate
     }
     const  saveAdditionaltestInfoClick = (info) =>{
-
-        info.startDate = convertTimeToDate(info.startTime)
+        //TODO
+        // info.startDate = convertTimeToDate(info.startTime)
         info.endDate = convertTimeToDate(info.endTime)
-
+        //TO BE CHANGED    
+        info.endDate = info.date
         request("unknownWords/updateTestInfo","POST",{testInfo:info,testId:testInfo._id}).subscribe(
             (res)=>{
+                navigate(`/main/testInfo/${testInfo._id}`)
+            }
+        )
+    }
+    const editQuestionClick = () =>{
+        testInfo.questions.splice(testInfo.questions[currentQuestionIndex],1,questionForm)
+        const updatedQuestions = [...testInfo.questions]
+        console.log(updatedQuestions)
+        request("unknownWords/updateTestInfo","POST",{testInfo: {questions:updatedQuestions},testId:testInfo._id}).subscribe(
+            (res)=>{
+                setTestInfo((old)=>{
+                        return{
+                            ...old,
+                            questions:updatedQuestions
+                        }
+                    }
+                )
+                setTimeout(()=>{
+                    setCurrentQuestionIndex(testInfo.questions.length-1)
+                    changeQuestionClick(testInfo.questions.length-1)
+                },0)
 
             }
         )
+
+
+
+
     }
     return(
         <>
@@ -199,7 +230,10 @@ export default function CreateTest(){
 
                         </div>
                         <div className={styles.btnsC}>
-                            <button disabled={Object.values(questionForm).some(el=>!el&&el!==0)} onClick={()=>addQuestionBtnClick(false)} className={`${styles.btn} ${styles.nextQuestion}`}>следващ въпрос</button>
+                            {/*//TODO when edit is ready -> currentQuestionIndex===testInfo.questions.length-1&&*/}
+                            {<button disabled={Object.values(questionForm).some(el=>!el&&el!==0)} onClick={()=>addQuestionBtnClick(false)} className={`${styles.btn} ${styles.nextQuestion}`}>следващ въпрос</button>}
+                            {/*//TODO edit to work*/}
+                            {/*{currentQuestionIndex!==testInfo.questions.length-1&&<button disabled={Object.values(questionForm).some(el=>!el&&el!==0)} onClick={()=>editQuestionClick()} className={`${styles.btn} ${styles.nextQuestion}`}>редактиране</button>}*/}
                             <button disabled={Object.values(questionForm).some(el=>!el&&el!==0)} onClick={()=>addQuestionBtnClick(true)} className={`${styles.btn} ${styles.save}`}>Попълних последния въпрос</button>
                             {/*<button disabled={!testInfo.testName||Object.values(questionForm).some(el=>!el)} className={`${styles.btn} ${styles.draft}`}>запази в чернови</button>*/}
                         </div>
@@ -212,10 +246,11 @@ export default function CreateTest(){
                             <p>Дата</p>
                             <input  value={testDetailsForm.date} onChange={onDetailsChange} name={"date"} className={styles.textBox} type="date"/>
                         </div>
-                        <div className={styles.textBoxAndHeading}>
-                            <p>Начален час</p>
-                            <input  value={testDetailsForm.startTime} onChange={onDetailsChange} name={"startTime"} className={styles.textBox} type="time"/>
-                        </div>
+                        {/*TODO*/}
+                        {/*<div className={styles.textBoxAndHeading}>*/}
+                        {/*    <p>Начален час</p>*/}
+                        {/*    <input  value={testDetailsForm.startTime} onChange={onDetailsChange} name={"startTime"} className={styles.textBox} type="time"/>*/}
+                        {/*</div>*/}
                         <div className={styles.textBoxAndHeading}>
                             <p>Краен час</p>
                             <input  value={testDetailsForm.endTime} onChange={onDetailsChange} name={"endTime"} className={styles.textBox} type="time"/>

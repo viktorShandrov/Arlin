@@ -172,7 +172,7 @@ export default function TestResume(){
                                         <h6 className={styles.answerText}>(верен отговор)</h6>
                                     </div>
                                 </div>
-                                {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent&&
+                                {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples?.[0]?.sentenceWhereWordsIsPresent&&
                                     <div className={styles.exampleC}>
                                         {question.testType!=="fillWord"&&<div className={styles.headingAndSentencePair}>
                                             <p>пример в изречение:</p>
@@ -189,7 +189,7 @@ export default function TestResume(){
                                             <p>превод на изречение:</p>
                                             <p>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].translation}</p>
                                         </div>
-                                        <button className={styles.moreExamplesBtn}>още изречения</button>
+                                        {/*<button className={styles.moreExamplesBtn}>още изречения</button>*/}
 
                                     </div>
                                 }

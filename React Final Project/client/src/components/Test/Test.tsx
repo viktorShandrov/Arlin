@@ -104,10 +104,11 @@ export default function Test(){
         const questionIndex = test.findIndex(question1=>question1==question)
 
         if(answersHistory.length+1===test.length){
+            //Предай btn show
             setIsTestDone(true)
         }
         if(answersHistory.length==test.length){
-
+            //test completed
             answersHistory.sort((a,b)=>a.questionIndex - b.questionIndex)
 
             request("unknownWords/testCompleted","POST",{results:answersHistory,testId:testInfo._id}).subscribe(
@@ -125,6 +126,7 @@ export default function Test(){
                 targetIndex = findUnguessedQuestion()
             }
 
+            setCurrentTestType(test[targetIndex].testType)
             setQuestion(()=>{
                 return test[targetIndex]
             })
@@ -227,10 +229,10 @@ export default function Test(){
 
                     <div className={styles.quitAndRestartBtns}>
                         <button onClick={()=>setIsMobileNavVisible(true)} className={`${styles.btn} ${styles.questionsMenuMobileBtn}`}>въпрос {test.indexOf(question)+1}</button>
-                        <button className={`${styles.btn} ${styles.restartBtn}`}><i
-                            className="fa-solid fa-rotate-right"></i> рестарт</button>
-                        <button className={`${styles.btn} ${styles.quitBtn}`}><i
-                            className="fa-solid fa-person-walking-arrow-right"></i> изход</button>
+                        {/*<button className={`${styles.btn} ${styles.restartBtn}`}><i*/}
+                        {/*    className="fa-solid fa-rotate-right"></i> рестарт</button>*/}
+                        {/*<button className={`${styles.btn} ${styles.quitBtn}`}><i*/}
+                        {/*    className="fa-solid fa-person-walking-arrow-right"></i> изход</button>*/}
                     </div>
                     <div className={`${styles.questionAndNavigation} ${currentTestType=="fillWord"?styles.sentence:styles.aaa} `}>
                         <div className={styles.questionWrapper}>

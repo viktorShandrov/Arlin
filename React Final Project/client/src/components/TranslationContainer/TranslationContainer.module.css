@@ -112,6 +112,7 @@
 
 .wordExamplesPopup{
     color: var(--lightBlue);
+    max-width: 80%;
 }
 .heading{
     text-decoration: underline;

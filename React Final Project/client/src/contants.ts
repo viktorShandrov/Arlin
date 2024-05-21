@@ -9,6 +9,8 @@ export const translationAPI = "https://arlin-translate-lingva.vercel.app/api/v1/
 // export const translationAPI = "http://localhost:5000/translate"
 export const googleClientSecret = "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"
 
+export const userIconUrl = "public/user.jpg"
+
 
 export const rewardNames={
     "expMultiplier":"множител на опит",

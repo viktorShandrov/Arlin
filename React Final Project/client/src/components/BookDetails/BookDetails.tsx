@@ -15,7 +15,7 @@ import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
 // import {setUser} from "../../redux/user";
 import Rating from "@mui/material/Rating";
 import {userContext} from "../../redux/StateProvider/StateProvider";
-
+import {userIconUrl} from "../../contants"
 export default function  BookDetails(){
     // @ts-ignore
 
@@ -324,9 +324,12 @@ export default function  BookDetails(){
                                         <article className={styles.feedback}>
                                             <div className={`${styles.userInfo} ${!review.text?styles.noText:null}`}>
                                                 <div className={styles.pictureC}>
-                                                    <img src={review.writtenBy.imageURL} alt="Снимка на потребител"/>
+                                                    {review.writtenBy&&<img src={review.writtenBy.imageURL} alt="Снимка на потребител"/>}
+                                                    {!review.writtenBy&&<img src={userIconUrl} alt="Снимка на потребител"/>}
                                                 </div>
-                                                <h5 className={styles.userName}>{review.writtenBy.username}</h5>
+                                                {review.writtenBy&&<h5 className={styles.userName}>{review.writtenBy.username}</h5>}
+                                                {!review.writtenBy&&<h5 className={styles.userName}>{"Потребител"}</h5>}
+
                                                 <Rating name="read-only" value={review.stars} readOnly />
                                             </div>
                                             {review.text&&<div className={styles.feedBackInfo}>
