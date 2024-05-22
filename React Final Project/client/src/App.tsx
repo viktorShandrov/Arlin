@@ -4,7 +4,7 @@ import styles from './App.module.css'
 import {Navigate, Route, Routes} from "react-router-dom";
 // import AdminPanel from "./admin/AdminPanel";
 import Main from "./components/Main/Main";
-import React, {createContext, useEffect, Suspense} from "react";
+import React, { useEffect, Suspense} from "react";
 // @ts-ignore
 import {store} from "./redux/store.js";
 

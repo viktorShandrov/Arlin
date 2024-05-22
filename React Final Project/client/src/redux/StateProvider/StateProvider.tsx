@@ -1,7 +1,7 @@
 
-import styles from "./StateProvider.module.css"
-import {createContext, useEffect, useState} from "react";
-import {REST_API} from "../../contants";
+
+import {createContext} from "react";
+{/*// @ts-ignore*/}
 import { useSynchronousState } from '@toolz/use-synchronous-state';
 
 
@@ -11,6 +11,7 @@ import { useSynchronousState } from '@toolz/use-synchronous-state';
 
 
 export const userContext = createContext(null);
+{/*// @ts-ignore*/}
 export default function StateProvider({initialState,children}){
     const [userState, setUser] = useSynchronousState(initialState);
 
@@ -21,9 +22,14 @@ export default function StateProvider({initialState,children}){
         // console.log("state changed from:", window.location.hash)
         setUser(user)
     }
+
     return(
-        <userContext.Provider value={{ userState, setUserState }}>
-            {children}
-        </userContext.Provider>
+        <>
+            {/*// @ts-ignore*/}
+            <userContext.Provider value={{ userState, setUserState }}>
+                {children}
+            </userContext.Provider>
+        </>
+
     )
 }

@@ -6,6 +6,7 @@ import {userContext} from "../../redux/StateProvider/StateProvider";
 // import {useDispatch} from "react-redux";
 // import {setUser} from "../../redux/user";
 export default function Navigation(){
+    // @ts-ignore
     const { userState,setUserState } = useContext(userContext);
     const [currentSectionName,setCurrentSectionName] = useState("")
     const navigationWrapperRef = useRef(null)
@@ -126,14 +127,15 @@ export default function Navigation(){
                         <h6 className={styles.navItemLabel}>Профил</h6>
                     </article>
                 </Link>
-                <Link onClick={navigateHandler} to={"/main/plans"}  className={styles.linkItem} >
-                    <article className={styles.linkC}>
-                        <div className={styles.imageC}>
-                            <img src="/nav%20icons%20new/plans.png" alt=""/>
-                        </div>
-                        <h6 className={styles.navItemLabel}>Планове</h6>
-                    </article>
-                </Link>
+                {/*//TODO plans*/}
+                {/*<Link onClick={navigateHandler} to={"/main/plans"}  className={styles.linkItem} >*/}
+                {/*    <article className={styles.linkC}>*/}
+                {/*        <div className={styles.imageC}>*/}
+                {/*            <img src="/nav%20icons%20new/plans.png" alt=""/>*/}
+                {/*        </div>*/}
+                {/*        <h6 className={styles.navItemLabel}>Планове</h6>*/}
+                {/*    </article>*/}
+                {/*</Link>*/}
                 <Link onClick={logoutHandler} to={"/user/login"}  className={styles.linkItem} >
                     <article className={styles.linkC}>
                         <div className={styles.imageC}>

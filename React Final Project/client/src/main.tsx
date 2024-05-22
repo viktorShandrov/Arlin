@@ -9,9 +9,9 @@ import {HashRouter} from "react-router-dom";
 import {REST_API} from "./contants";
 //@ts-ignore
 import {store} from "./redux/store";
-import {setInitialData} from "./redux/user";
+
 import StateProvider from "./redux/StateProvider/StateProvider";
-import {StrictMode} from "react";
+
 
 
 

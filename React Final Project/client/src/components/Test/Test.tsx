@@ -2,9 +2,7 @@
 import styles from "./Test.module.css"
 import {useEffect, useRef, useState} from "react";
 import {request} from "../../functions";
-import Spinner from 'react-bootstrap/Spinner';
 import {useNavigate, useParams} from "react-router-dom";
-import TestResume from "../TestResume/TestResume";
 import Popup from "../Popup/Popup";
 import Loading from "../Spinner/Loading";
 
@@ -38,6 +36,7 @@ export default function Test(){
     useEffect(() => {
         answerRefs.current = answerRefs.current.slice(0, question.possibleAnswers.length);
     }, [question]);
+    {/*// @ts-ignore*/}
 
     const textToSpeechClickHandler = ()=>{
         const voice = new SpeechSynthesisUtterance(question.question)
@@ -45,17 +44,22 @@ export default function Test(){
     }
     const answerCLickEvent = (index:number,question:any)=>{
         //if its already answered ->
+        {/*// @ts-ignore*/}
         if(testInfo.isExercise||testInfo.isPersonalExercise){
+            {/*// @ts-ignore*/}
             if(answersHistory.some(el=>el.questionIndex == test.indexOf(question))) return
         }
 
         setIsCurrentQuestionGuessed(true)
+        {/*// @ts-ignore*/}
         clearInterval(timerInterval)
 
         const rightAnswerIndex = question.rightAnswerIndex
+        {/*// @ts-ignore*/}
         const clickedAnswer = question.possibleAnswers[index]
         // @ts-ignore
         setAnswersHistory([...answersHistory,{
+            /*// @ts-ignore*/
             questionIndex: test.indexOf(question),
             rightAnswerIndex:rightAnswerIndex,
             guessedAnswerIndex: index,
@@ -71,29 +75,43 @@ export default function Test(){
     function resetAnswersColors(){
         for (const answerRef of answerRefs.current) {
             //remove colors
+            {/*// @ts-ignore*/}
             answerRef.classList.remove(styles.wrongAnswer)
+            {/*// @ts-ignore*/}
             answerRef.classList.remove(styles.rightAnswer)
+            {/*// @ts-ignore*/}
             answerRef.classList.remove(styles.incorectAnswers)
+            {/*// @ts-ignore*/}
             answerRef.classList.remove(styles.guessedAnswer)
+            {/*// @ts-ignore*/}
             helpSectionRef?.current?.classList.remove(styles.helpSectionIsVisible)
         }
     }
+    {/*// @ts-ignore*/}
     function checkIfAnsweredAlready(questionIndex){
+        {/*// @ts-ignore*/}
         const answeredQuestionData = answersHistory.find(el=>el.questionIndex==questionIndex)
         if(answeredQuestionData){
+            {/*// @ts-ignore*/}
             markCorrectAndIncorrectAnswers(answeredQuestionData.guessedAnswerIndex,answeredQuestionData.rightAnswerIndex)
         }
     }
+    {/*// @ts-ignore*/}
     function markCorrectAndIncorrectAnswers(guessedIndex,rightAnswerIndex){
         resetAnswersColors()
         answerRefs.current.forEach(el=>{
+            {/*// @ts-ignore*/}
             el.classList.add(styles.incorectAnswers)
         })
         console.log(testInfo)
+        {/*// @ts-ignore*/}
         if(testInfo.isPersonalExercise||testInfo.isExercise){
+            {/*// @ts-ignore*/}
             answerRefs.current[rightAnswerIndex].classList.add(styles.rightAnswer);
+            {/*// @ts-ignore*/}
             answerRefs.current[guessedIndex].classList.add(styles.wrongAnswer);
         }else{
+            {/*// @ts-ignore*/}
             answerRefs.current[guessedIndex].classList.add(styles.guessedAnswer);
         }
 
@@ -109,8 +127,9 @@ export default function Test(){
         }
         if(answersHistory.length==test.length){
             //test completed
+            {/*// @ts-ignore*/}
             answersHistory.sort((a,b)=>a.questionIndex - b.questionIndex)
-
+            {/*// @ts-ignore*/}
             request("unknownWords/testCompleted","POST",{results:answersHistory,testId:testInfo._id}).subscribe(
                 (res:any)=> {
                     navigate(`/main/testSubmission/${res.submissionId}`)
@@ -121,25 +140,34 @@ export default function Test(){
             let targetIndex = questionIndex+1
 
             //if its on the end of the test but has unchecked questions
+            {/*// @ts-ignore*/}
             answersHistory.sort((a,b)=>a.questionIndex - b.questionIndex)
             if(targetIndex>test.length-1){
+                {/*// @ts-ignore*/}
                 targetIndex = findUnguessedQuestion()
             }
-
+            {/*// @ts-ignore*/}
             setCurrentTestType(test[targetIndex].testType)
             setQuestion(()=>{
                 return test[targetIndex]
             })
             //change colors on test number nav
+            {/*// @ts-ignore*/}
             questionNumbersNavEls.current[questionIndex].classList.add(styles.alreadyAnsweredQuestion)
+            {/*// @ts-ignore*/}
             questionNumbersNavEls.current[questionIndex].classList.remove(styles.currentQuestion)
+            {/*// @ts-ignore*/}
             questionNumbersNavEls.current[targetIndex].classList.add(styles.currentQuestion)
             //mobile nav
+            {/*// @ts-ignore*/}
             questionNumbersNavMobileEls.current[questionIndex].classList.add(styles.alreadyAnsweredQuestion)
+            {/*// @ts-ignore*/}
             questionNumbersNavMobileEls.current[questionIndex].classList.remove(styles.currentQuestion)
+            {/*// @ts-ignore*/}
             questionNumbersNavMobileEls.current[targetIndex].classList.add(styles.currentQuestion)
 
             setTimeForQuestion(0)
+            {/*// @ts-ignore*/}
             setTimerInterval(setInterval(()=>{
                 setTimeForQuestion(old=>old+1)
             },1000))
@@ -156,25 +184,30 @@ export default function Test(){
             prevIndex++
         }
     }
-
+    {/*// @ts-ignore*/}
     const changeQuestionClick = (index) =>{
         const questionIndex = test.findIndex(question1=>question1==question)
-
+        {/*// @ts-ignore*/}
         questionNumbersNavEls.current[questionIndex].classList.remove(styles.currentQuestion)
+        {/*// @ts-ignore*/}
         questionNumbersNavEls.current[index].classList.add(styles.currentQuestion)
         //mobile nav
+        {/*// @ts-ignore*/}
         questionNumbersNavMobileEls.current[questionIndex]?.classList.remove(styles.currentQuestion)
+        {/*// @ts-ignore*/}
         questionNumbersNavMobileEls.current[index]?.classList.add(styles.currentQuestion)
 
         setIsMobileNavVisible(false)
         resetAnswersColors();
         checkIfAnsweredAlready(index);
+        {/*// @ts-ignore*/}
         setCurrentTestType(test[index].testType)
         setQuestion(()=>{
             return test[index]
         })
     }
     const helpBtnCLick = ()=>{
+        {/*// @ts-ignore*/}
         helpSectionRef.current.classList.add(styles.helpSectionIsVisible)
     }
 
@@ -193,14 +226,16 @@ export default function Test(){
                 setQuestion(res.test.questions[0])
                 setCurrentTestType(res.test.questions[0].testType)
                 setTimeout(()=>{
+                    {/*// @ts-ignore*/}
                     questionNumbersNavEls.current[0].classList.add(styles.currentQuestion)
+                    {/*// @ts-ignore*/}
                     questionNumbersNavMobileEls.current[0]?.classList.add(styles.currentQuestion)
                 },0)
                 // @ts-ignore
                 t.style.setProperty("padding", "0")
 
                 setIsLoading(false)
-
+                {/*// @ts-ignore*/}
                 setTimerInterval(setInterval(()=>{
                     setTimeForQuestion(old=>old+1)
                 },1000))
@@ -228,6 +263,7 @@ export default function Test(){
                 <div className={styles.mainView}>
 
                     <div className={styles.quitAndRestartBtns}>
+                        {/*// @ts-ignore*/}
                         <button onClick={()=>setIsMobileNavVisible(true)} className={`${styles.btn} ${styles.questionsMenuMobileBtn}`}>въпрос {test.indexOf(question)+1}</button>
                         {/*<button className={`${styles.btn} ${styles.restartBtn}`}><i*/}
                         {/*    className="fa-solid fa-rotate-right"></i> рестарт</button>*/}
@@ -247,12 +283,14 @@ export default function Test(){
                                     <p >попълни пропусната дума в изречението:</p>
                                 </>
                             }
-
+                            {/*// @ts-ignore*/}
                             <h4 className={`${styles.word} ${currentTestType=="fillWord"?styles.sentence:styles.aaa}`}>{question.question.stringValue}</h4>
                             <button onClick={helpBtnCLick} className={styles.helpBtn}>затруднявам се <i className={`fa-solid fa-info ${styles.infoIcon}`}></i></button>
                         </div>
                         <div className={styles.navigationWrapper}>
+                            {/*// @ts-ignore*/}
                             {test.length>0&&test.map((question,index)=>{
+                                {/*// @ts-ignore*/}
                                 return <div onClick={()=>changeQuestionClick(index)} ref={(el:any) => questionNumbersNavEls.current[index] = el} className={styles.questionNumberNavEl}>
                                     {index+1}
                                 </div>
@@ -262,7 +300,9 @@ export default function Test(){
                             <Popup hidePopup={hideNavMobilePopup} styleSelector={styles.navMobilePopup} isWithDisplayNone={!isMobileNavVisible}>
                                 <p className={styles.popupHeading}>Всички въпроси:</p>
                                 <div className={styles.questionsMenuMobile}>
+                                    {/*// @ts-ignore*/}
                                     {test.length>0&&test.map((question,index)=>{
+                                        {/*// @ts-ignore*/}
                                         return <div onClick={()=>changeQuestionClick(index)} ref={(el:any) => questionNumbersNavMobileEls.current[index] = el} className={styles.questionNumberNavMobileEl}>
                                             {index+1}
                                         </div>
@@ -277,7 +317,8 @@ export default function Test(){
                         <div className={styles.answersBtnsWrapper}>
                             <div className={styles.answersBtnsC}>
                                 {question.possibleAnswers.length>0&&question.possibleAnswers.map((answer, index)=>{
-                                   return <div className={styles.answerBtn} onClick={()=>answerCLickEvent(index,question)} ref={(el:any) => answerRefs.current[index] = el} data-iscorrect={answer.isCorrect}>
+                                    {/*// @ts-ignore*/}
+                                    return <div className={styles.answerBtn} onClick={()=>answerCLickEvent(index,question)} ref={(el:any) => answerRefs.current[index] = el} data-iscorrect={answer.isCorrect}>
                                         <div className={styles.dot}></div>
                                         <p className={styles.answerText}>{answer.stringValue}</p>
                                     </div>

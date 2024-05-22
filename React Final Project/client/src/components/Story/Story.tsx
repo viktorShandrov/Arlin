@@ -1,8 +1,8 @@
 import Sentence from "./Sentence/Sentence.tsx";
 import {useContext, useState} from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
 import styles from "./Story.module.css"
-import { useSelector} from "react-redux";
+
 import ComponentLoading from "../ComponentLoading/ComponentLoading";
 import Popup from "../Popup/Popup";
 import Rating from "@mui/material/Rating";
@@ -60,6 +60,7 @@ export default function Story({chapter,changeChapterClickHandler,isLoading,isRat
              sentences = chapter.currentChapter.text.split(/(?<=[?!.])/)
         }
     const [areTestsHidden,setAreTestsHidden] = useState(true)
+    // @ts-ignore
     const showBtns = ()=>{
         setAreTestsHidden(!areTestsHidden)
     }

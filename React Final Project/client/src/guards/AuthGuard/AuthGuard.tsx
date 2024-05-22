@@ -1,12 +1,12 @@
 
 import {Navigate, Outlet} from "react-router-dom";
-import {useSelector} from "react-redux";
 import {toast} from "react-toastify";
 import {useContext} from "react";
 import {userContext} from "../../redux/StateProvider/StateProvider";
 
 export default function AuthGuard(){
     // let {user} = useSelector((state:any)=>state.user)
+    {/*// @ts-ignore*/}
     const { userState } = useContext(userContext);
 
     if(!userState()||!userState().token){

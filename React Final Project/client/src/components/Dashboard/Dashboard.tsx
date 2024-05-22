@@ -4,7 +4,7 @@ import {useContext, useEffect, useState} from 'react';
 
 import {request} from "../../functions";
 // import {useDispatch, useSelector} from "react-redux";
-import DashboardStat from "./DashboardStat/DashboardStat";
+
 // import {setUser} from "../../redux/user";
 import {toast} from "react-toastify";
 import {rewardNames} from "../../contants";
@@ -12,6 +12,7 @@ import {useNavigate} from "react-router-dom";
 import NoContentSection from "../NoContentSection/NoContentSection";
 import {userContext} from "../../redux/StateProvider/StateProvider";
 export default function Dashboard(){
+    {/*// @ts-ignore*/}
     const { userState,setUserState } = useContext(userContext);
     const [userInfo,setUserInfo] = useState({
         randomWordsTests: undefined,

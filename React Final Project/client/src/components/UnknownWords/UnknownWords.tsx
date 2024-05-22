@@ -1,7 +1,7 @@
 import styles from "./UnknownWords.module.css"
 import {useEffect, useState} from "react";
 import {request} from "../../functions";
-import ComponentLoading from "../ComponentLoading/ComponentLoading.tsx";
+
 
 import Popup from "../Popup/Popup";
 import CreateWordContainer from "../CreateWordContainer/CreateWordContainer";
@@ -9,6 +9,7 @@ import CreateWordContainer from "../CreateWordContainer/CreateWordContainer";
 export default function UnknownWords(){
     // const [words,setWords] = useState([])
     const [userWordContainers, setUserWordContainers] = useState([]);
+    {/*// @ts-ignore*/}
     const [isLoading,setIsLoading] = useState(true)
     const [clickedWord,setClickedWord] = useState({
         isKnown:false,
@@ -22,6 +23,7 @@ export default function UnknownWords(){
     })
     const [isCreateGroupPopUpVisible,setIsCreateGroupPopUpVisible] = useState(false)
     const [isWordInfoPopUpVisible,setWordInfoPopUpVisible] = useState(false)
+    {/*// @ts-ignore*/}
     const [isWordExamplesPopUpVisible,setIsWordExamplesPopUpVisible] = useState(false)
     useEffect(()=>{
         setIsLoading(true)
@@ -77,6 +79,7 @@ export default function UnknownWords(){
                                         <i className="fa-solid fa-gear"></i>
                                     </div>
                                 </summary>
+                                {/*// @ts-ignore*/}
                                 {container.words.length>0&&container.words.sort((a,b)=>(a.status === b.status) ? 0 : b.status=="hard" ? 1 : -1).map(word=><div className={styles.wordCell}>
                                     <div className={styles.wordC}>
                                         <h6>{word.wordRef.word}</h6>
@@ -113,7 +116,9 @@ export default function UnknownWords(){
                                     <span className={styles.detailsLabel}>примери в изречение</span>
                                     {clickedWord.wordRef.examples.splice(0,2).map(ex=>{
                                         return <div className={styles.examplePair}>
+                                            {/*// @ts-ignore*/}
                                             <h6 className={styles.text}>{ex.sentenceWhereWordsIsPresent}</h6>
+                                            {/*// @ts-ignore*/}
                                             <h6 className={styles.translation}>{ex.translation}</h6>
                                         </div>
                                     })}

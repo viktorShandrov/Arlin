@@ -1,8 +1,7 @@
 
 import styles from "./TestResume.module.css"
 import {request} from "../../functions";
-import {useNavigate, useParams} from "react-router-dom";
-import {toast} from "react-toastify";
+import { useParams} from "react-router-dom";
 import {userContext} from "../../redux/StateProvider/StateProvider";
 import {useContext, useEffect, useState} from "react";
 import Loading from "../Spinner/Loading";
@@ -10,7 +9,7 @@ import Loading from "../Spinner/Loading";
 // import {setUser} from "../../redux/user";
 // @ts-ignore
 export default function TestResume(){
-    const navigate = useNavigate()
+
     const {testSubmissionId} = useParams()
     const [questions,setQuestions] = useState([])
     const [answers,setAnswers] = useState([])
@@ -20,6 +19,7 @@ export default function TestResume(){
         submission: {},
         questions: []
     })
+    // @ts-ignore
     const { userState,setUserState } = useContext(userContext);
 
 
@@ -37,59 +37,80 @@ export default function TestResume(){
         )
     },[testSubmissionId])
 
+    // @ts-ignore
+    // @ts-ignore
     return(
         <>
             {isLoading&&<Loading/>}
             <div className={styles.questionsListWrapper}>
                 <div className={styles.heading}>
                     <h3>Браво!</h3>
+                    {/*// @ts-ignore*/}
                     <h6 className={styles.textInfoPair}>Отнеха ти <h6 className={styles.highlightedText}>{`${Math.floor(testDetails.submission.time / 60)}:${(testDetails.submission.time % 60).toString().padStart(2, '0')}`}</h6> минути</h6>
+                    {/*// @ts-ignore*/}
                     <h6 className={styles.textInfoPair}>С резултат <h6 className={styles.highlightedText}>{testDetails.submission.score}/{testDetails.questions.length}</h6> верни отговора</h6>
+                    {/*// @ts-ignore*/}
                     <h6 className={styles.textInfoPair}>Предадено на<h6 className={styles.highlightedText}>{new Date(testDetails.submission.submissionTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' })}</h6> часа</h6>
 
                 </div>
 
                <div className={styles.questionsListC}>
 
+                   {/*// @ts-ignore*/}
 
                     {questions.length>0&&questions.map(el=>el.testType).every(el=>el === questions.map(el=>el.testType)[0])&&<h5 className={styles.wordTypeSection}>{testTypes[questions[0].testType]}</h5>}
+                   {/*// @ts-ignore*/}
 
-                    {questions.length>0&&questions.map((question,index)=><>
+                    {questions.length>0&&questions.map((question:any,index)=><>
+                            {/*// @ts-ignore*/}
 
                         {(question.testType!==questions.at(index-1).testType)&&<h5 className={styles.wordTypeSection}>{testTypes[question.testType]}</h5>}
+                            {/*// @ts-ignore*/}
 
                         {question.rightAnswerIndex==answers[index].answerIndex&&answers[index].time>20&&
                             <div className={`${styles.questionListItem} ${styles.hardQuestionAnswer} ${styles.wordType}`}>
                                 <div className={styles.headings}>
                                     <h6>Позамисли се</h6>
+                                    {/*// @ts-ignore*/}
+
                                     <p>време за отговор <span className={styles.time}>{`${Math.floor(answers[index].time / 60)}:${(answers[index].time % 60).toString().padStart(2, '0')}`}</span> мин.</p>
                                 </div>
                                 <div className={styles.wordPair}>
+                                    {/*// @ts-ignore*/}
                                     {question.testType=="randomWordsTests"?<p>дума</p>:null}
+                                    {/*// @ts-ignore*/}
                                     {question.testType=="fillWord"?<p>изречение</p>:null}
+                                    {/*// @ts-ignore*/}
                                     {question.testType=="justQuestion"?<p>въпрос</p>:null}
-
+                                    {/*// @ts-ignore*/}
                                     {question.testType=="randomWordsTests"?<span className={styles.word}>{question.question}</span>:<></>}
+                                    {/*// @ts-ignore*/}
                                     {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers.find(el=>el.word == question.question).examples[0].sentenceWhereWordsIsPresent.replace(question.question,"___")}</span> :<></>}
+                                    {/*// @ts-ignore*/}
                                     {question.testType=="justQuestion"?<span className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</span>:<></>}
 
                                 </div>
                                 <div className={styles.wordPair}>
                                     <p>правилен отговор</p>
+                                    {/*// @ts-ignore*/}
                                     {question.testType=="randomWordsTests"?<span className={styles.word}>{question.possibleAnswers.find(el=>el._id==question.rightAnswer).translatedText}</span>:<></>}
+                                    {/*// @ts-ignore*/}
                                     {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers.find(el=>el._id==question.rightAnswer).word}</span> :<></>}
+                                    {/*// @ts-ignore*/}
                                     {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}
 
                                 </div>
+                                {/*// @ts-ignore*/}
                                 {question.testType=="fillWord"&&
                                     <div className={styles.wordPair}>
                                         <p>превод</p>
+                                        {/*// @ts-ignore*/}
                                         <span className={styles.word}>{question.possibleAnswers.find(el=>el._id==question.rightAnswer).examples[0].translation}</span>
                                     </div>
                                 }
                             </div>
                         }
-
+                            {/*// @ts-ignore*/}
                         {question.rightAnswerIndex==answers[index].answerIndex&&answers[index].time<=20&&
                             <div className={`
                             ${styles.questionListItem} 
@@ -99,6 +120,7 @@ export default function TestResume(){
                             `}>
                                 <div className={styles.headings}>
                                     <h6>Затвърдено е</h6>
+                                    {/*// @ts-ignore*/}
                                     <p>време за отговор <span className={styles.time}>{`${Math.floor(answers[index].time / 60)}:${(answers[index].time % 60).toString().padStart(2, '0')}`}</span> мин.</p>
                                 </div>
                                 <div className={styles.wordPair}>
@@ -108,6 +130,7 @@ export default function TestResume(){
 
                                     {question.testType=="randomWordsTests"?<span className={styles.word}>{question.question.elementId?.word||question.question.stringValue}</span>:<></>}
                                     {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.replace(question.question,"___")}</span> :<></>}
+                                    {/*// @ts-ignore*/}
                                     {question.testType=="justQuestion"?<span className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</span>:<></>}
 
                                 </div>
@@ -126,7 +149,7 @@ export default function TestResume(){
                                 }
                             </div>
                         }
-
+                            {/*// @ts-ignore*/}
                         {question.rightAnswerIndex!==answers[index].answerIndex&&
                             <div className={`
                             ${styles.questionListItem} 
@@ -136,6 +159,7 @@ export default function TestResume(){
                             `}>
                                 <div className={styles.headings}>
                                     <h6>Ще упражним още</h6>
+                                    {/*// @ts-ignore*/}
                                     <p>време за отговор <span className={styles.time}>{`${Math.floor(answers[index].time / 60)}:${(answers[index].time % 60).toString().padStart(2, '0')}`}</span> мин.</p>
                                 </div>
                                 <div className={styles.wordPair}>
@@ -152,9 +176,11 @@ export default function TestResume(){
                                     <div className={styles.wrongAnswerC}>
                                         <div className={styles.textPair}>
                                             <div className={styles.dot}></div>
-
+                                            {/*// @ts-ignore*/}
                                             {question.testType=="randomWordsTests"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[answers[index].answerIndex].elementId?.translatedText||question.possibleAnswers[answers[index].answerIndex].stringValue}</h6>:<></>}
+                                            {/*// @ts-ignore*/}
                                             {question.testType=="fillWord"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[answers[index].answerIndex].elementId?.word||question.possibleAnswers[answers[index].answerIndex].stringValue}</h6> :<></>}
+                                            {/*// @ts-ignore*/}
                                             {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</h6>:<></>}
 
                                         </div>
@@ -177,8 +203,9 @@ export default function TestResume(){
                                         {question.testType!=="fillWord"&&<div className={styles.headingAndSentencePair}>
                                             <p>пример в изречение:</p>
                                             <div className={styles.sentenceC}>
+
                                                 {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.split(" ")
-                                                    .map(word=>{
+                                                    .map((word:any)=>{
                                                         return <p className={word == question.question?styles.questionedWord:styles.wordInSentence}>{word} </p>
                                                     })
                                                 }

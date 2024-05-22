@@ -1,11 +1,10 @@
 import  { useEffect, useRef, useState } from "react";
 import "./TranslationContainer.module.css";
 import styles from "./TranslationContainer.module.css";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import {request} from "../../functions";
 import ComponentLoading from "../ComponentLoading/ComponentLoading";
 import Popup from "../Popup/Popup";
-import CreateWordContainer from "../CreateWordContainer/CreateWordContainer";
 import {toast} from "react-toastify";
 
 export default function TranslationContainer() {
@@ -13,6 +12,7 @@ export default function TranslationContainer() {
     const [selectedWordInfo, setSelectedWordInfo] = useState("");
     const [userWordContainers, setUserWordContainers] = useState([]);
     const [clickedWordContainer, setClickedWordContainer] = useState({});
+    {/*// @ts-ignore*/}
     const [isCreateWordContainerPopupVisible, setIsCreateWordContainerPopupVisible] = useState(false);
     const translationWrapper = useRef(null)
     const wordContainersRefs = useRef([])
@@ -53,13 +53,13 @@ export default function TranslationContainer() {
     }
 
 
-
+    {/*// @ts-ignore*/}
     const wordClick = (word) =>{
         if(!userWordContainers.length){
             fetchUserWordContainers()
         }
         request("unknownwords/getWordInfo/"+word,"GET").subscribe(
-            (res)=>{
+            (res:any)=>{
                 setSelectedWordInfo(
                     res.word?
                     res.word:
@@ -77,34 +77,41 @@ export default function TranslationContainer() {
     const toggleWordExamplesPopupVisible = () =>{
         setIsWordExamplesPopupVisible(!isWordExamplesPopupVisible)
     }
+    {/*// @ts-ignore*/}
     const selectContainerClick = (containerIndex) =>{
         const container = wordContainersRefs.current[containerIndex]
         setClickedWordContainer(userWordContainers[containerIndex])
         highlightWordContainer(container)
     }
+    {/*// @ts-ignore*/}
     function highlightWordContainer(container){
+        {/*// @ts-ignore*/}
         wordContainersRefs.current.find(el=>el.classList.contains(styles.clickedWordContainer))?.classList.remove(styles.clickedWordContainer)
         if(container){
             container.classList.add(styles.clickedWordContainer)
         }
     }
+    {/*// @ts-ignore*/}
     const saveWordInContainerClick = (containerIndex) =>{
+        {/*// @ts-ignore*/}
         const wordString = selectedWordInfo.word
+        {/*// @ts-ignore*/}
         const containerId = clickedWordContainer._id
 
         request("unknownWords/addWordToContainer","POST",{wordString,containerId}).subscribe(
-            (res)=>{
+            ()=>{
                 highlightWordContainer(null)
                 setClickedWordContainer({})
                 toast.success("успешно запазена")
             },
-            (err)=>{
+            ()=>{
                 highlightWordContainer(null)
                 setClickedWordContainer({})
             }
         )
     }
     const toggleTranslationContainer = () =>{
+        {/*// @ts-ignore*/}
         setSelectedWordInfo({})
         setIsTextTranslationEmerged(!isTextTranslationEmerged)
     }
@@ -125,33 +132,40 @@ export default function TranslationContainer() {
 
                     <div className={styles.sentenceAndTranslation}>
                         <div className={styles.sentenceC}>
+                            {/*// @ts-ignore*/}
                             {textToTranslate&&textToTranslate.split(" ").map((word, index) => {
                                 return <h6 onClick={()=>wordClick(word)} className={styles.word}>
                                     {word}
                                 </h6>
                             })}
                         </div>
+                        {/*// @ts-ignore*/}
                         {!selectedWordInfo.word&&
                             <div className={styles.sentenceTranslationC}>
                                 <p className={styles.translation}>{isTranslationLoading&&<ComponentLoading bgColor={"#F4F4F4"}/>}{translatedSentence}</p>
                             </div>
                         }
+                        {/*// @ts-ignore*/}
                         {selectedWordInfo.word&&
                             <div className={styles.wordDetailsC}>
                                 <div className={styles.detailPair}>
                                     <h6 className={styles.detailLabel}>дума:</h6>
+                                    {/*// @ts-ignore*/}
                                     <h6 className={styles.detailValue}>{selectedWordInfo.word}</h6>
                                 </div>
                                 <div className={styles.detailPair}>
                                     <h6 className={styles.detailLabel}>превод:</h6>
+                                    {/*// @ts-ignore*/}
                                     <h6 className={styles.detailValue}>{selectedWordInfo.translatedText}</h6>
                                 </div>
+                                {/*// @ts-ignore*/}
                                 {selectedWordInfo.examples&&selectedWordInfo.examples.length>0&&
                                     <div className={styles.detailPair}>
                                         <h6 className={styles.detailLabel}>примери в изречение:</h6>
                                         <h6 onClick={toggleWordExamplesPopupVisible} className={styles.detailValueLink}>{"виж >"} </h6>
                                     </div>
                                 }
+                                {/*// @ts-ignore*/}
                                 {selectedWordInfo.synonyms&&selectedWordInfo.synonyms.length>0&&
                                     <div className={styles.detailPair}>
                                         <h6 className={styles.detailLabel}>синоними:</h6>
@@ -161,6 +175,7 @@ export default function TranslationContainer() {
 
                                 <div className={styles.wordContainersLAbelAndBtn}>
                                     <h6 className={styles.detailLabel}>Запази в група от думи:</h6>
+                                    {/*// @ts-ignore*/}
                                     <button disabled={!clickedWordContainer._id} onClick={saveWordInContainerClick} className={styles.saveWordCBtn}>Запази</button>
                                 </div>
 
@@ -168,10 +183,13 @@ export default function TranslationContainer() {
                                     {userWordContainers.length>0&&userWordContainers.map((container,index)=><>
                                         <div
                                             className={styles.wordContainerC}
+                                            // @ts-ignore*/
                                             style={{backgroundColor:container.colorCode}}
+                                            // @ts-ignore*/
                                             ref={(el:any) => wordContainersRefs.current[index] = el}
                                             onClick={()=>selectContainerClick(index)}
                                         >
+                                            {/*// @ts-ignore*/}
                                             {container.name}
                                         </div>
                                     </>)
@@ -190,6 +208,7 @@ export default function TranslationContainer() {
                         <span>примери в изречение</span>
                     </div>
                     <div className={styles.examplesC}>
+                        {/*// @ts-ignore*/}
                         {selectedWordInfo.examples.map(ex=> <>
                             <div className={styles.examplePair}>
                                 <h6 className={styles.text}>{ex.sentenceWhereWordsIsPresent}</h6>
@@ -207,6 +226,7 @@ export default function TranslationContainer() {
                         <span>синоними</span>
                     </div>
                     <div className={styles.examplesC}>
+                        {/*// @ts-ignore*/}
                         {selectedWordInfo.synonyms.map(syn=> <>
                             <h6 className={styles.text}>{syn}</h6>
                         </> )}

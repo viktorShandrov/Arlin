@@ -3,7 +3,7 @@ import styles from "./CreateTest.module.css"
 import {useEffect, useRef, useState} from "react";
 import useForm from "../../hooks/useForm";
 import {request} from "../../functions";
-import {forEach} from "react-bootstrap/ElementChildren";
+
 import {useNavigate} from "react-router-dom";
 export default function CreateTest(){
     const emptyQuestion = {
@@ -22,6 +22,7 @@ export default function CreateTest(){
         questions:[{...emptyQuestion}]
     });
     const [questionForm,onChange,resetForm,populateForm] = useForm({...emptyQuestion})
+    {/*// @ts-ignore*/}
     const [testDetailsForm,onDetailsChange,resetDetailsForm,populateDetailsForm] = useForm({
         // startTime:"",
         endTime:"",
@@ -33,11 +34,11 @@ export default function CreateTest(){
     const [areQuestionsReady,setAreQuestionsReady] = useState(false)
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState(0)
     const navigate = useNavigate()
-    const addQuestionBtnClick = (isFinal) =>{
+    const addQuestionBtnClick = (isFinal:any) =>{
         if(Object.values(questionForm).some(el=>!el&&el!==0)) return
 
         request("unknownWords/addQuestionToTest","POST",{testId:testInfo._id,question:questionForm}).subscribe(
-            (res)=>{
+            ()=>{
                 setCurrentQuestionIndex(old=>old+1)
                 setTestInfo((old)=>{
                     const questions = [...testInfo.questions]
@@ -62,11 +63,13 @@ export default function CreateTest(){
 
 
     }
-    function setNavCurrentQuestionColor(index){
+    function setNavCurrentQuestionColor(index:any){
+        {/*// @ts-ignore*/}
         questionNumbersNavEls.current.at(index).classList.add(styles.currentQuestion)
     }
     function resetNavColors(){
         for (const el of questionNumbersNavEls.current) {
+            {/*// @ts-ignore*/}
             el.classList.remove(styles.currentQuestion)
         }
     }
@@ -74,11 +77,12 @@ export default function CreateTest(){
         setNavCurrentQuestionColor(-1)
     },[])
     const saveTestNameClick = () =>{
+        {/*// @ts-ignore*/}
         const testTitle = testNameInput.current.value.trim(); // Trim whitespace
 
 
             request("unknownWords/createTest","POST",{testTitle}).subscribe(
-                (res)=>{
+                (res:any)=>{
                     setTestInfo((old)=>{
                         return {
                             ...old,
@@ -93,18 +97,21 @@ export default function CreateTest(){
     }
     function resetTicks(){
         ticksEls.current.forEach((el)=>{
+            {/*// @ts-ignore*/}
                 el.classList.remove(styles.unticked)
         })
     }
-    const tickClick = (index) =>{
+    const tickClick = (index:any) =>{
         populateForm({
             ...questionForm,
             rightIndex:index
         })
         ticksEls.current.forEach((el,i)=>{
             if(i == index){
+                {/*// @ts-ignore*/}
                 el.classList.remove(styles.unticked)
             } else{
+                {/*// @ts-ignore*/}
                 el.classList.add(styles.unticked)
             }
         })
@@ -120,7 +127,7 @@ export default function CreateTest(){
         resetNavColors()
         setNavCurrentQuestionColor(index)
     }
-    function convertTimeToDate(timeString){
+    function convertTimeToDate(timeString:any){
         const currentDate = new Date();
 
         const [hoursStr, minutesStr] = timeString.split(':');
@@ -134,24 +141,26 @@ export default function CreateTest(){
 
         return currentDate
     }
-    const  saveAdditionaltestInfoClick = (info) =>{
+    const  saveAdditionaltestInfoClick = (info:any) =>{
         //TODO
         // info.startDate = convertTimeToDate(info.startTime)
         info.endDate = convertTimeToDate(info.endTime)
         //TO BE CHANGED    
         info.endDate = info.date
         request("unknownWords/updateTestInfo","POST",{testInfo:info,testId:testInfo._id}).subscribe(
-            (res)=>{
+            ()=>{
                 navigate(`/main/testInfo/${testInfo._id}`)
             }
         )
     }
+    {/*// @ts-ignore*/}
     const editQuestionClick = () =>{
+        {/*// @ts-ignore*/}
         testInfo.questions.splice(testInfo.questions[currentQuestionIndex],1,questionForm)
         const updatedQuestions = [...testInfo.questions]
         console.log(updatedQuestions)
         request("unknownWords/updateTestInfo","POST",{testInfo: {questions:updatedQuestions},testId:testInfo._id}).subscribe(
-            (res)=>{
+            ()=>{
                 setTestInfo((old)=>{
                         return{
                             ...old,
@@ -184,8 +193,8 @@ export default function CreateTest(){
                                     <p>Име на теста</p>
                                     <input ref={testNameInput} value={questionForm.testTitle} onChange={onChange} name={"testTitle"} className={styles.textBox} type="text"/>
                                 </div>
-                                <button
-                                    disabled={!testNameInput.current || !testNameInput.current.value}
+                                    {/*// @ts-ignore*/}
+                                <button disabled={!testNameInput.current || !testNameInput.current.value}
                                     onClick={saveTestNameClick}
                                     className={`${styles.btn} ${styles.nameSave}`}
                                 >
@@ -198,7 +207,9 @@ export default function CreateTest(){
                         }
 
                         <div className={styles.questionsNav}>
+                            {/*// @ts-ignore*/}
                             {testInfo.questions.length>0&&testInfo.questions.map((question,index)=>{
+                                {/*// @ts-ignore*/}
                                 return <div onClick={()=>changeQuestionClick(index)} ref={(el:any) => questionNumbersNavEls.current[index] = el} className={styles.questionNumberNavEl}>
                                     {index+1}
                                 </div>
@@ -217,6 +228,7 @@ export default function CreateTest(){
                                     <p>Опция {index+1}</p>
                                     <div className={styles.optionAndTick}>
                                         <input disabled={!testInfo.title} name={`option${index+1}`} onChange={onChange} value={questionForm[`option${index+1}`]} className={styles.textBox} type="text"/>
+                                        {/*// @ts-ignore*/}
                                         <div onClick={()=>tickClick(index)} ref={(el:any) => ticksEls.current[index] = el} className={styles.tick}>
                                             <i className="fa-solid fa-check"></i>
                                         </div>

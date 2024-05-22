@@ -3,8 +3,8 @@ import TranslationContainer from "../TranslationContainer/TranslationContainer";
 import { Route, Routes, useLocation, useNavigate, useParams} from "react-router-dom";
 import styles from "./Read.module.css"
 // import {useDispatch, useSelector} from "react-redux";
-import {useContext, useEffect, useRef, useState} from "react";
-import ReadToolBox from "../ReadToolBox/ReadToolBox";
+import {useContext, useEffect, useState} from "react";
+
 import {request} from "../../functions";
 import {userContext} from "../../redux/StateProvider/StateProvider";
 // import {setUser} from "../../redux/user";
@@ -14,6 +14,7 @@ export default  function Read(){
     const {bookId} = useParams()
 
     // const {user} = useSelector((selector:any)=>selector.user)
+    // @ts-ignore
     const { userState,setUserState } = useContext(userContext);
 
     const navigate = useNavigate()

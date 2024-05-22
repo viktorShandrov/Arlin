@@ -31,8 +31,10 @@ export default function  LoginAndRegister(){
 
     useEffect(()=>{
         if(portal=="login"){
+            {/*// @ts-ignore*/}
             setIsLogin(true)
         } else{
+            {/*// @ts-ignore*/}
             setIsLogin(false)
         }
     },[portal])

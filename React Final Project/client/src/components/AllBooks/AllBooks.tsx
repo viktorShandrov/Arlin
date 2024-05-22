@@ -2,7 +2,7 @@ import styles from "./AllBooks.module.css"
 import {useContext, useEffect, useState} from "react";
 import {request} from "../../functions";
 // import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+
 import Loading from "../Spinner/Loading";
 // import BookElement from "./BookElement/BookElement";
 import SearchBar from "../SearchBar/SearchBar";
@@ -31,7 +31,7 @@ export default function AllBooks(){
         author:[],
         genre:[],
     })
-
+    {/*// @ts-ignore*/}
     const { userState,setUserState } = useContext(userContext);
     const navigate = useNavigate()
     useEffect(()=>{

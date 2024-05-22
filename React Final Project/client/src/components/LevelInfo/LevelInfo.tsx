@@ -13,6 +13,7 @@ import {userContext} from "../../redux/StateProvider/StateProvider";
 // import {setUser} from "../../redux/user";
 export default function LevelInfo(){
     // const {user} = useSelector((state:any)=>state.user)
+    {/*// @ts-ignore*/}
     const { userState,setUserState } = useContext(userContext);
 
     const levelInfoWrapperRef=useRef(null)

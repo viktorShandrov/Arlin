@@ -1,11 +1,11 @@
 
 import styles from "./TrophyRoad.module.css"
 import {calculateLevel} from "../../functions";
-import {useSelector} from "react-redux";
 import {useContext, useEffect, useState} from "react";
 import {userContext} from "../../redux/StateProvider/StateProvider";
 export default function TrophyRoad(){
     // const {user} = useSelector((state:any)=>state.user)
+    {/*// @ts-ignore*/}
     const { userState,setUserState } = useContext(userContext);
     const [rewardLevels,setRewardLevels] = useState([])
 

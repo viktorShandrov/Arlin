@@ -2,7 +2,7 @@
 import styles from "./MyBooksList.module.css"
 {/*//@ts-ignore*/}
 import ContinueBookElement from "../Read/ContinueBookElement/BookElement";
-import {useSelector} from "react-redux";
+
 import {useContext, useEffect, useState} from "react";
 import {request} from "../../functions";
 {/*//@ts-ignore*/}
@@ -18,6 +18,7 @@ export default function MyBooksList(){
 
 
     // const {user} = useSelector((selector:any)=>selector.user)
+    {/*// @ts-ignore*/}
     const { userState,setUserState } = useContext(userContext);
     const [reqBooks,setReqBooks] = useState([])
     const [books,setBooks] = useState([])

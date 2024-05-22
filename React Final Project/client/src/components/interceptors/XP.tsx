@@ -5,6 +5,7 @@ import {toast} from "react-toastify";
 import {userContext} from "../../redux/StateProvider/StateProvider";
 
 export default function XP(){
+    {/*// @ts-ignore*/}
     const { userState,setUserState } = useContext(userContext);
 
     // const {user} = useSelector((state:any)=>state.user)

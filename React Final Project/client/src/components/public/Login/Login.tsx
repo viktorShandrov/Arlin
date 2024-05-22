@@ -12,6 +12,7 @@ export default function  Login(){
     // const {user,setUser} = useContext(userContext)
     // const {user} = useSelector((state:any)=>state.user)
     // const dispatch = useDispatch()
+    {/*// @ts-ignore*/}
     const { userState,setUserState } = useContext(userContext);
 
     const navigate = useNavigate()

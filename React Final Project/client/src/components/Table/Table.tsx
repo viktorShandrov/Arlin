@@ -1,6 +1,6 @@
 
 import styles from "./Table.module.css"
-import {Link} from "react-router-dom";
+{/*// @ts-ignore*/}
 export default function Table({children,title,arr,noContentText="Няма тестове"}){
     return(
         <>
