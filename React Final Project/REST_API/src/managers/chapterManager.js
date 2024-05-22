@@ -20,9 +20,10 @@ exports.getChapter =async(chapterId,userId)=>{
 
 
     const chapter = await models.chapterModel.findById(chapterId)
-    if(!chapter.isFree&&user.role!=="admin"&&![0,1].includes(currentChapterIndex)){
-        await isOwnedByUser(userId,book._id,models.bookModel,"ownedBy")
-    }
+    //TODO -> after first class -> to be restricted
+    // if(!chapter.isFree&&user.role!=="admin"&&![0,1].includes(currentChapterIndex)){
+    //     await isOwnedByUser(userId,book._id,models.bookModel,"ownedBy")
+    // }
 
     await changeUserLastReading(book._id,chapter._id,userId)
     const [prev,next] = getPreviousAndNextChapters(book,currentChapterIndex)

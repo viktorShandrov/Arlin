@@ -1,18 +1,18 @@
 import styles from "./NewsList.module.css"
+{/*// @ts-ignore*/}
 import {useEffect, useRef, useState} from "react";
 import {request} from "../../functions";
 import News from "../LandingPage/News/News";
 import Loading from "../Spinner/Loading";
-import {Link} from "react-router-dom";
-import ScrollerContainer from "../ScrollerContainer/ScrollerContainer";
+
 import ComponentLoading from "../ComponentLoading/ComponentLoading";
 export default function NewsList(){
     const [news,setNews] = useState([])
     const [isReadMoreLoading,setIsReadMoreLoading] = useState(false)
     const [areNoNewsLeft,setAreNoNewsLeft] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
-    const categoriesWrapper = useRef(null)
-    const tagsWrapper = useRef(null)
+    // const categoriesWrapper = useRef(null)
+    // const tagsWrapper = useRef(null)
     useEffect(()=>{
         request("news/paginated/0","GET").subscribe(
             (res:any)=>{
@@ -39,12 +39,16 @@ export default function NewsList(){
             }
         )
     }
+    {/*// @ts-ignore*/}
+
     const menuClickHandler= (ref:any)=>{
         ref.current.classList.add(styles.clicked)
     }
+    {/*// @ts-ignore*/}
     const closeMenuClickHandler= (ref:any)=>{
         ref.current.classList.remove(styles.clicked)
     }
+    {/*// @ts-ignore*/}
     const categories = [
         "Politics",
         "World News",
