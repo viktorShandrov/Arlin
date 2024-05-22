@@ -78,7 +78,9 @@ export default function  LoginAndRegister(){
                 <div className={styles.formWrapper}>
                     <form className={styles.form} >
                         <div className={styles.headingLeft}>
-                            <h5>Създайте в своя профил</h5>
+                            {isLogin&&<h5>Влезте в своя профил</h5>}
+                            {!isLogin&&<h5>Създайте профил</h5>}
+
                             {/*<p >Отключете всички възможности!</p>*/}
                         </div>
                         {!isLogin&&
