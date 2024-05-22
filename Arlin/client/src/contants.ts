@@ -1,5 +1,5 @@
 // export const REST_API = "https://api-okin.onrender.com/"
-export const REST_API = "https://soft-uni-react-rest-2023-viktorshandrov.vercel.app/"
+export const REST_API = "https://arlin-rest.vercel.app"
 // export const REST_API = "http://localhost:3000/"
 export const facebookAppId = "350005497676561"
 // export const googleTranslateAPIKey = "AIzaSyCwcafxQT_4clYPFoz6pR5C3KOAbNhvTc8"
