@@ -33,6 +33,7 @@ exports.getAll=async()=>{
 }
 exports.getPaginated=async(start)=>{
     return  models.newsModel.find({})
+        .sort({ publishedAt: -1 })
         .skip(start)
         .limit(10)
 }
