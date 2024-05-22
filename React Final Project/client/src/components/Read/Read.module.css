@@ -15,7 +15,9 @@
     margin:0 clamp(5px,1vw,20px);
 
 }
-
+.storyC{
+    transform: translateX(20%);
+}
 
 @media (max-width: 1200px) {
     .listC{

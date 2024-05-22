@@ -100,21 +100,22 @@ export default function Story({chapter,changeChapterClickHandler,isLoading,isRat
                         {chapter.isBookOwnedByUser&&isRateBtnVisible&&!chapter.hasUserRatedTheBook&&<button onClick={showRatePopUp} className={`${styles.btn} ${styles.rateBtn}`}><span className={styles.btnName}>оцени книгата</span> <i className={`fa-solid fa-star ${styles.btnIcon}`}></i></button>}
                         <p></p>
                     </div>
-                        <div className={styles.testsWrapper}>
-                            {!areTestsHidden&&
-                                <>
-                                    <Link to={`/main/test/wordsFromChapterTests/${chapter.currentChapter._id}`}>
-                                        <button className={`${styles.btn} ${styles.textWordsTest}`}>тест на думи от текста</button>
-                                    </Link>
-                                    <Link to={`/main/test/chapterPlotTests/${chapter.currentChapter._id}`}>
-                                        <button disabled={!chapter.hasChapterPlotTest} className={`${styles.btn} ${styles.textTest}`}>тест на разбраното от текста</button>
-                                    </Link>
-                                </>
-                            }
-                            <button onClick={showBtns} className={`${styles.btn} ${styles.testIcon}`}>
-                                <img src="/nav%20icons%20new/test.png" alt=""/>
-                            </button>
-                        </div>
+                    {/*//TODO to work*/}
+                    {/*    <div className={styles.testsWrapper}>*/}
+                    {/*        {!areTestsHidden&&*/}
+                    {/*            <>*/}
+                    {/*                <Link to={`/main/test/wordsFromChapterTests/${chapter.currentChapter._id}`}>*/}
+                    {/*                    <button className={`${styles.btn} ${styles.textWordsTest}`}>тест на думи от текста</button>*/}
+                    {/*                </Link>*/}
+                    {/*                <Link to={`/main/test/chapterPlotTests/${chapter.currentChapter._id}`}>*/}
+                    {/*                    <button disabled={!chapter.hasChapterPlotTest} className={`${styles.btn} ${styles.textTest}`}>тест на разбраното от текста</button>*/}
+                    {/*                </Link>*/}
+                    {/*            </>*/}
+                    {/*        }*/}
+                    {/*        <button onClick={showBtns} className={`${styles.btn} ${styles.testIcon}`}>*/}
+                    {/*            <img src="/nav%20icons%20new/test.png" alt=""/>*/}
+                    {/*        </button>*/}
+                    {/*    </div>*/}
                 </div>
 
 

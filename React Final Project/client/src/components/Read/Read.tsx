@@ -100,13 +100,13 @@ export default  function Read(){
     return(
         <>
             <section className={styles.main}>
-
-                <div className={styles.listC}>
-                    <ReadToolBox chapter={chapter} changeChapterClickHandler={changeChapterClickHandler} />
-                        {/*<Routes>*/}
-                            {/*<Route path={"/:bookId/:chapterId?/:textToTranslate?"} element={}/>*/}
-                        {/*</Routes>*/}
-                </div>
+                {/*//TODO to work*/}
+                {/*<div className={styles.listC}>*/}
+                {/*    <ReadToolBox chapter={chapter} changeChapterClickHandler={changeChapterClickHandler} />*/}
+                {/*        /!*<Routes>*!/*/}
+                {/*            /!*<Route path={"/:bookId/:chapterId?/:textToTranslate?"} element={}/>*!/*/}
+                {/*        /!*</Routes>*!/*/}
+                {/*</div>*/}
                 <div className={styles.storyC}>
                     <Story chapter={chapter} bookId={bookId} isLoading={isLoading} isRateBtnVisible={isRateBtnVisible}  changeChapterClickHandler={changeChapterClickHandler}  />
                     {/*<Routes>*/}
