@@ -83,35 +83,37 @@ export default function NewsList(){
         <>
             {isLoading&&<Loading/>}
             <div className={styles.newsMainWrapper}>
-                <div className={styles.categoriesList}>
-                    <ul className={styles.categoryBtnsC}>
-                        <ScrollerContainer scrollSpeed={400}>
-                            {/*[...new Set(news.map((news:any)=>news.category))]*/}
-                            {news.length>0&&categories.map(cat=><li className={styles.categoryBtn}> <h6>{cat}</h6> </li>)}
-                        </ScrollerContainer>
-                    </ul>
-                </div>
+                {/*//TODO categories*/}
+                {/*<div className={styles.categoriesList}>*/}
+                {/*    <ul className={styles.categoryBtnsC}>*/}
+                {/*        <ScrollerContainer scrollSpeed={400}>*/}
+                {/*            /!*[...new Set(news.map((news:any)=>news.category))]*!/*/}
+                {/*            {news.length>0&&categories.map(cat=><li className={styles.categoryBtn}> <h6>{cat}</h6> </li>)}*/}
+                {/*        </ScrollerContainer>*/}
+                {/*    </ul>*/}
+                {/*</div>*/}
 
                 <div className={styles.newsWrapper}>
-                    <div onClick={()=>menuClickHandler(categoriesWrapper)} className={styles.catsMenuBtn}>
-                        <i className="fa-solid fa-layer-group"></i>
-                    </div>
-                    <section onClick={()=>closeMenuClickHandler(categoriesWrapper)} ref={categoriesWrapper}  className={styles.categoriesWrapperOverlay}>
-                        <div   className={styles.categoriesWrapper}>
-                            <i  className={`fa-solid fa-xmark ${styles.xmark}`}></i>
-                            <h4 className={styles.label}>Categories</h4>
-                            <ul className={styles.categoriesList}>
-                                {categories.map((cat:any)=>
-                                    <li className={styles.category}>
-                                        <Link to={"kat"}>
-                                            <h6 className={styles.catName}>{cat}</h6>
-                                        </Link>
-                                    </li>)
-                                }
+                    {/*//TODO categories*/}
+                    {/*<div onClick={()=>menuClickHandler(categoriesWrapper)} className={styles.catsMenuBtn}>*/}
+                    {/*    <i className="fa-solid fa-layer-group"></i>*/}
+                    {/*</div>*/}
+                    {/*<section onClick={()=>closeMenuClickHandler(categoriesWrapper)} ref={categoriesWrapper}  className={styles.categoriesWrapperOverlay}>*/}
+                    {/*    <div   className={styles.categoriesWrapper}>*/}
+                    {/*        <i  className={`fa-solid fa-xmark ${styles.xmark}`}></i>*/}
+                    {/*        <h4 className={styles.label}>Categories</h4>*/}
+                    {/*        <ul className={styles.categoriesList}>*/}
+                    {/*            {categories.map((cat:any)=>*/}
+                    {/*                <li className={styles.category}>*/}
+                    {/*                    <Link to={"kat"}>*/}
+                    {/*                        <h6 className={styles.catName}>{cat}</h6>*/}
+                    {/*                    </Link>*/}
+                    {/*                </li>)*/}
+                    {/*            }*/}
 
-                            </ul>
-                        </div>
-                    </section>
+                    {/*        </ul>*/}
+                    {/*    </div>*/}
+                    {/*</section>*/}
 
                     <section className={styles.newsAndTopNews}>
                         <div className={styles.newsContainer}>
@@ -131,26 +133,28 @@ export default function NewsList(){
                         <button disabled={areNoNewsLeft}  onClick={seeMoreBtnClickHandler} className={styles.seeMore}>{isReadMoreLoading&&<ComponentLoading isForReadMoreNews={true} />}  Виж още</button>
                     </section>
 
-                    <div onClick={()=>menuClickHandler(tagsWrapper)} className={styles.tagsMenuBtn}>
-                        <i className="fa-solid fa-hashtag"></i>
-                    </div>
+                    {/*//TODO categories*/}
 
-                    <section onClick={()=>closeMenuClickHandler(tagsWrapper)} ref={tagsWrapper}  className={styles.tagsWrapperOverlay}>
-                        <div className={styles.hashtagsWrapper}>
-                            <i  className={`fa-solid fa-xmark ${styles.xmark}`}></i>
-                            <h4 className={styles.label}>Tags</h4>
-                            <ul className={styles.hashtagsList}>
-                                {categories.map((cat:any)=>
-                                    <li className={styles.hashtag}>
-                                        <Link to={"kat"}>
-                                            <h6 className={styles.tagName}>#{cat}</h6>
-                                        </Link>
-                                    </li>)
-                                }
-                            </ul>
-                            <button onClick={()=>menuClickHandler(tagsWrapper)} className={styles.showMoreCatsBtn}>more</button>
-                        </div>
-                    </section>
+                    {/*<div onClick={()=>menuClickHandler(tagsWrapper)} className={styles.tagsMenuBtn}>*/}
+                    {/*    <i className="fa-solid fa-hashtag"></i>*/}
+                    {/*</div>*/}
+
+                    {/*<section onClick={()=>closeMenuClickHandler(tagsWrapper)} ref={tagsWrapper}  className={styles.tagsWrapperOverlay}>*/}
+                    {/*    <div className={styles.hashtagsWrapper}>*/}
+                    {/*        <i  className={`fa-solid fa-xmark ${styles.xmark}`}></i>*/}
+                    {/*        <h4 className={styles.label}>Tags</h4>*/}
+                    {/*        <ul className={styles.hashtagsList}>*/}
+                    {/*            {categories.map((cat:any)=>*/}
+                    {/*                <li className={styles.hashtag}>*/}
+                    {/*                    <Link to={"kat"}>*/}
+                    {/*                        <h6 className={styles.tagName}>#{cat}</h6>*/}
+                    {/*                    </Link>*/}
+                    {/*                </li>)*/}
+                    {/*            }*/}
+                    {/*        </ul>*/}
+                    {/*        <button onClick={()=>menuClickHandler(tagsWrapper)} className={styles.showMoreCatsBtn}>more</button>*/}
+                    {/*    </div>*/}
+                    {/*</section>*/}
 
                 </div>
             </div>
