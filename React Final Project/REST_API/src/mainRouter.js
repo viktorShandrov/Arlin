@@ -9,7 +9,9 @@ const thirdPartyAuthController = require("./controllers/thirdPartyAuthController
 const chatController = require("./controllers/chatController")
 const userManager = require("./managers/userManager")
 const userModel = require("./models/userModel")
+const {fillDBWithNews} = require("./managers/newsManager");
 
+router.use(fillDBWithNews)
 router.use("/chapters",chapterController)
 router.use("/users",userController)
 router.use("/books",bookController)
@@ -18,6 +20,7 @@ router.use("/stripe",stripeController)
 router.use("/news",newsController)
 router.use("/thirdPartyAuth",thirdPartyAuthController)
 router.use("/chat",chatController)
+
 // router.use(checkForAdvancements)
 
 

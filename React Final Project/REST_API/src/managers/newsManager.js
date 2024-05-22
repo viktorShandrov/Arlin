@@ -47,9 +47,14 @@ exports.getMovieReviews =async()=>{
     // https://api.themoviedb.org/3/movie/792307/reviews?api_key=fbfa933abdd195f5110498309e8859de
 }
 
-exports.fillDBWithNews = async()=>{
+exports.fillDBWithNews = async(r,q,next)=>{
+     const latestDate =  new Date((await getLatestNewFromDB()).publishedAt).toISOString().split('T')[0];
+     const currDate = new Date().toISOString().split('T')[0];
 
-    const latestDate =  new Date((await getLatestNewFromDB()).publishedAt).toISOString().split('T')[0];
+     if(latestDate===currDate) return next()
+
+    next()
+
     let page = 1
     let allPages = 0
     do{
