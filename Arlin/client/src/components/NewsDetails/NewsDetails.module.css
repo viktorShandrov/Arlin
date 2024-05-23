@@ -24,18 +24,32 @@
 .imgC{
     /*padding: 20px;*/
     border-radius: 15px;
-    margin: 20px;
+    margin: 20px 0;
+    max-width: 600px;
 }
 .imgC>*{
     object-fit: cover;
     width: 100%;
 }
 .content{
-    padding:10px 70px;
+    padding:10px;
 }
 .translationC{
     /*position: sticky;*/
     height: fit-content;
     /*display: flex;*/
    /*align-items: center;*/
+}
+
+
+@media (max-width: 500px){
+    .detailsWrapper{
+        padding:0;
+    }
+    .detailsC{
+        padding: 10px;
+    }
+    .content{
+        padding: 10px;
+    }
 }

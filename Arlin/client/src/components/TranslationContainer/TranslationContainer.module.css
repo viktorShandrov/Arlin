@@ -173,6 +173,14 @@
         min-width: 320px;
     }
 }
+@media (max-width: 800px){
+    .sentenceC{
+        padding-right: 45px;
+    }
+    .translationC{
+        padding: 20px;
+    }
+}
 
 
 @keyframes emerge {

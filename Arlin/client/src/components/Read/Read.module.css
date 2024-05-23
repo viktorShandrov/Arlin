@@ -16,7 +16,7 @@
 
 }
 .storyC{
-    transform: translateX(20%);
+    /*transform: translateX(20%);*/
 }
 
 @media (max-width: 1200px) {

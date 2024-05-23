@@ -52,16 +52,16 @@ exports.fillDBWithNews = async(r,q,next)=>{
      const latestDate =  new Date((await getLatestNewFromDB()).publishedAt).toISOString().split('T')[0];
      const currDate = new Date().toISOString().split('T')[0];
 
+        console.log(latestDate??new Date().toISOString().split('T')[0])
      if(latestDate===currDate) return next()
 
-    next()
 
     let page = 1
     let allPages = 0
     do{
         const articles =  await getArticles(latestDate??new Date().toISOString().split('T')[0],page)
         for (const article of articles.results) {
-            const isAlreadySaved = (await newsModel.findOne({idFromSource:article.id}))
+            const isAlreadySaved = !!(await newsModel.findOne({idFromSource:article.id}))
             if(!isAlreadySaved){
                 await saveArticleToDB(article)
             }
@@ -72,6 +72,7 @@ exports.fillDBWithNews = async(r,q,next)=>{
 
     } while(allPages!==page)
 
+    next()
 }
 
 async function saveArticleToDB(data){

@@ -60,7 +60,7 @@
 .newsContainer{
     display: grid;
     flex: 1;
-    grid-template-columns: repeat(auto-fill,350px);
+    grid-template-columns: repeat(auto-fill,300px);
     height: fit-content;
     flex-wrap: wrap;
     justify-content: center ;
