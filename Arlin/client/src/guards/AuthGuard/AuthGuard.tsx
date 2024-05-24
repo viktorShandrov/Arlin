@@ -5,6 +5,8 @@ import {useContext, useEffect, useState} from "react";
 import {userContext} from "../../redux/StateProvider/StateProvider";
 
 export default function AuthGuard() {
+
+    //@ts-ignore
     const { userState } = useContext(userContext);
     const [isTimedOut, setIsTimedOut] = useState(false);
 
