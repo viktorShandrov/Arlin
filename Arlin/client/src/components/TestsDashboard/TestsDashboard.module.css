@@ -34,3 +34,14 @@
     flex-direction: column;
     gap: 60px;
 }
+
+@media (max-width: 800px){
+    .testDashboardWrapper{
+        padding: 15px;
+    }
+}
+@media (max-width: 500px){
+    .testDashboardWrapper{
+        padding: 10px;
+    }
+}

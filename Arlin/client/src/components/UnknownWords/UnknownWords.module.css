@@ -10,6 +10,7 @@
 }
 .dictionaryPageC{
     color: var(--lightBlue);
+    padding: 5px;
 }
 
 .newGroupBtn{

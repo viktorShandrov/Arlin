@@ -76,7 +76,8 @@ export default function UnknownWords(){
                                     </div>
                                     <div className={styles.toggleAndSettings}>
                                         <i className="fa-solid fa-caret-down"></i>
-                                        <i className="fa-solid fa-gear"></i>
+                                        {/*TODO to have settings*/}
+                                        {/*<i className="fa-solid fa-gear"></i>*/}
                                     </div>
                                 </summary>
                                 {/*// @ts-ignore*/}
