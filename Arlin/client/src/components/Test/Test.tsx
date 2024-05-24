@@ -349,15 +349,14 @@ export default function Test(){
                                 }
 
                             </div>}
-                            {question.sentenceWhereWordsIsPresentTranslation&&
                                 <div ref={helpSectionRef} className={styles.textAndHeadingPair}>
-                                    <p>помощ</p>
-                                    <h5>{question.sentenceWhereWordsIsPresentTranslation}</h5>
+                                    {question.sentenceWhereWordsIsPresentTranslation&&
+                                        <>
+                                            <p>помощ</p>
+                                            <h5>{question.sentenceWhereWordsIsPresentTranslation}</h5>
+                                        </>
+                                    }
                                 </div>
-                            }
-
-
-
                         </div>
 
 

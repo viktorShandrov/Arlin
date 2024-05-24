@@ -118,9 +118,20 @@ import('random-words')
                         for (const question of testRecord.questions) {
                             populateStringValueToQuestionsAndAnswers(question)
                         }
+                        for (const question of testRecord.questions) {
+                            populateQuestionHelpSections(question)
+                        }
 
                         return testRecord
 
+                    }
+                    function populateQuestionHelpSections(question){
+                        // question.sentenceWhereWordsIsPresent = question.possibleAnswers[question.rightAnswerIndex]
+                        const example = question.question.elementId.examples?.[0]
+                        if(example&&example.sentenceWhereWordsIsPresent){
+                            question.sentenceWhereWordsIsPresent = example.sentenceWhereWordsIsPresent
+                            question.sentenceWhereWordsIsPresentTranslation = example.translation
+                        }
                     }
                     function populateStringValueToQuestionsAndAnswers(question){
 
