@@ -35,7 +35,10 @@ useEffect(()=>{
                 const contentType = clonedResponse.headers.get('Content-Type');
                 if (contentType && contentType.includes('application/json')) {
                     const data = await newUserData(userState())
-                    setUserState(data);
+
+                    if(Object.keys(data)[0]){
+                        setUserState(data);
+                    }
 
                     //@ts-ignore
                    async function newUserData(trueUser){

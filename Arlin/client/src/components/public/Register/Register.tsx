@@ -30,6 +30,10 @@ export default function  LoginAndRegister(){
     const imageUploadInput =useRef(null)
 
     useEffect(()=>{
+        localStorage.clear()
+    },[])
+
+    useEffect(()=>{
         if(portal=="login"){
             {/*// @ts-ignore*/}
             setIsLogin(true)

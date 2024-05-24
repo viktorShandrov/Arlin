@@ -19,7 +19,8 @@ export default function StateProvider({initialState,children}){
 
 
     const setUserState =(user:any)=>{
-        // console.log("state changed from:", window.location.hash)
+        console.log("state changed from:", window.location.hash)
+        console.log(user)
         setUser(user)
     }
 
