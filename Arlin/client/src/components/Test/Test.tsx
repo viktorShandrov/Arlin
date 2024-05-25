@@ -232,7 +232,7 @@ export default function Test(){
                     questionNumbersNavMobileEls.current[0]?.classList.add(styles.currentQuestion)
                 },0)
                 // @ts-ignore
-                t.style.setProperty("padding", "0")
+                t.classList.add(styles.withoutPadding)
 
                 setIsLoading(false)
                 {/*// @ts-ignore*/}
@@ -246,7 +246,7 @@ export default function Test(){
             // @ts-ignore
             r.style.setProperty("--navDisplay", "block")
             // @ts-ignore
-            t.style.setProperty("padding-left", "80px")
+            t.classList.remove(styles.withoutPadding)
         }
 
 

@@ -123,9 +123,9 @@ export default function NewsList(){
                         <div className={styles.newsContainer}>
                             <div className={styles.topNews}>
 
-                                {news.length>0&&<div className={styles.newsElement}>
-                                    <News isTop={true} newsElement={news[0]}/>
-                                </div>}
+                                {/*{news.length>0&&<div className={styles.newsElement}>*/}
+                                {/*    <News isTop={true} newsElement={news[0]}/>*/}
+                                {/*</div>}*/}
                             </div>
                             {news.length>0&&news.map((el:any)=>
                                 <div className={styles.newsElement}>
