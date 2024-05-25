@@ -285,7 +285,8 @@ export default function Test(){
                             }
                             {/*// @ts-ignore*/}
                             <h4 className={`${styles.word} ${currentTestType=="fillWord"?styles.sentence:styles.aaa}`}>{question.question.stringValue}</h4>
-                            <button onClick={helpBtnCLick} className={styles.helpBtn}>затруднявам се <i className={`fa-solid fa-info ${styles.infoIcon}`}></i></button>
+                            {/*TODO:*/}
+                            {/*<button onClick={helpBtnCLick} className={styles.helpBtn}>затруднявам се <i className={`fa-solid fa-info ${styles.infoIcon}`}></i></button>*/}
                         </div>
                         <div className={styles.navigationWrapper}>
                             {/*// @ts-ignore*/}
