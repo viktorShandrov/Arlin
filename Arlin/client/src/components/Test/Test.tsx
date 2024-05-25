@@ -206,6 +206,7 @@ export default function Test(){
             return test[index]
         })
     }
+    //@ts-ignore
     const helpBtnCLick = ()=>{
         {/*// @ts-ignore*/}
         helpSectionRef.current.classList.add(styles.helpSectionIsVisible)
