@@ -63,14 +63,15 @@ export default function Navigation(){
                     </section>
                 </Link>
             <section className={styles.linksC}>
-                <Link onClick={navigateHandler} to={"/main/read"} className={styles.linkItem} >
-                    <article className={styles.linkC}>
-                        <div className={styles.imageC}>
-                            <img src="/nav%20icons%20new/read.png" alt=""/>
-                        </div>
-                        <h6 className={styles.navItemLabel}>Четене на книга</h6>
-                    </article>
-                </Link>
+                {/*TODO to be shown*/}
+                {/*<Link onClick={navigateHandler} to={"/main/read"} className={styles.linkItem} >*/}
+                {/*    <article className={styles.linkC}>*/}
+                {/*        <div className={styles.imageC}>*/}
+                {/*            <img src="/nav%20icons%20new/read.png" alt=""/>*/}
+                {/*        </div>*/}
+                {/*        <h6 className={styles.navItemLabel}>Четене на книга</h6>*/}
+                {/*    </article>*/}
+                {/*</Link>*/}
                 <Link onClick={navigateHandler} to={"/main/AllBooks"} className={styles.linkItem} >
                     <article className={styles.linkC}>
                         <div className={styles.imageC}>

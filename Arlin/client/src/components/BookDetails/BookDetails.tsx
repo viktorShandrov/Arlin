@@ -35,6 +35,8 @@ export default function  BookDetails(){
     const { userState,setUserState } = useContext(userContext);
     const [isDialogShown,setIsDialogShown] = useState(false)
     const [isLoading,setIsLoading] = useState(true)
+    // @ts-ignore
+
     const [isFreeBookMode,setIsFreeBookMode] = useState(false)
     const [reviewsLimit,setReviewsLimit] = useState(2)
     const [book,setBook] = useState({
@@ -84,6 +86,8 @@ export default function  BookDetails(){
             }
         )
     }
+    // @ts-ignore
+
     const getBookForFree = () =>{
         request(`books/${book._id}/getForFree`,"GET").subscribe(
             ()=>{
@@ -148,6 +152,8 @@ export default function  BookDetails(){
             }
         )
     }
+    // @ts-ignore
+
     const buyBook = () =>{
         request(`stripe/create-checkout-session`,"POST",{bookId:book._id}).subscribe(
             async (res:any)=>{
@@ -211,16 +217,16 @@ export default function  BookDetails(){
                                 <h5 className={styles.resumeHeading}>Резюме на книгата:</h5>
                                 {book.resume}
                             </p>
-
-                            {book&&book.isBookOwnedByUser&&<div className={styles.btns}>
+                            {/*//TODO  add &&book.isBookOwnedByUser when the access is becomes restricted*/}
+                            {book&&<div className={styles.btns}>
                                 <button onClick={readBtnClickHandler} className={styles.readBtn}>прочети</button>
                             </div>}
 
-                            {book&&!book.isBookOwnedByUser&&<div className={styles.btns}>
-                                <button onClick={readBtnClickHandler} className={styles.btn}>надникни</button>
-                                {!isFreeBookMode&&<button onClick={buyBook} className={styles.btn}>КУПИ</button>}
-                                {isFreeBookMode&&<button onClick={getBookForFree} className={styles.btn}>ВЗEМИ БЕЗПЛАТНО</button>}
-                            </div>}
+                            {/*{book&&!book.isBookOwnedByUser&&<div className={styles.btns}>*/}
+                            {/*    <button onClick={readBtnClickHandler} className={styles.btn}>надникни</button>*/}
+                            {/*    {!isFreeBookMode&&<button onClick={buyBook} className={styles.btn}>КУПИ</button>}*/}
+                            {/*    {isFreeBookMode&&<button onClick={getBookForFree} className={styles.btn}>ВЗEМИ БЕЗПЛАТНО</button>}*/}
+                            {/*</div>}*/}
 
                         </article>
                     </section>

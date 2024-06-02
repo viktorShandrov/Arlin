@@ -129,7 +129,7 @@ export default function TestsDashboard(){
                             // @ts-ignore*/
                             <Table title={"Предадени упражнениея"} arr={testElTables.submittedByUser.filter(t=>t.isPersonalExercise||t.isTestSubmittedOnlyAsExercise)}>
                                 {/*// @ts-ignore*/}
-                                {testElTables.submittedByUser.filter(t=>t.isPersonalExercise||t.isTestSubmittedOnlyAsExercise).length>0&&testElTables.submittedByUser.filter(t=>t.isPersonalExercise||t.isTestSubmittedOnlyAsExercise).map((test)=>
+                                {testElTables.submittedByUser.filter(t=>t.isPersonalExercise||t.isTestSubmittedOnlyAsExercise).length>0&&testElTables.submittedByUser.filter(t=>t.isPersonalExercise||t.isTestSubmittedOnlyAsExercise).reverse().map((test)=>
                                 {
                                     {/*// @ts-ignore*/}
                                         return  <Link to={`/main/testSubmission/${test.submissionId}`}>
