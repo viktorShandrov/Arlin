@@ -17,7 +17,7 @@ exports.expressConfig = (app) => {
         origin: allowedOrigins,
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true, // This allows cookies and authorization headers
-        allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization', // Add the allowed headers here
+        allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization','Access-Control-Allow-Origin' // Add the allowed headers here
     }));
 
     app.use(auth);
