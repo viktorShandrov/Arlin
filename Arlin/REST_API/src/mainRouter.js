@@ -11,7 +11,7 @@ const userManager = require("./managers/userManager")
 const userModel = require("./models/userModel")
 const {fillDBWithNews} = require("./managers/newsManager");
 
-router.use(fillDBWithNews)
+// router.use(fillDBWithNews)
 router.use("/chapters",chapterController)
 router.use("/users",userController)
 router.use("/books",bookController)
