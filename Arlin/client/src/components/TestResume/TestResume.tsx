@@ -48,7 +48,7 @@ export default function TestResume(){
                     {/*// @ts-ignore*/}
                     <h6 className={styles.textInfoPair}>Отнеха ти <h6 className={styles.highlightedText}>{`${Math.floor(testDetails.submission.time / 60)}:${(testDetails.submission.time % 60).toString().padStart(2, '0')}`}</h6> минути</h6>
                     {/*// @ts-ignore*/}
-                    <h6 className={styles.textInfoPair}>С резултат <h6 className={styles.highlightedText}>{testDetails.submission.score}/{testDetails.questions.length}</h6> верни отговора</h6>
+                    <h6 className={styles.textInfoPair}>С резултат <h6 className={styles.highlightedText}>{testDetails.submission.score} от {testDetails.questions.length}</h6> верни отговора</h6>
                     {/*// @ts-ignore*/}
                     <h6 className={styles.textInfoPair}>Предадено на<h6 className={styles.highlightedText}>{new Date(testDetails.submission.submissionTime).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' })}</h6> часа</h6>
 
@@ -67,10 +67,24 @@ export default function TestResume(){
                         {(question.testType!==questions.at(index-1).testType)&&<h5 className={styles.wordTypeSection}>{testTypes[question.testType]}</h5>}
                             {/*// @ts-ignore*/}
 
-                        {question.rightAnswerIndex==answers[index].answerIndex&&answers[index].time>20&&
-                            <div className={`${styles.questionListItem} ${styles.hardQuestionAnswer} ${styles.wordType}`}>
+                        {
+                            <div className={`
+                            
+                            ${styles.questionListItem}
+                            ${styles.wordType}
+                            ${question.rightAnswerIndex==answers[index].answerIndex&&answers[index].time<=20?styles.rightAnswer:null} 
+                            ${question.rightAnswerIndex==answers[index].answerIndex&&answers[index].time>20?styles.hardQuestionAnswer:null} 
+                            ${question.rightAnswerIndex!==answers[index].answerIndex ? styles.wrongAnswer : null}
+                            ${question.testType=="randomWordsTests"?styles.wordType:null}
+                            ${question.testType=="fillWord"?styles.fillWordType:null}
+                            `}>
                                 <div className={styles.headings}>
-                                    <h6>Позамисли се</h6>
+
+                                    {question.rightAnswerIndex==answers[index].answerIndex&&answers[index].time<=20? <h6>Затвърдено е</h6> : null}
+                                    {question.rightAnswerIndex == answers[index].answerIndex && answers[index].time > 20 ? <h6>Позамисли се</h6> : null}
+                                    {question.rightAnswerIndex!==answers[index].answerIndex ? <h6>Ще упражним още</h6> : null}
+
+
                                     {/*// @ts-ignore*/}
 
                                     <p>време за отговор <span className={styles.time}>{`${Math.floor(answers[index].time / 60)}:${(answers[index].time % 60).toString().padStart(2, '0')}`}</span> мин.</p>
@@ -83,147 +97,177 @@ export default function TestResume(){
                                     {/*// @ts-ignore*/}
                                     {question.testType=="justQuestion"?<p>въпрос</p>:null}
                                     {/*// @ts-ignore*/}
-                                    {question.testType=="randomWordsTests"?<span className={styles.word}>{question.question}</span>:<></>}
+                                    {question.testType=="randomWordsTests"?<span className={styles.word}>{question.question.elementId.word}</span>:<></>}
                                     {/*// @ts-ignore*/}
-                                    {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers.find(el=>el.word == question.question).examples[0].sentenceWhereWordsIsPresent.replace(question.question,"___")}</span> :<></>}
-                                    {/*// @ts-ignore*/}
-                                    {question.testType=="justQuestion"?<span className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</span>:<></>}
-
-                                </div>
-                                <div className={styles.wordPair}>
-                                    <p>правилен отговор</p>
-                                    {/*// @ts-ignore*/}
-                                    {question.testType=="randomWordsTests"?<span className={styles.word}>{question.possibleAnswers.find(el=>el._id==question.rightAnswer).translatedText}</span>:<></>}
-                                    {/*// @ts-ignore*/}
-                                    {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers.find(el=>el._id==question.rightAnswer).word}</span> :<></>}
-                                    {/*// @ts-ignore*/}
-                                    {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}
-
-                                </div>
-                                {/*// @ts-ignore*/}
-                                {question.testType=="fillWord"&&
-                                    <div className={styles.wordPair}>
-                                        <p>превод</p>
-                                        {/*// @ts-ignore*/}
-                                        <span className={styles.word}>{question.possibleAnswers.find(el=>el._id==question.rightAnswer).examples[0].translation}</span>
-                                    </div>
-                                }
-                            </div>
-                        }
-                            {/*// @ts-ignore*/}
-                        {question.rightAnswerIndex==answers[index].answerIndex&&answers[index].time<=20&&
-                            <div className={`
-                            ${styles.questionListItem} 
-                            ${styles.rightAnswer} 
-                            ${question.testType=="randomWordsTests"?styles.wordType:null}
-                            ${question.testType=="fillWord"?styles.fillWordType:null}
-                            `}>
-                                <div className={styles.headings}>
-                                    <h6>Затвърдено е</h6>
-                                    {/*// @ts-ignore*/}
-                                    <p>време за отговор <span className={styles.time}>{`${Math.floor(answers[index].time / 60)}:${(answers[index].time % 60).toString().padStart(2, '0')}`}</span> мин.</p>
-                                </div>
-                                <div className={styles.wordPair}>
-                                    {question.testType=="randomWordsTests"?<p>дума</p>:null}
-                                    {question.testType=="fillWord"?<p>изречение</p>:null}
-                                    {question.testType=="justQuestion"?<p>въпрос</p>:null}
-
-                                    {question.testType=="randomWordsTests"?<span className={styles.word}>{question.question.elementId?.word||question.question.stringValue}</span>:<></>}
-                                    {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.replace(question.question,"___")}</span> :<></>}
+                                    {console.log(question)}
+                                    {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId.examples[0].sentenceWhereWordsIsPresent.replace(question.question.elementId.word,"___")}</span> :<></>}
                                     {/*// @ts-ignore*/}
                                     {question.testType=="justQuestion"?<span className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</span>:<></>}
 
                                 </div>
-                                <div className={styles.wordPair}>
-                                    <p>правилен отговор</p>
-                                    {question.testType=="randomWordsTests"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.translatedText}</span>:<></>}
-                                    {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.word}</span> :<></>}
-                                    {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}
+                                {question.rightAnswerIndex!==answers[index].answerIndex&&
+                                    <>
+                                        <div className={styles.wrongAndRightAnswerPairC}>
+                                            <div className={styles.wrongAnswerC}>
+                                                <div className={styles.textPair}>
+                                                    <div className={styles.dot}></div>
+                                                    {/*// @ts-ignore*/}
+                                                    {question.testType=="randomWordsTests"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[answers[index].answerIndex].elementId?.translatedText||question.possibleAnswers[answers[index].answerIndex].stringValue}</h6>:<></>}
+                                                    {/*// @ts-ignore*/}
+                                                    {question.testType=="fillWord"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[answers[index].answerIndex].elementId?.word||question.possibleAnswers[answers[index].answerIndex].stringValue}</h6> :<></>}
+                                                    {/*// @ts-ignore*/}
+                                                    {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</h6>:<></>}
 
-                                </div>
-                                {question.testType=="fillWord"&&
-                                    <div className={styles.wordPair}>
-                                        <p>превод</p>
-                                        <span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].translation}</span>
-                                    </div>
-                                }
-                            </div>
-                        }
-                            {/*// @ts-ignore*/}
-                        {question.rightAnswerIndex!==answers[index].answerIndex&&
-                            <div className={`
-                            ${styles.questionListItem} 
-                            ${styles.wrongAnswer} 
-                            ${question.testType=="randomWordsTests"?styles.wordType:null}
-                            ${question.testType=="fillWord"?styles.fillWordType:null}
-                            `}>
-                                <div className={styles.headings}>
-                                    <h6>Ще упражним още</h6>
-                                    {/*// @ts-ignore*/}
-                                    <p>време за отговор <span className={styles.time}>{`${Math.floor(answers[index].time / 60)}:${(answers[index].time % 60).toString().padStart(2, '0')}`}</span> мин.</p>
-                                </div>
-                                <div className={styles.wordPair}>
-                                    {question.testType=="randomWordsTests"?<p>дума</p>:<></>}
-                                    {question.testType=="fillWord"?<p>изречение</p>:<></>}
-                                    {question.testType=="justQuestion"?<p>въпрос</p>:<></>}
-
-                                    {question.testType=="randomWordsTests"?<span className={styles.word}>{question.question.elementId?.word||question.question.stringValue}</span>:<></>}
-                                    {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.replace(question.question.elementId?.word||question.question.stringValue,"___")}</span> :<></>}
-                                    {question.testType=="justQuestion"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</span>:<></>}
-
-                                </div>
-                                <div className={styles.wrongAndRightAnswerPairC}>
-                                    <div className={styles.wrongAnswerC}>
-                                        <div className={styles.textPair}>
-                                            <div className={styles.dot}></div>
-                                            {/*// @ts-ignore*/}
-                                            {question.testType=="randomWordsTests"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[answers[index].answerIndex].elementId?.translatedText||question.possibleAnswers[answers[index].answerIndex].stringValue}</h6>:<></>}
-                                            {/*// @ts-ignore*/}
-                                            {question.testType=="fillWord"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[answers[index].answerIndex].elementId?.word||question.possibleAnswers[answers[index].answerIndex].stringValue}</h6> :<></>}
-                                            {/*// @ts-ignore*/}
-                                            {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</h6>:<></>}
-
-                                        </div>
-                                        <h6 className={styles.answerText}>(твой отговор)</h6>
-                                    </div>
-                                    <div className={styles.rightAnswerC}>
-                                        <div className={styles.textPair}>
-                                            <div className={styles.dot}></div>
-
-                                            {question.testType=="randomWordsTests"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.translatedText||question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}
-                                            {question.testType=="fillWord"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.word||question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6> :<></>}
-                                            {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}
-
-                                        </div>
-                                        <h6 className={styles.answerText}>(верен отговор)</h6>
-                                    </div>
-                                </div>
-                                {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples?.[0]?.sentenceWhereWordsIsPresent&&
-                                    <div className={styles.exampleC}>
-                                        {question.testType!=="fillWord"&&<div className={styles.headingAndSentencePair}>
-                                            <p>пример в изречение:</p>
-                                            <div className={styles.sentenceC}>
-
-                                                {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.split(" ")
-                                                    .map((word:any)=>{
-                                                        return <p className={word == question.question?styles.questionedWord:styles.wordInSentence}>{word} </p>
-                                                    })
-                                                }
+                                                </div>
+                                                <h6 className={styles.answerText}>(твой отговор)</h6>
                                             </div>
-                                        </div>}
+                                            <div className={styles.rightAnswerC}>
+                                                <div className={styles.textPair}>
+                                                    <div className={styles.dot}></div>
 
-                                        <div className={styles.headingAndSentencePair}>
-                                            <p>превод на изречение:</p>
-                                            <p>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].translation}</p>
+                                                    {question.testType=="randomWordsTests"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.translatedText||question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}
+                                                    {question.testType=="fillWord"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.word||question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6> :<></>}
+                                                    {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}
+
+                                                </div>
+                                                <h6 className={styles.answerText}>(верен отговор)</h6>
+                                            </div>
                                         </div>
-                                        {/*<button className={styles.moreExamplesBtn}>още изречения</button>*/}
+                                        {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples?.[0]?.sentenceWhereWordsIsPresent&&
+                                            <div className={styles.exampleC}>
+                                                {question.testType!=="fillWord"&&<div className={styles.headingAndSentencePair}>
+                                                    <p>пример в изречение:</p>
+                                                    <div className={styles.sentenceC}>
 
-                                    </div>
+                                                        {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.split(" ")
+                                                            .map((word:any)=>{
+                                                                return <p className={word == question.question?styles.questionedWord:styles.wordInSentence}>{word} </p>
+                                                            })
+                                                        }
+                                                    </div>
+                                                </div>}
+
+                                                <div className={styles.headingAndSentencePair}>
+                                                    <p>превод на изречение:</p>
+                                                    <p>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].translation}</p>
+                                                </div>
+                                                {/*<button className={styles.moreExamplesBtn}>още изречения</button>*/}
+
+                                            </div>
+                                        }
+                                    </>
+                                }
+
+                                {question.rightAnswerIndex===answers[index].answerIndex&&
+                                            <>
+                                                <div className={styles.wordPair}>
+                                                    <p>правилен отговор</p>
+                                                    {/*// @ts-ignore*/}
+                                                    {question.testType=="randomWordsTests"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId.translatedText}</span>:<></>}
+                                                    {/*// @ts-ignore*/}
+                                                    {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId.word}</span> :<></>}
+                                                    {/*// @ts-ignore*/}
+                                                    {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId.stringValue}</h6>:<></>}
+
+                                                </div>
+                                                {/*// @ts-ignore*/}
+                                                {question.testType=="fillWord"&&
+                                                    <div className={styles.wordPair}>
+                                                        <p>превод</p>
+                                                        {/*// @ts-ignore*/}
+                                                        <span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId.examples[0].translation}</span>
+                                                    </div>
+                                                }
+                                            </>
                                 }
 
 
-                            </div>
-                        }
+
+                    {/*<button className={styles.moreExamplesBtn}>още изречения</button>*/}
+
+                    </div>
+                    }
+
+
+
+
+
+
+
+                            {/*// @ts-ignore*/}
+                        {/*{question.rightAnswerIndex!==answers[index].answerIndex&&*/}
+                        {/*    <div className={`*/}
+                        {/*    ${styles.questionListItem} */}
+                        {/*    ${styles.wrongAnswer} */}
+                        {/*    ${question.testType=="randomWordsTests"?styles.wordType:null}*/}
+                        {/*    ${question.testType=="fillWord"?styles.fillWordType:null}*/}
+                        {/*    `}>*/}
+                        {/*        <div className={styles.headings}>*/}
+                        {/*            <h6>Ще упражним още</h6>*/}
+                        {/*            <p>време за отговор <span className={styles.time}>{`${Math.floor(answers[index].time / 60)}:${(answers[index].time % 60).toString().padStart(2, '0')}`}</span> мин.</p>*/}
+                        {/*        </div>*/}
+                        {/*        <div className={styles.wordPair}>*/}
+                        {/*            {question.testType=="randomWordsTests"?<p>дума</p>:<></>}*/}
+                        {/*            {question.testType=="fillWord"?<p>изречение</p>:<></>}*/}
+                        {/*            {question.testType=="justQuestion"?<p>въпрос</p>:<></>}*/}
+
+                        {/*            {question.testType=="randomWordsTests"?<span className={styles.word}>{question.question.elementId?.word||question.question.stringValue}</span>:<></>}*/}
+                        {/*            {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.replace(question.question.elementId?.word||question.question.stringValue,"___")}</span> :<></>}*/}
+                        {/*            {question.testType=="justQuestion"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</span>:<></>}*/}
+
+                        {/*        </div>*/}
+                        {/*        <div className={styles.wrongAndRightAnswerPairC}>*/}
+                        {/*            <div className={styles.wrongAnswerC}>*/}
+                        {/*                <div className={styles.textPair}>*/}
+                        {/*                    <div className={styles.dot}></div>*/}
+                                            {/*// @ts-ignore*/}
+                        {/*                    {question.testType=="randomWordsTests"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[answers[index].answerIndex].elementId?.translatedText||question.possibleAnswers[answers[index].answerIndex].stringValue}</h6>:<></>}*/}
+                                            {/*// @ts-ignore*/}
+                        {/*                    {question.testType=="fillWord"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[answers[index].answerIndex].elementId?.word||question.possibleAnswers[answers[index].answerIndex].stringValue}</h6> :<></>}*/}
+                                            {/*// @ts-ignore*/}
+                        {/*                    {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</h6>:<></>}*/}
+
+                        {/*                </div>*/}
+                        {/*                <h6 className={styles.answerText}>(твой отговор)</h6>*/}
+                        {/*            </div>*/}
+                        {/*            <div className={styles.rightAnswerC}>*/}
+                        {/*                <div className={styles.textPair}>*/}
+                        {/*                    <div className={styles.dot}></div>*/}
+
+                        {/*                    {question.testType=="randomWordsTests"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.translatedText||question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}*/}
+                        {/*                    {question.testType=="fillWord"?<h6 className={styles.wrongAnswerText}>{question.possibleAnswers[question.rightAnswerIndex].elementId?.word||question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6> :<></>}*/}
+                        {/*                    {question.testType=="justQuestion"?<h6 className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].stringValue}</h6>:<></>}*/}
+
+                        {/*                </div>*/}
+                        {/*                <h6 className={styles.answerText}>(верен отговор)</h6>*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*        {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples?.[0]?.sentenceWhereWordsIsPresent&&*/}
+                        {/*            <div className={styles.exampleC}>*/}
+                        {/*                {question.testType!=="fillWord"&&<div className={styles.headingAndSentencePair}>*/}
+                        {/*                    <p>пример в изречение:</p>*/}
+                        {/*                    <div className={styles.sentenceC}>*/}
+
+                        {/*                        {question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].sentenceWhereWordsIsPresent.split(" ")*/}
+                        {/*                            .map((word:any)=>{*/}
+                        {/*                                return <p className={word == question.question?styles.questionedWord:styles.wordInSentence}>{word} </p>*/}
+                        {/*                            })*/}
+                        {/*                        }*/}
+                        {/*                    </div>*/}
+                        {/*                </div>}*/}
+
+                        {/*                <div className={styles.headingAndSentencePair}>*/}
+                        {/*                    <p>превод на изречение:</p>*/}
+                        {/*                    <p>{question.possibleAnswers[question.rightAnswerIndex].elementId?.examples[0].translation}</p>*/}
+                        {/*                </div>*/}
+                        {/*                /!*<button className={styles.moreExamplesBtn}>още изречения</button>*!/*/}
+
+                        {/*            </div>*/}
+                        {/*        }*/}
+
+
+                        {/*    </div>*/}
+                        {/*}*/}
 
 
 
