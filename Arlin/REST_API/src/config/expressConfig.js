@@ -10,15 +10,21 @@ exports.expressConfig = (app) => {
     app.use(bodyParser.urlencoded({extended:true}))
     app.use(bodyParser.json())
 
-    const allowedOrigins = utils.FEdomains;
-
-    // app.use(corsMiddleware)
-    app.use(cors({
-        origin: allowedOrigins,
+    const corsOptions = {
+        origin: (origin, callback) => {
+            if (utils.isAllowedOrigin(origin)) {
+                callback(null, true);
+            } else {
+                callback(null, false);
+            }
+        },
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        credentials: true, // This allows cookies and authorization headers
+        credentials: true,
         allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Origin'
-    }));
+    };
+
+    app.use(cors(corsOptions));
+    app.options('*', cors(corsOptions));
 
     app.use(auth);
     app.use(router);
