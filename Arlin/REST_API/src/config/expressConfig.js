@@ -27,5 +27,6 @@ exports.expressConfig = (app) => {
     app.options('*', cors(corsOptions));
 
     app.use(auth);
+    app.use('/api', router);
     app.use(router);
 }

@@ -1,0 +1,12 @@
+{
+  "name": "arlin-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "build": "cd client && npm run build",
+    "start": "cd REST_API && npm start"
+  }
+}
