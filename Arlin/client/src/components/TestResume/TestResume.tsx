@@ -11,8 +11,8 @@ import Loading from "../Spinner/Loading";
 export default function TestResume(){
 
     const {testSubmissionId} = useParams()
-    const [questions,setQuestions] = useState([])
-    const [answers,setAnswers] = useState([])
+    const [questions,setQuestions] = useState<any[]>([])
+    const [answers,setAnswers] = useState<any[]>([])
     const [testTypes,setTestTypes] = useState({})
     const [isLoading,setIsLoading] = useState(true)
     const [testDetails,setTestDetails] = useState({
@@ -98,8 +98,6 @@ export default function TestResume(){
                                     {question.testType=="justQuestion"?<p>въпрос</p>:null}
                                     {/*// @ts-ignore*/}
                                     {question.testType=="randomWordsTests"?<span className={styles.word}>{question.question.elementId.word}</span>:<></>}
-                                    {/*// @ts-ignore*/}
-                                    {console.log(question)}
                                     {question.testType=="fillWord"?<span className={styles.word}>{question.possibleAnswers[question.rightAnswerIndex].elementId.examples[0].sentenceWhereWordsIsPresent.replace(question.question.elementId.word,"___")}</span> :<></>}
                                     {/*// @ts-ignore*/}
                                     {question.testType=="justQuestion"?<span className={styles.word}>{question.possibleAnswers[answers[index].answerIndex].stringValue}</span>:<></>}

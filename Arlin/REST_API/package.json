@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "nodemon src/startServer.js",
+    "build": "echo build successful",
     "vercel-build": "echo hello"
   },
   "keywords": [],
