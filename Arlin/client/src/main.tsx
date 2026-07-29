@@ -1,45 +1,38 @@
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-// import {BrowserRouter} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {HashRouter} from "react-router-dom";
-
-
 import {REST_API} from "./contants";
-//@ts-ignore
-import {store} from "./redux/store";
-
 import StateProvider from "./redux/StateProvider/StateProvider";
 
-
-
-
-async function getDataFromServer(){
-    const token = localStorage.getItem("token")
-    if(token){
-        const userData = await(await fetch(`${REST_API}users/userInfo`,{headers:{Authorization:token}})).json()
-        return {...userData,token,userId:userData._id}
-    }else{
-        return null
+async function getDataFromServer() {
+    const token = localStorage.getItem("token");
+    if (token && token !== "null") {
+        try {
+            const response = await fetch(`${REST_API}users/userInfo`, {
+                headers: { Authorization: token }
+            });
+            if (response.ok) {
+                const userData = await response.json();
+                return { ...userData, token, userId: userData._id };
+            } else {
+                localStorage.removeItem("token");
+            }
+        } catch (e) {
+            console.error("Initial load fetch error:", e);
+        }
     }
+    return null;
 }
 
-
 getDataFromServer()
-    .then((user:any)=>{
+    .then((user: any) => {
         ReactDOM.createRoot(document.getElementById('root')!).render(
-            <HashRouter >
+            <HashRouter>
                 <StateProvider initialState={user}>
                     <App />
                 </StateProvider>
             </HashRouter>
-        )
-    })
-
-
-// getDataFromServer().then((initialData) => {
-//     store.dispatch(setInitialData(initialData));
-// })
-
-
+        );
+    });

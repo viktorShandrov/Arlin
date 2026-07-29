@@ -1,21 +1,19 @@
-const express = require("express")
-const {expressConfig} = require("./config/expressConfig.js");
-const {mongodbConfig} = require("./config/MongoConfig.js");
-const {port} = require("./utils/utils");
-const {test} = require("./utils/test");
-const {fillDBWithNews} = require("./managers/newsManager");
+const express = require("express");
+const { expressConfig } = require("./config/expressConfig.js");
+const { mongodbConfig } = require("./config/MongoConfig.js");
 
-const server = express()
+const server = express();
 
+server.use(async (req, res, next) => {
+    try {
+        await mongodbConfig();
+        next();
+    } catch (err) {
+        console.error("Database connection error:", err);
+        res.status(500).json({ message: "Database connection failed" });
+    }
+});
 
-expressConfig(server)
+expressConfig(server);
 
-mongodbConfig()
-
-setTimeout(()=>{
-
-    test()
-},1000)
-
-
-module.exports = server
+module.exports = server;
