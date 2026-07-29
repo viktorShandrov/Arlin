@@ -2,6 +2,8 @@ import { connectDB } from '@/lib/db';
 import { Book } from '@/lib/models/Book';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BooksPage() {
   await connectDB();
   const books = await Book.find({}).lean();
