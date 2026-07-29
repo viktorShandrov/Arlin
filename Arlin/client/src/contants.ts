@@ -1,6 +1,8 @@
-// export const REST_API = "https://api-okin.onrender.com/"
-// export const REST_API = "https://arlin-rest.vercel.app/"
-export const REST_API = "http://localhost:3000/"
+export const REST_API = import.meta.env.VITE_REST_API || (
+    typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+        ? "http://localhost:3000/"
+        : "https://arlin-rest.vercel.app/"
+);
 export const facebookAppId = "350005497676561"
 // export const googleTranslateAPIKey = "AIzaSyCwcafxQT_4clYPFoz6pR5C3KOAbNhvTc8"
 export const googleClientId = "638123872925-ss6qml6jnp2ltb4v11jtd63lkhgmrikk.apps.googleusercontent.com"
